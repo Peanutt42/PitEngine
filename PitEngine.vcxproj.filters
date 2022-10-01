@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Engine\Main\main.cpp" />
+    <ClCompile Include="Engine\Rendering\Renderer.cpp" />
+    <ClCompile Include="Engine\Debug\Logging.cpp" />
+    <ClCompile Include="Build\stb.cpp" />
+    <ClCompile Include="Engine\ECS\ECSSubsystem.cpp" />
+    <ClCompile Include="Engine\ECS\ECSWorld.cpp" />
+    <ClCompile Include="Engine\ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanRenderer.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanSwapChain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
+    <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Engine\Main\CoreInclude.h" />
+    <ClInclude Include="Engine\Rendering\RenderingInclude.h" />
+    <ClInclude Include="Engine\Rendering\Renderer.h" />
+    <ClInclude Include="Engine\Main\Engineloop.h" />
+    <ClInclude Include="Engine\Rendering\Window.h" />
+    <ClInclude Include="Engine\Debug\Logging.h" />
+    <ClInclude Include="Engine\Main\Timer.h" />
+    <ClInclude Include="Engine\Main\FileSystem.h" />
+    <ClInclude Include="Engine\ECS\ECS.h" />
+    <ClInclude Include="Engine\ECS\ECSGameloop.h" />
+    <ClInclude Include="Engine\ECS\ECSSubsystem.h" />
+    <ClInclude Include="Engine\ECS\ECSSystem.h" />
+    <ClInclude Include="Engine\ECS\ECSWorld.h" />
+    <ClInclude Include="Engine\ECS\Examples\ECSBasicGameloop.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imconfig.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Engine\Rendering\ImGui\ImGuiRenderer.h" />
+    <ClInclude Include="Engine\Main\Types.h" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanRenderer.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.h" />
+    <ClInclude Include="Engine\Main\EngineConfig.h" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanDevice.h" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanSwapChain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Dependencies\glfw\lib\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependencies\glfw\lib\glfw3.pdb" />
+    <None Include="imgui.ini" />
+    <None Include="Sandbox\shaders\simple_shader.vert" />
+    <None Include="Sandbox\shaders\simple_shader.frag" />
+    <None Include="Sandbox\shaders\compile.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Dependencies\stb\include\stb\stb_image.h" />
+    <Text Include="Engine\TODO-Code.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Sandbox\textures\Popcat.png" />
+    <Image Include="Sandbox\textures\planks.png" />
+    <Image Include="Sandbox\textures\planksSpec.png" />
+  </ItemGroup>
+</Project>
