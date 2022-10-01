@@ -1,4 +1,4 @@
-#include "ImGuiRenderer.h"
+#include "ImGuiRenderer.hpp"
 #include <ImGui/imgui_impl_vulkan.h>
 
 using namespace Pit::Rendering;

@@ -1,4 +1,4 @@
-#include "VulkanSwapChain.h"
+#include "VulkanSwapChain.hpp"
 
 using namespace Pit::Rendering::Vulkan;
 

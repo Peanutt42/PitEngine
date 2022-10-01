@@ -1,6 +1,6 @@
-#include "Renderer.h"
+#include "Renderer.hpp"
 
-#include "Vulkan/VulkanRenderer.h"
+#include "Vulkan/VulkanRenderer.hpp"
 
 #include<filesystem>
 namespace fs = std::filesystem;

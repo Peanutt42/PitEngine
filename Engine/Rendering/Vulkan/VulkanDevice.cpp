@@ -1,4 +1,4 @@
-#include "VulkanDevice.h"
+#include "VulkanDevice.hpp"
 
 #include <unordered_set>
 #include <set>

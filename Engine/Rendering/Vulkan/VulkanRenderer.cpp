@@ -1,4 +1,4 @@
-#include "VulkanRenderer.h"
+#include "VulkanRenderer.hpp"
 
 using namespace Pit::Rendering::Vulkan;
 

@@ -1,4 +1,4 @@
-#include "Logging.h"
+#include "Logging.hpp"
 
 using namespace Pit::Debug;
 

@@ -1,5 +1,5 @@
-#include "ECSWorld.h"
-#include "ECSSystem.h"
+#include "ECSWorld.hpp"
+#include "ECSSystem.hpp"
 
 using namespace Pit::ECS;
 
