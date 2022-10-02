@@ -1,2 +1,4 @@
-﻿  VulkanSwapChain.cpp
+﻿  "Compiling shader files[.vert, .frag] into .spv files"
+  Drücken Sie eine beliebige Taste . . . 
+  VulkanRenderer.cpp
   PitEngine.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\PitEngine.exe

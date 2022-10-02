@@ -1,19 +1,20 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
 #include "Rendering/RenderingInclude.hpp"
 #include "VulkanDevice.hpp"
+#include <memory>
 
 namespace Pit::Rendering::Vulkan {
     class SwapChain {
     public:
         static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-        SwapChain(Device& deviceRef, VkExtent2D windowExtent, bool vsync);
+        SwapChain(Device& deviceRef, VkExtent2D windowExtent);
+        SwapChain(Device& deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
         ~SwapChain();
 
         SwapChain(const SwapChain&) = delete;
-        void operator=(const SwapChain&) = delete;
+        SwapChain& operator=(const SwapChain&) = delete;
 
         VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
         VkRenderPass getRenderPass() { return renderPass; }
@@ -33,7 +34,8 @@ namespace Pit::Rendering::Vulkan {
         VkResult submitCommandBuffers(const VkCommandBuffer* buffers, uint32_t* imageIndex);
 
     private:
-        void createSwapChain(bool vsync);
+        void init();
+        void createSwapChain();
         void createImageViews();
         void createDepthResources();
         void createRenderPass();
@@ -43,7 +45,7 @@ namespace Pit::Rendering::Vulkan {
         // Helper functions
         VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR>& availableFormats);
-        VkPresentModeKHR chooseSwapPresentMode(bool vsync, const std::vector<VkPresentModeKHR>& availablePresentModes);
+        VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
         VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
         VkFormat swapChainImageFormat;
@@ -62,6 +64,7 @@ namespace Pit::Rendering::Vulkan {
         VkExtent2D windowExtent;
 
         VkSwapchainKHR swapChain;
+        std::shared_ptr<SwapChain> oldSwapChain;
 
         std::vector<VkSemaphore> imageAvailableSemaphores;
         std::vector<VkSemaphore> renderFinishedSemaphores;

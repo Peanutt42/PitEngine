@@ -19,6 +19,7 @@
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanSwapChain.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanPipeline.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanDevice.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanSwapChain.hpp" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanModel.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />

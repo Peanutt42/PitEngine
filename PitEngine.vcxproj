@@ -172,6 +172,7 @@
     <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
     <ClCompile Include="Engine\Rendering\Renderer.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
+    <ClCompile Include="Engine\Rendering\Vulkan\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanRenderer.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanSwapChain.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Engine\Rendering\Renderer.hpp" />
     <ClInclude Include="Engine\Rendering\RenderingInclude.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanDevice.hpp" />
+    <ClInclude Include="Engine\Rendering\Vulkan\VulkanModel.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanPipeline.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanRenderer.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanSwapChain.hpp" />

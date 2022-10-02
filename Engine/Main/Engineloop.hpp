@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
 #include "Rendering/RenderingInclude.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/Window.hpp"
