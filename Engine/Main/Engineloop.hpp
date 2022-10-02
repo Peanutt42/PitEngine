@@ -3,7 +3,11 @@
 #include "Rendering/RenderingInclude.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/Window.hpp"
+#include "Rendering/Vulkan/VulkanPipeline.hpp"
 #include "ECS/ECSSubsystem.hpp"
+#include "ECS/Examples/ECSExampleMovement.hpp"
+#include "ECS/Commons/ECSMeshComponent.hpp"
+#include "ECS/Commons/ECSTransformComponent.hpp"
 
 namespace Pit {
 
@@ -12,44 +16,25 @@ namespace Pit {
 	using namespace ECS;
 
 	class Engineloop {
-		Renderer* m_Renderer;
-		ECSSubsystem* m_ECSSubsystem;
+	private:
+		Window m_Window{ 800, 600, "PitEngine" };
+		Device m_Device{ m_Window };
+		ECSSubsystem m_ECSSubsystem;
+		Renderer m_Renderer{m_Device, m_Window, m_ECSSubsystem.GetEcsWorld() };
+		std::unique_ptr<Pipeline> m_Pipeline;
+		VkPipelineLayout m_PipelineLayout;
 
 	public:
-		Engineloop() {
-			FileSystem::Init();
+		Engineloop();
 
-			Logging::Init();
+		~Engineloop();
 
-			m_ECSSubsystem = new ECSSubsystem();
-			m_ECSSubsystem->Initialize();
+		int Run();
 
-			m_Renderer = new Renderer();
-
-			m_Renderer->SetSpecs({ true });
-		}
-
-		~Engineloop() {
-			delete m_Renderer;
-
-			m_ECSSubsystem->Deinitialize();
-			delete m_ECSSubsystem;
-
-			Logging::Shutdown();
-		}
-		
-
-
-		int Run() {
-			while (!m_Renderer->ShouldClose()) {
-				//QUICK_SCOPE_PROFILE("Main thread update");
-
-				m_ECSSubsystem->Tick(0.16f);
-
-				m_Renderer->Render();
-			}
-
-			return 0;
-		}
+	private:
+		void _LoadExampleEntities();
+		void _CreatePipelineLayout();
+		void _CreatePipeline();
+		void _RenderEntities(VkCommandBuffer commandBuffer);
 	};
 }

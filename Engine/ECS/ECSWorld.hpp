@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Main/CoreInclude.hpp"
-#include "ECS.hpp"
+#include "ECSInclude.hpp"
 #include "ECSSystem.hpp"
 
 
@@ -106,6 +106,16 @@ namespace Pit::ECS {
 #pragma endregion
 
 #pragma region System
+		template<typename... T>
+		auto View() {
+			return m_Registry.view<T...>();
+		}
+
+		template<typename... T>
+		auto Group() {
+			return m_Registry.group<T...>();
+		}
+
 		template<typename T>
 		bool HasSystem() {
 			SystemIndex systemIndex = GetSystemIndex<T>();
@@ -146,8 +156,6 @@ namespace Pit::ECS {
 
 		WorldSpecs& GetWorldSpecs() { return m_Specs; }
 		void SetWorldSpecs(WorldSpecs specs);
-
-		entt::registry& GetRegistry() { return m_Registry; }
 		
 		bool Paused = false;
 

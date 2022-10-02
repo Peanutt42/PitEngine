@@ -14,12 +14,13 @@
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
-    <ClCompile Include="Engine\Rendering\Vulkan\VulkanRenderer.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanSwapChain.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanModel.cpp" />
+    <ClCompile Include="Engine\Rendering\Window.cpp" />
+    <ClCompile Include="Engine\Main\Engineloop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
@@ -32,7 +33,7 @@
     <ClInclude Include="Engine\Debug\Logging.hpp" />
     <ClInclude Include="Engine\Main\Timer.hpp" />
     <ClInclude Include="Engine\Main\FileSystem.hpp" />
-    <ClInclude Include="Engine\ECS\ECS.hpp" />
+    <ClInclude Include="Engine\ECS\ECSInclude.hpp" />
     <ClInclude Include="Engine\ECS\ECSGameloop.hpp" />
     <ClInclude Include="Engine\ECS\ECSSubsystem.hpp" />
     <ClInclude Include="Engine\ECS\ECSSystem.hpp" />
@@ -47,13 +48,15 @@
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_truetype.h" />
     <ClInclude Include="Engine\Rendering\ImGui\ImGuiRenderer.hpp" />
     <ClInclude Include="Engine\Main\Types.hpp" />
-    <ClInclude Include="Engine\Rendering\Vulkan\VulkanRenderer.hpp" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.h" />
     <ClInclude Include="Engine\Main\EngineConfig.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanPipeline.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanDevice.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanSwapChain.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanModel.hpp" />
+    <ClInclude Include="Engine\ECS\Examples\ECSExampleMovement.hpp" />
+    <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="Engine\ECS\Commons\ECSMeshComponent.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />

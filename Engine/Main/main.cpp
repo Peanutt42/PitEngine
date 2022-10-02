@@ -4,9 +4,13 @@
 using namespace Pit;
 
 int main() {
+	Logging::Init();
+	
 	Engineloop engineloop;
 
 	engineloop.Run();
+
+	Logging::Shutdown();
 
 	return 0;
 }

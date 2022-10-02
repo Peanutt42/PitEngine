@@ -379,6 +379,7 @@ VkFormat Device::findSupportedFormat(
         }
     }
     PIT_ENGINE_ERR("Failed to find supported format!");
+    return VK_FORMAT_UNDEFINED;
 }
 
 uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
@@ -392,6 +393,7 @@ uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags prope
     }
 
     PIT_ENGINE_ERR("Failed to find suitable memory type!");
+    return 0;
 }
 
 void Device::createBuffer(

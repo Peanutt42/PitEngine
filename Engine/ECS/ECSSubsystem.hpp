@@ -1,17 +1,16 @@
 #pragma once
 
 #include "Main/CoreInclude.hpp"
-#include "ECS.hpp"
+#include "ECSInclude.hpp"
 #include "ECSWorld.hpp"
 #include "Examples/ECSBasicGameloop.hpp"
 
 
 namespace Pit::ECS {
 	class ECSSubsystem {
-
 	public:
-		void Initialize();
-		void Deinitialize();
+		ECSSubsystem();
+		~ECSSubsystem();
 		void Tick(float DeltaTime);
 		void ResetECSWorld();
 

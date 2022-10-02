@@ -21,7 +21,7 @@ namespace Pit::Rendering::Vulkan {
 
     class Device {
     public:
-        static constexpr bool ENABLE_VALIDATION_LAYERS = (PIT_ENGINE_DEBUG || PIT_ENGINE_DEVELOPMENT);
+        static constexpr bool ENABLE_VALIDATION_LAYERS = PIT_ENGINE_DEBUG || PIT_ENGINE_DEVELOPMENT;
 
         Device(Window& window);
         ~Device();

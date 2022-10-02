@@ -6,7 +6,7 @@ using namespace Pit::ECS;
 ECSSubsystem* ECSSubsystem::m_Instance = nullptr;
 
 
-void ECSSubsystem::Initialize() {
+ECSSubsystem::ECSSubsystem() {
 	m_Instance = this;
 
 	ECSWorld = new World(ECSWorldSpecs);
@@ -19,7 +19,7 @@ void ECSSubsystem::Initialize() {
 	PIT_ENGINE_INFO("ECSSubsystem has started!");
 }
 
-void ECSSubsystem::Deinitialize() {
+ECSSubsystem::~ECSSubsystem() {
 	ECSGameloop->Shutdown(*ECSWorld);
 
 	if (ECSWorld) {
