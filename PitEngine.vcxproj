@@ -172,6 +172,7 @@
     <ClCompile Include="Engine\Main\main.cpp" />
     <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
     <ClCompile Include="Engine\Rendering\Renderer.cpp" />
+    <ClCompile Include="Engine\Rendering\SimpleRenderSystem.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
@@ -191,7 +192,7 @@
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_truetype.h" />
     <ClInclude Include="Engine\Debug\Logging.hpp" />
     <ClInclude Include="Engine\ECS\Commons\ECSMeshComponent.hpp" />
-    <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="Engine\ECS\Commons\ECSTransform2DComponent.hpp" />
     <ClInclude Include="Engine\ECS\ECSInclude.hpp" />
     <ClInclude Include="Engine\ECS\ECSGameloop.hpp" />
     <ClInclude Include="Engine\ECS\ECSSubsystem.hpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Engine\Rendering\ImGui\ImGuiRenderer.hpp" />
     <ClInclude Include="Engine\Rendering\Renderer.hpp" />
     <ClInclude Include="Engine\Rendering\RenderingInclude.hpp" />
+    <ClInclude Include="Engine\Rendering\SimpleRenderSystem.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanDevice.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanModel.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanPipeline.hpp" />

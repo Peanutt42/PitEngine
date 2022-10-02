@@ -58,24 +58,15 @@ VkCommandBuffer Renderer::BeginFrame() {
 
 	return commandBuffer;
 }
-void Renderer::EndFrame() {
-	assert(m_IsFrameStarted && "Can't call EndFrame() while frame isn't in progress");
 
-	auto commandBuffer = GetCurrentCommandBuffer();
+void Renderer::EndSwapChainRenderPass(VkCommandBuffer commandBuffer) {
+	assert(m_IsFrameStarted && "Can't call EndSwapChainRenderPass() while frame isn't in progress");
+	assert(commandBuffer == GetCurrentCommandBuffer() &&
+		   "Can't end renderPass on commandBuffer from diffrent frame!");
 
-	if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS)
-		PIT_ENGINE_ERR("Failed to record commandBuffer!");
-
-	auto result = m_SwapChain->submitCommandBuffers(&commandBuffer, &m_CurrentImageIndex);
-	if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || m_CurrentWindow.WasResized()) {
-		m_CurrentWindow.ResetResizedFlag();
-		_RecreateSwapChain();
-	}
-	else if (result != VK_SUCCESS)
-		PIT_ENGINE_ERR("Failed to present CommandBuffer-image Nr.{}", m_CurrentImageIndex);
-
-	m_IsFrameStarted = false;
+	vkCmdEndRenderPass(commandBuffer);
 }
+
 void Renderer::BeginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 	assert(m_IsFrameStarted && "Can't call BeginSwapChainRenderPass() while frame isn't in progress");
 	assert(commandBuffer == GetCurrentCommandBuffer() &&
@@ -108,12 +99,24 @@ void Renderer::BeginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 }
 
-void Renderer::EndSwapChainRenderPass(VkCommandBuffer commandBuffer) {
-	assert(m_IsFrameStarted && "Can't call EndSwapChainRenderPass() while frame isn't in progress");
-	assert(commandBuffer == GetCurrentCommandBuffer() &&
-		   "Can't end renderPass on commandBuffer from diffrent frame!");
+void Renderer::EndFrame() {
+	assert(m_IsFrameStarted && "Can't call EndFrame() while frame isn't in progress");
 
-	vkCmdEndRenderPass(commandBuffer);
+	auto commandBuffer = GetCurrentCommandBuffer();
+
+	if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS)
+		PIT_ENGINE_ERR("Failed to record commandBuffer!");
+
+	auto result = m_SwapChain->submitCommandBuffers(&commandBuffer, &m_CurrentImageIndex);
+	if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || m_CurrentWindow.WasResized()) {
+		m_CurrentWindow.ResetResizedFlag();
+		_RecreateSwapChain();
+	}
+	else if (result != VK_SUCCESS)
+		PIT_ENGINE_ERR("Failed to present CommandBuffer-image Nr.{}", m_CurrentImageIndex);
+
+	m_IsFrameStarted = false;
+	m_CurrentFrameIndex = (m_CurrentFrameIndex + 1) % SwapChain::MAX_FRAMES_IN_FLIGHT;
 }
  
 bool Renderer::ShouldClose() {
@@ -122,7 +125,7 @@ bool Renderer::ShouldClose() {
 
 
 void Renderer::_CreateCommandBuffers() {
-	m_CommandBuffers.resize(m_SwapChain->imageCount());
+	m_CommandBuffers.resize(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
 	VkCommandBufferAllocateInfo allocInfo{};
 	allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -154,11 +157,11 @@ void Renderer::_RecreateSwapChain() {
 	if (m_SwapChain == nullptr)
 		m_SwapChain = std::make_unique<SwapChain>(m_Device, extent);
 	else {
-		m_SwapChain = std::make_unique<SwapChain>(m_Device, extent, std::move(m_SwapChain));
-		if (m_SwapChain->imageCount() != m_CommandBuffers.size()) {
-			_FreeCommandBuffers();
-			_CreateCommandBuffers();
-		}
+		std::shared_ptr<SwapChain> oldSwapChain = std::move(m_SwapChain);
+		m_SwapChain = std::make_unique<SwapChain>(m_Device, extent, oldSwapChain);
+
+		if (!oldSwapChain->CompareSwapChains(*m_SwapChain.get()))
+			PIT_ENGINE_WARN("SwapChain image(or depth) format has changed!");
 	}
 }
 

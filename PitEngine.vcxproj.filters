@@ -21,6 +21,7 @@
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Window.cpp" />
     <ClCompile Include="Engine\Main\Engineloop.cpp" />
+    <ClCompile Include="Engine\Rendering\SimpleRenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
@@ -55,8 +56,9 @@
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanSwapChain.hpp" />
     <ClInclude Include="Engine\Rendering\Vulkan\VulkanModel.hpp" />
     <ClInclude Include="Engine\ECS\Examples\ECSExampleMovement.hpp" />
-    <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="Engine\ECS\Commons\ECSTransform2DComponent.hpp" />
     <ClInclude Include="Engine\ECS\Commons\ECSMeshComponent.hpp" />
+    <ClInclude Include="Engine\Rendering\SimpleRenderSystem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />

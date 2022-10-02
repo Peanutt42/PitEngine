@@ -26,8 +26,13 @@ namespace Pit::Rendering {
 		VkRenderPass GetSwapChainRenderPass() const { return m_SwapChain->getRenderPass();	}
 		bool IsFrameInProgress() const { return m_IsFrameStarted; }
 		VkCommandBuffer GetCurrentCommandBuffer() const {
-			assert(m_IsFrameStarted && "Cannot get command buffer when frame is not in progress!");
-			return m_CommandBuffers[m_CurrentImageIndex];
+			assert(m_IsFrameStarted && "Can't get command buffer when frame isn't in progress!");
+			return m_CommandBuffers[m_CurrentFrameIndex];
+		}
+
+		int GetFrameIndex() const {
+			assert(m_IsFrameStarted && "Can't get frameIndex when frame isn't in progress!");
+			return m_CurrentFrameIndex;
 		}
 
 		VkCommandBuffer BeginFrame();
@@ -44,6 +49,7 @@ namespace Pit::Rendering {
 		std::unique_ptr<SwapChain> m_SwapChain;
 		std::vector<VkCommandBuffer> m_CommandBuffers;
 		uint32_t m_CurrentImageIndex;
+		int m_CurrentFrameIndex;
 		bool m_IsFrameStarted;
 
 		void _CreateCommandBuffers();

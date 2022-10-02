@@ -1,6 +1,6 @@
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
-#include "Commons/ECSTransformComponent.hpp"
+#include "Commons/ECSTransform2DComponent.hpp"
 
 using namespace Pit::ECS;
 
@@ -31,7 +31,7 @@ void World::Clear() {
 #pragma region Entity
 entt::entity World::CreateEntity() {
 	auto e = m_Registry.create();
-	m_Registry.emplace<TransformComponent>(e);
+	m_Registry.emplace<Transform2DComponent>(e);
 	return e;
 }
 
