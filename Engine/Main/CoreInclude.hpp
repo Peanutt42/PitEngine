@@ -7,7 +7,7 @@
 
 // Own
 #include "Debug/Logging.hpp"
-#include "Timer.hpp"
+#include "Time.hpp"
 #include "FileSystem.hpp"
 #include "Types.hpp"
 #include "EngineConfig.hpp"

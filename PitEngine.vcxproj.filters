@@ -13,7 +13,6 @@
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
@@ -22,6 +21,13 @@
     <ClCompile Include="Engine\Rendering\Window.cpp" />
     <ClCompile Include="Engine\Main\Engineloop.cpp" />
     <ClCompile Include="Engine\Rendering\SimpleRenderSystem.cpp" />
+    <ClCompile Include="Engine\Audio\AudioEngine.cpp" />
+    <ClCompile Include="Engine\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\SoundSource.cpp" />
+    <ClCompile Include="Engine\Audio\MusicBuffer.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="Engine\Main\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
@@ -32,7 +38,7 @@
     <ClInclude Include="Engine\Main\Engineloop.hpp" />
     <ClInclude Include="Engine\Rendering\Window.hpp" />
     <ClInclude Include="Engine\Debug\Logging.hpp" />
-    <ClInclude Include="Engine\Main\Timer.hpp" />
+    <ClInclude Include="Engine\Main\Time.hpp" />
     <ClInclude Include="Engine\Main\FileSystem.hpp" />
     <ClInclude Include="Engine\ECS\ECSInclude.hpp" />
     <ClInclude Include="Engine\ECS\ECSGameloop.hpp" />
@@ -47,7 +53,6 @@
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Engine\Rendering\ImGui\ImGuiRenderer.hpp" />
     <ClInclude Include="Engine\Main\Types.hpp" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.h" />
     <ClInclude Include="Engine\Main\EngineConfig.hpp" />
@@ -59,6 +64,14 @@
     <ClInclude Include="Engine\ECS\Commons\ECSTransform2DComponent.hpp" />
     <ClInclude Include="Engine\ECS\Commons\ECSMeshComponent.hpp" />
     <ClInclude Include="Engine\Rendering\SimpleRenderSystem.hpp" />
+    <ClInclude Include="Engine\Audio\SoundDevice.hpp" />
+    <ClInclude Include="Engine\Audio\AudioEngine.hpp" />
+    <ClInclude Include="Engine\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="Engine\Audio\SoundSource.hpp" />
+    <ClInclude Include="Engine\Audio\MusicBuffer.hpp" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.h" />
+    <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
@@ -69,6 +82,9 @@
     <None Include="Sandbox\shaders\simple_shader.vert" />
     <None Include="Sandbox\shaders\simple_shader.frag" />
     <None Include="Sandbox\shaders\compile.bat" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\generate_spv.sh" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.frag" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Engine\TODO-Code.txt" />

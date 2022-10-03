@@ -4,7 +4,6 @@
 #include "RenderingInclude.hpp"
 #include "Rendering/Vulkan/VulkanDevice.hpp"
 #include "Rendering/Vulkan/VulkanSwapChain.hpp"
-#include "ImGui/ImGuiRenderer.hpp"
 #include "Window.hpp"
 #include "ECS/ECSWorld.hpp"
 
@@ -36,13 +35,17 @@ namespace Pit::Rendering {
 		}
 
 		VkCommandBuffer BeginFrame();
-		void EndFrame();
 		void BeginSwapChainRenderPass(VkCommandBuffer commandBuffer);
 		void EndSwapChainRenderPass(VkCommandBuffer commandBuffer);
+		void EndFrame();
 
 		void SetSpecs(const RendererSpecs& specs);
 
 		bool ShouldClose();
+
+		uint32_t GetSwapChainImageCount() { return static_cast<uint32_t>(m_SwapChain->imageCount()); }
+
+		VkDescriptorPool GetDescriptorPoolPool() { return m_DescriptorPool; }
 
 	private:
 		Vulkan::Device& m_Device;
@@ -51,15 +54,16 @@ namespace Pit::Rendering {
 		uint32_t m_CurrentImageIndex;
 		int m_CurrentFrameIndex;
 		bool m_IsFrameStarted;
+		VkDescriptorPool m_DescriptorPool;
 
 		void _CreateCommandBuffers();
 		void _FreeCommandBuffers();
 		void _RecreateSwapChain();
+		void _CreateDecriptorPool();
 
 		void _InitGLFW();
 		void _ShutdownGLFW();
 
-		ImGuiRenderer* m_ImGuiRenderer;
 		ECS::World* m_ECSWorld;
 		Window& m_CurrentWindow;
 	};

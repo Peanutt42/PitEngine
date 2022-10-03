@@ -402,6 +402,7 @@ void Device::createBuffer(
     VkMemoryPropertyFlags properties,
     VkBuffer& buffer,
     VkDeviceMemory& bufferMemory) {
+
     VkBufferCreateInfo bufferInfo{};
     bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     bufferInfo.size = size;

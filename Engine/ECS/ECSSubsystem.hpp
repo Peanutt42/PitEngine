@@ -11,7 +11,7 @@ namespace Pit::ECS {
 	public:
 		ECSSubsystem();
 		~ECSSubsystem();
-		void Tick(float DeltaTime);
+		void Tick();
 		void ResetECSWorld();
 
 		World* GetEcsWorld() const { return ECSWorld; }

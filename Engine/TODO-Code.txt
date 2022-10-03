@@ -3,3 +3,8 @@
 
 === 2D/3D ===
 -Seperate Engines?
+
+
+=== GAME ===
+-man wechselt zwischen Größen (PlanetenGröße/ HochHäuserGröße/ Normal/ Ameisen/ Backterien...)
+ um den Planeten zu erforschen und zu heilen

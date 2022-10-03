@@ -1,6 +1,6 @@
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
-#include "Commons/ECSTransform2DComponent.hpp"
+#include "Commons/ECSTransformComponent.hpp"
 
 using namespace Pit::ECS;
 
@@ -15,11 +15,11 @@ bool World::Init() {
 	return true;
 }
 
-bool World::Update(float DeltaTime) {
+bool World::Update() {
 	if (Paused) return true;
 
 	for (auto& system : m_Systems)
-		system.Update(*this, DeltaTime);
+		system.Update(*this);
 
 	return true;
 }
@@ -31,7 +31,7 @@ void World::Clear() {
 #pragma region Entity
 entt::entity World::CreateEntity() {
 	auto e = m_Registry.create();
-	m_Registry.emplace<Transform2DComponent>(e);
+	m_Registry.emplace<TransformComponent>(e);
 	return e;
 }
 

@@ -3,28 +3,31 @@
 #include "Rendering/RenderingInclude.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/Window.hpp"
+#include "Rendering/SimpleRenderSystem.hpp"
+#include "Audio/AudioEngine.hpp"
+#include "Audio/MusicBuffer.hpp"
 #include "ECS/ECSSubsystem.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
 
 namespace Pit {
-
-	using namespace Rendering;
-	using namespace Debug;
-	using namespace ECS;
-
 	class Engineloop {
-	private:
-		Window m_Window{ 800, 600, "PitEngine" };
-		Device m_Device{ m_Window };
-		ECSSubsystem m_ECSSubsystem;
-		Renderer m_Renderer{m_Device, m_Window, m_ECSSubsystem.GetEcsWorld() };
-
 	public:
+		Rendering::Window* Window;
+		Rendering::Device* Device;
+		ECS::ECSSubsystem* ECSSubsystem;
+		Rendering::Renderer* Renderer;
+		Rendering::SimpleRenderSystem* SimpleRenderSystem;
+		Audio::MusicBuffer* sound1;
+
 		Engineloop();
 
 		~Engineloop();
 
 		int Run();
+
+		void Update();
+
+		static Engineloop* Instance;
 
 	private:
 		void _LoadExampleEntities();

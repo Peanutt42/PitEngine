@@ -6,6 +6,11 @@
 #include "Debug/Logging.hpp"
 
 namespace Pit {
+	class Time {
+	public:
+		static float DeltaTime;
+	};
+
 
 #define QUICK_SCOPE_PROFILE(name)	\
 	ScopedTimer __scopeTimer(name);

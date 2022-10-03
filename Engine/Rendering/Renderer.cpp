@@ -13,11 +13,6 @@ Renderer::Renderer(Device& device, Window& window, ECS::World* ecsWorld) : m_Cur
 	vkDeviceWaitIdle(m_Device.device());
 	_RecreateSwapChain();
 	_CreateCommandBuffers();
-	
-	// TODO: improve
-	if (m_ImGuiRenderer)
-		delete m_ImGuiRenderer;
-	m_ImGuiRenderer = new Pit::Rendering::ImGuiRenderer(m_CurrentWindow.GetWindowHandle());
 
 	m_CurrentWindow.SetRenderer(this);
 }
@@ -25,10 +20,9 @@ Renderer::Renderer(Device& device, Window& window, ECS::World* ecsWorld) : m_Cur
 Renderer::~Renderer() {
 	vkDeviceWaitIdle(m_Device.device());
 
+	vkDestroyDescriptorPool(m_Device.device(), m_DescriptorPool, nullptr);
 	_FreeCommandBuffers();
 	_ShutdownGLFW();
-
-	delete m_ImGuiRenderer;
 }
 
 void Renderer::SetSpecs(const RendererSpecs& specs) {
@@ -59,18 +53,9 @@ VkCommandBuffer Renderer::BeginFrame() {
 	return commandBuffer;
 }
 
-void Renderer::EndSwapChainRenderPass(VkCommandBuffer commandBuffer) {
-	assert(m_IsFrameStarted && "Can't call EndSwapChainRenderPass() while frame isn't in progress");
-	assert(commandBuffer == GetCurrentCommandBuffer() &&
-		   "Can't end renderPass on commandBuffer from diffrent frame!");
-
-	vkCmdEndRenderPass(commandBuffer);
-}
-
 void Renderer::BeginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 	assert(m_IsFrameStarted && "Can't call BeginSwapChainRenderPass() while frame isn't in progress");
-	assert(commandBuffer == GetCurrentCommandBuffer() &&
-		   "Can't begin renderPass on commandBuffer from diffrent frame!");
+	assert(commandBuffer == GetCurrentCommandBuffer() && "Can't begin renderPass on commandBuffer from diffrent frame!");
 	
 	VkRenderPassBeginInfo renderPassInfo{};
 	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -97,6 +82,13 @@ void Renderer::BeginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 	VkRect2D scissor{ {0, 0}, m_SwapChain->getSwapChainExtent() };
 	vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+}
+
+void Renderer::EndSwapChainRenderPass(VkCommandBuffer commandBuffer) {
+	assert(m_IsFrameStarted && "Can't call EndSwapChainRenderPass() while frame isn't in progress");
+	assert(commandBuffer == GetCurrentCommandBuffer() && "Can't end renderPass on commandBuffer from diffrent frame!");
+
+	vkCmdEndRenderPass(commandBuffer);
 }
 
 void Renderer::EndFrame() {
@@ -163,6 +155,31 @@ void Renderer::_RecreateSwapChain() {
 		if (!oldSwapChain->CompareSwapChains(*m_SwapChain.get()))
 			PIT_ENGINE_WARN("SwapChain image(or depth) format has changed!");
 	}
+}
+
+void Renderer::_CreateDecriptorPool() {
+	VkDescriptorPoolSize pool_sizes[] =
+	{
+		{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+	};
+	VkDescriptorPoolCreateInfo pool_info = {};
+	pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+	pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+	pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
+	pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+	pool_info.pPoolSizes = pool_sizes;
+	if (vkCreateDescriptorPool(m_Device.device(), &pool_info, nullptr, &m_DescriptorPool) != VK_SUCCESS)
+		PIT_ENGINE_ERR("Failed to create descriptorPool!");
 }
 
 void Renderer::_InitGLFW() {

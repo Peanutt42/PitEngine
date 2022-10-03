@@ -1,13 +1,12 @@
 #include "SimpleRenderSystem.hpp"
-#include "ECS/Commons/ECSTransform2DComponent.hpp"
+#include "ECS/Commons/ECSTransformComponent.hpp"
 #include "ECS/Commons/ECSMeshComponent.hpp"
 
 using namespace Pit::Rendering;
 
 struct SimplePushConstantData {
-	glm::mat2 transform{ 1.f };
-	glm::vec2 offset;
-	alignas(16) glm::vec3 color;
+	glm::mat4 transform{ 1.f };
+	alignas(16) glm::vec3 color{};
 };
 
 SimpleRenderSystem::SimpleRenderSystem(Device& device, VkRenderPass renderPass)
@@ -54,17 +53,17 @@ void SimpleRenderSystem::_CreatePipeline(VkRenderPass renderPass) {
 void SimpleRenderSystem::RenderEntities(VkCommandBuffer commandBuffer, World* ecsWorld) {
 	m_Pipeline->Bind(commandBuffer);
 
-	auto group = ecsWorld->Group<ECS::MeshComponent, ECS::Transform2DComponent>();
+	auto group = ecsWorld->Group<ECS::MeshComponent, ECS::TransformComponent>();
 	for (auto e : group) {
 		auto& mesh = group.get<ECS::MeshComponent>(e);
-		auto& transform = group.get<ECS::Transform2DComponent>(e);
+		auto& transform = group.get<ECS::TransformComponent>(e);
 
-		transform.rotation = glm::mod(transform.rotation + 0.01f, glm::two_pi<float>());
+		transform.rotation.y = glm::mod(transform.rotation.y + Time::DeltaTime * 5, glm::two_pi<float>());
+		transform.rotation.x = glm::mod(transform.rotation.x + Time::DeltaTime * 5, glm::two_pi<float>());
 
 		SimplePushConstantData push{};
-		push.offset = transform.position;
+		push.transform = transform.fast_mat4();
 		push.color = mesh.color;
-		push.transform = transform.mat2();
 
 		vkCmdPushConstants(
 			commandBuffer,

@@ -1,4 +1,14 @@
 ﻿  "Compiling shader files[.vert, .frag] into .spv files"
   Drücken Sie eine beliebige Taste . . . 
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1118,5): warning MSB8027: Mehrere Dateien mit dem Namen imgui_impl_glfw.cpp führen zu Ausgaben am selben Speicherort. Dadurch kann ein falsches Buildergebnis entstehen. Die betroffenen Dateien sind Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.cpp, Dependencies\ImGui\include\ImGui\imgui_impl_glfw.cpp.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1118,5): warning MSB8027: Mehrere Dateien mit dem Namen imgui_impl_vulkan.cpp führen zu Ausgaben am selben Speicherort. Dadurch kann ein falsches Buildergebnis entstehen. Die betroffenen Dateien sind Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.cpp, Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp.
+  ECSWorld.cpp
+  Engineloop.cpp
+  main.cpp
   SimpleRenderSystem.cpp
+  Window.cpp
+  Code wird generiert...
+  LINK : C:\dev\cpp\PitEngine\x64\Debug\PitEngine.exe wurde nicht gefunden oder beim letzten inkrementellen Linkvorgang nicht erstellt; vollständiger Link wird durchgeführt.
+x64\Debug\imgui_impl_glfw.obj : warning LNK4042: Objekt mehrmals angegeben; zusätzliche Objekte werden ignoriert.
+x64\Debug\imgui_impl_vulkan.obj : warning LNK4042: Objekt mehrmals angegeben; zusätzliche Objekte werden ignoriert.
   PitEngine.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\PitEngine.exe

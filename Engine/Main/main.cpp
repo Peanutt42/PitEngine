@@ -1,16 +1,12 @@
 #include "Engineloop.hpp"
-#include <iostream>
 
 using namespace Pit;
 
 int main() {
-	Logging::Init();
-	
+	FileSystem::Init();
+	Debug::Logging::Init();
+
 	Engineloop engineloop;
-
-	engineloop.Run();
-
-	Logging::Shutdown();
-
-	return 0;
+	int result = engineloop.Run();
+	return result;
 }

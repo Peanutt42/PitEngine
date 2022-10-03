@@ -13,7 +13,7 @@ namespace Pit::ECS {
 		SystemIndex SystemIndex;
 		SystemTopic Topic = SystemTopic::None;
 		int32_t ExecuteOrder;
-		std::function<void(World&, float)> Update;
+		std::function<void(World&)> Update;
 	};
 	
 	struct WorldSpecs {
@@ -29,7 +29,7 @@ namespace Pit::ECS {
 			m_Specs(specs) { }
 
 		bool Init();
-		bool Update(float DeltaTime);
+		bool Update();
 		void Clear();
 
 #pragma region Entity

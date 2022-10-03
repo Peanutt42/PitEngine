@@ -32,8 +32,8 @@ ECSSubsystem::~ECSSubsystem() {
 	PIT_ENGINE_INFO("ECSSubsystem has shut down!");
 }
 
-void ECSSubsystem::Tick(float DeltaTime) {
-	ECSWorld->Update(DeltaTime);
+void ECSSubsystem::Tick() {
+	ECSWorld->Update();
 }
 
 void ECSSubsystem::ResetECSWorld() {

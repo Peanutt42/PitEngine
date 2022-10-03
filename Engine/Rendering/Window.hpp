@@ -14,11 +14,13 @@ namespace Pit::Rendering {
 
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+			glfwWindowHint(GLFW_DECORATED, GLFW_TRUE); // titlebar
 
 			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
 			glfwSetWindowUserPointer(m_Window, this);
 			glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizeCallback);
 			glfwSetWindowSizeCallback(m_Window, _FramebufferResizeCallback);
+			glfwSetWindowPosCallback(m_Window, _WindowSetPosCallback);
 		}
 
 		~Window() {
@@ -44,6 +46,7 @@ namespace Pit::Rendering {
 
 	private:
 		static void _FramebufferResizeCallback(GLFWwindow* window, int width, int height);
+		static void _WindowSetPosCallback(GLFWwindow* window, int posx, int posy);
 		uint32_t m_Width, m_Height;
 		bool m_Resized = false;
 		std::string m_Title;

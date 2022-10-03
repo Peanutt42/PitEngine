@@ -157,6 +157,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_draw.cpp" />
@@ -164,13 +166,17 @@
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Engine\Audio\AudioEngine.cpp" />
+    <ClCompile Include="Engine\Audio\MusicBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\SoundSource.cpp" />
     <ClCompile Include="Engine\Debug\Logging.cpp" />
     <ClCompile Include="Engine\ECS\ECSSubsystem.cpp" />
     <ClCompile Include="Engine\ECS\ECSWorld.cpp" />
     <ClCompile Include="Engine\ECS\Examples\ECSBasicGameloop.cpp" />
     <ClCompile Include="Engine\Main\Engineloop.cpp" />
     <ClCompile Include="Engine\Main\main.cpp" />
-    <ClCompile Include="Engine\Rendering\ImGui\ImGuiRenderer.cpp" />
+    <ClCompile Include="Engine\Main\Time.cpp" />
     <ClCompile Include="Engine\Rendering\Renderer.cpp" />
     <ClCompile Include="Engine\Rendering\SimpleRenderSystem.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
@@ -182,6 +188,8 @@
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imconfig.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imgui_impl_glfw.h" />
@@ -190,9 +198,15 @@
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Engine\Audio\MusicBuffer.hpp" />
+    <ClInclude Include="Engine\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="Engine\Audio\SoundDevice.hpp" />
+    <ClInclude Include="Engine\Audio\AudioEngine.hpp" />
+    <ClInclude Include="Engine\Audio\SoundSource.hpp" />
     <ClInclude Include="Engine\Debug\Logging.hpp" />
     <ClInclude Include="Engine\ECS\Commons\ECSMeshComponent.hpp" />
     <ClInclude Include="Engine\ECS\Commons\ECSTransform2DComponent.hpp" />
+    <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
     <ClInclude Include="Engine\ECS\ECSInclude.hpp" />
     <ClInclude Include="Engine\ECS\ECSGameloop.hpp" />
     <ClInclude Include="Engine\ECS\ECSSubsystem.hpp" />
@@ -204,9 +218,8 @@
     <ClInclude Include="Engine\Main\EngineConfig.hpp" />
     <ClInclude Include="Engine\Main\Engineloop.hpp" />
     <ClInclude Include="Engine\Main\FileSystem.hpp" />
-    <ClInclude Include="Engine\Main\Timer.hpp" />
+    <ClInclude Include="Engine\Main\Time.hpp" />
     <ClInclude Include="Engine\Main\Types.hpp" />
-    <ClInclude Include="Engine\Rendering\ImGui\ImGuiRenderer.hpp" />
     <ClInclude Include="Engine\Rendering\Renderer.hpp" />
     <ClInclude Include="Engine\Rendering\RenderingInclude.hpp" />
     <ClInclude Include="Engine\Rendering\SimpleRenderSystem.hpp" />
@@ -221,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glfw\lib\glfw3.pdb" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\generate_spv.sh" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.frag" />
+    <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.vert" />
     <None Include="imgui.ini" />
     <None Include="Sandbox\shaders\compile.bat" />
     <None Include="Sandbox\shaders\simple_shader.frag" />
