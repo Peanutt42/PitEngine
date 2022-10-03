@@ -4,6 +4,7 @@
 #include "Rendering/Renderer.hpp"
 #include "Rendering/Window.hpp"
 #include "Rendering/SimpleRenderSystem.hpp"
+#include "Rendering/Camera.hpp"
 #include "Audio/AudioEngine.hpp"
 #include "Audio/MusicBuffer.hpp"
 #include "ECS/ECSSubsystem.hpp"
@@ -17,6 +18,7 @@ namespace Pit {
 		ECS::ECSSubsystem* ECSSubsystem;
 		Rendering::Renderer* Renderer;
 		Rendering::SimpleRenderSystem* SimpleRenderSystem;
+		Rendering::Camera* Camera;
 		Audio::MusicBuffer* sound1;
 
 		Engineloop();
@@ -25,7 +27,7 @@ namespace Pit {
 
 		int Run();
 
-		void Update();
+		void Update(); // Only for window callbacks (ex. Resizing)
 
 		static Engineloop* Instance;
 

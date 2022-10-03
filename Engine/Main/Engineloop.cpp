@@ -3,10 +3,12 @@
 #include "Rendering/Vulkan/VulkanModel.hpp"
 #include "ECS/Commons/ECSTransformComponent.hpp"
 #include "ECS/Commons/ECSMeshComponent.hpp"
+#include "ECS/Examples/ECSExampleMovement.hpp"
 #include "Audio/SoundBuffer.hpp"
 #include "Audio/SoundSource.hpp"
 #include "Audio/AudioEngine.hpp"
 #include "Audio/MusicBuffer.hpp"
+#include "Main/Input/EditorCameraController.hpp"
 
 using namespace Pit;
 using namespace Audio;
@@ -24,12 +26,10 @@ Engineloop::Engineloop() {
 	Device = new Rendering::Device(*Window);
 	
 	ECSSubsystem = new ECS::ECSSubsystem();
+	ECSSubsystem->GetEcsWorld()->AddSystem<ECS::ExampleMovementSystem>();
 	_LoadExampleEntities();
 
 	Renderer = new Rendering::Renderer(*Device, *Window, ECSSubsystem->GetEcsWorld());
-	Rendering::RendererSpecs rendererSpecs{};
-	rendererSpecs.VSync = false;
-	Renderer->SetSpecs(rendererSpecs);
 
 	AudioEngine::get();
 
@@ -57,6 +57,9 @@ Engineloop::~Engineloop() {
 
 int Engineloop::Run() {
 	SimpleRenderSystem = new Rendering::SimpleRenderSystem(*Device, Renderer->GetSwapChainRenderPass());
+	Camera = new Rendering::Camera();
+	Camera->SetViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
+	Camera->SetViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
 	while (!Window->ShouldClose()) {
 		Update();
@@ -73,23 +76,34 @@ void Engineloop::Update() {
 	//PIT_ENGINE_INFO("{0}, {1}, {2}", Time::DeltaTime, 1 / Time::DeltaTime * 1, Time::DeltaTime * 1000);
 	
 	glfwPollEvents();
+	Rendering::Window::UpdateWidnows();
 
 	sound1->UpdateBufferStream();
 
 	ECSSubsystem->Tick();
 
+	static glm::vec3 camPos, camRot;
+	EditorCameraController::MoveCam(camPos, camRot);
+	Camera->SetViewYXZ(camPos, camRot);
+
+	float aspect = Renderer->GetAspectRatio();
+	//Camera->SetOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+	Camera->SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+
 	if (auto commandBuffer = Renderer->BeginFrame()) {
 		Renderer->BeginSwapChainRenderPass(commandBuffer);
-		SimpleRenderSystem->RenderEntities(commandBuffer, ECSSubsystem->GetEcsWorld());
+		SimpleRenderSystem->RenderEntities(commandBuffer, ECSSubsystem->GetEcsWorld(), *Camera);
 		Renderer->EndSwapChainRenderPass(commandBuffer);
 		Renderer->EndFrame();
-	}	
+	}
+
+	Window->Update();
 }
 
 
 
 
-std::unique_ptr<Rendering::Model> createCubeModel(Rendering::Device& device, glm::vec3 offset) {
+static std::unique_ptr<Rendering::Model> createCubeModel(Rendering::Device& device, glm::vec3 offset) {
 	std::vector<Rendering::Vertex> vertices{
 
 		// left face (white)
@@ -154,6 +168,6 @@ void Engineloop::_LoadExampleEntities() {
 	auto cube = ecsworld->CreateEntity();
 	ecsworld->AddComponent<ECS::MeshComponent>(cube, Model);
 	auto& transform = ecsworld->GetComponent<ECS::TransformComponent>(cube);
-	transform.position = { 0.f, 0.f, .5f };
+	transform.position = { 0.f, 0.f, 2.5f };
 	transform.scale = { .5f, .5f, .5f };
 }

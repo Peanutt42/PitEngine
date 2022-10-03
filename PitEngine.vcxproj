@@ -175,8 +175,10 @@
     <ClCompile Include="Engine\ECS\ECSWorld.cpp" />
     <ClCompile Include="Engine\ECS\Examples\ECSBasicGameloop.cpp" />
     <ClCompile Include="Engine\Main\Engineloop.cpp" />
+    <ClCompile Include="Engine\Main\Input\Input.cpp" />
     <ClCompile Include="Engine\Main\main.cpp" />
     <ClCompile Include="Engine\Main\Time.cpp" />
+    <ClCompile Include="Engine\Rendering\Camera.cpp" />
     <ClCompile Include="Engine\Rendering\Renderer.cpp" />
     <ClCompile Include="Engine\Rendering\SimpleRenderSystem.cpp" />
     <ClCompile Include="Engine\Rendering\Vulkan\VulkanDevice.cpp" />
@@ -218,8 +220,12 @@
     <ClInclude Include="Engine\Main\EngineConfig.hpp" />
     <ClInclude Include="Engine\Main\Engineloop.hpp" />
     <ClInclude Include="Engine\Main\FileSystem.hpp" />
+    <ClInclude Include="Engine\Main\Input\EditorCameraController.hpp" />
+    <ClInclude Include="Engine\Main\Input\Input.hpp" />
+    <ClInclude Include="Engine\Main\Input\KeyCode.hpp" />
     <ClInclude Include="Engine\Main\Time.hpp" />
     <ClInclude Include="Engine\Main\Types.hpp" />
+    <ClInclude Include="Engine\Rendering\Camera.hpp" />
     <ClInclude Include="Engine\Rendering\Renderer.hpp" />
     <ClInclude Include="Engine\Rendering\RenderingInclude.hpp" />
     <ClInclude Include="Engine\Rendering\SimpleRenderSystem.hpp" />
@@ -233,6 +239,7 @@
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="Dependencies\glfw\lib\glfw3.pdb" />
     <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\generate_spv.sh" />
     <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.frag" />

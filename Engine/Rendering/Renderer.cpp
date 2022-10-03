@@ -25,10 +25,6 @@ Renderer::~Renderer() {
 	_ShutdownGLFW();
 }
 
-void Renderer::SetSpecs(const RendererSpecs& specs) {
-	PIT_ENGINE_INFO("TODO: Imploment Vsync, vsync: {}", specs.VSync);
-}
-
 VkCommandBuffer Renderer::BeginFrame() {
 	assert(!m_IsFrameStarted && "Can't call BeginFrame() while already in progress!");
 

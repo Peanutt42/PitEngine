@@ -9,8 +9,8 @@ namespace Pit::ECS {
 		glm::vec3 scale{ 1.f, 1.f, 1.f };
 		glm::vec3 rotation{};
 
-		glm::mat4 fast_mat4() {
-            /* Simplified but slower
+		glm::mat4 mat4() {
+            /* Simplified but slower:
             auto transform = glm::translate(glm::mat4(1.f), position);
 
 			transform = glm::rotate(transform, rotation.y, {0.f, 1.f, 0.f});

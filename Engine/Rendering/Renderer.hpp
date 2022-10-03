@@ -10,10 +10,6 @@
 namespace Pit::Rendering {
 	using namespace Vulkan;
 
-	struct RendererSpecs {
-		bool VSync = false;
-	};
-
 	class Renderer {
 	public:
 		Renderer(Vulkan::Device& device, Window& window, ECS::World* ecsWorld);
@@ -23,6 +19,7 @@ namespace Pit::Rendering {
 		Renderer& operator=(const Renderer&) = delete;
 
 		VkRenderPass GetSwapChainRenderPass() const { return m_SwapChain->getRenderPass();	}
+		float GetAspectRatio() const { return m_SwapChain->extentAspectRatio(); }
 		bool IsFrameInProgress() const { return m_IsFrameStarted; }
 		VkCommandBuffer GetCurrentCommandBuffer() const {
 			assert(m_IsFrameStarted && "Can't get command buffer when frame isn't in progress!");
@@ -38,8 +35,6 @@ namespace Pit::Rendering {
 		void BeginSwapChainRenderPass(VkCommandBuffer commandBuffer);
 		void EndSwapChainRenderPass(VkCommandBuffer commandBuffer);
 		void EndFrame();
-
-		void SetSpecs(const RendererSpecs& specs);
 
 		bool ShouldClose();
 

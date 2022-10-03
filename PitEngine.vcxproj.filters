@@ -28,6 +28,8 @@
     <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.cpp" />
     <ClCompile Include="Engine\Main\Time.cpp" />
+    <ClCompile Include="Engine\Rendering\Camera.cpp" />
+    <ClCompile Include="Engine\Main\Input\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\glfw\include\GLFW\glfw3.h" />
@@ -72,6 +74,10 @@
     <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.h" />
     <ClInclude Include="Engine\ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="Engine\Rendering\Camera.hpp" />
+    <ClInclude Include="Engine\Main\Input\Input.hpp" />
+    <ClInclude Include="Engine\Main\Input\KeyCode.hpp" />
+    <ClInclude Include="Engine\Main\Input\EditorCameraController.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
@@ -85,6 +91,7 @@
     <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\generate_spv.sh" />
     <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.frag" />
     <None Include="Dependencies\ImGui\include\ImGui\backends\vulkan\glsl_shader.vert" />
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Engine\TODO-Code.txt" />

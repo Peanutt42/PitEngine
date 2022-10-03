@@ -7,6 +7,8 @@ enum RenderingAPI {
 // Could get loaded from some Graphics.ini etc. beforehand
 const static RenderingAPI RendereringAPI = RenderingAPI::VulkanAPI;
 
+const static bool UseVsync = true;
+
 #define PIT_CONFIGURATION_DEBUG 1
 #define PIT_CONFIGURATION_DEVELOPMENT 2
 #define PIT_CONFIGURATION_RELEASE 3

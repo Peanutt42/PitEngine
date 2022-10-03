@@ -4,6 +4,7 @@
 #include "Rendering/Vulkan/VulkanPipeline.hpp"
 #include "ECS/ECSSubsystem.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
+#include "Camera.hpp"
 
 namespace Pit::Rendering {
 
@@ -16,7 +17,7 @@ namespace Pit::Rendering {
 		SimpleRenderSystem(Device& device, VkRenderPass renderPass);
 		~SimpleRenderSystem();
 
-		void RenderEntities(VkCommandBuffer commandBuffer, World* ecsWorld);
+		void RenderEntities(VkCommandBuffer commandBuffer, World* ecsWorld, const Camera& camera);
 	
 	private:
 		Device& m_Device;

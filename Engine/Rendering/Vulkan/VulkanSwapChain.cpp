@@ -372,13 +372,15 @@ VkSurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(
 
 VkPresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
     static bool showedDebugMsg = false;
-    for (const auto& availablePresentMode : availablePresentModes) {
-        if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
-            if (!showedDebugMsg) {
-                PIT_ENGINE_INFO("Present mode: Mailbox");
-                showedDebugMsg = true;
+    if (!UseVsync) {
+        for (const auto& availablePresentMode : availablePresentModes) {
+            if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
+                if (!showedDebugMsg) {
+                    PIT_ENGINE_INFO("Present mode: Mailbox");
+                    showedDebugMsg = true;
+                }
+                return availablePresentMode;
             }
-            return availablePresentMode;
         }
     }
     if (!showedDebugMsg) {

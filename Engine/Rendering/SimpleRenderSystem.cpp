@@ -50,19 +50,18 @@ void SimpleRenderSystem::_CreatePipeline(VkRenderPass renderPass) {
 		pipelineConfig);
 }
 
-void SimpleRenderSystem::RenderEntities(VkCommandBuffer commandBuffer, World* ecsWorld) {
+void SimpleRenderSystem::RenderEntities(VkCommandBuffer commandBuffer, World* ecsWorld, const Camera& camera) {
 	m_Pipeline->Bind(commandBuffer);
+
+	auto projectionView = camera.GetProjection() * camera.GetView();
 
 	auto group = ecsWorld->Group<ECS::MeshComponent, ECS::TransformComponent>();
 	for (auto e : group) {
 		auto& mesh = group.get<ECS::MeshComponent>(e);
 		auto& transform = group.get<ECS::TransformComponent>(e);
 
-		transform.rotation.y = glm::mod(transform.rotation.y + Time::DeltaTime * 5, glm::two_pi<float>());
-		transform.rotation.x = glm::mod(transform.rotation.x + Time::DeltaTime * 5, glm::two_pi<float>());
-
 		SimplePushConstantData push{};
-		push.transform = transform.fast_mat4();
+		push.transform = projectionView * transform.mat4();
 		push.color = mesh.color;
 
 		vkCmdPushConstants(

@@ -7,30 +7,20 @@ namespace Pit::Rendering {
 
 	class Window {
 	public:
-		Window(uint32_t width, uint32_t height, const std::string& title)
-			: m_Width(width), m_Height(height), m_Title(title) {
+		Window(uint32_t width, uint32_t height, const std::string& title);
 
-			glfwInit();
-
-			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-			glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-			glfwWindowHint(GLFW_DECORATED, GLFW_TRUE); // titlebar
-
-			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
-			glfwSetWindowUserPointer(m_Window, this);
-			glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizeCallback);
-			glfwSetWindowSizeCallback(m_Window, _FramebufferResizeCallback);
-			glfwSetWindowPosCallback(m_Window, _WindowSetPosCallback);
-		}
-
-		~Window() {
-			glfwDestroyWindow(m_Window);
-			glfwTerminate();
-		}
+		~Window();
 
 		inline void Update() {
 			glfwSwapBuffers(m_Window);
 		}
+
+		static void UpdateWidnows() {
+			for (size_t i = 0; i < m_PitsWindows.size(); i++)
+				if (glfwGetWindowAttrib(m_PitsWindows[i], GLFW_FOCUSED))
+					CurrentlySelectedWindow = m_PitsWindows[i];
+		}
+		static GLFWwindow* CurrentlySelectedWindow;
 
 		inline void SetRenderer(Renderer* renderer) { m_Renderer = renderer; }
 		inline bool ShouldClose() { return glfwWindowShouldClose(m_Window); }
@@ -47,6 +37,7 @@ namespace Pit::Rendering {
 	private:
 		static void _FramebufferResizeCallback(GLFWwindow* window, int width, int height);
 		static void _WindowSetPosCallback(GLFWwindow* window, int posx, int posy);
+		static std::vector<GLFWwindow*> m_PitsWindows;
 		uint32_t m_Width, m_Height;
 		bool m_Resized = false;
 		std::string m_Title;
