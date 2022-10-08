@@ -31,3 +31,6 @@
 *.out
 *.app
 *.ipch
+
+# Excluded Folders
+x64/
