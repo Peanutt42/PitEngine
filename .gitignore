@@ -34,3 +34,4 @@
 
 # Excluded Folders
 x64/
+.vs/
