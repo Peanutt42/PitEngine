@@ -23,16 +23,14 @@ void MusicBuffer::Play() {
 		alBufferData(p_Buffers[i], p_Format, p_Membuf, (ALsizei)slen, p_Sfinfo.samplerate);
 	}
 	if (alGetError() != AL_NO_ERROR) {
-		PIT_ENGINE_ERR("Error buffering for playback");
+		PIT_ENGINE_ERR(Log::Audio, "Error buffering for playback");
 	}
 
 	/* Now queue and start playback! */
 	alSourceQueueBuffers(p_Source, i, p_Buffers);
 	alSourcePlay(p_Source);
-	if (alGetError() != AL_NO_ERROR) {
-		PIT_ENGINE_ERR("Error starting playback");
-	}
-
+	if (alGetError() != AL_NO_ERROR)
+		PIT_ENGINE_ERR(Log::Audio, "Error starting playback");
 }
 
 //void MusicBuffer::Pause()
@@ -52,7 +50,7 @@ void MusicBuffer::UpdateBufferStream() {
 	alGetSourcei(p_Source, AL_SOURCE_STATE, &state);
 	alGetSourcei(p_Source, AL_BUFFERS_PROCESSED, &processed);
 	if (alGetError() != AL_NO_ERROR) {
-		PIT_ENGINE_ERR("error checking music source state");
+		PIT_ENGINE_ERR(Log::Audio, "error checking music source state");
 	}
 
 	/* Unqueue and handle each processed buffer */
@@ -72,9 +70,8 @@ void MusicBuffer::UpdateBufferStream() {
 						 p_Sfinfo.samplerate);
 			alSourceQueueBuffers(p_Source, 1, &bufid);
 		}
-		if (alGetError() != AL_NO_ERROR) {
-			PIT_ENGINE_ERR("error buffering music data");
-		}
+		if (alGetError() != AL_NO_ERROR)
+			PIT_ENGINE_ERR(Log::Audio, "error buffering music data");
 	}
 
 	/* Make sure the source hasn't underrun */
@@ -87,9 +84,8 @@ void MusicBuffer::UpdateBufferStream() {
 			return;
 
 		alSourcePlay(p_Source);
-		if (alGetError() != AL_NO_ERROR) {
-			PIT_ENGINE_ERR("error restarting music playback");
-		}
+		if (alGetError() != AL_NO_ERROR)
+			PIT_ENGINE_ERR(Log::Audio, "error restarting music playback");
 	}
 
 }
@@ -106,7 +102,7 @@ MusicBuffer::MusicBuffer(const char* filename) {
 
 	p_SndFile = sf_open(filename, SFM_READ, &p_Sfinfo);
 	if (!p_SndFile) {
-		PIT_ENGINE_ERR("could not open provided music file -- check path");
+		PIT_ENGINE_ERR(Log::Audio, "could not open provided music file -- check path");
 	}
 
 	/* Get the sound format, and figure out the OpenAL format */
@@ -125,7 +121,7 @@ MusicBuffer::MusicBuffer(const char* filename) {
 	if (!p_Format) {
 		sf_close(p_SndFile);
 		p_SndFile = NULL;
-		PIT_ENGINE_ERR("Unsupported channel count from file");
+		PIT_ENGINE_ERR(Log::Audio, "Unsupported channel count from file");
 	}
 
 	frame_size = ((size_t)BUFFER_SAMPLES * (size_t)p_Sfinfo.channels) * sizeof(short);
@@ -144,5 +140,4 @@ MusicBuffer::~MusicBuffer() {
 	free(p_Membuf);
 
 	alDeleteBuffers(NUM_BUFFERS, p_Buffers);
-
 }

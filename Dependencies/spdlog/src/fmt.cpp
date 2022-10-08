@@ -2,6 +2,7 @@
 // Copyright (c) 2012 - 2016, Victor Zverovich
 // All rights reserved.
 
+#define SPDLOG_COMPILED_LIB
 #ifndef SPDLOG_COMPILED_LIB
 #    error Please define SPDLOG_COMPILED_LIB to compile this file.
 #endif

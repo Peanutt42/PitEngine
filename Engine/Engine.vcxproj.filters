@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Rendering\Window.hpp" />
+    <ClInclude Include="Rendering\ImGui\ImGuiLayer.hpp" />
+    <ClInclude Include="Rendering\ImGui\ImGuiRenderer.hpp" />
+    <ClInclude Include="Rendering\Renderer.hpp" />
+    <ClInclude Include="Rendering\VulkanDebugMessenger.hpp" />
+    <ClInclude Include="Rendering\VulkanShaderLoader.hpp" />
+    <ClInclude Include="Rendering\VulkanTypes.hpp" />
+    <ClInclude Include="Rendering\VulkanTypesToString.hpp" />
+    <ClInclude Include="Rendering\VulkanUtils.hpp" />
+    <ClInclude Include="Main\Input\Input.hpp" />
+    <ClInclude Include="Main\Input\KeyCode.hpp" />
+    <ClInclude Include="Main\CoreInclude.hpp" />
+    <ClInclude Include="Main\Engine.hpp" />
+    <ClInclude Include="Main\EngineConfig.hpp" />
+    <ClInclude Include="Main\FileSystem.hpp" />
+    <ClInclude Include="Main\Time.hpp" />
+    <ClInclude Include="Main\Types.hpp" />
+    <ClInclude Include="ECS\Commons\ECSTransform2DComponent.hpp" />
+    <ClInclude Include="ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="ECS\Examples\ECSBasicGameloop.hpp" />
+    <ClInclude Include="ECS\Examples\ECSExampleMovement.hpp" />
+    <ClInclude Include="ECS\ECSGameloop.hpp" />
+    <ClInclude Include="ECS\ECSInclude.hpp" />
+    <ClInclude Include="ECS\ECSSubsystem.hpp" />
+    <ClInclude Include="ECS\ECSSystem.hpp" />
+    <ClInclude Include="ECS\ECSWorld.hpp" />
+    <ClInclude Include="Audio\AudioEngine.hpp" />
+    <ClInclude Include="Audio\MusicBuffer.hpp" />
+    <ClInclude Include="Audio\SoundBuffer.hpp" />
+    <ClInclude Include="Audio\SoundSource.hpp" />
+    <ClInclude Include="Debug\Logging.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Rendering\ImGui\ImGuiRenderer.cpp" />
+    <ClCompile Include="Rendering\Renderer.cpp" />
+    <ClCompile Include="Rendering\VulkanUtils.cpp" />
+    <ClCompile Include="Rendering\Window.cpp" />
+    <ClCompile Include="Main\Input\Input.cpp" />
+    <ClCompile Include="Main\Engine.cpp" />
+    <ClCompile Include="Main\Time.cpp" />
+    <ClCompile Include="ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="ECS\ECSSubsystem.cpp" />
+    <ClCompile Include="ECS\ECSWorld.cpp" />
+    <ClCompile Include="Audio\AudioEngine.cpp" />
+    <ClCompile Include="Audio\MusicBuffer.cpp" />
+    <ClCompile Include="Audio\SoundBuffer.cpp" />
+    <ClCompile Include="Audio\SoundSource.cpp" />
+    <ClCompile Include="Debug\Logging.cpp" />
+  </ItemGroup>
+</Project>

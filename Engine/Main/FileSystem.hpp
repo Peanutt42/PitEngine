@@ -8,9 +8,7 @@ namespace Pit::FileSystem {
 		static bool changedRootTo_PitEngine = false;
 		if (changedRootTo_PitEngine) return;
 		auto root = std::filesystem::current_path();
-#if true
 		std::filesystem::current_path(root.parent_path().parent_path());
-#endif
 		changedRootTo_PitEngine = true;
 	}
 
@@ -20,12 +18,12 @@ namespace Pit::FileSystem {
 	}
 
 	inline std::string& GetEngineDir() {
-		static std::string engineDir = GetRootDir() + std::string("/Engine");
+		static std::string engineDir = GetRootDir() + std::string("/Engine/");
 		return engineDir;
 	}
 
 	inline std::string& GetSandboxDir() {
-		static std::string sandboxDir = GetRootDir() + std::string("/Sandbox");
+		static std::string sandboxDir = GetRootDir() + std::string("/Sandbox/");
 		return sandboxDir;
 	}
 }

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\glfw</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\vulkan</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\Sandbox.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\Editor.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

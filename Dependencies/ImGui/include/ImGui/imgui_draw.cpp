@@ -39,12 +39,25 @@ Index of this file:
 #endif
 
 #include <stdio.h>      // vsnprintf, sscanf, printf
+#if !defined(alloca)
+#if defined(__GLIBC__) || defined(__sun) || defined(__APPLE__) || defined(__NEWLIB__)
+#include <alloca.h>     // alloca (glibc uses <alloca.h>. Note that Cygwin may have _WIN32 defined, so the order matters here)
+#elif defined(_WIN32)
+#include <malloc.h>     // alloca
+#if !defined(alloca)
+#define alloca _alloca  // for clang with MS Codegen
+#endif
+#else
+#include <stdlib.h>     // alloca
+#endif
+#endif
 
 // Visual Studio warnings
 #ifdef _MSC_VER
 #pragma warning (disable: 4127)     // condition expression is constant
 #pragma warning (disable: 4505)     // unreferenced local function has been removed (stb stuff)
 #pragma warning (disable: 4996)     // 'This function or variable may be unsafe': strcpy, strdup, sprintf, vsnprintf, sscanf, fopen
+#pragma warning (disable: 6255)     // [Static Analyzer] _alloca indicates failure by raising a stack overflow exception.  Consider using _malloca instead.
 #pragma warning (disable: 26451)    // [Static Analyzer] Arithmetic overflow : Using operator 'xxx' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator 'xxx' to avoid overflow(io.2).
 #pragma warning (disable: 26812)    // [Static Analyzer] The enum type 'xxx' is unscoped. Prefer 'enum class' over 'enum' (Enum.3). [MSVC Static Analyzer)
 #endif
@@ -53,6 +66,9 @@ Index of this file:
 #if defined(__clang__)
 #if __has_warning("-Wunknown-warning-option")
 #pragma clang diagnostic ignored "-Wunknown-warning-option"         // warning: unknown warning group 'xxx'                      // not all warnings are known by all Clang versions and they tend to be rename-happy.. so ignoring warnings triggers new warnings on some configuration. Great!
+#endif
+#if __has_warning("-Walloca")
+#pragma clang diagnostic ignored "-Walloca"                         // warning: use of function '__builtin_alloca' is discouraged
 #endif
 #pragma clang diagnostic ignored "-Wunknown-pragmas"                // warning: unknown warning group 'xxx'
 #pragma clang diagnostic ignored "-Wold-style-cast"                 // warning: use of old-style cast                            // yes, they are more terse.
@@ -214,6 +230,8 @@ void ImGui::StyleColorsDark(ImGuiStyle* dst)
     colors[ImGuiCol_TabActive]              = ImLerp(colors[ImGuiCol_HeaderActive], colors[ImGuiCol_TitleBgActive], 0.60f);
     colors[ImGuiCol_TabUnfocused]           = ImLerp(colors[ImGuiCol_Tab],          colors[ImGuiCol_TitleBg], 0.80f);
     colors[ImGuiCol_TabUnfocusedActive]     = ImLerp(colors[ImGuiCol_TabActive],    colors[ImGuiCol_TitleBg], 0.40f);
+    colors[ImGuiCol_DockingPreview]         = colors[ImGuiCol_HeaderActive] * ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
+    colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
     colors[ImGuiCol_PlotLines]              = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
     colors[ImGuiCol_PlotLinesHovered]       = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
     colors[ImGuiCol_PlotHistogram]          = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
@@ -274,6 +292,8 @@ void ImGui::StyleColorsClassic(ImGuiStyle* dst)
     colors[ImGuiCol_TabActive]              = ImLerp(colors[ImGuiCol_HeaderActive], colors[ImGuiCol_TitleBgActive], 0.60f);
     colors[ImGuiCol_TabUnfocused]           = ImLerp(colors[ImGuiCol_Tab],          colors[ImGuiCol_TitleBg], 0.80f);
     colors[ImGuiCol_TabUnfocusedActive]     = ImLerp(colors[ImGuiCol_TabActive],    colors[ImGuiCol_TitleBg], 0.40f);
+    colors[ImGuiCol_DockingPreview]         = colors[ImGuiCol_Header] * ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
+    colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
     colors[ImGuiCol_PlotLines]              = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
     colors[ImGuiCol_PlotLinesHovered]       = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
     colors[ImGuiCol_PlotHistogram]          = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
@@ -335,6 +355,8 @@ void ImGui::StyleColorsLight(ImGuiStyle* dst)
     colors[ImGuiCol_TabActive]              = ImLerp(colors[ImGuiCol_HeaderActive], colors[ImGuiCol_TitleBgActive], 0.60f);
     colors[ImGuiCol_TabUnfocused]           = ImLerp(colors[ImGuiCol_Tab],          colors[ImGuiCol_TitleBg], 0.80f);
     colors[ImGuiCol_TabUnfocusedActive]     = ImLerp(colors[ImGuiCol_TabActive],    colors[ImGuiCol_TitleBg], 0.40f);
+    colors[ImGuiCol_DockingPreview]         = colors[ImGuiCol_Header] * ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
+    colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
     colors[ImGuiCol_PlotLines]              = ImVec4(0.39f, 0.39f, 0.39f, 1.00f);
     colors[ImGuiCol_PlotLinesHovered]       = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
     colors[ImGuiCol_PlotHistogram]          = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
@@ -389,6 +411,8 @@ void ImDrawList::_ResetForNewFrame()
     IM_STATIC_ASSERT(IM_OFFSETOF(ImDrawCmd, ClipRect) == 0);
     IM_STATIC_ASSERT(IM_OFFSETOF(ImDrawCmd, TextureId) == sizeof(ImVec4));
     IM_STATIC_ASSERT(IM_OFFSETOF(ImDrawCmd, VtxOffset) == sizeof(ImVec4) + sizeof(ImTextureID));
+    if (_Splitter._Count > 1)
+        _Splitter.Merge(this);
 
     CmdBuffer.resize(0);
     IdxBuffer.resize(0);
@@ -737,8 +761,7 @@ void ImDrawList::AddPolyline(const ImVec2* points, const int points_count, ImU32
 
         // Temporary buffer
         // The first <points_count> items are normals at each line point, then after that there are either 2 or 4 temp points for each line point
-        _Data->TempBuffer.reserve_discard(points_count * ((use_texture || !thick_line) ? 3 : 5));
-        ImVec2* temp_normals = _Data->TempBuffer.Data;
+        ImVec2* temp_normals = (ImVec2*)alloca(points_count * ((use_texture || !thick_line) ? 3 : 5) * sizeof(ImVec2)); //-V630
         ImVec2* temp_points = temp_normals + points_count;
 
         // Calculate normals (tangents) for each line segment
@@ -986,8 +1009,7 @@ void ImDrawList::AddConvexPolyFilled(const ImVec2* points, const int points_coun
         }
 
         // Compute normals
-        _Data->TempBuffer.reserve_discard(points_count);
-        ImVec2* temp_normals = _Data->TempBuffer.Data;
+        ImVec2* temp_normals = (ImVec2*)alloca(points_count * sizeof(ImVec2)); //-V630
         for (int i0 = points_count - 1, i1 = 0; i1 < points_count; i0 = i1++)
         {
             const ImVec2& p0 = points[i0];
@@ -3740,6 +3762,7 @@ void ImFont::RenderText(ImDrawList* draw_list, float size, const ImVec2& pos, Im
 // - RenderArrow()
 // - RenderBullet()
 // - RenderCheckMark()
+// - RenderArrowDockMenu()
 // - RenderArrowPointingAt()
 // - RenderRectFilledRangeH()
 // - RenderRectFilledWithHole()
@@ -3811,6 +3834,14 @@ void ImGui::RenderArrowPointingAt(ImDrawList* draw_list, ImVec2 pos, ImVec2 half
     case ImGuiDir_Down:  draw_list->AddTriangleFilled(ImVec2(pos.x - half_sz.x, pos.y - half_sz.y), ImVec2(pos.x + half_sz.x, pos.y - half_sz.y), pos, col); return;
     case ImGuiDir_None: case ImGuiDir_COUNT: break; // Fix warnings
     }
+}
+
+// This is less wide than RenderArrow() and we use in dock nodes instead of the regular RenderArrow() to denote a change of functionality,
+// and because the saved space means that the left-most tab label can stay at exactly the same position as the label of a loose window.
+void ImGui::RenderArrowDockMenu(ImDrawList* draw_list, ImVec2 p_min, float sz, ImU32 col)
+{
+    draw_list->AddRectFilled(p_min + ImVec2(sz * 0.20f, sz * 0.15f), p_min + ImVec2(sz * 0.80f, sz * 0.30f), col);
+    RenderArrowPointingAt(draw_list, p_min + ImVec2(sz * 0.50f, sz * 0.85f), ImVec2(sz * 0.30f, sz * 0.40f), ImGuiDir_Down, col);
 }
 
 static inline float ImAcos01(float x)
@@ -3896,6 +3927,17 @@ void ImGui::RenderRectFilledWithHole(ImDrawList* draw_list, const ImRect& outer,
     if (fill_R && fill_U) draw_list->AddRectFilled(ImVec2(inner.Max.x, outer.Min.y), ImVec2(outer.Max.x, inner.Min.y), col, rounding, ImDrawFlags_RoundCornersTopRight);
     if (fill_L && fill_D) draw_list->AddRectFilled(ImVec2(outer.Min.x, inner.Max.y), ImVec2(inner.Min.x, outer.Max.y), col, rounding, ImDrawFlags_RoundCornersBottomLeft);
     if (fill_R && fill_D) draw_list->AddRectFilled(ImVec2(inner.Max.x, inner.Max.y), ImVec2(outer.Max.x, outer.Max.y), col, rounding, ImDrawFlags_RoundCornersBottomRight);
+}
+
+ImDrawFlags ImGui::CalcRoundingFlagsForRectInRect(const ImRect& r_in, const ImRect& r_outer, float threshold)
+{
+    bool round_l = r_in.Min.x <= r_outer.Min.x + threshold;
+    bool round_r = r_in.Max.x >= r_outer.Max.x - threshold;
+    bool round_t = r_in.Min.y <= r_outer.Min.y + threshold;
+    bool round_b = r_in.Max.y >= r_outer.Max.y - threshold;
+    return ImDrawFlags_RoundCornersNone
+        | ((round_t && round_l) ? ImDrawFlags_RoundCornersTopLeft : 0) | ((round_t && round_r) ? ImDrawFlags_RoundCornersTopRight : 0)
+        | ((round_b && round_l) ? ImDrawFlags_RoundCornersBottomLeft : 0) | ((round_b && round_r) ? ImDrawFlags_RoundCornersBottomRight : 0);
 }
 
 // Helper for ColorPicker4()

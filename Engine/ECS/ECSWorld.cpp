@@ -8,9 +8,9 @@ bool World::Init() {
 	// Set Specs
 	SetWorldSpecs(m_Specs);
 
-	PIT_ENGINE_INFO("ECS-World '{}' succesfully initialized", m_Specs.name);
-	PIT_ENGINE_INFO("[Specs]");
-	PIT_ENGINE_INFO("[Name]: {}", m_Specs.name);
+	PIT_ENGINE_INFO(Log::ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
+	PIT_ENGINE_INFO(Log::ECS, "[Specs]");
+	PIT_ENGINE_INFO(Log::ECS, "[Name]: {}", m_Specs.name);
 
 	return true;
 }

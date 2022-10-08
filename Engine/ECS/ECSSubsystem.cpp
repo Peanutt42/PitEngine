@@ -11,12 +11,12 @@ ECSSubsystem::ECSSubsystem() {
 
 	ECSWorld = new World(ECSWorldSpecs);
 	if (!ECSWorld->Init())
-		PIT_ENGINE_ERR("Error while initializing ECSWorld");
+		PIT_ENGINE_FATAL(Log::ECS, "Error while initializing ECSWorld");
 
 	ECSGameloop = new Example::BasicGameloop();
 	ECSGameloop->Initialize(*ECSWorld);
 
-	PIT_ENGINE_INFO("ECSSubsystem has started!");
+	PIT_ENGINE_INFO(Log::ECS, "ECSSubsystem has started!");
 }
 
 ECSSubsystem::~ECSSubsystem() {
@@ -29,7 +29,7 @@ ECSSubsystem::~ECSSubsystem() {
 
 	m_Instance = nullptr;
 
-	PIT_ENGINE_INFO("ECSSubsystem has shut down!");
+	PIT_ENGINE_INFO(Log::ECS, "ECSSubsystem has shut down!");
 }
 
 void ECSSubsystem::Tick() {
@@ -44,5 +44,5 @@ void ECSSubsystem::ResetECSWorld() {
 
 	ECSWorld = new World(ECSWorldSpecs);
 	if (!ECSWorld->Init())
-		PIT_ENGINE_ERR("Error while initializing ECSWorld");
+		PIT_ENGINE_FATAL(Log::ECS, "Error while initializing ECSWorld");
 }

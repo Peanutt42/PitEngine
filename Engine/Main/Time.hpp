@@ -43,13 +43,10 @@ namespace Pit {
 			: m_Name(name) {}
 		~ScopedTimer() {
 			float time = m_Timer.ElapsedMillis();
-			PIT_ENGINE_INFO("[TIMER] {0:s} - {1:f}ms, {2:f}fps", m_Name, time, 1 / time * 1000);
+			PIT_ENGINE_INFO(Log::General, "[TIMER] {0:s} - {1:f}ms, {2:f}fps", m_Name, time, 1 / time * 1000);
 		}
 	private:
 		std::string m_Name;
 		Timer m_Timer;
 	};
-
-
-
 }

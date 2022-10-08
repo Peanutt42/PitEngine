@@ -1,50 +1,38 @@
 #include "Window.hpp"
-#include "Renderer.hpp"
-#include "Main/Engineloop.hpp"
 
 using namespace Pit::Rendering;
 
-std::vector<GLFWwindow*> Window::m_PitsWindows = std::vector<GLFWwindow*>();
-GLFWwindow* Window::CurrentlySelectedWindow = nullptr;
+static bool glfwInited = false;
 
-Window::Window(uint32_t width, uint32_t height, const std::string& title)
-	: m_Width(width), m_Height(height), m_Title(title) {
-
-	if (m_PitsWindows.size() <= 0)
+Window::Window(const std::string& title, int width, int height) 
+	: m_Title(title), m_Width(width), m_Height(height) {
+	
+	if (!glfwInited) {
 		glfwInit();
-
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-	glfwWindowHint(GLFW_DECORATED, GLFW_TRUE); // titlebar
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwInited = true;
+	}
 
 	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
-	m_PitsWindows.push_back(m_Window);
-	glfwSetWindowUserPointer(m_Window, this);
-	glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizeCallback);
-	glfwSetWindowSizeCallback(m_Window, _FramebufferResizeCallback);
-	glfwSetWindowPosCallback(m_Window, _WindowSetPosCallback);
 }
 
 Window::~Window() {
 	glfwDestroyWindow(m_Window);
-	for (size_t i = 0; i < m_PitsWindows.size(); i++) {
-		if (m_PitsWindows[i] == m_Window) {
-			m_PitsWindows.erase(m_PitsWindows.begin() + i);
-			break;
-		}
-	}
-	if (m_PitsWindows.size() <= 0)
+	if (glfwInited) {
 		glfwTerminate();
+		glfwInited = false;
+	}
 }
 
-void Window::_FramebufferResizeCallback(GLFWwindow* window, int width, int height) {
-	auto _window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
-	_window->m_Resized = true;
-	_window->m_Width = static_cast<uint32_t>(width);
-	_window->m_Height = static_cast<uint32_t>(height);
-	Engineloop::Instance->Update();
+void Window::UpdateAllWindows() {
+	glfwPollEvents();
 }
 
-void Window::_WindowSetPosCallback(GLFWwindow* window, int posx, int posy) {
-	Engineloop::Instance->Update();
+bool Window::ShouldClose() {
+	return glfwWindowShouldClose(m_Window);
+}
+
+void Window::CreateVKSurface(VkInstance instance, VkSurfaceKHR* surface) {
+	if (glfwCreateWindowSurface(instance, m_Window, nullptr, surface) != VK_SUCCESS)
+		PIT_ENGINE_ERR(Log::Rendering, "Failed to create Vulkan surface!");
 }

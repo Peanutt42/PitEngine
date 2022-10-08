@@ -15,8 +15,8 @@ namespace Pit::ECS {
 			for (auto e : view) {
 				auto& transform = view.get<TransformComponent>(e);
 
-				transform.rotation.y = glm::mod(transform.rotation.y + Time::DeltaTime * 1, glm::two_pi<float>());
-				transform.rotation.x = glm::mod(transform.rotation.x + Time::DeltaTime * 1, glm::two_pi<float>());
+				//transform.rotation.y = glm::mod(transform.rotation.y + Time::DeltaTime * .1f, glm::two_pi<float>());
+				//transform.rotation.x = glm::mod(transform.rotation.x + Time::DeltaTime * .1f, glm::two_pi<float>());
 			}
 		}
 	};

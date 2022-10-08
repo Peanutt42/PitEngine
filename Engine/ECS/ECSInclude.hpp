@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Main/CoreInclude.hpp"
-#include <EnTT/entt.hpp>
+#include <entt.hpp>
 
 namespace Pit::ECS {
 	/* === CONFIGURATION === */

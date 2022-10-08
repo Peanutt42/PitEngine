@@ -25,11 +25,11 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 	/* Open the audio file and check that it's usable. */
 	sndfile = sf_open(filename, SFM_READ, &sfinfo);
 	if (!sndfile) {
-		PIT_ENGINE_ERR("Could not open audio in {}", filename);
+		PIT_ENGINE_ERR(Log::Audio, "Could not open audio in {}", filename);
 		return 0;
 	}
 	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels) {
-		PIT_ENGINE_ERR("Bad sample count in {0:s} {1:d})\n", filename, static_cast<int>(sfinfo.frames));
+		PIT_ENGINE_ERR(Log::Audio, "Bad sample count in {0:s} {1:d})\n", filename, static_cast<int>(sfinfo.frames));
 		sf_close(sndfile);
 		return 0;
 	}
@@ -49,7 +49,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 			format = AL_FORMAT_BFORMAT3D_16;
 	}
 	if (!format) {
-		PIT_ENGINE_ERR("Unsupported channel count: {}", sfinfo.channels);
+		PIT_ENGINE_ERR(Log::Audio, "Unsupported channel count: {}", sfinfo.channels);
 		sf_close(sndfile);
 		return 0;
 	}
@@ -61,7 +61,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 	if (num_frames < 1) {
 		free(membuf);
 		sf_close(sndfile);
-		PIT_ENGINE_ERR("Failed to read samples in {0:s} {1:d}", filename, static_cast<int>(num_frames));
+		PIT_ENGINE_ERR(Log::Audio, "Failed to read samples in {0:s} {1:d}", filename, static_cast<int>(num_frames));
 		return 0;
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
@@ -79,7 +79,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 	/* Check if an error occured, and clean up if so. */
 	err = alGetError();
 	if (err != AL_NO_ERROR) {
-		PIT_ENGINE_ERR("OpenAL Error: {}", static_cast<const char*>(alGetString(err)));
+		PIT_ENGINE_ERR(Log::Audio, "OpenAL Error: {}", static_cast<const char*>(alGetString(err)));
 		if (buffer && alIsBuffer(buffer))
 			alDeleteBuffers(1, &buffer);
 		return 0;
