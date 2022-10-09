@@ -33,6 +33,10 @@
     <ClInclude Include="Audio\SoundSource.hpp" />
     <ClInclude Include="Debug\Logging.hpp" />
     <ClInclude Include="Rendering\UI\UILayerManager.hpp" />
+    <ClInclude Include="ECS\Commons\ECSEntityComponent.hpp" />
+    <ClInclude Include="ECS\ECSComponent.hpp" />
+    <ClInclude Include="Rendering\UI\UIFonts.hpp" />
+    <ClInclude Include="Rendering\VulkanTexture.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
@@ -51,5 +55,6 @@
     <ClCompile Include="Audio\SoundSource.cpp" />
     <ClCompile Include="Debug\Logging.cpp" />
     <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
+    <ClCompile Include="Rendering\VulkanTexture.cpp" />
   </ItemGroup>
 </Project>

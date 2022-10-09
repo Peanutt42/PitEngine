@@ -17,6 +17,8 @@ LayerManager::~LayerManager() {
 
 void LayerManager::RenderLayers() {
 #ifdef PIT_EDITOR
+    float minWinSizeX = ImGui::GetStyle().WindowMinSize.x;
+    ImGui::GetStyle().WindowMinSize.x = 300;
     static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
@@ -34,7 +36,7 @@ void LayerManager::RenderLayers() {
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
     static bool opened = true;
-    ImGui::Begin("DockSpace Demo", &opened, window_flags);
+    ImGui::Begin("DockSpace", &opened, window_flags);
 
     ImGui::PopStyleVar();
     ImGui::PopStyleVar(2);
@@ -62,5 +64,6 @@ void LayerManager::RenderLayers() {
 
 #ifdef PIT_EDITOR
     ImGui::End();
+    ImGui::GetStyle().WindowMinSize.x = minWinSizeX;
 #endif
 }

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Rendering/RenderingInclude.hpp"
+#include "ECS/ECSComponent.hpp"
+#include <glm/glm.hpp>
 
 namespace Pit::ECS {
-	struct Transform2DComponent {
+	struct Transform2DComponent : public Component {
 		glm::vec2 position{};
 		glm::vec2 scale{1.f, 1.f};
 		float rotation;

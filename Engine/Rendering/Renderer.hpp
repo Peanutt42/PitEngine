@@ -22,8 +22,9 @@ namespace Pit::Rendering {
 		bool ShouldClose();
 
 		UI::Renderer* GetUIRenderer() { return m_UIRenderer; }
+		uint32_t GetWidth() { return m_MainWindowData.Width; }
+		uint32_t GetHeight() { return m_MainWindowData.Height; }
 
-	private:
 		// Window
 		Window* m_Window = nullptr;
 
@@ -46,6 +47,7 @@ namespace Pit::Rendering {
 		int                      m_MinImageCount = 2;
 		bool                     m_SwapChainRebuild = false;
 
+	private:
 		void _SetupVulkan(), _CleanupVulkan();
 		void _CreateVkInstance(), _DestroyVkInstance();
 		void _CreateWindowSurface();

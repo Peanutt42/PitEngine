@@ -116,6 +116,11 @@ namespace Pit::ECS {
 			return m_Registry.group<T...>();
 		}
 
+		template<typename Func>
+		void Each(Func func) {
+			m_Registry.each(func);
+		}
+
 		template<typename T>
 		bool HasSystem() {
 			SystemIndex systemIndex = GetSystemIndex<T>();
@@ -157,6 +162,7 @@ namespace Pit::ECS {
 		WorldSpecs& GetWorldSpecs() { return m_Specs; }
 		void SetWorldSpecs(WorldSpecs specs);
 		
+		entt::registry& GetRegistry() { return m_Registry; }
 		bool Paused = false;
 
 	private:

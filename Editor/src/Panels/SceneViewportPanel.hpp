@@ -1,9 +1,12 @@
 #pragma once
 
+#include "Engine/Main/CoreInclude.hpp"
 #include "Engine/Rendering/UI/UILayer.hpp"
+#include "Engine/Rendering/VulkanTexture.hpp"
+#include <vulkan/vulkan.h>
 
 namespace Pit::Editor {
-	class EntityListPanel : public Rendering::UI::Layer {
+	class SceneViewportPanel : public Rendering::UI::Layer {
 	public:
 
 		virtual void OnAttach() override;
@@ -12,5 +15,6 @@ namespace Pit::Editor {
 		virtual void OnGUI() override;
 
 	private:
+		Pit::Rendering::Texture* m_SceneTexture;
 	};
 }

@@ -322,7 +322,7 @@ void Renderer::_SetupVulkanWindow(VkSurfaceKHR surface) {
     }
 
     m_MainWindowData.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(m_PhysicalDevice, m_MainWindowData.Surface, &presentModes[0], static_cast<int>(presentModes.size()));
-    PIT_ENGINE_INFO(Log::Rendering, "[Vulkan] Selected PresentMode = {}", PresentModeToString(m_MainWindowData.PresentMode));
+    PIT_ENGINE_INFO(Log::Rendering, "Selected PresentMode = {}", PresentModeToString(m_MainWindowData.PresentMode));
 
     IM_ASSERT(m_MinImageCount >= 2);
     ImGui_ImplVulkanH_CreateOrResizeWindow(m_Instance, m_PhysicalDevice, m_Device, &m_MainWindowData, m_QueueFamily, m_Allocator, w, h, m_MinImageCount);

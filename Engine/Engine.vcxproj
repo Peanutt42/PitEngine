@@ -80,11 +80,11 @@
     <LibraryPath>$(SolutionDir)Dependencies\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -177,6 +177,9 @@
     <ProjectReference Include="..\Dependencies\spdlog\spdlog.vcxproj">
       <Project>{c31f36ee-b048-4591-9bdc-51baa2ddec60}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Dependencies\stb_image\stb_image.vcxproj">
+      <Project>{9b3a36b5-42ea-45dd-b0c5-9be9d6b0d9a5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Dependencies\tinyobjloader\tinyobjloader.vcxproj">
       <Project>{74a5561b-40f6-4160-b0c1-0a1cda26d89e}</Project>
     </ProjectReference>
@@ -190,8 +193,10 @@
     <ClInclude Include="Audio\SoundBuffer.hpp" />
     <ClInclude Include="Audio\SoundSource.hpp" />
     <ClInclude Include="Debug\Logging.hpp" />
+    <ClInclude Include="ECS\Commons\ECSEntityComponent.hpp" />
     <ClInclude Include="ECS\Commons\ECSTransform2DComponent.hpp" />
     <ClInclude Include="ECS\Commons\ECSTransformComponent.hpp" />
+    <ClInclude Include="ECS\ECSComponent.hpp" />
     <ClInclude Include="ECS\ECSGameloop.hpp" />
     <ClInclude Include="ECS\ECSInclude.hpp" />
     <ClInclude Include="ECS\ECSSubsystem.hpp" />
@@ -207,12 +212,14 @@
     <ClInclude Include="Main\Input\KeyCode.hpp" />
     <ClInclude Include="Main\Time.hpp" />
     <ClInclude Include="Main\Types.hpp" />
+    <ClInclude Include="Rendering\UI\UIFonts.hpp" />
     <ClInclude Include="Rendering\UI\UILayer.hpp" />
     <ClInclude Include="Rendering\UI\UILayerManager.hpp" />
     <ClInclude Include="Rendering\UI\UIRenderer.hpp" />
     <ClInclude Include="Rendering\Renderer.hpp" />
     <ClInclude Include="Rendering\VulkanDebugMessenger.hpp" />
     <ClInclude Include="Rendering\VulkanShaderLoader.hpp" />
+    <ClInclude Include="Rendering\VulkanTexture.hpp" />
     <ClInclude Include="Rendering\VulkanTypes.hpp" />
     <ClInclude Include="Rendering\VulkanTypesToString.hpp" />
     <ClInclude Include="Rendering\VulkanUtils.hpp" />
@@ -233,6 +240,7 @@
     <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
     <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
     <ClCompile Include="Rendering\Renderer.cpp" />
+    <ClCompile Include="Rendering\VulkanTexture.cpp" />
     <ClCompile Include="Rendering\VulkanUtils.cpp" />
     <ClCompile Include="Rendering\Window.cpp" />
   </ItemGroup>

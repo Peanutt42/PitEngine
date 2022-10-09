@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcx
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{BBF85723-2957-4266-BDC5-A9FB24CEF1D9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stb_image", "Dependencies\stb_image\stb_image.vcxproj", "{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -113,6 +115,14 @@ Global
 		{94421F0C-BBB2-4B79-81D9-1EEA70D127F3}.Release|x64.Build.0 = Release|x64
 		{94421F0C-BBB2-4B79-81D9-1EEA70D127F3}.Release|x86.ActiveCfg = Release|Win32
 		{94421F0C-BBB2-4B79-81D9-1EEA70D127F3}.Release|x86.Build.0 = Release|Win32
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Debug|x64.ActiveCfg = Debug|x64
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Debug|x64.Build.0 = Debug|x64
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Debug|x86.ActiveCfg = Debug|Win32
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Debug|x86.Build.0 = Debug|Win32
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Release|x64.ActiveCfg = Release|x64
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Release|x64.Build.0 = Release|x64
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Release|x86.ActiveCfg = Release|Win32
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +135,7 @@ Global
 		{C31F36EE-B048-4591-9BDC-51BAA2DDEC60} = {BBF85723-2957-4266-BDC5-A9FB24CEF1D9}
 		{74A5561B-40F6-4160-B0C1-0A1CDA26D89E} = {BBF85723-2957-4266-BDC5-A9FB24CEF1D9}
 		{158A1A27-9DD8-4BD0-9591-A92500A46E5D} = {BBF85723-2957-4266-BDC5-A9FB24CEF1D9}
+		{9B3A36B5-42EA-45DD-B0C5-9BE9D6B0D9A5} = {BBF85723-2957-4266-BDC5-A9FB24CEF1D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B2B7A8BC-12AB-47F7-8F9B-A109828CE162}

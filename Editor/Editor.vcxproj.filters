@@ -21,7 +21,13 @@
     <ClCompile Include="src\EditorApplication.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Panels\EntityListPanel.cpp">
+    <ClCompile Include="src\Panels\HierachyPanel.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\InspectorPanel.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\SceneViewportPanel.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +35,13 @@
     <ClInclude Include="src\EditorApplication.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\Panels\EntityListPanel.hpp">
+    <ClInclude Include="src\Panels\HierachyPanel.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panels\InspectorPanel.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panels\SceneViewportPanel.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,12 +1,13 @@
 #pragma once
 
+#include "ECS/ECSComponent.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Pit::ECS {
-	struct TransformComponent {
+	struct TransformComponent : public Component {
 		glm::vec3 position{};
-		glm::vec3 scale{ 1.f, 1.f, 1.f };
 		glm::vec3 rotation{};
+		glm::vec3 scale{ 1.f, 1.f, 1.f };
 
 		glm::mat4 mat4() {
             /* Simplified but slower:
