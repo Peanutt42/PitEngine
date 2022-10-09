@@ -10,7 +10,7 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_vulkan.h>
 #include <vulkan/vulkan.h>
-#include "ImGui/ImGuiRenderer.hpp"
+#include "UI/UIRenderer.hpp"
 
 namespace Pit::Rendering {
 	class Renderer {
@@ -20,6 +20,8 @@ namespace Pit::Rendering {
 
 		void Update();
 		bool ShouldClose();
+
+		UI::Renderer* GetUIRenderer() { return m_UIRenderer; }
 
 	private:
 		// Window
@@ -58,6 +60,6 @@ namespace Pit::Rendering {
 		void _FrameRender();
 		void _FramePresent();
 
-		ImGuiRenderer* m_ImGuiRenderer = nullptr;
+		UI::Renderer* m_UIRenderer = nullptr;
 	};
 }

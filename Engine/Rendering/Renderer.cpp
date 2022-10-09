@@ -38,14 +38,14 @@ Renderer::Renderer() {
     
     _SetupVulkanWindow(m_Surface);
 
-    m_ImGuiRenderer = new ImGuiRenderer(m_Window->GetWindowHandle(), m_Instance, m_PhysicalDevice, m_Device, m_QueueFamily, m_Queue,
+    m_UIRenderer = new UI::Renderer(m_Window->GetWindowHandle(), m_Instance, m_PhysicalDevice, m_Device, m_QueueFamily, m_Queue,
                                         m_PipelineCache, m_DescriptorPool, m_MinImageCount, m_MainWindowData.ImageCount, m_Allocator, &m_MainWindowData);
 }
 
 Renderer::~Renderer() {
     check_vk_result(vkDeviceWaitIdle(m_Device));
 
-    delete m_ImGuiRenderer;
+    delete m_UIRenderer;
     _CleanupVulkanWindow();
     _CleanupVulkan();
 	delete m_Window;
@@ -57,7 +57,7 @@ void Renderer::Update() {
 		
         static bool show_demo_window = true;
         static bool show_another_window = false;
-        static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        static ImVec4 clear_color = ImVec4(0.1f, 0.1f, 0.1f, 1.f);
 
         if (m_SwapChainRebuild) {
             int width, height;
@@ -70,12 +70,9 @@ void Renderer::Update() {
             }
         }
 
-        m_ImGuiRenderer->BeginFrame();
-
-        // Draw UI
-        m_ImGuiRenderer->TestWindows();
-
-        m_ImGuiRenderer->EndFrame();
+        m_UIRenderer->BeginFrame();
+        m_UIRenderer->RenderLayers();
+        m_UIRenderer->EndFrame();
 
         const bool is_minimized = ImGui::GetDrawData()->DisplaySize.x <= 0 ||
                                   ImGui::GetDrawData()->DisplaySize.y <= 0;
@@ -348,7 +345,7 @@ void Renderer::_FrameRender() {
     }
     check_vk_result(err);
 
-    auto fd = m_ImGuiRenderer->PresentFrame();
+    auto fd = m_UIRenderer->PresentFrame();
 
     // Submit command buffer
     vkCmdEndRenderPass(fd->CommandBuffer);

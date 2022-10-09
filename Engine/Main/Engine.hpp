@@ -23,9 +23,15 @@ namespace Pit {
 		~Engine();
 		
 		void Init(), Shutdown();
+		void ForceShutdown() { m_ForceShutdown = true; }
 		bool ShouldClose();
 		void Update();
 
+		Rendering::UI::LayerManager* GetUILayerManager() { return Renderer->GetUIRenderer()->GetUILayerManager(); }
+
 		static Engine* Instance;
+
+	private:
+		bool m_ForceShutdown = false;
 	};
 }

@@ -65,5 +65,8 @@ void Engine::Update() {
 }
 
 bool Engine::ShouldClose() {
-	return Renderer->ShouldClose();
+	if (m_ForceShutdown)
+		return true;
+	else
+		return Renderer->ShouldClose();
 }

@@ -16,6 +16,8 @@ namespace Pit::Rendering {
 		void CreateVKSurface(VkInstance instance, VkSurfaceKHR* surface);
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
+		bool IsMaximized() { return glfwGetWindowAttrib(m_Window, GLFW_MAXIMIZED) == GLFW_TRUE; }
+		void SetMaximized(bool maximized) { return glfwSetWindowAttrib(m_Window, GLFW_MAXIMIZED, maximized ? GLFW_TRUE : GLFW_FALSE); }
 		GLFWwindow* GetWindowHandle() { return m_Window; }
 		bool IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
 

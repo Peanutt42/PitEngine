@@ -1,10 +1,17 @@
-#include <iostream>
-#define PIT_EDITOR false
 #include "Main/Engine.hpp"
+#include "Rendering/Window.hpp"
 
+using namespace Pit;
 
 int main() {
-	std::cout << "Hello World!" << std::endl;
+	Engine engine;
+	engine.Init();
+
+	while (!engine.ShouldClose()) {
+		engine.Update();
+	}
+
+	engine.Shutdown();
 
 	return 0;
 }

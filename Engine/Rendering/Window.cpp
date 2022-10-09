@@ -1,4 +1,5 @@
 #include "Window.hpp"
+#include "Main/Engine.hpp"
 
 using namespace Pit::Rendering;
 
@@ -10,10 +11,21 @@ Window::Window(const std::string& title, int width, int height)
 	if (!glfwInited) {
 		glfwInit();
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#ifndef PIT_EDITOR
+			glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+			glfwWindowHint(GLFW_DECORATED, NULL);
+#endif
 		glfwInited = true;
 	}
 
-	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+	GLFWmonitor* primaryMonitor = nullptr;
+#ifndef PIT_EDITOR
+		primaryMonitor = glfwGetPrimaryMonitor();
+		m_Width = glfwGetVideoMode(primaryMonitor)->width;
+		m_Height = glfwGetVideoMode(primaryMonitor)->height;
+#endif
+
+	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);
 }
 
 Window::~Window() {

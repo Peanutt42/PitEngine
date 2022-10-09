@@ -2,8 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Rendering\Window.hpp" />
-    <ClInclude Include="Rendering\ImGui\ImGuiLayer.hpp" />
-    <ClInclude Include="Rendering\ImGui\ImGuiRenderer.hpp" />
+    <ClInclude Include="Rendering\UI\UILayer.hpp" />
+    <ClInclude Include="Rendering\UI\UIRenderer.hpp" />
     <ClInclude Include="Rendering\Renderer.hpp" />
     <ClInclude Include="Rendering\VulkanDebugMessenger.hpp" />
     <ClInclude Include="Rendering\VulkanShaderLoader.hpp" />
@@ -32,9 +32,10 @@
     <ClInclude Include="Audio\SoundBuffer.hpp" />
     <ClInclude Include="Audio\SoundSource.hpp" />
     <ClInclude Include="Debug\Logging.hpp" />
+    <ClInclude Include="Rendering\UI\UILayerManager.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Rendering\ImGui\ImGuiRenderer.cpp" />
+    <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
     <ClCompile Include="Rendering\Renderer.cpp" />
     <ClCompile Include="Rendering\VulkanUtils.cpp" />
     <ClCompile Include="Rendering\Window.cpp" />
@@ -49,5 +50,6 @@
     <ClCompile Include="Audio\SoundBuffer.cpp" />
     <ClCompile Include="Audio\SoundSource.cpp" />
     <ClCompile Include="Debug\Logging.cpp" />
+    <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
   </ItemGroup>
 </Project>
