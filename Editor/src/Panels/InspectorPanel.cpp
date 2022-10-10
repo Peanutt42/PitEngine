@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "InspectorPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "Engine/Main/Engine.hpp"

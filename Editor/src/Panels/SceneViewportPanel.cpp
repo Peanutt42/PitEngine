@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "SceneViewportPanel.hpp"
 #include "Engine/Main/Engine.hpp"
 #include <imgui/imgui.h>

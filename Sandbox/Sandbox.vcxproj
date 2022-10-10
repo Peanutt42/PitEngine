@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{20921504-04bd-460b-949e-086a07b6a38a}</ProjectGuid>
+    <ProjectGuid>{280b44a5-2650-4257-b8ed-ec436dee8865}</ProjectGuid>
     <RootNamespace>Sandbox</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,19 +110,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <UndefinePreprocessorDefinitions>
-      </UndefinePreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,23 +128,23 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <UndefinePreprocessorDefinitions>
-      </UndefinePreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\pch.hpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -185,11 +182,8 @@
       <Project>{158a1a27-9dd8-4bd0-9591-a92500a46e5d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
-      <Project>{0c543ef9-52c7-4641-a17b-ff5ed7fc1841}</Project>
+      <Project>{3ca8e803-d81a-4823-90fe-feeb1dee73d9}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

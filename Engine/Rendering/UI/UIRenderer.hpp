@@ -3,7 +3,7 @@
 #include "Main/CoreInclude.hpp"
 #include "UILayer.hpp"
 #include "UILayerManager.hpp"
-#include "Rendering/VulkanFrame.hpp"
+#include "Rendering/VulkanTypes.hpp"
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_vulkan.h>

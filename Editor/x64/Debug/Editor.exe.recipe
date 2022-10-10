@@ -8,9 +8,6 @@
       <FullPath>C:\dev\cpp\PitEngine\x64\Debug\vulkan</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\Sandbox.exe</FullPath>
-    </ProjectOutput>
-    <ProjectOutput>
       <FullPath>C:\dev\cpp\PitEngine\x64\Debug\Editor.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>

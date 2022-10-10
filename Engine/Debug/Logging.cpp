@@ -14,7 +14,7 @@ std::shared_ptr<spdlog::logger> Logging::s_GameLogger;
 bool Logging::LoggerInitialized = false;
 
 void Logging::Init() {
-	spdlog::set_pattern("%^[%n]: %v%$");//"%^%n: %v%$");
+	spdlog::set_pattern("%^[%n]: %v%$");
 	s_EngineLogger_General = spdlog::stdout_color_mt("Engine-General");
 	s_EngineLogger_General->set_level(spdlog::level::trace);
 

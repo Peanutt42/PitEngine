@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "pch.hpp"
 #include "EditorApplication.hpp"
 #include "Panels/HierachyPanel.hpp"
 #include "Panels/InspectorPanel.hpp"

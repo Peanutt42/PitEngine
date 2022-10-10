@@ -1,6 +1,0 @@
-﻿  "Compiling shader files[.vert, .frag] into .spv files"
-  Drücken Sie eine beliebige Taste . . . 
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1118,5): warning MSB8027: Mehrere Dateien mit dem Namen imgui_impl_glfw.cpp führen zu Ausgaben am selben Speicherort. Dadurch kann ein falsches Buildergebnis entstehen. Die betroffenen Dateien sind Dependencies\ImGui\include\ImGui\backends\imgui_impl_glfw.cpp, Dependencies\ImGui\include\ImGui\imgui_impl_glfw.cpp.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1118,5): warning MSB8027: Mehrere Dateien mit dem Namen imgui_impl_vulkan.cpp führen zu Ausgaben am selben Speicherort. Dadurch kann ein falsches Buildergebnis entstehen. Die betroffenen Dateien sind Dependencies\ImGui\include\ImGui\backends\imgui_impl_vulkan.cpp, Dependencies\ImGui\include\ImGui\imgui_impl_vulkan.cpp.
-  Engineloop.cpp
-  PitEngine.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\PitEngine.exe

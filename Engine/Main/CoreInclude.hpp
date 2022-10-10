@@ -1,6 +1,6 @@
 #pragma once
 
-// std(20)
+// std(c++20)
 #include <string>
 #include <vector>
 #include <array>
