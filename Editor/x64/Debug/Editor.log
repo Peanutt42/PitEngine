@@ -1,1 +1,2 @@
-﻿  Editor.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\Editor.exe
+﻿MSVCRTD.lib(initializers.obj) : warning LNK4098: Standardbibliothek "msvcrt.lib" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  Editor.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\Editor.exe

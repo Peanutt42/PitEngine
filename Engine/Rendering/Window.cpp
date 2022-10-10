@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "Window.hpp"
 #include "Main/Engine.hpp"
 

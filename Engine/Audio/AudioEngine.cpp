@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "AudioEngine.hpp"
 #include "MusicBuffer.hpp"
 #include <AL/al.h>

@@ -30,6 +30,9 @@
     <ClCompile Include="src\Panels\SceneViewportPanel.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorApplication.hpp">
@@ -42,6 +45,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\SceneViewportPanel.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

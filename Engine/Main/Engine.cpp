@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "Engine.hpp"
 #include "ECS/Commons/ECSTransformComponent.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
@@ -36,9 +37,12 @@ void Engine::Init() {
 	//sound1Id = AudioEngine->AddMusicBuffer(sound1);
 
 	Renderer = new Rendering::Renderer();
+	UIRenderer = new Rendering::UI::Renderer(Renderer->m_Window->GetWindowHandle(), Renderer->m_Instance, Renderer->m_PhysicalDevice, Renderer->m_Device, Renderer->m_QueueFamily,
+											 Renderer->m_Queue, Renderer->m_PipelineCache, Renderer->m_DescriptorPool, Renderer->m_MinImageCount, Renderer->m_ImageCount, Renderer->m_Allocator);
 }
 
 void Engine::Shutdown() {
+	delete UIRenderer;
 	delete Renderer;
 	//delete sound1;
 	delete AudioEngine;

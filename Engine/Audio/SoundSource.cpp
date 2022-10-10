@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "SoundSource.hpp"
 
 using namespace Pit::Audio;

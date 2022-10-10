@@ -1,4 +1,6 @@
+#include "CoreInclude.hpp"
 #include "UIRenderer.hpp"
+#include "Main/Engine.hpp"
 
 using namespace Pit::Rendering::UI;
 
@@ -11,10 +13,11 @@ static void check_vk_result(VkResult err) {
 }
 
 void SetDarkThemeColors();
+
 Renderer::Renderer(GLFWwindow* window, VkInstance instance, VkPhysicalDevice physicalDevice, VkDevice device,
                              uint32_t queueFamily, VkQueue queue, VkPipelineCache pipelineCache, VkDescriptorPool descriptorPool,
-                             uint32_t minImageCount, uint32_t imageCount, VkAllocationCallbacks* allocator, ImGui_ImplVulkanH_Window* wd)
-    : m_Wd(wd), m_Device(device) {
+                             uint32_t minImageCount, uint32_t imageCount, VkAllocationCallbacks* allocator)
+    : m_Device(device) {
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -48,15 +51,15 @@ Renderer::Renderer(GLFWwindow* window, VkInstance instance, VkPhysicalDevice phy
     init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
     init_info.Allocator = allocator;
     init_info.CheckVkResultFn = check_vk_result;
-    ImGui_ImplVulkan_Init(&init_info, wd->RenderPass);
+    ImGui_ImplVulkan_Init(&init_info, Engine::Instance->Renderer->m_RenderPass);
 
     // See UIFonts.hpp->FontType for ordering of loading!!!
     io.FontDefault = io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-Regular.ttf").c_str(), 18.f);
     io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), 18.f);
     io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), 18.f);
     
-    VkCommandPool command_pool = wd->Frames[wd->FrameIndex].CommandPool;
-    VkCommandBuffer command_buffer = wd->Frames[wd->FrameIndex].CommandBuffer;
+    VkCommandPool command_pool = Engine::Instance->Renderer->m_Frames[Engine::Instance->Renderer->m_FrameIndex].CommandPool;
+    VkCommandBuffer command_buffer = Engine::Instance->Renderer->m_Frames[Engine::Instance->Renderer->m_FrameIndex].CommandBuffer;
 
     VkResult err = vkResetCommandPool(device, command_pool, 0);
     check_vk_result(err);
@@ -85,6 +88,8 @@ Renderer::Renderer(GLFWwindow* window, VkInstance instance, VkPhysicalDevice phy
 }
 
 Renderer::~Renderer() {
+    vkDeviceWaitIdle(m_Device);
+
     delete m_UILayerManager;
     ImGui_ImplVulkan_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -105,40 +110,40 @@ void Renderer::RenderLayers() {
     m_UILayerManager->RenderLayers();
 }
 
-ImGui_ImplVulkanH_Frame* Renderer::PresentFrame() {
-    ImGui_ImplVulkanH_Frame* fd = &m_Wd->Frames[m_Wd->FrameIndex];
+Pit::Rendering::Frame* Renderer::PresentFrame() {
+    Frame* frame = &Engine::Instance->Renderer->m_Frames[Engine::Instance->Renderer->m_FrameIndex];
     {
-        VkResult err = vkWaitForFences(m_Device, 1, &fd->Fence, VK_TRUE, UINT64_MAX);    // wait indefinitely instead of periodically checking
+        VkResult err = vkWaitForFences(m_Device, 1, &frame->Fence, VK_TRUE, UINT64_MAX);
         check_vk_result(err);
 
-        err = vkResetFences(m_Device, 1, &fd->Fence);
+        err = vkResetFences(m_Device, 1, &frame->Fence);
         check_vk_result(err);
     }
     {
-        VkResult err = vkResetCommandPool(m_Device, fd->CommandPool, 0);
+        VkResult err = vkResetCommandPool(m_Device, frame->CommandPool, 0);
         check_vk_result(err);
         VkCommandBufferBeginInfo info = {};
         info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
         info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-        err = vkBeginCommandBuffer(fd->CommandBuffer, &info);
+        err = vkBeginCommandBuffer(frame->CommandBuffer, &info);
         check_vk_result(err);
     }
     {
         VkRenderPassBeginInfo info = {};
         info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-        info.renderPass = m_Wd->RenderPass;
-        info.framebuffer = fd->Framebuffer;
-        info.renderArea.extent.width = m_Wd->Width;
-        info.renderArea.extent.height = m_Wd->Height;
+        info.renderPass = Engine::Instance->Renderer->m_RenderPass;
+        info.framebuffer = frame->Framebuffer;
+        info.renderArea.extent.width = Engine::Instance->Renderer->m_Width;
+        info.renderArea.extent.height = Engine::Instance->Renderer->m_Height;
         info.clearValueCount = 1;
-        info.pClearValues = &m_Wd->ClearValue;
-        vkCmdBeginRenderPass(fd->CommandBuffer, &info, VK_SUBPASS_CONTENTS_INLINE);
+        info.pClearValues = &Engine::Instance->Renderer->m_ClearValue;
+        vkCmdBeginRenderPass(frame->CommandBuffer, &info, VK_SUBPASS_CONTENTS_INLINE);
     }
 
     // Record dear imgui primitives into command buffer
-    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), fd->CommandBuffer);
+    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), frame->CommandBuffer);
 
-    return fd;
+    return frame;
 }
 
 void SetDarkThemeColors() {

@@ -116,6 +116,8 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +137,8 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +150,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\EnTT\EnTT.vcxproj">
@@ -163,6 +175,9 @@
     <ProjectReference Include="..\Dependencies\spdlog\spdlog.vcxproj">
       <Project>{c31f36ee-b048-4591-9bdc-51baa2ddec60}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Dependencies\stb_image\stb_image.vcxproj">
+      <Project>{9b3a36b5-42ea-45dd-b0c5-9be9d6b0d9a5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Dependencies\tinyobjloader\tinyobjloader.vcxproj">
       <Project>{74a5561b-40f6-4160-b0c1-0a1cda26d89e}</Project>
     </ProjectReference>
@@ -172,6 +187,9 @@
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{0c543ef9-52c7-4641-a17b-ff5ed7fc1841}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

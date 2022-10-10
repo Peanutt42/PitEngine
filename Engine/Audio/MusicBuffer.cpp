@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "MusicBuffer.hpp"
 #include <AL/alext.h>
 

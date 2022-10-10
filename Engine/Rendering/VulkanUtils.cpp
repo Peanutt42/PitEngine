@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "VulkanUtils.hpp"
 
 using namespace Pit;

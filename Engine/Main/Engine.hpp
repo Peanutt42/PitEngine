@@ -5,6 +5,7 @@
 #include "ECS/ECSSubsystem.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
 #include "Rendering/Renderer.hpp"
+#include "Rendering/UI/UIRenderer.hpp"
 
 namespace Pit {
 	struct GlobalUbo {
@@ -18,6 +19,7 @@ namespace Pit {
 		Audio::AudioEngine* AudioEngine = nullptr;
 		uint sound1Id = 0; Audio::MusicBuffer* sound1 = nullptr;
 		Rendering::Renderer* Renderer = nullptr;
+		Rendering::UI::Renderer* UIRenderer = nullptr;
 
 		Engine();
 		~Engine();
@@ -27,7 +29,7 @@ namespace Pit {
 		bool ShouldClose();
 		void Update();
 
-		Rendering::UI::LayerManager* GetUILayerManager() { return Renderer->GetUIRenderer()->GetUILayerManager(); }
+		Rendering::UI::LayerManager* GetUILayerManager() { return UIRenderer->GetUILayerManager(); }
 
 		static Engine* Instance;
 

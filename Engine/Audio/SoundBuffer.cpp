@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "SoundBuffer.hpp"
 #include <sndfile.h>
 #include <cstddef>

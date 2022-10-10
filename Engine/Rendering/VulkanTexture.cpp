@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "VulkanTexture.hpp"
 #include "Main/Engine.hpp"
 #include <stb_image.h>
@@ -119,7 +120,7 @@ void Texture::SetData(void* data) {
 
 	// Create a command buffer that will perform following steps when hit in the command queue.
 	// TODO: this works in the example, but may need input if this is an acceptable way to access the pool/create the command buffer.
-	VkCommandPool command_pool = renderer->m_MainWindowData.Frames[renderer->m_MainWindowData.FrameIndex].CommandPool;
+	VkCommandPool command_pool = renderer->m_Frames[renderer->m_FrameIndex].CommandPool;
 	VkCommandBuffer command_buffer;
 	{
 		VkCommandBufferAllocateInfo alloc_info{};

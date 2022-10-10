@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "Time.hpp"
 
 using namespace Pit;

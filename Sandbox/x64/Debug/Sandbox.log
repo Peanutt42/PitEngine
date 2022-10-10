@@ -1,1 +1,2 @@
-﻿  Sandbox.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\Sandbox.exe
+﻿MSVCRTD.lib(initializers.obj) : warning LNK4098: Standardbibliothek "msvcrt.lib" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  Sandbox.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\Sandbox.exe

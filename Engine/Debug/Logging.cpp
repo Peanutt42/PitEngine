@@ -1,3 +1,4 @@
+#include "CoreInclude.hpp"
 #include "Logging.hpp"
 
 using namespace Pit::Debug;

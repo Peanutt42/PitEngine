@@ -37,6 +37,7 @@
     <ClInclude Include="ECS\ECSComponent.hpp" />
     <ClInclude Include="Rendering\UI\UIFonts.hpp" />
     <ClInclude Include="Rendering\VulkanTexture.hpp" />
+    <ClInclude Include="Rendering\VulkanFrame.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
@@ -56,5 +57,6 @@
     <ClCompile Include="Debug\Logging.cpp" />
     <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
     <ClCompile Include="Rendering\VulkanTexture.cpp" />
+    <ClCompile Include="Main\pch.cpp" />
   </ItemGroup>
 </Project>
