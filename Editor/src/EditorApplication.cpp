@@ -17,9 +17,9 @@ EditorApplication::~EditorApplication() {
 }
 
 void EditorApplication::Init() {
-	m_Engine.GetUILayerManager()->PushLayer<HierachyPanel>();
-	m_Engine.GetUILayerManager()->PushLayer<InspectorPanel>();
-	m_Engine.GetUILayerManager()->PushLayer<SceneViewportPanel>();
+	m_Engine.LayerManager()->PushLayer<HierachyPanel>();
+	m_Engine.LayerManager()->PushLayer<InspectorPanel>();
+	m_Engine.LayerManager()->PushLayer<SceneViewportPanel>();
 }
 
 void EditorApplication::Shutdown() {

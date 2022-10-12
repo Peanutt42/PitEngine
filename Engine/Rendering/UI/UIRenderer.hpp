@@ -3,7 +3,7 @@
 #include "Main/CoreInclude.hpp"
 #include "UILayer.hpp"
 #include "UILayerManager.hpp"
-#include "Rendering/VulkanTypes.hpp"
+#include "Rendering/Renderer.hpp"
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_vulkan.h>
@@ -13,15 +13,13 @@
 namespace Pit::Rendering::UI {
 	class Renderer {
 	public:
-		Renderer(GLFWwindow* window, VkInstance instance, VkPhysicalDevice physicalDevice, VkDevice device,
-					  uint32_t queueFamily, VkQueue queue, VkPipelineCache pipelineCache, VkDescriptorPool descriptorPool,
-					  uint32_t minImageCount, uint32_t imageCount, VkAllocationCallbacks* allocator);
+		Renderer(const RendererContext& context);
 		~Renderer();
 
 		void BeginFrame();
 		void EndFrame();
-		Pit::Rendering::Frame* PresentFrame();
-		void RenderLayers();
+		void DrawLayers();
+		void Render(VkCommandBuffer commandBuffer);
 
 		LayerManager* GetUILayerManager() { return m_UILayerManager; }
 

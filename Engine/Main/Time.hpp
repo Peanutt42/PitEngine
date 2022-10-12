@@ -8,7 +8,15 @@
 namespace Pit {
 	class Time {
 	public:
-		static float DeltaTime;
+		static const float& DeltaTime() { return s_DeltaTime; }
+		static void SetDeltaTime(float DeltaTime) { s_DeltaTime = DeltaTime; }
+
+		static const int& Frame() { return s_Frame; }
+		static void SetFrame(int Frame) { s_Frame = Frame; }
+
+	private:
+		static float s_DeltaTime;
+		static int s_Frame;
 	};
 
 

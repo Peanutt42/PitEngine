@@ -37,8 +37,8 @@ void Engine::Init() {
 	//sound1Id = AudioEngine->AddMusicBuffer(sound1);
 
 	Renderer = new Rendering::Renderer();
-	UIRenderer = new Rendering::UI::Renderer(Renderer->m_Window->GetWindowHandle(), Renderer->m_Instance, Renderer->m_PhysicalDevice, Renderer->m_Device, Renderer->m_QueueFamily,
-											 Renderer->m_Queue, Renderer->m_PipelineCache, Renderer->m_DescriptorPool, Renderer->m_MinImageCount, Renderer->m_ImageCount, Renderer->m_Allocator);
+
+	UIRenderer = new Rendering::UI::Renderer(Renderer->GetContext());
 }
 
 void Engine::Shutdown() {
@@ -56,9 +56,11 @@ void Engine::Shutdown() {
 }
 
 void Engine::Update() {
+	Time::SetFrame((Time::Frame() + 1) % 1000);
+
 	static time_point<high_resolution_clock> lastUpdate;
 	time_point<high_resolution_clock> now = high_resolution_clock::now();
-	Time::DeltaTime = duration_cast<microseconds>(now - lastUpdate).count() / 1000000.0f;
+	Time::SetDeltaTime(duration_cast<microseconds>(now - lastUpdate).count() / 1000000.f);
 	lastUpdate = now;
 
 	ECSSubsystem->Tick();

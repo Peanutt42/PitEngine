@@ -1,9 +1,2 @@
-﻿  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_vulkan.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  Code wird generiert...
+﻿  imgui_impl_vulkan.cpp
   imgui.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\imgui.lib

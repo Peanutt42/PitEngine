@@ -5,10 +5,6 @@ using namespace Pit;
 using namespace Editor;
 
 int main() {
-	std::ifstream file;
-	file.open("C:/temp.txt");
-	file.close();
-
 	Engine engine;
 	engine.Init();
 

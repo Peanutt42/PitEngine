@@ -2,8 +2,6 @@
 #include "VulkanTexture.hpp"
 #include "Main/Engine.hpp"
 #include <stb_image.h>
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_vulkan.h>
 
 using namespace Pit::Rendering;
 
@@ -17,7 +15,7 @@ static void check_vk_result(VkResult err) {
 
 static uint32_t GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32_t type_bits) {
 	VkPhysicalDeviceMemoryProperties prop;
-	vkGetPhysicalDeviceMemoryProperties(Pit::Engine::Instance->Renderer->m_PhysicalDevice, &prop);
+	vkGetPhysicalDeviceMemoryProperties(Pit::Engine::Instance->Renderer->GetContext().m_Device->getPhysicalDevice(), &prop);
 	for (uint32_t i = 0; i < prop.memoryTypeCount; i++) {
 		if ((prop.memoryTypes[i].propertyFlags & properties) == properties && type_bits & (1 << i))
 			return i;
@@ -69,7 +67,7 @@ Texture::~Texture() {
 
 void Texture::SetData(void* data) {
 	auto* renderer = Pit::Engine::Instance->Renderer;
-	VkDevice device = renderer->m_Device;
+	VkDevice device = renderer->GetContext().m_Device->device();
 
 	size_t upload_size = m_Width * m_Height * BytesPerPixel(m_Format);
 
@@ -120,16 +118,15 @@ void Texture::SetData(void* data) {
 
 	// Create a command buffer that will perform following steps when hit in the command queue.
 	// TODO: this works in the example, but may need input if this is an acceptable way to access the pool/create the command buffer.
-	VkCommandPool command_pool = renderer->m_Frames[renderer->m_FrameIndex].CommandPool;
 	VkCommandBuffer command_buffer;
 	{
 		VkCommandBufferAllocateInfo alloc_info{};
 		alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		alloc_info.commandPool = command_pool;
+		alloc_info.commandPool = Pit::Engine::Instance->Renderer->GetContext().m_CommandPool;
 		alloc_info.commandBufferCount = 1;
 
-		err = vkAllocateCommandBuffers(renderer->m_Device, &alloc_info, &command_buffer);
+		err = vkAllocateCommandBuffers(renderer->GetContext().m_Device->device(), &alloc_info, &command_buffer);
 		check_vk_result(err);
 
 		VkCommandBufferBeginInfo begin_info = {};
@@ -185,9 +182,9 @@ void Texture::SetData(void* data) {
 		end_info.pCommandBuffers = &command_buffer;
 		err = vkEndCommandBuffer(command_buffer);
 		check_vk_result(err);
-		err = vkQueueSubmit(renderer->m_Queue, 1, &end_info, VK_NULL_HANDLE);
+		err = vkQueueSubmit(renderer->GetContext().m_Device->queue(), 1, &end_info, VK_NULL_HANDLE);
 		check_vk_result(err);
-		err = vkDeviceWaitIdle(renderer->m_Device);
+		err = vkDeviceWaitIdle(renderer->GetContext().m_Device->device());
 		check_vk_result(err);
 	}
 }
@@ -206,7 +203,7 @@ void Texture::Resize(uint32_t width, uint32_t height) {
 }
 
 void Texture::AllocateMemory(uint64_t size) {
-	VkDevice device = Pit::Engine::Instance->Renderer->m_Device;
+	VkDevice device = Pit::Engine::Instance->Renderer->GetContext().m_Device->device();
 
 	VkResult err;
 
@@ -278,7 +275,7 @@ void Texture::AllocateMemory(uint64_t size) {
 }
 
 void Texture::Release() {
-	VkDevice device = Pit::Engine::Instance->Renderer->m_Device;
+	VkDevice device = Pit::Engine::Instance->Renderer->GetContext().m_Device->device();
 
 	vkDestroySampler(device, m_Sampler, nullptr);
 	vkDestroyImageView(device, m_ImageView, nullptr);

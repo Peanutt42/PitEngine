@@ -21,9 +21,16 @@ namespace Pit::Rendering {
 		GLFWwindow* GetWindowHandle() { return m_Window; }
 		bool IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
 
+		bool WasWindowResized() { return m_FramebufferResized; }
+		void SetWindowResizedFlag(bool resized) { m_FramebufferResized = resized; }
+
 	private:
 		GLFWwindow* m_Window = nullptr;
 		std::string m_Title;
 		int m_Width, m_Height;
+		bool m_FramebufferResized = false;
+
+		static void _FramebufferResizedCallback(GLFWwindow* window, int width, int height);
+		static void _WindowResizedCallback(GLFWwindow* window, int width, int height);
 	};
 }

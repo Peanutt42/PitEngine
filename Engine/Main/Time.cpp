@@ -3,4 +3,5 @@
 
 using namespace Pit;
 
-float Time::DeltaTime = 0.f;
+float Time::s_DeltaTime = 0.f;
+int Time::s_Frame = 0;

@@ -61,11 +61,11 @@ static std::shared_ptr<spdlog::logger> _GetEngineLogger(Log category) {
 #define PIT_ENGINE_INFO(category, msg, ...)		if (PIT_ENGINE_LOGGING && Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_INFO(_GetEngineLogger(category), msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		if (PIT_ENGINE_LOGGING && Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_WARN(_GetEngineLogger(category), msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		if (PIT_ENGINE_LOGGING && Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_ERROR(_GetEngineLogger(category), msg, ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	if (PIT_ENGINE_LOGGING && Pit::Debug::Logging::LoggerInitialized) { PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__); throw std::runtime_error(msg); }
+#define PIT_ENGINE_FATAL(category, msg, ...)	if (PIT_ENGINE_LOGGING && Pit::Debug::Logging::LoggerInitialized) { PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
 
 // Game logging
 #define PIT_TRACE(msg, ...)			SPDLOG_LOGGER_TRACE(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
 #define PIT_INFO(msg, ...)			SPDLOG_LOGGER_INFO(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
 #define PIT_WARN(msg, ...)			SPDLOG_LOGGER_WARN(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
 #define PIT_ERR(msg, ...)			SPDLOG_LOGGER_ERROR(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); }
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }

@@ -27,4 +27,13 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\vert.spv" />
+    <None Include="shaders\compile.bat">
+      <Filter>Quelldateien</Filter>
+    </None>
+    <None Include="shaders\frag.spv" />
+    <None Include="shaders\Shader.frag" />
+    <None Include="shaders\Shader.vert" />
+  </ItemGroup>
 </Project>

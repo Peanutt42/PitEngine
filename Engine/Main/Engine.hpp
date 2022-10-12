@@ -29,9 +29,8 @@ namespace Pit {
 		bool ShouldClose();
 		void Update();
 
-		Rendering::UI::LayerManager* GetUILayerManager() { return UIRenderer->GetUILayerManager(); }
-
 		static Engine* Instance;
+		static Rendering::UI::LayerManager* LayerManager() { return Instance->UIRenderer->GetUILayerManager(); }
 
 	private:
 		bool m_ForceShutdown = false;

@@ -163,17 +163,19 @@
     <ClInclude Include="Main\FileSystem.hpp" />
     <ClInclude Include="Main\Input\Input.hpp" />
     <ClInclude Include="Main\Input\KeyCode.hpp" />
+    <ClInclude Include="Main\Random.hpp" />
     <ClInclude Include="Main\Time.hpp" />
     <ClInclude Include="Main\Types.hpp" />
     <ClInclude Include="Rendering\Renderer.hpp" />
+    <ClInclude Include="Rendering\VulkanDevice.hpp" />
     <ClInclude Include="Rendering\UI\UIFonts.hpp" />
     <ClInclude Include="Rendering\UI\UILayer.hpp" />
     <ClInclude Include="Rendering\UI\UILayerManager.hpp" />
     <ClInclude Include="Rendering\UI\UIRenderer.hpp" />
-    <ClInclude Include="Rendering\VulkanDebugMessenger.hpp" />
-    <ClInclude Include="Rendering\VulkanShaderLoader.hpp" />
+    <ClInclude Include="Rendering\VulkanMesh.hpp" />
+    <ClInclude Include="Rendering\VulkanPipeline.hpp" />
+    <ClInclude Include="Rendering\VulkanSwapChain.hpp" />
     <ClInclude Include="Rendering\VulkanTexture.hpp" />
-    <ClInclude Include="Rendering\VulkanTypes.hpp" />
     <ClInclude Include="Rendering\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,12 +197,38 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Main\Random.cpp" />
     <ClCompile Include="Main\Time.cpp" />
-    <ClCompile Include="Rendering\Renderer.cpp" />
+    <ClCompile Include="Rendering\Renderer.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Rendering\VulkanDevice.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
     <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
-    <ClCompile Include="Rendering\VulkanTexture.cpp" />
-    <ClCompile Include="Rendering\Window.cpp" />
+    <ClCompile Include="Rendering\VulkanMesh.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Rendering\VulkanPipeline.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Rendering\VulkanSwapChain.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Rendering\VulkanTexture.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Rendering\Window.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
