@@ -45,7 +45,7 @@ Renderer::Renderer(const RendererContext& context)
     init_info.DescriptorPool = context.m_DescriptorPool;
     init_info.Subpass = 0;
     init_info.MinImageCount = context.m_MinImageCount;
-    init_info.ImageCount = context.m_SwapChain->imageCount();
+    init_info.ImageCount = Cast<uint32_t>(context.m_SwapChain->imageCount());
     init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
     init_info.Allocator = nullptr;
     init_info.CheckVkResultFn = check_vk_result;
@@ -102,7 +102,7 @@ void Renderer::EndFrame() {
 }
 
 void Renderer::DrawLayers() {
-    m_UILayerManager->RenderLayers();
+    m_UILayerManager->RenderLayers(m_MenubarCallback);
 }
 
 void Renderer::Render(VkCommandBuffer commandBuffer) {

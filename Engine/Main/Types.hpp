@@ -8,6 +8,10 @@ typedef unsigned int uint;
 typedef int32_t int32;
 typedef int64_t int64;
 
+template<typename To, typename From>
+FORCEINLINE To Cast(From src) {
+	return static_cast<To>(src);
+}
 
 template<typename T>
 class Ref {

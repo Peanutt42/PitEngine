@@ -9,6 +9,9 @@ using namespace Pit::Editor;
 entt::entity HierachyPanel::s_SelectedEntity = entt::null;
 
 void HierachyPanel::OnAttach() {
+	Name = "Hierachy";
+	Shortcut = std::vector<KeyCode>{ LeftControl + H };
+
 	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
 	for (int i = 0; i < 15; i++) {
 		auto e = ecsworld->CreateEntity();
@@ -20,7 +23,7 @@ void HierachyPanel::OnDetach() {
 }
 
 void HierachyPanel::OnGUI() {
-	ImGui::Begin("EntityList");
+	ImGui::Begin(Name.c_str(), &Opened);
 
 	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
 	ecsworld->Each([&](entt::entity e) {

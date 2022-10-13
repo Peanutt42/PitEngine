@@ -8,7 +8,7 @@ namespace Pit {
 	class Random {
 	public:
 		static int Int() {
-			return static_cast<int>(UInt() - (std::numeric_limits<uint32_t>::max() / 2));
+			return Cast<int>(UInt() - (std::numeric_limits<uint32_t>::max() / 2));
 		}
 
 		static uint32_t UInt() {

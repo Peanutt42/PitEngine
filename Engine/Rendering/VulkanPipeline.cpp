@@ -13,7 +13,7 @@ static std::vector<char> read_file(const std::string& filepath) {
 	if (!file.is_open())
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to open shader code file: '{}'", filepath);
 
-	size_t fileSize = static_cast<size_t>(file.tellg());
+	size_t fileSize = Cast<size_t>(file.tellg());
 	std::vector<char> buffer(fileSize);
 
 	file.seekg(0);
@@ -102,7 +102,7 @@ void Pipeline::DefaultConfigInfo(PipelineConfigInfo& configInfo) {
 	configInfo.dynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	configInfo.dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 	configInfo.dynamicStateInfo.pDynamicStates = configInfo.dynamicStateEnables.data();
-	configInfo.dynamicStateInfo.dynamicStateCount = static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
+	configInfo.dynamicStateInfo.dynamicStateCount = Cast<uint32_t>(configInfo.dynamicStateEnables.size());
 	configInfo.dynamicStateInfo.flags = 0;
 }
 
@@ -138,8 +138,8 @@ void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const std::
 	auto attributeDescriptions = Vertex::GetAttributeDescription();
 	VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 	vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-	vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
-	vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+	vertexInputInfo.vertexBindingDescriptionCount = Cast<uint32_t>(bindingDescriptions.size());
+	vertexInputInfo.vertexAttributeDescriptionCount = Cast<uint32_t>(attributeDescriptions.size());
 	vertexInputInfo.pVertexBindingDescriptions = bindingDescriptions.data();
 	vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 

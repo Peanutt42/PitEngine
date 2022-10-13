@@ -56,13 +56,13 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 	}
 
 	/* Decode the whole audio file to a buffer. */
-	membuf = static_cast<short*>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
+	membuf = Cast<short*>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
 
 	num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
 	if (num_frames < 1) {
 		free(membuf);
 		sf_close(sndfile);
-		PIT_ENGINE_ERR(Log::Audio, "Failed to read samples in {0:s} {1:d}", filename, static_cast<int>(num_frames));
+		PIT_ENGINE_ERR(Log::Audio, "Failed to read samples in {0:s} {1:d}", filename, Cast<int>(num_frames));
 		return 0;
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
@@ -80,7 +80,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename) {
 	/* Check if an error occured, and clean up if so. */
 	err = alGetError();
 	if (err != AL_NO_ERROR) {
-		PIT_ENGINE_ERR(Log::Audio, "OpenAL Error: {}", static_cast<const char*>(alGetString(err)));
+		PIT_ENGINE_ERR(Log::Audio, "OpenAL Error: {}", Cast<const char*>(alGetString(err)));
 		if (buffer && alIsBuffer(buffer))
 			alDeleteBuffers(1, &buffer);
 		return 0;
@@ -115,7 +115,7 @@ SoundBuffer::SoundBuffer() {
 }
 
 SoundBuffer::~SoundBuffer() {
-	alDeleteBuffers(static_cast<ALsizei>(p_SoundEffectBuffers.size()), p_SoundEffectBuffers.data());
+	alDeleteBuffers(Cast<ALsizei>(p_SoundEffectBuffers.size()), p_SoundEffectBuffers.data());
 
 	p_SoundEffectBuffers.clear();
 }

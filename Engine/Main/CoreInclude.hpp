@@ -20,3 +20,4 @@
 #include "EngineConfig.hpp"
 #include "Input/Input.hpp"
 #include "Input/KeyCode.hpp"
+#include "Utils/StringUtils.hpp"

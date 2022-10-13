@@ -49,7 +49,7 @@ void Mesh::Draw(VkCommandBuffer commandBuffer) {
 
 
 void Mesh::_CreateVertexBuffers(const std::vector<Vertex>& vertices) {
-	m_VertexCount = static_cast<uint32_t>(vertices.size());
+	m_VertexCount = Cast<uint32_t>(vertices.size());
 	VkDeviceSize bufferSize = sizeof(Vertex) * m_VertexCount;
 	m_Device.createBuffer(bufferSize,
 						  VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
@@ -59,6 +59,6 @@ void Mesh::_CreateVertexBuffers(const std::vector<Vertex>& vertices) {
 
 	void* data;
 	vkMapMemory(m_Device.device(), m_VertexBufferMemory, 0, bufferSize, 0, &data);
-	memcpy(data, vertices.data(), static_cast<size_t>(bufferSize));
+	memcpy(data, vertices.data(), Cast<size_t>(bufferSize));
 	vkUnmapMemory(m_Device.device(), m_VertexBufferMemory);
 }

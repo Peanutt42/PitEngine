@@ -33,7 +33,7 @@ void Engine::Init() {
 
 	AudioEngine = new Audio::AudioEngine();
 	AudioEngine->SetGain(0.2f);
-	//sound1 = new MusicBuffer("C:/dev/cpp/PitEngine/Sandbox/audio/mc-virgins-yun-head-trap-anthem-official-lyric-video.mp3");
+	//sound1 = new MusicBuffer("C:/dev/cpp/PitEngine/Sandbox/assets/audio/mc-virgins-yun-head-trap-anthem-official-lyric-video.mp3");
 	//sound1Id = AudioEngine->AddMusicBuffer(sound1);
 
 	Renderer = new Rendering::Renderer();

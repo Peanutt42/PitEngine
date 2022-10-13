@@ -1,3 +1,5 @@
 ﻿  Compiling shaders
   Drücken Sie eine beliebige Taste . . . 
+  pch.cpp
+  main.cpp
   Sandbox.vcxproj -> C:\dev\cpp\PitEngine\x64\Debug\Sandbox.exe

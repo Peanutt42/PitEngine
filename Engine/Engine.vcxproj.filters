@@ -123,6 +123,9 @@
     <ClInclude Include="Main\Random.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\StringUtils.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering\UI\UILayerManager.cpp">

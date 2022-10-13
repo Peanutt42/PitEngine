@@ -16,29 +16,12 @@ namespace Pit::FileSystem {
 		static std::string rootDir = std::filesystem::current_path().string();
 		return rootDir;
 	}
-	inline const char* GetRootDir(const std::string& extra) {
-		static std::string rootDir = std::filesystem::current_path().string();
-		const char* dir = (rootDir + extra).c_str();
-		return dir;
+
+	inline std::string GetEngineDir() {
+		return "Engine/";
 	}
 
-	inline std::string& GetEngineDir() {
-		static std::string engineDir = GetRootDir() + std::string("/Engine/");
-		return engineDir;
-	}
-	inline const char* GetEngineDir(const std::string& extra) {
-		static std::string engineDir = GetRootDir() + std::string("/Engine/");
-		const char* dir = (engineDir + extra).c_str();
-		return dir;
-	}
-
-	inline std::string& GetSandboxDir() {
-		static std::string sandboxDir = GetRootDir() + std::string("/Sandbox/");
-		return sandboxDir;
-	}
-	inline const char* GetSandboxDir(const std::string& extra) {
-		static std::string sandboxDir = GetRootDir() + std::string("/Sandbox/");
-		const char* dir = (sandboxDir + extra).c_str();
-		return dir;
+	inline std::string GetSandboxDir() {
+		return "Sandbox/";
 	}
 }

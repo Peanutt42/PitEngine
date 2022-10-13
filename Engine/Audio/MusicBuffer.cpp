@@ -126,7 +126,7 @@ MusicBuffer::MusicBuffer(const char* filename) {
 	}
 
 	frame_size = ((size_t)BUFFER_SAMPLES * (size_t)p_Sfinfo.channels) * sizeof(short);
-	p_Membuf = static_cast<short*>(malloc(frame_size));
+	p_Membuf = Cast<short*>(malloc(frame_size));
 
 }
 

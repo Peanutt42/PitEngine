@@ -16,7 +16,7 @@ LayerManager::~LayerManager() {
     }
 }
 
-void LayerManager::RenderLayers() {
+void LayerManager::RenderLayers(std::function<void()> menubarCallback) {
 #ifdef PIT_EDITOR
     float minWinSizeX = ImGui::GetStyle().WindowMinSize.x;
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
@@ -56,13 +56,15 @@ void LayerManager::RenderLayers() {
 
                 ImGui::EndMenu();
             }
+            if (menubarCallback)
+                menubarCallback();
             ImGui::EndMenuBar();
         }
     }
 #endif
 
     for (auto layer : m_LayerStack)
-        if (layer)
+        if (layer && layer->Opened)
             layer->OnGUI();
 
 #ifdef PIT_EDITOR

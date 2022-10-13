@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorApplication.hpp" />
+    <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
     <ClInclude Include="src\Panels\InspectorPanel.hpp" />
     <ClInclude Include="src\Panels\SceneViewportPanel.hpp" />
@@ -152,8 +153,10 @@
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\HierachyPanel.cpp" />
     <ClCompile Include="src\Panels\InspectorPanel.cpp" />
+    <ClCompile Include="src\Panels\ProfilerPanel.cpp" />
     <ClCompile Include="src\Panels\SceneViewportPanel.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -192,6 +195,9 @@
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{3ca8e803-d81a-4823-90fe-feeb1dee73d9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Panels\ProfilerPanel.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -177,6 +177,7 @@
     <ClInclude Include="Rendering\VulkanSwapChain.hpp" />
     <ClInclude Include="Rendering\VulkanTexture.hpp" />
     <ClInclude Include="Rendering\Window.hpp" />
+    <ClInclude Include="Utils\StringUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\AudioEngine.cpp" />

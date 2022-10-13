@@ -108,8 +108,8 @@ void Renderer::_CreatePipeline() {
 	pipelineConfig.pipelineLayout = m_PipelineLayout;
 	m_Pipeline = std::make_unique<Pipeline>(m_Device,
 											pipelineConfig,
-											FileSystem::GetSandboxDir() + "shaders/vert.spv",
-											FileSystem::GetSandboxDir() + "shaders/frag.spv");
+											FileSystem::GetSandboxDir() + "assets/shaders/vert.spv",
+											FileSystem::GetSandboxDir() + "assets/shaders/frag.spv");
 
 }
 
@@ -125,9 +125,9 @@ static int _GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode) {
 }
 
 void Renderer::_RecreateSwapChain() {
-	VkExtent2D extent{ static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()) };
+	VkExtent2D extent{ Cast<uint32_t>(m_Window.GetWidth()), Cast<uint32_t>(m_Window.GetHeight()) };
 	while (extent.width == 0 || extent.height == 0) {
-		extent = { static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()) };
+		extent = { Cast<uint32_t>(m_Window.GetWidth()), Cast<uint32_t>(m_Window.GetHeight()) };
 		glfwWaitEvents();
 	}
 
@@ -162,7 +162,7 @@ void Renderer::_CreateCommandBuffers() {
 }
 
 void Renderer::_FreeCommandBuffers() {
-	vkFreeCommandBuffers(m_Device.device(), m_Device.getCommandPool(), static_cast<uint32_t>(m_CommandBuffers.size()), m_CommandBuffers.data());
+	vkFreeCommandBuffers(m_Device.device(), m_Device.getCommandPool(), Cast<uint32_t>(m_CommandBuffers.size()), m_CommandBuffers.data());
 	m_CommandBuffers.clear();
 }
 
@@ -190,8 +190,8 @@ void Renderer::_RecordCommandBuffer(int imageIndex) {
 
 	VkViewport viewport{};
 	viewport.x = viewport.y = 0;
-	viewport.width = static_cast<float>(m_SwapChain->getSwapChainExtent().width);
-	viewport.height = static_cast<float>(m_SwapChain->getSwapChainExtent().height);
+	viewport.width = Cast<float>(m_SwapChain->getSwapChainExtent().width);
+	viewport.height = Cast<float>(m_SwapChain->getSwapChainExtent().height);
 	viewport.minDepth = 0.f;
 	viewport.maxDepth = 1.f;
 	VkRect2D scissors{ {0, 0}, m_SwapChain->getSwapChainExtent() };

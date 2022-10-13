@@ -14,5 +14,7 @@ namespace Pit::Editor {
 
 	private:
 		Engine& m_Engine;
+		std::vector<Pit::Rendering::UI::Layer*> m_Panels;
+		std::vector<bool> m_PanelKeyShortcutsPressed;
 	};
 }

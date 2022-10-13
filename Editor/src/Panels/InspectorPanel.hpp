@@ -1,4 +1,4 @@
-// Help from TheCherno (Hazel) , see SceneHierachyPanel->Property Window
+// Help from TheCherno (Hazel) https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/SceneHierarchyPanel.h, see SceneHierachyPanel->Property Window
 
 #pragma once
 

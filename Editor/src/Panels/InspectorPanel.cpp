@@ -13,7 +13,8 @@
 using namespace Pit::Editor;
 
 void InspectorPanel::OnAttach() {
-
+	Name = "Inspector";
+	Shortcut = std::vector<KeyCode>{ LeftControl, I };
 }
 
 void InspectorPanel::OnDetach() {
@@ -21,7 +22,7 @@ void InspectorPanel::OnDetach() {
 }
 
 void InspectorPanel::OnGUI() {
-	ImGui::Begin("Inspector");
+	ImGui::Begin(Name.c_str(), &Opened);
 
 	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
 	if (ecsworld->GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {

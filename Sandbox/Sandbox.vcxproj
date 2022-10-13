@@ -122,7 +122,7 @@
       <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Sandbox/shaders/compile.bat</Command>
+      <Command>$(SolutionDir)Sandbox/assets/shaders/compile.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -145,7 +145,7 @@
       <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Sandbox/shaders/compile.bat</Command>
+      <Command>$(SolutionDir)Sandbox/assets/shaders/compile.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
