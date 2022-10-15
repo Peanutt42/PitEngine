@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "HierachyPanel.hpp"
 #include <imgui/imgui.h>
-#include "Engine/Main/Engine.hpp"
-#include "Engine/ECS/Commons/ECSEntityComponent.hpp"
+#include "Main/Engine.hpp"
+#include "ECS/ECSComponents.hpp"
 
 using namespace Pit::Editor;
 
@@ -12,10 +12,10 @@ void HierachyPanel::OnAttach() {
 	Name = "Hierachy";
 	Shortcut = std::vector<KeyCode>{ LeftControl + H };
 
-	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
+	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	for (int i = 0; i < 15; i++) {
-		auto e = ecsworld->CreateEntity();
-		ecsworld->GetComponent<ECS::EntityComponent>(e).Name = "Entity" + std::to_string((uint32_t)e);
+		auto e = ecsworld.CreateEntity();
+		ecsworld.GetComponent<ECS::NameComponent>(e).Name = "Entity" + std::to_string((uint32_t)e);
 	}
 }
 
@@ -25,9 +25,9 @@ void HierachyPanel::OnDetach() {
 void HierachyPanel::OnGUI() {
 	ImGui::Begin(Name.c_str(), &Opened);
 
-	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
-	ecsworld->Each([&](entt::entity e) {
-		if (ecsworld->GetRegistry().valid(e))
+	auto& ecsworld = Engine::ECS()->GetEcsWorld();
+	ecsworld.Each([&](entt::entity e) {
+		if (ecsworld.GetRegistry().valid(e))
 			_DrawEntityNode(e);
 	});
 
@@ -37,7 +37,7 @@ void HierachyPanel::OnGUI() {
 	// Right-click on blank space
 	if (ImGui::BeginPopupContextWindow("EntityCreateMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_NoOpenOverExistingPopup)) {
 		if (ImGui::MenuItem("Create Entity"))
-			ecsworld->CreateEntity();
+			ecsworld.CreateEntity();
 
 		ImGui::EndPopup();
 	}
@@ -46,8 +46,8 @@ void HierachyPanel::OnGUI() {
 }
 
 void HierachyPanel::_DrawEntityNode(entt::entity entity) {
-	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
-	auto& name = ecsworld->GetComponent<ECS::EntityComponent>(entity).Name;
+	auto& ecsworld = Engine::ECS()->GetEcsWorld();
+	auto& name = ecsworld.GetComponent<ECS::NameComponent>(entity).Name;
 
 	ImGuiTreeNodeFlags flags = ((s_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 	flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
@@ -66,7 +66,7 @@ void HierachyPanel::_DrawEntityNode(entt::entity entity) {
 		ImGui::TreePop();
 
 	if (deleteEntity) {
-		ecsworld->DestroyEntity(entity);
+		ecsworld.DestroyEntity(entity);
 		s_SelectedEntity = entt::null;
 	}
 }

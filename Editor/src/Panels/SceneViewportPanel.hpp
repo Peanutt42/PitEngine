@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Engine/Main/CoreInclude.hpp"
-#include "Engine/Rendering/UI/UILayer.hpp"
-#include "Engine/Rendering/VulkanTexture.hpp"
+#include "Main/CoreInclude.hpp"
+#include "Rendering/UI/UILayer.hpp"
+#include "Rendering/Vulkan/VulkanTexture.hpp"
+#include "EditorApplication.hpp"
 #include <vulkan/vulkan.h>
 
 namespace Pit::Editor {

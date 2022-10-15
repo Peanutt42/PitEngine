@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine/Rendering/UI/UILayer.hpp"
+#include "Rendering/UI/UILayer.hpp"
 
 namespace Pit::Editor {
 	class ProfilerPanel : public Rendering::UI::Layer {

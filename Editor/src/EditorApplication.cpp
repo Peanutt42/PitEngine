@@ -5,21 +5,25 @@
 #include "Panels/SceneViewportPanel.hpp"
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
+#include <vulkan/vulkan.h>
 
 using namespace Pit::Editor;
 
+EditorApplication* EditorApplication::Instance = nullptr;
 
 EditorApplication::EditorApplication(Engine& engine)
 	: m_Engine(engine) {
 
-
+	Instance = this;
 }
 
 EditorApplication::~EditorApplication() {
-
+	Instance = nullptr;
 }
 
 void EditorApplication::Init() {
+	m_AssetManager.Init();
+
 	m_Panels.push_back(new HierachyPanel());
 	m_Panels.push_back(new InspectorPanel());
 	m_Panels.push_back(new SceneViewportPanel());
@@ -29,7 +33,7 @@ void EditorApplication::Init() {
 	for (auto layer : m_Panels)
 		Engine::LayerManager()->PushLayer(layer);
 	
-	Engine::Instance->UIRenderer->SetMenubarCallback([&]() {
+	Engine::Rendering()->GetUIRenderer()->SetMenubarCallback([&]() {
 		std::vector<bool> openWindows(m_Panels.size());
 		if (ImGui::BeginMenu("Windows"))  {
 			for (int i = 0; i < m_Panels.size(); i++) {
@@ -46,7 +50,9 @@ void EditorApplication::Init() {
 }
 
 void EditorApplication::Shutdown() {
+	vkDeviceWaitIdle(Engine::Rendering()->GetRenderer()->Device.device());
 
+	m_AssetManager.Shutdown();
 }
 
 void EditorApplication::Update() {
@@ -59,5 +65,9 @@ void EditorApplication::Update() {
 				pressed = false;
 		}
 		m_PanelKeyShortcutsPressed[i] = pressed;
+	}
+
+	if (Input::IsKeyDown(Space)) {
+		test1();
 	}
 }

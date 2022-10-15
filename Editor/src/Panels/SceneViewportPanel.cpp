@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "SceneViewportPanel.hpp"
-#include "Engine/Main/Engine.hpp"
+#include "Main/Engine.hpp"
 #include <imgui/imgui.h>
 #include <stb_image.h>
 #include <vulkan/vulkan.h>
@@ -23,5 +23,12 @@ void SceneViewportPanel::OnGUI() {
 	auto region = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)m_SceneTexture->GetDescriptorSet(),
 				 ImVec2(region.x, region.y));
+	if (ImGui::BeginDragDropTarget()) {
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(CONTENT_BROWSER_DRAG_DROP)) {
+			const char* path = Cast<const char*>(payload->Data);
+		}
+		ImGui::EndDragDropTarget();
+	}
+
 	ImGui::End();
 }

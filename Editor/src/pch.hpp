@@ -1,3 +1,4 @@
 #pragma once
 
-#include "Engine/Main/Engine.hpp"
+#define PIT_EDITOR
+#include "Main/Engine.hpp"

@@ -18,6 +18,109 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Audio\AudioEngine.hpp" />
+    <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
+    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
+    <ClInclude Include="src\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="src\Audio\SoundSource.hpp" />
+    <ClInclude Include="src\Debug\Logging.hpp" />
+    <ClInclude Include="src\Debug\ProfileStats.hpp" />
+    <ClInclude Include="src\ECS\ECSComponent.hpp" />
+    <ClInclude Include="src\ECS\ECSComponents.hpp" />
+    <ClInclude Include="src\ECS\ECSGameloop.hpp" />
+    <ClInclude Include="src\ECS\ECSInclude.hpp" />
+    <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
+    <ClInclude Include="src\ECS\ECSSystem.hpp" />
+    <ClInclude Include="src\ECS\ECSWorld.hpp" />
+    <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
+    <ClInclude Include="src\ECS\Examples\ECSExampleMovement.hpp" />
+    <ClInclude Include="src\Main\CoreInclude.hpp" />
+    <ClInclude Include="src\Main\Engine.hpp" />
+    <ClInclude Include="src\Main\EngineConfig.hpp" />
+    <ClInclude Include="src\Main\FileSystem.hpp" />
+    <ClInclude Include="src\Main\Input\Input.hpp" />
+    <ClInclude Include="src\Main\Input\KeyCode.hpp" />
+    <ClInclude Include="src\Main\Random.hpp" />
+    <ClInclude Include="src\Main\Submodule.hpp" />
+    <ClInclude Include="src\Main\Time.hpp" />
+    <ClInclude Include="src\Main\Types.hpp" />
+    <ClInclude Include="src\Main\UUID.hpp" />
+    <ClInclude Include="src\Rendering\Renderer.hpp" />
+    <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
+    <ClInclude Include="src\Rendering\UI\UIFonts.hpp" />
+    <ClInclude Include="src\Rendering\UI\UILayer.hpp" />
+    <ClInclude Include="src\Rendering\UI\UILayerManager.hpp" />
+    <ClInclude Include="src\Rendering\UI\UIRenderer.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanSwapChain.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanTexture.hpp" />
+    <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\Utils\DateUtils.hpp" />
+    <ClInclude Include="src\Utils\StringUtils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Audio\AudioEngine.cpp" />
+    <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
+    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
+    <ClCompile Include="src\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="src\Audio\SoundSource.cpp" />
+    <ClCompile Include="src\Debug\Logging.cpp" />
+    <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
+    <ClCompile Include="src\ECS\ECSWorld.cpp" />
+    <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="src\Main\Engine.cpp" />
+    <ClCompile Include="src\Main\Input\Input.cpp" />
+    <ClCompile Include="src\Main\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\Main\Random.cpp" />
+    <ClCompile Include="src\Main\Time.cpp" />
+    <ClCompile Include="src\Main\UUID.cpp" />
+    <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
+    <ClCompile Include="src\Rendering\UI\UILayerManager.cpp" />
+    <ClCompile Include="src\Rendering\UI\UIRenderer.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanSwapChain.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanTexture.cpp" />
+    <ClCompile Include="src\Rendering\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dependencies\EnTT\EnTT.vcxproj">
+      <Project>{92011705-82a1-4fdd-950c-65c25e0a2bc6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\glfw\glfw.vcxproj">
+      <Project>{a9e3c93b-9481-4001-b47e-d89089944351}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\glm\glm.vcxproj">
+      <Project>{6703417e-677e-4894-b028-0421accf9bea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\imgui\imgui.vcxproj">
+      <Project>{cfbf84e4-6431-42e3-9723-bf195d1831b7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\spdlog\spdlog.vcxproj">
+      <Project>{c31f36ee-b048-4591-9bdc-51baa2ddec60}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\stb_image\stb_image.vcxproj">
+      <Project>{9b3a36b5-42ea-45dd-b0c5-9be9d6b0d9a5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\tinyobjloader\tinyobjloader.vcxproj">
+      <Project>{74a5561b-40f6-4160-b0c1-0a1cda26d89e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\vulkan\vulkan.vcxproj">
+      <Project>{158a1a27-9dd8-4bd0-9591-a92500a46e5d}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -71,11 +174,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -113,7 +216,7 @@
       <PreprocessorDefinitions>PIT_EDITOR</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -130,7 +233,7 @@
       <PreprocessorDefinitions>PIT_EDITOR</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>CoreInclude.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -140,97 +243,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Audio\AudioEngine.hpp" />
-    <ClInclude Include="Audio\MusicBuffer.hpp" />
-    <ClInclude Include="Audio\SoundBuffer.hpp" />
-    <ClInclude Include="Audio\SoundSource.hpp" />
-    <ClInclude Include="Debug\Logging.hpp" />
-    <ClInclude Include="ECS\Commons\ECSEntityComponent.hpp" />
-    <ClInclude Include="ECS\Commons\ECSTransform2DComponent.hpp" />
-    <ClInclude Include="ECS\Commons\ECSTransformComponent.hpp" />
-    <ClInclude Include="ECS\ECSComponent.hpp" />
-    <ClInclude Include="ECS\ECSGameloop.hpp" />
-    <ClInclude Include="ECS\ECSInclude.hpp" />
-    <ClInclude Include="ECS\ECSSubsystem.hpp" />
-    <ClInclude Include="ECS\ECSSystem.hpp" />
-    <ClInclude Include="ECS\ECSWorld.hpp" />
-    <ClInclude Include="ECS\Examples\ECSBasicGameloop.hpp" />
-    <ClInclude Include="ECS\Examples\ECSExampleMovement.hpp" />
-    <ClInclude Include="Main\CoreInclude.hpp" />
-    <ClInclude Include="Main\Engine.hpp" />
-    <ClInclude Include="Main\EngineConfig.hpp" />
-    <ClInclude Include="Main\FileSystem.hpp" />
-    <ClInclude Include="Main\Input\Input.hpp" />
-    <ClInclude Include="Main\Input\KeyCode.hpp" />
-    <ClInclude Include="Main\Random.hpp" />
-    <ClInclude Include="Main\Time.hpp" />
-    <ClInclude Include="Main\Types.hpp" />
-    <ClInclude Include="Rendering\Renderer.hpp" />
-    <ClInclude Include="Rendering\VulkanDevice.hpp" />
-    <ClInclude Include="Rendering\UI\UIFonts.hpp" />
-    <ClInclude Include="Rendering\UI\UILayer.hpp" />
-    <ClInclude Include="Rendering\UI\UILayerManager.hpp" />
-    <ClInclude Include="Rendering\UI\UIRenderer.hpp" />
-    <ClInclude Include="Rendering\VulkanMesh.hpp" />
-    <ClInclude Include="Rendering\VulkanPipeline.hpp" />
-    <ClInclude Include="Rendering\VulkanSwapChain.hpp" />
-    <ClInclude Include="Rendering\VulkanTexture.hpp" />
-    <ClInclude Include="Rendering\Window.hpp" />
-    <ClInclude Include="Utils\StringUtils.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Audio\AudioEngine.cpp" />
-    <ClCompile Include="Audio\MusicBuffer.cpp" />
-    <ClCompile Include="Audio\SoundBuffer.cpp" />
-    <ClCompile Include="Audio\SoundSource.cpp" />
-    <ClCompile Include="Debug\Logging.cpp" />
-    <ClCompile Include="ECS\ECSSubsystem.cpp" />
-    <ClCompile Include="ECS\ECSWorld.cpp" />
-    <ClCompile Include="ECS\Examples\ECSBasicGameloop.cpp" />
-    <ClCompile Include="Main\Engine.cpp" />
-    <ClCompile Include="Main\Input\Input.cpp" />
-    <ClCompile Include="Main\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Main\Random.cpp" />
-    <ClCompile Include="Main\Time.cpp" />
-    <ClCompile Include="Rendering\Renderer.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\VulkanDevice.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\UI\UILayerManager.cpp" />
-    <ClCompile Include="Rendering\UI\UIRenderer.cpp" />
-    <ClCompile Include="Rendering\VulkanMesh.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\VulkanPipeline.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\VulkanSwapChain.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\VulkanTexture.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Rendering\Window.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CoreInclude.hpp</PrecompiledHeaderFile>
-    </ClCompile>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

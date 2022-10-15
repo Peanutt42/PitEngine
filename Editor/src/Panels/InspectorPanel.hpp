@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Engine/Rendering/UI/UILayer.hpp"
-#include "Engine/ECS/ECSWorld.hpp"
+#include "Rendering/UI/UILayer.hpp"
+#include "ECS/ECSWorld.hpp"
 
 namespace Pit::Editor {
 	class InspectorPanel : public Rendering::UI::Layer {

@@ -1,11 +1,10 @@
 #include "pch.hpp"
 #include "InspectorPanel.hpp"
 #include "HierachyPanel.hpp"
-#include "Engine/Main/Engine.hpp"
-#include "Engine/ECS/ECSWorld.hpp"
-#include "Engine/ECS/Commons/ECSEntityComponent.hpp"
-#include "Engine/ECS/Commons/ECSTransformComponent.hpp"
-#include "Engine/Rendering/UI/UIFonts.hpp"
+#include "Main/Engine.hpp"
+#include "ECS/ECSWorld.hpp"
+#include "ECS/ECSComponents.hpp"
+#include "Rendering/UI/UIFonts.hpp"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui_internal.h>
@@ -24,9 +23,9 @@ void InspectorPanel::OnDetach() {
 void InspectorPanel::OnGUI() {
 	ImGui::Begin(Name.c_str(), &Opened);
 
-	auto* ecsworld = Engine::Instance->ECSSubsystem->GetEcsWorld();
-	if (ecsworld->GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {
-		_DrawComponents(ecsworld, HierachyPanel::s_SelectedEntity);
+	auto& ecsworld = Engine::ECS()->GetEcsWorld();
+	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {
+		_DrawComponents(&ecsworld, HierachyPanel::s_SelectedEntity);
 	}
 
 	ImGui::End();
@@ -137,18 +136,18 @@ static void DrawComponent(const std::string& name, Pit::ECS::World* world, entt:
 
 template<typename T>
 static void DisplayAddComponentEntry(const std::string& entryName) {
-	auto* ecsworld = Pit::Engine::Instance->ECSSubsystem->GetEcsWorld();
-	if (!ecsworld->HasComponent<T>(HierachyPanel::s_SelectedEntity)) {
+	auto& ecsworld = Pit::Engine::ECS()->GetEcsWorld();
+	if (!ecsworld.HasComponent<T>(HierachyPanel::s_SelectedEntity)) {
 		if (ImGui::MenuItem(entryName.c_str())) {
-			ecsworld->AddComponent<T>(HierachyPanel::s_SelectedEntity);
+			ecsworld.AddComponent<T>(HierachyPanel::s_SelectedEntity);
 			ImGui::CloseCurrentPopup();
 		}
 	}
 }
 
 void InspectorPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
-	if (world->HasComponent<ECS::EntityComponent>(entity)) {
-		auto& entityComp = world->GetComponent<ECS::EntityComponent>(entity);
+	if (world->HasComponent<ECS::NameComponent>(entity)) {
+		auto& entityComp = world->GetComponent<ECS::NameComponent>(entity);
 		auto& name = entityComp.Name;
 
 		char buffer[256];

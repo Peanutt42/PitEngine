@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Engine/Rendering/UI/UILayer.hpp"
+#include "Rendering/UI/UILayer.hpp"
 #include <entt.hpp>
 
 namespace Pit::Editor {

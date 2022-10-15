@@ -15,183 +15,204 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Rendering\UI\UIFonts.hpp">
+    <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\UI\UILayer.hpp">
+    <ClInclude Include="src\Audio\AudioEngine.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\UI\UILayerManager.hpp">
+    <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\UI\UIRenderer.hpp">
+    <ClInclude Include="src\Audio\MusicBuffer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\VulkanDevice.hpp">
+    <ClInclude Include="src\Audio\SoundBuffer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\VulkanTexture.hpp">
+    <ClInclude Include="src\Audio\SoundSource.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Window.hpp">
+    <ClInclude Include="src\Debug\Logging.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Input\Input.hpp">
+    <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Input\KeyCode.hpp">
+    <ClInclude Include="src\ECS\Examples\ECSExampleMovement.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\CoreInclude.hpp">
+    <ClInclude Include="src\ECS\ECSComponent.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Engine.hpp">
+    <ClInclude Include="src\ECS\ECSGameloop.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\EngineConfig.hpp">
+    <ClInclude Include="src\ECS\ECSInclude.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\FileSystem.hpp">
+    <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Time.hpp">
+    <ClInclude Include="src\ECS\ECSSystem.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Types.hpp">
+    <ClInclude Include="src\ECS\ECSWorld.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSWorld.hpp">
+    <ClInclude Include="src\Main\Input\Input.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Commons\ECSEntityComponent.hpp">
+    <ClInclude Include="src\Main\Input\KeyCode.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Commons\ECSTransform2DComponent.hpp">
+    <ClInclude Include="src\Main\CoreInclude.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Commons\ECSTransformComponent.hpp">
+    <ClInclude Include="src\Main\Engine.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Examples\ECSBasicGameloop.hpp">
+    <ClInclude Include="src\Main\EngineConfig.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Examples\ECSExampleMovement.hpp">
+    <ClInclude Include="src\Main\FileSystem.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSComponent.hpp">
+    <ClInclude Include="src\Main\Random.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSGameloop.hpp">
+    <ClInclude Include="src\Main\Submodule.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSInclude.hpp">
+    <ClInclude Include="src\Main\Time.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSSubsystem.hpp">
+    <ClInclude Include="src\Main\Types.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\ECSSystem.hpp">
+    <ClInclude Include="src\Rendering\UI\UIFonts.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Debug\Logging.hpp">
+    <ClInclude Include="src\Rendering\UI\UILayer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Audio\AudioEngine.hpp">
+    <ClInclude Include="src\Rendering\UI\UILayerManager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Audio\MusicBuffer.hpp">
+    <ClInclude Include="src\Rendering\UI\UIRenderer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Audio\SoundBuffer.hpp">
+    <ClInclude Include="src\Rendering\Renderer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Audio\SoundSource.hpp">
+    <ClInclude Include="src\Rendering\RenderingSubmodule.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\VulkanPipeline.hpp">
+    <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\VulkanSwapChain.hpp">
+    <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\Renderer.hpp">
+    <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\VulkanMesh.hpp">
+    <ClInclude Include="src\Rendering\Vulkan\VulkanSwapChain.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Random.hpp">
+    <ClInclude Include="src\Rendering\Vulkan\VulkanTexture.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\StringUtils.hpp">
+    <ClInclude Include="src\Rendering\Window.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\DateUtils.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Main\UUID.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\ECSComponents.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Debug\ProfileStats.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Rendering\UI\UILayerManager.cpp">
+    <ClCompile Include="src\Audio\MusicBuffer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\UI\UIRenderer.cpp">
+    <ClCompile Include="src\Audio\SoundBuffer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\VulkanDevice.cpp">
+    <ClCompile Include="src\Audio\SoundSource.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\VulkanTexture.cpp">
+    <ClCompile Include="src\Debug\Logging.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\Window.cpp">
+    <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Input\Input.cpp">
+    <ClCompile Include="src\ECS\ECSWorld.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Engine.cpp">
+    <ClCompile Include="src\Main\Input\Input.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main\pch.cpp">
+    <ClCompile Include="src\Main\Engine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Time.cpp">
+    <ClCompile Include="src\Main\pch.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\Examples\ECSBasicGameloop.cpp">
+    <ClCompile Include="src\Main\Random.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\ECSSubsystem.cpp">
+    <ClCompile Include="src\Main\Time.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\ECSWorld.cpp">
+    <ClCompile Include="src\Rendering\UI\UILayerManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Debug\Logging.cpp">
+    <ClCompile Include="src\Rendering\UI\UIRenderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Audio\AudioEngine.cpp">
+    <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Audio\MusicBuffer.cpp">
+    <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Audio\SoundBuffer.cpp">
+    <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Audio\SoundSource.cpp">
+    <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\VulkanPipeline.cpp">
+    <ClCompile Include="src\Rendering\Vulkan\VulkanSwapChain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\VulkanSwapChain.cpp">
+    <ClCompile Include="src\Rendering\Vulkan\VulkanTexture.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\Renderer.cpp">
+    <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\VulkanMesh.cpp">
+    <ClCompile Include="src\Audio\AudioEngine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Random.cpp">
+    <ClCompile Include="src\Main\UUID.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\AudioSubmodule.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

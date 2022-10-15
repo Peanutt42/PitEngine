@@ -5,19 +5,24 @@ using namespace Pit;
 using namespace Editor;
 
 int main() {
-	Engine engine;
-	engine.Init();
+	try {
+		Engine engine;
+		engine.Init();
 
-	EditorApplication editor(engine);
-	editor.Init();
+		EditorApplication editor(engine);
+		editor.Init();
 
-	while (!engine.ShouldClose()) {
-		editor.Update();
-		engine.Update();
+		while (!engine.ShouldClose()) {
+			editor.Update();
+			engine.Update();
+		}
+
+		editor.Shutdown();
+		engine.Shutdown();
 	}
-
-	editor.Shutdown();
-	engine.Shutdown();
+	catch (const std::exception& e) {
+		std::cerr << e.what();
+	}
 
 
 	return 0;

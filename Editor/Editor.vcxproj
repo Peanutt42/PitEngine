@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Editor\src;$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)Engine;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)Editor\src;$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\stb_image\include;$(ExternalIncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\glfw\lib-vc2022;$(SolutionDir)Dependencies\vulkan\Lib;C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -119,7 +119,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies);$(CoreLibraryDependencies);</AdditionalDependencies>
+      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;opengl32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies);$(CoreLibraryDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,11 +139,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies);$(CoreLibraryDependencies);</AdditionalDependencies>
+      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;opengl32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies);$(CoreLibraryDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorApplication.hpp" />
+    <ClInclude Include="src\EditorAssetManager.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
     <ClInclude Include="src\Panels\InspectorPanel.hpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
+    <ClCompile Include="src\EditorAssetManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\HierachyPanel.cpp" />

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine/Rendering/UI/UILayer.hpp"
+#include "Rendering/UI/UILayer.hpp"
 #include <filesystem>
 
 namespace Pit::Editor {
@@ -14,5 +14,10 @@ namespace Pit::Editor {
 
 	private:
 		std::filesystem::path m_CurrentDirectory;
+		std::filesystem::path m_LastDirectory;
+
+		void _DrawBrowserToolbar();
+		void _DrawListBrowser();
+		void _DrawColumnsBrowser();
 	};
 }
