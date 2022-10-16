@@ -21,15 +21,15 @@ void ProfilerPanel::OnDetach() {
 }
 
 template<typename T>
-static void DrawProfileStat() {
-	if (T::GetProfileType() == Debug::ProfileStatType::Float)
-		ImGui::Text((T::GetName() + ": %fms").c_str(), T::Value);
-	else if (T::GetProfileType() == Debug::ProfileStatType::Int)
-		ImGui::Text((T::GetName() + ": %d").c_str(), T::Value);
-	else if (T::GetProfileType() == Debug::ProfileStatType::String)
-		ImGui::Text((T::GetName() + ": %s").c_str(), T::Value);
-	else if (T::GetProfileType() == Debug::ProfileStatType::Memory)
-		ImGui::Text((T::GetName() + ": %sbytes").c_str(), T::Value);
+static void DrawProfileStatGroup() {
+	for (auto& statEntry : T::s_FloatProfileStats)
+		ImGui::Text((statEntry.name + ": %fms").c_str(), *statEntry.pValue);
+	for (auto& statEntry : T::s_IntProfileStats)
+		ImGui::Text((statEntry.name + ": %d").c_str(), *statEntry.pValue);
+	for (auto& statEntry : T::s_StringProfileStats)
+		ImGui::Text((statEntry.name + ": %s").c_str(), *statEntry.pValue);
+	for (auto& statEntry : T::s_MemoryProfileStats)
+		ImGui::Text((statEntry.name + ": %dbytes").c_str(), *statEntry.pValue);
 }
 
 void ProfilerPanel::OnGUI() {
@@ -47,25 +47,25 @@ void ProfilerPanel::OnGUI() {
 	if (ImGui::TreeNodeEx("ProfileStats:", header_flags, "ProfileStats:")) {
 
 		if (ImGui::TreeNodeEx("[General]", header_flags, "[General]")) {
-			DrawProfileStat<STAT_TestStat>();
+			DrawProfileStatGroup<STAT_GROUP_General>();
 			ImGui::TreePop();
 		}
 		ImGui::Dummy({ 0, 8 });
 
 		if (ImGui::TreeNodeEx("[Rendering]", header_flags, "[Rendering]")) {
-			DrawProfileStat<STAT_RenderingUpdate>();
+			DrawProfileStatGroup<STAT_GROUP_Rendering>();
 			ImGui::TreePop();
 		}
 		ImGui::Dummy({ 0, 8 });
 
 		if (ImGui::TreeNodeEx("[Audio]", header_flags, "[Audio]")) {
-			DrawProfileStat<STAT_AudioUpdate>();
+			DrawProfileStatGroup<STAT_GROUP_Audio>();
 			ImGui::TreePop();
 		}
 		ImGui::Dummy({ 0, 8 });
 		
 		if (ImGui::TreeNodeEx("[ECS]", header_flags, "[ECS]")) {
-			DrawProfileStat<STAT_ECSUpdate>();
+			DrawProfileStatGroup<STAT_GROUP_ECS>();
 			ImGui::TreePop();
 		}
 		ImGui::Dummy({ 0, 8 });

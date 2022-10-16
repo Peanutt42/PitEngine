@@ -68,6 +68,7 @@
     <ClCompile Include="src\Audio\SoundBuffer.cpp" />
     <ClCompile Include="src\Audio\SoundSource.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
+    <ClCompile Include="src\Debug\ProfileStats.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />

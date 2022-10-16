@@ -3,5 +3,5 @@
 
 using namespace Pit;
 
-DEFINE_EXTERN_PROFILE_STAT_FLOAT(AudioUpdate);
+DEFINE_EXTERN_PROFILE_STAT_FLOAT(AudioUpdate, Audio);
 

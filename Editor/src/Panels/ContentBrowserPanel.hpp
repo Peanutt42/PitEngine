@@ -18,6 +18,8 @@ namespace Pit::Editor {
 
 		void _DrawBrowserToolbar();
 		void _DrawListBrowser();
+		void _DrawListBrowserStage(const std::filesystem::path& stage, int& indentation);
+		bool _DrawListBrowserItem(const std::filesystem::directory_entry& entry);
 		void _DrawColumnsBrowser();
 	};
 }

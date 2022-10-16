@@ -92,63 +92,56 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 }
 
 void ContentBrowserPanel::_DrawListBrowser() {
-	for (auto& directoryEntry : std::filesystem::directory_iterator(s_AssetPath)) {
-		const auto& path = directoryEntry.path();
-		auto relativePath = std::filesystem::relative(directoryEntry.path(), s_AssetPath);
-		std::string filenameString = relativePath.filename().string();
-
-		ImGui::PushID(filenameString.c_str());
-
-		const auto* icon = directoryEntry.is_directory() ? folderIcon : textIcon;
-		auto extention = path.extension();
-		if (extention == ".wav" ||
-			extention == ".mp3")
-			icon = audioIcon;
-
-		if (extention == ".obj" ||
-			extention == ".fbx")
-			icon = meshIcon;
-
-		if (extention == ".png" ||
-			extention == ".jpg")
-			icon = imageIcon;
-
-		if (extention == ".vert" ||
-			extention == ".frag")
-			icon = shaderIcon;
-
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		ImGui::ImageButton(Cast<ImTextureID>(icon->GetDescriptorSet()),
-						   { 25, 25 },
-						   { 0, 1 }, { 1, 0 });
-
-		if (ImGui::BeginDragDropSource()) {
-			std::string itemPath_str = relativePath.string();
-			const char* itemPath = itemPath_str.c_str();
-			ImGui::SetDragDropPayload(CONTENT_BROWSER_DRAG_DROP, itemPath, sizeof(itemPath_str));
-
-			ImGui::EndDragDropSource();
-		}
-
-		ImGui::PopStyleColor();
-		
-		ImGui::SameLine();
-
-		ImGui::TextWrapped(filenameString.c_str());
-		ImGui::Button(filenameString.c_str(), {ImGui::GetItemRectMax().x, 50});
-
-		if ((ImGui::IsItemHovered() || ImGui::IsItemActive()) &&
-			ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-
-			if (directoryEntry.is_directory())
-				m_CurrentDirectory /= path.filename();
-		}
-
-		ImGui::NextColumn();
-
-		ImGui::PopID();
-	}
+	int indentation = 0;
+	_DrawListBrowserStage(s_AssetPath, indentation);
 }
+
+
+void ContentBrowserPanel::_DrawListBrowserStage(const std::filesystem::path& stage, int& indentation) {
+	for (auto& directoryEntry : std::filesystem::directory_iterator(stage)) {
+		ImGui::Dummy({ 10.f * indentation, 0.f });
+		ImGui::SameLine();
+		if (_DrawListBrowserItem(directoryEntry)) {
+			if (directoryEntry.is_directory()) {
+				indentation++;
+				_DrawListBrowserStage(directoryEntry.path(), indentation);
+			}
+		}
+	}
+	indentation--;
+}
+
+bool ContentBrowserPanel::_DrawListBrowserItem(const std::filesystem::directory_entry& entry) {
+	const auto& path = entry.path();
+	auto relativePath = std::filesystem::relative(entry.path(), s_AssetPath);
+	std::string filenameString = relativePath.filename().string();
+
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+	bool opened = ImGui::TreeNodeEx(filenameString.c_str(), flags, filenameString.c_str());
+
+	if (ImGui::BeginDragDropSource()) {
+		std::string itemPath_str = relativePath.string();
+		const char* itemPath = itemPath_str.c_str();
+		ImGui::SetDragDropPayload(CONTENT_BROWSER_DRAG_DROP, itemPath, sizeof(itemPath_str));
+
+		ImGui::EndDragDropSource();
+	}
+
+	if ((ImGui::IsItemHovered() || ImGui::IsItemActive()) &&
+		ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+
+		if (entry.is_directory())
+			m_CurrentDirectory /= path.filename();
+	}
+
+	if (opened)
+		ImGui::TreePop();
+
+	return opened;
+}
+
+
 
 void ContentBrowserPanel::_DrawColumnsBrowser() {
 	static float padding = 16.f;

@@ -215,5 +215,8 @@
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\Debug\ProfileStats.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
