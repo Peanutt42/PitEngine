@@ -14,7 +14,7 @@ static Pit::Rendering::Texture* meshIcon;
 static Pit::Rendering::Texture* imageIcon;
 static Pit::Rendering::Texture* shaderIcon;
 
-void ContentBrowserPanel::OnAttach() {
+void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
 	Shortcut = std::vector<KeyCode>{ LeftControl + K };
 
@@ -28,14 +28,12 @@ void ContentBrowserPanel::OnAttach() {
 	shaderIcon = EditorApplication::AssetManager().GetIcon(ShaderIcon);
 }
 
-void ContentBrowserPanel::OnDetach() {
+void ContentBrowserPanel::OnDestroy() {
 
 }
 
 
-void ContentBrowserPanel::OnGUI() {
-	ImGui::Begin(Name.c_str(), &Opened);
-
+void ContentBrowserPanel::OnGui() {
 	_DrawBrowserToolbar();
 	
 	// Splitview
@@ -58,8 +56,6 @@ void ContentBrowserPanel::OnGUI() {
 
 	ImGui::EndChild();
 	ImGui::PopStyleVar();
-
-	ImGui::End();
 }
 
 void ContentBrowserPanel::_DrawBrowserToolbar() {

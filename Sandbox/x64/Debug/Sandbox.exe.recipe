@@ -2,9 +2,6 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\dev\cpp\PitEngine\x64\Debug\glfw</FullPath>
-    </ProjectOutput>
-    <ProjectOutput>
       <FullPath>C:\dev\cpp\PitEngine\x64\Debug\vulkan</FullPath>
     </ProjectOutput>
     <ProjectOutput>

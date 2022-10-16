@@ -36,6 +36,9 @@
     <ClInclude Include="src\EditorAssetManager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\EditorWindowPanel.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Panels\HierachyPanel.cpp">

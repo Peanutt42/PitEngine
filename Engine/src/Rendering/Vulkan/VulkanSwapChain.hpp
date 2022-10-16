@@ -9,7 +9,7 @@ namespace Pit::Rendering {
         static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
         SwapChain(Device& device, VkExtent2D windowExtent);
-        SwapChain(Device& device, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
+        SwapChain(Device& device, VkExtent2D windowExtent, Ref<SwapChain> previous);
         ~SwapChain();
 
         SwapChain(const SwapChain&) = delete;

@@ -1,16 +1,17 @@
 #pragma once
 
 #include "Rendering/UI/UILayer.hpp"
+#include "EditorWindowPanel.hpp"
 #include <filesystem>
 
 namespace Pit::Editor {
-	class ContentBrowserPanel : public Rendering::UI::Layer {
+	class ContentBrowserPanel : public EditorWindowPanel {
 	public:
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
+		virtual void OnCreate() override;
+		virtual void OnDestroy() override;
 
-		virtual void OnGUI() override;
+		virtual void OnGui() override;
 
 	private:
 		std::filesystem::path m_CurrentDirectory;

@@ -24,27 +24,27 @@ EditorApplication::~EditorApplication() {
 void EditorApplication::Init() {
 	m_AssetManager.Init();
 
-	m_Panels.push_back(new HierachyPanel());
-	m_Panels.push_back(new InspectorPanel());
-	m_Panels.push_back(new SceneViewportPanel());
-	m_Panels.push_back(new ProfilerPanel());
-	m_Panels.push_back(new ContentBrowserPanel());
+	m_WindowPanels.push_back(new HierachyPanel());
+	m_WindowPanels.push_back(new InspectorPanel());
+	m_WindowPanels.push_back(new SceneViewportPanel());
+	m_WindowPanels.push_back(new ProfilerPanel());
+	m_WindowPanels.push_back(new ContentBrowserPanel());
 
-	for (auto layer : m_Panels)
+	for (auto layer : m_WindowPanels)
 		Engine::LayerManager()->PushLayer(layer);
 	
 	Engine::Rendering()->GetUIRenderer()->SetMenubarCallback([&]() {
-		std::vector<bool> openWindows(m_Panels.size());
+		std::vector<bool> openWindows(m_WindowPanels.size());
 		if (ImGui::BeginMenu("Windows"))  {
-			for (int i = 0; i < m_Panels.size(); i++) {
-				if (ImGui::MenuItem(m_Panels[i]->Name.c_str(), "wip", nullptr, m_Panels[i]->Enabled))
+			for (int i = 0; i < m_WindowPanels.size(); i++) {
+				if (ImGui::MenuItem(m_WindowPanels[i]->Name.c_str(), "wip", nullptr, m_WindowPanels[i]->Enabled))
 					openWindows[i] = true;
 			}
 			ImGui::EndMenu();
 		}
-		for (int i = 0; i < m_Panels.size(); i++) {
+		for (int i = 0; i < m_WindowPanels.size(); i++) {
 			if (openWindows[i] || m_PanelKeyShortcutsPressed[i])
-				m_Panels[i]->Opened = true;
+				m_WindowPanels[i]->Opened = true;
 		}
 	});
 }
@@ -56,11 +56,11 @@ void EditorApplication::Shutdown() {
 }
 
 void EditorApplication::Update() {
-	m_PanelKeyShortcutsPressed.resize(m_Panels.size());
-	for (int i = 0; i < m_Panels.size(); i++) {
-		bool pressed = m_Panels[i]->Shortcut.size() <= 0 ?
+	m_PanelKeyShortcutsPressed.resize(m_WindowPanels.size());
+	for (int i = 0; i < m_WindowPanels.size(); i++) {
+		bool pressed = m_WindowPanels[i]->Shortcut.size() <= 0 ?
 						false : true;
-		for (auto keycode : m_Panels[i]->Shortcut) {
+		for (auto keycode : m_WindowPanels[i]->Shortcut) {
 			if (!Input::IsKeyDown(keycode))
 				pressed = false;
 		}

@@ -22,8 +22,8 @@ namespace Pit::Rendering {
 
 		Window Window{ "PitEngine", 800, 600};
 		Device Device{ Window };
-		std::unique_ptr<Rendering::SwapChain> SwapChain;
-		std::unique_ptr<Rendering::Pipeline> Pipeline;
+		ScopeRef<Rendering::SwapChain> SwapChain;
+		ScopeRef<Rendering::Pipeline> Pipeline;
 		VkPipelineLayout PipelineLayout;
 		std::vector<VkCommandBuffer> CommandBuffers;
 		VkDescriptorPool DescriptorPool;
@@ -40,7 +40,7 @@ namespace Pit::Rendering {
 		void _RecordCommandBuffer(int imageIndex);
 		void _CreateDescriptorPool();
 
-		std::unique_ptr<Mesh> m_TestMesh;
+		ScopeRef<Mesh> m_TestMesh;
 		void _LoadModels();
 		void _Sierpinski(std::vector<Vertex>& vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top);
 	};

@@ -11,24 +11,20 @@
 
 using namespace Pit::Editor;
 
-void InspectorPanel::OnAttach() {
+void InspectorPanel::OnCreate() {
 	Name = "Inspector";
 	Shortcut = std::vector<KeyCode>{ LeftControl, I };
 }
 
-void InspectorPanel::OnDetach() {
+void InspectorPanel::OnDestroy() {
 
 }
 
-void InspectorPanel::OnGUI() {
-	ImGui::Begin(Name.c_str(), &Opened);
-
+void InspectorPanel::OnGui() {
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {
 		_DrawComponents(&ecsworld, HierachyPanel::s_SelectedEntity);
 	}
-
-	ImGui::End();
 }
 
 static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {

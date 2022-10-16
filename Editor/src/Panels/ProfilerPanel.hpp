@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Rendering/UI/UILayer.hpp"
+#include "EditorWindowPanel.hpp"
 
 namespace Pit::Editor {
-	class ProfilerPanel : public Rendering::UI::Layer {
+	class ProfilerPanel : public EditorWindowPanel {
 	public:
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
+		virtual void OnCreate() override;
+		virtual void OnDestroy() override;
 
-		virtual void OnGUI() override;
+		virtual void OnGui() override;
 	};
 }

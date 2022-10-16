@@ -64,7 +64,7 @@ void LayerManager::RenderLayers(std::function<void()> menubarCallback) {
 #endif
 
     for (auto layer : m_LayerStack)
-        if (layer && layer->Opened)
+        if (layer)
             layer->OnGUI();
 
 #ifdef PIT_EDITOR

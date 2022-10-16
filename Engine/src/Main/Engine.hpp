@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Audio/AudioEngine.hpp"
-#include "Audio/MusicBuffer.hpp"
 #include "ECS/ECSSubmodule.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
-#include "Audio/AudioSubmodule.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/UI/UIRenderer.hpp"
@@ -14,7 +11,6 @@ namespace Pit {
 		glm::mat4 projectionView{ 1.f };
 		glm::vec3 lightDirection = glm::normalize(glm::vec3{ 1.f, -3.f, -1.f });
 	};
-
 	class Engine {
 	public:
 
@@ -33,12 +29,21 @@ namespace Pit {
 
 		static bool Exists() { return m_Instance; }
 
+
+		static Event<> InitEvent;
+		static Event<> TickEvent;
+		static Event<> UpdateEvent;
+		static Event<> RenderEvent;
+		static Event<> UIRenderEvent;
+		static Event<> OnWindowCloseEvent;
+		static Event<> OnWindowResizeEvent;
+		static Event<> ShutdownEvent;
+
 	private:
 		static Engine* m_Instance;
 
 		ECSSubmodule* m_ECSSubmodule = nullptr;
 		RenderingSubmodule* m_RenderingSubmodule = nullptr;
-		AudioSubmodule* m_AudioSubmodule = nullptr;
 		
 		std::atomic<bool> m_Quit = false;
 	};

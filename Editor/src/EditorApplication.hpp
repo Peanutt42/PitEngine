@@ -2,6 +2,7 @@
 
 #include "Main/Engine.hpp"
 #include "EditorAssetManager.hpp"
+#include "EditorWindowPanel.hpp"
 
 namespace Pit::Editor {
 	class EditorApplication {
@@ -25,7 +26,7 @@ namespace Pit::Editor {
 	private:
 		Engine& m_Engine;
 		EditorAssetManager m_AssetManager;
-		std::vector<Pit::Rendering::UI::Layer*> m_Panels;
+		std::vector<EditorWindowPanel*> m_WindowPanels;
 		std::vector<bool> m_PanelKeyShortcutsPressed;
 	};
 

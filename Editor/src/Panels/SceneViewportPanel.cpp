@@ -7,19 +7,18 @@
 
 using namespace Pit::Editor;
 
-void SceneViewportPanel::OnAttach() {
+void SceneViewportPanel::OnCreate() {
 	Name = "Viewport";
 	Shortcut = std::vector<KeyCode>{ LeftControl, T };
 	m_SceneTexture = new Pit::Rendering::Texture("C:/Users/Peter/Pictures/Wallpaper/texture.jpeg");
 }
 
 
-void SceneViewportPanel::OnDetach() {
+void SceneViewportPanel::OnDestroy() {
 	delete m_SceneTexture;
 }
 
-void SceneViewportPanel::OnGUI() {
-	ImGui::Begin(Name.c_str(), &Opened);
+void SceneViewportPanel::OnGui() {
 	auto region = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)m_SceneTexture->GetDescriptorSet(),
 				 ImVec2(region.x, region.y));
@@ -29,6 +28,4 @@ void SceneViewportPanel::OnGUI() {
 		}
 		ImGui::EndDragDropTarget();
 	}
-
-	ImGui::End();
 }

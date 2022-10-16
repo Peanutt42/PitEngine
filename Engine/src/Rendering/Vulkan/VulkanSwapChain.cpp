@@ -14,7 +14,7 @@ namespace Pit::Rendering {
         createSyncObjects();
     }
     
-    SwapChain::SwapChain(Device& device, VkExtent2D extent, std::shared_ptr<SwapChain> previous)
+    SwapChain::SwapChain(Device& device, VkExtent2D extent, Ref<SwapChain> previous)
         : device{ device }, windowExtent{ extent }, oldSwapChain{previous} {
         createSwapChain();
         createImageViews();

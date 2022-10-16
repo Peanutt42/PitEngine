@@ -53,6 +53,7 @@ void Renderer::_DrawFrame() {
 
 	Engine::Rendering()->GetUIRenderer()->BeginFrame();
 	Engine::Rendering()->GetUIRenderer()->DrawLayers();
+	Engine::UIRenderEvent.Invoke();
 	Engine::Rendering()->GetUIRenderer()->EndFrame();
 
 	const bool isMinimized = ImGui::GetDrawData()->DisplaySize.x <= 0 ||
@@ -202,6 +203,7 @@ void Renderer::_RecordCommandBuffer(int imageIndex) {
 	Pipeline->Bind(CommandBuffers[imageIndex]);
 	m_TestMesh->Bind(CommandBuffers[imageIndex]);
 
+
 	for (int j = 0; j < 4; j++) {
 		SimplePushConstantData push{};
 		push.offset = { -0.5f + Time::Frame() * 0.001f, -0.4f + j * 0.25f};
@@ -209,6 +211,9 @@ void Renderer::_RecordCommandBuffer(int imageIndex) {
 		vkCmdPushConstants(CommandBuffers[imageIndex], PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
 		m_TestMesh->Draw(CommandBuffers[imageIndex]);
 	}
+
+	Engine::RenderEvent.Invoke();
+
 
 	Engine::Rendering()->GetUIRenderer()->Render(CommandBuffers[imageIndex]);
 
