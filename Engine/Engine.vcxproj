@@ -156,6 +156,21 @@
     <ProjectReference Include="..\Dependencies\vulkan\vulkan.vcxproj">
       <Project>{158a1a27-9dd8-4bd0-9591-a92500a46e5d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\vendor\glm\glm.vcxproj">
+      <Project>{88502634-ab83-4d64-8edc-9c33d8551601}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\imgui\imgui.vcxproj">
+      <Project>{b7953ba2-f192-4384-901b-6da7b85177a2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\spdlog\spdlog.vcxproj">
+      <Project>{7986e5a8-9dda-4479-a1ea-957c7f7919fe}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\stb_image\stb_image.vcxproj">
+      <Project>{dc3bcb6c-396b-4af4-a889-849b980674eb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\tinyobjloader\tinyobjloader.vcxproj">
+      <Project>{097c266a-bfa0-4fab-97d2-3b3558d35846}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -285,28 +300,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugFast|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release2|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug2|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NewRelease|x64'">
-    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\EnTT\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDIr)Dependencies\spdlog\include;$(SolutionDir)Dependencies\vulkan\Include;$(SolutionDir)Dependencies\imgui\include;$(SolutionDir)Dependencies\glfw\include;$(SolutionDir)Dependencies\tinyobjloader\include;$(SolutionDir)Dependencies\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\vcpkg\packages\openal-soft_x64-windows\bin;$(SolutionDir)Dependencies\vulkan\Lib;$(SolutionDir)Dependencies\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)Engine\src;$(SolutionDir)vendor\EnTT\include;$(SolutionDir)vendor\glm\include;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\vulkan\Include;$(SolutionDir)vendor\imgui\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\tinyobjloader\include;$(SolutionDir)vendor\stb_image\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\vulkan\Lib;$(SolutionDir)vendor\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -397,6 +412,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -417,6 +433,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -432,6 +449,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -447,6 +465,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -484,6 +503,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Main/CoreInclude.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
