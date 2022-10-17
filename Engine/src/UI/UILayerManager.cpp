@@ -3,7 +3,7 @@
 #include <imgui/imgui.h>
 #include "Main/Engine.hpp"
 
-using namespace Pit::Rendering::UI;
+using namespace Pit::UI;
 
 LayerManager::LayerManager() {
 

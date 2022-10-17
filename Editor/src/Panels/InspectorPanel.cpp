@@ -4,7 +4,7 @@
 #include "Main/Engine.hpp"
 #include "ECS/ECSWorld.hpp"
 #include "ECS/ECSComponents.hpp"
-#include "Rendering/UI/UIFonts.hpp"
+#include "UI/UIFonts.hpp"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui_internal.h>
@@ -28,7 +28,7 @@ void InspectorPanel::OnGui() {
 }
 
 static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
-	ImFont* extraBoldFont = Pit::Rendering::UI::GetFont(Pit::Rendering::UI::ExtraBold);
+	ImFont* extraBoldFont = Pit::UI::GetFont(Pit::UI::ExtraBold);
 
 	ImGui::PushID(label.c_str());
 
@@ -107,7 +107,7 @@ static void DrawComponent(const std::string& name, Pit::ECS::World* world, entt:
 	ImGui::PopStyleVar(
 	);
 	ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-	ImGui::PushFont(Pit::Rendering::UI::GetFont(Pit::Rendering::UI::ExtraBold));
+	ImGui::PushFont(Pit::UI::GetFont(Pit::UI::ExtraBold));
 	if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight })) {
 		ImGui::OpenPopup("ComponentSettings");
 	}

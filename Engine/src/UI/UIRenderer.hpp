@@ -10,7 +10,7 @@
 #include <vulkan/vulkan.h>
 
 
-namespace Pit::Rendering::UI {
+namespace Pit::UI {
 	class Renderer {
 	public:
 		Renderer(Rendering::Renderer* renderer);

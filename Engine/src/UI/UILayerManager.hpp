@@ -3,7 +3,7 @@
 #include "Main/CoreInclude.hpp"
 #include "UILayer.hpp"
 
-namespace Pit::Rendering::UI {
+namespace Pit::UI {
 	class LayerManager {
 	public:
 		LayerManager();

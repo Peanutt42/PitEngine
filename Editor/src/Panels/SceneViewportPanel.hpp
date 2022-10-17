@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Main/CoreInclude.hpp"
-#include "Rendering/UI/UILayer.hpp"
+#include "UI/UILayer.hpp"
 #include "Rendering/Vulkan/VulkanTexture.hpp"
 #include "EditorApplication.hpp"
 #include "EditorWindowPanel.hpp"

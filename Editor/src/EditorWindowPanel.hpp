@@ -1,10 +1,10 @@
 #pragma once
 
 #include "pch.hpp"
-#include "Rendering/UI/UILayer.hpp"
+#include "UI/UILayer.hpp"
 
 namespace Pit::Editor {
-	class EditorWindowPanel : public Rendering::UI::Layer {
+	class EditorWindowPanel : public UI::Layer {
 	public:
 		virtual void OnCreate() = 0;
 		virtual void OnDestroy() = 0;

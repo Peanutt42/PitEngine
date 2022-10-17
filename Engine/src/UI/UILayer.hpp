@@ -2,7 +2,7 @@
 
 #include "Main/CoreInclude.hpp"
 
-namespace Pit::Rendering::UI {
+namespace Pit::UI {
 	class Layer {
 	public:
 		virtual ~Layer() = default;

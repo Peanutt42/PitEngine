@@ -26,6 +26,27 @@ namespace Pit::Debug {
 		T* pValue;
 	};
 
+	struct ProfileStatGroupEntry {
+		std::string name;
+		std::vector<ProfileStatEntry<float>>* pFloatStats;
+		std::vector<ProfileStatEntry<int>>* pIntStats;
+		std::vector<ProfileStatEntry<std::string>>* pStringStats;
+		std::vector<ProfileStatEntry<size_t>>* pMemoryStats;
+	};
+
+	struct ProfileStatGroups {
+		static std::vector<ProfileStatGroupEntry> s_ProfileStatGroups;
+		
+		template<typename T>
+		static bool Register() {
+			s_ProfileStatGroups.push_back(Pit::Debug::ProfileStatGroupEntry{ T::GetName(),
+																			&T::s_FloatProfileStats,
+																			&T::s_IntProfileStats,
+																			&T::s_StringProfileStats,
+																			&T::s_MemoryProfileStats });
+			return true;
+		}
+	};
 
 	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
 #define DECLARE_PROFILE_STAT_GROUP(name, statName)									\
@@ -33,6 +54,7 @@ namespace Pit::Debug {
 		static std::string GetName() {												\
 			return #statName;														\
 		}																			\
+		static bool Registered;														\
 		static std::vector<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;			\
 		static std::vector<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;				\
 		static std::vector<Pit::Debug::ProfileStatEntry<std::string>> s_StringProfileStats;		\
@@ -56,6 +78,8 @@ namespace Pit::Debug {
 				return true;														\
 			}																		\
 		}																			\
+	};																				\
+	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>(); \
 	std::vector<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;	\
 	std::vector<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;		\
 	std::vector<Pit::Debug::ProfileStatEntry<std::string>> STAT_GROUP_##name::s_StringProfileStats;	\
@@ -67,6 +91,7 @@ namespace Pit::Debug {
 		static std::string GetName() {												\
 			return #statName;														\
 		}																			\
+		static bool Registered;														\
 		static std::vector<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;			\
 		static std::vector<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;				\
 		static std::vector<Pit::Debug::ProfileStatEntry<std::string>> s_StringProfileStats;		\
@@ -93,6 +118,7 @@ namespace Pit::Debug {
 	}	
 
 #define DEFINE_EXTERN_PROFILE_STAT_GROUP(name)										\
+	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>(); \
 	std::vector<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;	\
 	std::vector<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;		\
 	std::vector<Pit::Debug::ProfileStatEntry<std::string>> STAT_GROUP_##name::s_StringProfileStats;	\

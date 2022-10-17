@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Rendering/UI/UILayer.hpp"
+#include "UI/UILayer.hpp"
 #include "EditorWindowPanel.hpp"
 #include <entt.hpp>
 

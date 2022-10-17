@@ -12,7 +12,7 @@ namespace Pit {
 	public:
 		virtual void Init() {
 			Renderer = new Rendering::Renderer();
-			UIRenderer = new Rendering::UI::Renderer(Renderer);
+			UIRenderer = new UI::Renderer(Renderer);
 		}
 		
 		virtual void Shutdown() {
@@ -27,10 +27,10 @@ namespace Pit {
 		}
 
 		Rendering::Renderer* GetRenderer() { return Renderer; }
-		Rendering::UI::Renderer* GetUIRenderer() { return UIRenderer; }
+		UI::Renderer* GetUIRenderer() { return UIRenderer; }
 
 	private:
 		Rendering::Renderer* Renderer = nullptr;
-		Rendering::UI::Renderer* UIRenderer = nullptr;
+		UI::Renderer* UIRenderer = nullptr;
 	};
 }

@@ -75,16 +75,16 @@
     <ClInclude Include="src\Main\Types.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\UI\UIFonts.hpp">
+    <ClInclude Include="src\UI\UIFonts.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\UI\UILayer.hpp">
+    <ClInclude Include="src\UI\UILayer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\UI\UILayerManager.hpp">
+    <ClInclude Include="src\UI\UILayerManager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\UI\UIRenderer.hpp">
+    <ClInclude Include="src\UI\UIRenderer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
@@ -158,10 +158,10 @@
     <ClCompile Include="src\Main\Time.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\UI\UILayerManager.cpp">
+    <ClCompile Include="src\UI\UILayerManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\UI\UIRenderer.cpp">
+    <ClCompile Include="src\UI\UIRenderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">

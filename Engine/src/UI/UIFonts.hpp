@@ -2,7 +2,7 @@
 
 #include <imgui/imgui.h>
 
-namespace Pit::Rendering::UI {
+namespace Pit::UI {
 	enum FontType {
 		Regular = 0,
 		Bold = 1,

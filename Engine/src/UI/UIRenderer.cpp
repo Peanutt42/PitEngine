@@ -2,7 +2,7 @@
 #include "UIRenderer.hpp"
 #include "Main/Engine.hpp"
 
-using namespace Pit::Rendering::UI;
+using namespace Pit::UI;
 
 static void check_vk_result(VkResult err) {
     if (err == 0) return;

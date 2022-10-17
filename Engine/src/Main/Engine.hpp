@@ -4,7 +4,7 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "ECS/Examples/ECSExampleMovement.hpp"
 #include "Rendering/Renderer.hpp"
-#include "Rendering/UI/UIRenderer.hpp"
+#include "UI/UIRenderer.hpp"
 
 namespace Pit {
 	struct GlobalUbo {
@@ -24,7 +24,7 @@ namespace Pit {
 
 		static RenderingSubmodule* Rendering() { return m_Instance->m_RenderingSubmodule; }
 		static ECSSubmodule* ECS() { return m_Instance->m_ECSSubmodule; }
-		static Rendering::UI::LayerManager* LayerManager() { return m_Instance->m_RenderingSubmodule->GetUIRenderer()->GetUILayerManager(); }
+		static UI::LayerManager* LayerManager() { return m_Instance->m_RenderingSubmodule->GetUIRenderer()->GetUILayerManager(); }
 
 
 		static bool Exists() { return m_Instance; }
