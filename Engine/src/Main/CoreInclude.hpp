@@ -17,6 +17,9 @@
 using namespace std::chrono_literals; // for ex: 200ms
 #include <atomic>
 
+// Packages
+#include <gtest/gtest.h>
+
 // Own
 #include "Debug/Logging.hpp"
 #include "Debug/ProfileStats.hpp"
