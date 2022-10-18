@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <queue>
 #include <numeric>
-using namespace std::chrono_literals;
+using namespace std::chrono_literals; // for ex: 200ms
 #include <atomic>
 
 // Own
@@ -25,6 +25,7 @@ using namespace std::chrono_literals;
 #include "FileSystem.hpp"
 #include "Types.hpp"
 #include "EngineConfig.hpp"
+#include "PlatformDetection.hpp"
 #include "UUID.hpp"
 #include "Result.hpp"
 #include "Input/Input.hpp"
@@ -34,7 +35,7 @@ using namespace std::chrono_literals;
 
 
 namespace Pit {
-	// Copied from TheCherno::Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/Base.h
+	// Inspired by TheCherno::Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/Base.h
 	#define BIT(x) (1 << x)
 
 	template<typename T>

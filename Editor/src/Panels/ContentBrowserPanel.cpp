@@ -2,30 +2,17 @@
 #include <imgui/imgui.h>
 #include "ContentBrowserPanel.hpp"
 #include <EditorApplication.hpp>
+#include "UI/UI.hpp"
 
 using namespace Pit::Editor;
 
 static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "assets");
-
-static Pit::Rendering::Texture* folderIcon;
-static Pit::Rendering::Texture* textIcon;
-static Pit::Rendering::Texture* audioIcon;
-static Pit::Rendering::Texture* meshIcon;
-static Pit::Rendering::Texture* imageIcon;
-static Pit::Rendering::Texture* shaderIcon;
 
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
 	Shortcut = std::vector<KeyCode>{ LeftControl + K };
 
 	m_CurrentDirectory = s_AssetPath;
-
-	folderIcon = EditorApplication::AssetManager().GetIcon(FolderIcon);
-	textIcon = EditorApplication::AssetManager().GetIcon(TextIcon);
-	audioIcon = EditorApplication::AssetManager().GetIcon(AudioIcon);
-	meshIcon = EditorApplication::AssetManager().GetIcon(MeshIcon);
-	imageIcon = EditorApplication::AssetManager().GetIcon(ImageIcon);
-	shaderIcon = EditorApplication::AssetManager().GetIcon(ShaderIcon);
 }
 
 void ContentBrowserPanel::OnDestroy() {
@@ -60,7 +47,7 @@ void ContentBrowserPanel::OnGui() {
 
 void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
-	if (ImGui::ImageButton(Cast<ImTextureID>(EditorApplication::AssetManager().GetIcon(BackIcon)->GetDescriptorSet()), { 20, 20 }, { 0,1 }, { 1,0 }, -1, { 0,0,0,0 }, tintColor) ||
+	if (ImGui::ImageButton(EditorAssetManager::GetIcon(BackIcon), { 20, 20 }, { 0,1 }, { 1,0 }, -1, { 0,0,0,0 }, tintColor) ||
 		/*Maybe concider hovering: prob: child blocks windowhovered*/
 		Input::IsMouseButtonDown(Button3)) {
 		if (m_CurrentDirectory != s_AssetPath) {
@@ -72,7 +59,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 
 	ImVec4 tintColor2 = (m_LastDirectory == m_CurrentDirectory ||
 						 m_LastDirectory == std::filesystem::path()) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
-	if (ImGui::ImageButton(Cast<ImTextureID>(EditorApplication::AssetManager().GetIcon(BackIcon)->GetDescriptorSet()), { 20, 20 }, { 1,0 }, { 0,1 }, -1, { 0,0,0,0 }, tintColor2) ||
+	if (ImGui::ImageButton(EditorAssetManager::GetIcon(BackIcon), { 20, 20 }, { 1,0 }, { 0,1 }, -1, { 0,0,0,0 }, tintColor2) ||
 		(ImGui::IsWindowHovered() && Input::IsMouseButtonDown(Button4))) {
 		if (m_LastDirectory != m_CurrentDirectory) {
 			m_CurrentDirectory = m_LastDirectory;
@@ -80,11 +67,29 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 	}
 
 	ImGui::SameLine();
-	if (ImGui::ImageButton(Cast<ImTextureID>(EditorApplication::AssetManager().GetIcon(RefreshIcon)->GetDescriptorSet()), { 20, 20 }, { 0,1 }, { 1, 0 }) ||
+	if (ImGui::ImageButton(EditorAssetManager::GetIcon(RefreshIcon), { 20, 20 }, { 0,1 }, { 1, 0 }) ||
 		(Input::IsKeyDown(LeftControl) && Input::IsKeyDown(R))) {
 
 		// Todo: research all elements in relative path
 	}
+
+	ImGui::SameLine();
+
+	ImGui::Spacing();
+
+	if (ImGui::ImageButton(EditorAssetManager::GetIcon(OptionsIcon), {20, 20}, {1, 0}, {0, 1}))
+		drawSettingsWindow = true;
+	if (drawSettingsWindow)
+		_DrawSettings();
+}
+
+void ContentBrowserPanel::_DrawSettings() {
+	ImGui::Begin("ContentBrowser-Settings", &drawSettingsWindow);
+
+	UI::DragFloat("Thumbnail Size:", &thumbnailSize);
+	UI::DragFloat("Padding:", &padding, 0, 100);
+
+	ImGui::End();
 }
 
 void ContentBrowserPanel::_DrawListBrowser() {
@@ -140,8 +145,6 @@ bool ContentBrowserPanel::_DrawListBrowserItem(const std::filesystem::directory_
 
 
 void ContentBrowserPanel::_DrawColumnsBrowser() {
-	static float padding = 16.f;
-	static float thumbnailSize = 128;
 	float cellSize = thumbnailSize + padding;
 
 	float panelWidth = ImGui::GetContentRegionAvail().x;
@@ -159,26 +162,27 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 
 		ImGui::PushID(filenameString.c_str());
 
-		const auto* icon = directoryEntry.is_directory() ? folderIcon : textIcon;
+		auto icon = directoryEntry.is_directory() ? EditorAssetManager::GetIcon(FolderIcon) :
+													EditorAssetManager::GetIcon(TextIcon);
 		auto extention = path.extension();
 		if (extention == ".wav" ||
 			extention == ".mp3")
-			icon = audioIcon;
+			icon = EditorAssetManager::GetIcon(AudioIcon);
 
 		if (extention == ".obj" ||
 			extention == ".fbx")
-			icon = meshIcon;
+			icon = EditorAssetManager::GetIcon(MeshIcon);
 
 		if (extention == ".png" ||
 			extention == ".jpg")
-			icon = imageIcon;
+			icon = EditorAssetManager::GetIcon(ImageIcon);
 
 		if (extention == ".vert" ||
 			extention == ".frag")
-			icon = shaderIcon;
+			icon = EditorAssetManager::GetIcon(ShaderIcon);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		ImGui::ImageButton(Cast<ImTextureID>(icon->GetDescriptorSet()),
+		ImGui::ImageButton(icon,
 						   { thumbnailSize, thumbnailSize },
 						   { 0, 1 }, { 1, 0 });
 
@@ -206,7 +210,4 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 	}
 
 	ImGui::Columns(1);
-
-	ImGui::SliderFloat("Thumbnail Size:", &thumbnailSize, 0, 300);
-	ImGui::SliderFloat("Padding:", &padding, 0, 100);
 }

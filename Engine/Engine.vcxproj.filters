@@ -150,6 +150,8 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\Main\PlatformDetection.hpp" />
+    <ClInclude Include="src\UI\UI.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">

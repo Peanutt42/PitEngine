@@ -55,6 +55,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>PIT_EDITOR;PIT_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -78,6 +79,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>PIT_EDITOR;PIT_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -119,6 +121,7 @@
     <ClInclude Include="src\Main\FileSystem.hpp" />
     <ClInclude Include="src\Main\Input\Input.hpp" />
     <ClInclude Include="src\Main\Input\KeyCode.hpp" />
+    <ClInclude Include="src\Main\PlatformDetection.hpp" />
     <ClInclude Include="src\Main\Random.hpp" />
     <ClInclude Include="src\Main\Result.hpp" />
     <ClInclude Include="src\Main\Submodule.hpp" />
@@ -133,6 +136,7 @@
     <ClInclude Include="src\Rendering\Vulkan\VulkanSwapChain.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanTexture.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\UI\UI.hpp" />
     <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UILayer.hpp" />
     <ClInclude Include="src\UI\UILayerManager.hpp" />

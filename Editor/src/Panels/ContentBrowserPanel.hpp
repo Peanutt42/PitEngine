@@ -17,7 +17,13 @@ namespace Pit::Editor {
 		std::filesystem::path m_CurrentDirectory;
 		std::filesystem::path m_LastDirectory;
 
+		float padding = 16.f;
+		float thumbnailSize = 64;
+
+		bool drawSettingsWindow = false;
+
 		void _DrawBrowserToolbar();
+		void _DrawSettings();
 		void _DrawListBrowser();
 		void _DrawListBrowserStage(const std::filesystem::path& stage, int& indentation);
 		bool _DrawListBrowserItem(const std::filesystem::directory_entry& entry);

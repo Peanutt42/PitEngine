@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "EditorAssetManager.hpp"
+#include "EditorApplication.hpp"
 
 using namespace Pit::Editor;
 
@@ -13,6 +14,11 @@ void EditorAssetManager::Init() {
 	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/ShaderIcon.png"));
 	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/BackIcon.png"));
 	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/RefreshIcon.png"));
+	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/Options.png"));
+}
+
+ImTextureID EditorAssetManager::GetIcon(Icon icon) {
+	return Cast<ImTextureID>(Pit::Editor::EditorApplication::Instance->AssetManager().m_Icons[icon]->GetDescriptorSet());
 }
 
 void EditorAssetManager::Shutdown() {

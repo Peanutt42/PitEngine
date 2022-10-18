@@ -21,7 +21,10 @@ int main() {
 		engine.Shutdown();
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
+		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
+	}
+	catch (...) {
+		std::cerr << "[Engine] Exception catched!" << std::endl;
 	}
 
 

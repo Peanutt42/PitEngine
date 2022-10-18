@@ -8,3 +8,4 @@ Paste this into the description:
 6. <a href="https://www.flaticon.com/free-icons/abstract" title="abstract icons">Abstract icons created by Roundicons - Flaticon</a>
 7. <a href="https://www.flaticon.com/free-icons/back" title="back icons">Back icons created by Handicon - Flaticon</a>
 8. <a href="https://www.flaticon.com/free-icons/refresh" title="refresh icons">Refresh icons created by Arkinasi - Flaticon</a>
+9. <a href="https://www.flaticon.com/free-icons/options" title="options icons">Options icons created by mim_studio - Flaticon</a>

@@ -23,7 +23,7 @@ project "Engine"
 		"%{wks.location}/vendor/imgui/include",
 		"%{wks.location}/vendor/glfw/include",
 		"%{wks.location}/vendor/tinyobjloader/include",
-		"%{wks.location}/vendor/stb_image/include",
+		"%{wks.location}/vendor/stb_image/include"
 	}
 
 	
@@ -39,11 +39,12 @@ project "Engine"
 		"stb_image",
 		"tinyobjloader",
 		"vulkan-1.lib",
-		"glfw3_mt.lib",
+		"glfw3_mt.lib"
 	}
 
 	defines {
-
+		-- if compiled for editor use
+		"PIT_EDITOR"
 	}
 
 	filter { "configurations:Debug" }
@@ -55,3 +56,16 @@ project "Engine"
 		buildoptions "/MT"
 		runtime "Release"
 		optimize "on"
+
+	filter { "system:windows" }
+		defines {
+			"PIT_WINDOWS"
+		}
+	filter { "system:linux" }
+		defines {
+			"PIT_LINUX"
+		}
+	filter { "system:macosx" }
+		defines {
+			"PIT_MACOS"
+		}
