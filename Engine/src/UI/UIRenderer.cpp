@@ -1,8 +1,12 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "UIRenderer.hpp"
 #include "Main/Engine.hpp"
 
 using namespace Pit::UI;
+
+DEFINE_EXTERN_PROFILE_STAT_FLOAT(UIRenderingRecord, UIRendering);
+DEFINE_EXTERN_PROFILE_STAT_FLOAT(UIRenderingRender, UIRendering);
 
 static void check_vk_result(VkResult err) {
     if (err == 0) return;
@@ -91,6 +95,15 @@ Renderer::~Renderer() {
     ImGui::DestroyContext();
 }
 
+void Renderer::Record() {
+    SCOPE_STAT(UIRenderingRecord);
+
+    BeginFrame();
+    DrawLayers();
+    Engine::UIRenderEvent.Invoke();
+    EndFrame();
+}
+
 void Renderer::BeginFrame() {
     ImGui_ImplVulkan_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -106,6 +119,8 @@ void Renderer::DrawLayers() {
 }
 
 void Renderer::Render(VkCommandBuffer commandBuffer) {
+    SCOPE_STAT(UIRenderingRender);
+
     ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer);
 }
 

@@ -158,7 +158,6 @@
     <ClCompile Include="src\Main\UUID.cpp" />
     <ClCompile Include="src\Main\pch.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
-    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp" />

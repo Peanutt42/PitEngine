@@ -9,7 +9,9 @@ using namespace std::chrono;
 Engine* Engine::m_Instance = nullptr;
 Event<> Engine::InitEvent;
 Event<> Engine::TickEvent;
+Event<> Engine::PreUpdateEvent;
 Event<> Engine::UpdateEvent;
+Event<> Engine::PostUpdateEvent;
 Event<> Engine::RenderEvent;
 Event<> Engine::UIRenderEvent;
 Event<> Engine::OnWindowCloseEvent;
@@ -59,13 +61,15 @@ void Engine::Update() {
 
 	static time_point<high_resolution_clock> lastUpdate;
 	time_point<high_resolution_clock> now = high_resolution_clock::now();
-	Time::SetDeltaTime(duration_cast<microseconds>(now - lastUpdate).count() / 1000000.f);
+	Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.001f * 0.001f * 0.001f);
 	lastUpdate = now;
 
+	Engine::PreUpdateEvent.Invoke();
 	Engine::TickEvent.Invoke();
 	Engine::UpdateEvent.Invoke();
 	m_ECSSubmodule->Update();
 	m_RenderingSubmodule->Update();
+	Engine::PostUpdateEvent.Invoke();
 }
 
 bool Engine::ShouldClose() {

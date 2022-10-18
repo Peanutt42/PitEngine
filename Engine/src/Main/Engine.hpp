@@ -29,10 +29,11 @@ namespace Pit {
 
 		static bool Exists() { return m_Instance; }
 
-
 		static Event<> InitEvent;
 		static Event<> TickEvent;
+		static Event<> PreUpdateEvent;
 		static Event<> UpdateEvent;
+		static Event<> PostUpdateEvent;
 		static Event<> RenderEvent;
 		static Event<> UIRenderEvent;
 		static Event<> OnWindowCloseEvent;

@@ -8,6 +8,9 @@
 #include "Window.hpp"
 
 namespace Pit::Rendering {
+	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering, "Rendering-Render");
+	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering, "Rendering-Present");
+
 	class Renderer {
 	public:
 		Renderer();
@@ -34,7 +37,9 @@ namespace Pit::Rendering {
 		void _CreatePipeline();
 		void _CreateCommandBuffers();
 		void _FreeCommandBuffers();
-		void _DrawFrame();
+		void _BeginFrame();
+		uint32_t _RenderFrame();
+		void _PresentFrame(uint32_t imageIndex);
 
 		void _RecreateSwapChain();
 		void _RecordCommandBuffer(int imageIndex);

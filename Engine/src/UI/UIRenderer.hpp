@@ -9,12 +9,16 @@
 #include <imgui/imgui_impl_vulkan.h>
 #include <vulkan/vulkan.h>
 
+DECLARE_EXTERN_PROFILE_STAT_FLOAT(UIRenderingRecord, UIRendering, "UIRendering-Record");
+DECLARE_EXTERN_PROFILE_STAT_FLOAT(UIRenderingRender, UIRendering, "UIRendering-Render");
 
 namespace Pit::UI {
 	class Renderer {
 	public:
 		Renderer(Rendering::Renderer* renderer);
 		~Renderer();
+
+		void Record();
 
 		void BeginFrame();
 		void EndFrame();

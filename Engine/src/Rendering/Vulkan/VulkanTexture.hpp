@@ -24,6 +24,10 @@ namespace Pit::Rendering {
 		uint32_t GetWidth() const { return m_Width; }
 		uint32_t GetHeight() const { return m_Height; }
 
+		const std::string& GetFilepath() {
+			return m_Filepath;
+		}
+
 	private:
 		void AllocateMemory(uint64_t size);
 		void Release();
@@ -45,5 +49,6 @@ namespace Pit::Rendering {
 		VkDescriptorSet m_DescriptorSet = nullptr;
 
 		std::string m_Filepath;
+		bool m_Png = true;
 	};
 }

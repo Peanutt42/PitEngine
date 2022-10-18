@@ -190,9 +190,6 @@
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>

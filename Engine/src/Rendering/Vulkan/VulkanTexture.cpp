@@ -44,8 +44,6 @@ static VkFormat WalnutFormatToVulkanFormat(TextureFormat format) {
 Texture::Texture(const std::string& path) : m_Filepath(path) {
 	int width, height, channels;
 	uint8_t* data = nullptr;
-
-	stbi_set_flip_vertically_on_load(m_Filepath.ends_with(".png") ? 1 : 0);
 	
 	if (stbi_is_hdr(m_Filepath.c_str())) {
 		data = (uint8_t*)stbi_loadf(m_Filepath.c_str(), &width, &height, &channels, 4);

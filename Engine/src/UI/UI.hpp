@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Rendering/Vulkan/VulkanTexture.hpp"
 #include <imgui/imgui.h>
 #include <glm/glm.hpp>
 #include "UIFonts.hpp"
@@ -209,4 +210,29 @@ namespace Pit::UI {
 	inline static bool DragFloat(const char* label, float* v, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) {
 		return IMGUI_LEFT_LABEL(ImGui::DragFloat, label, v, v_speed, v_min, v_max, format, flags);
 	}
+
+	inline static bool ImageButton(const Pit::Rendering::Texture* texture, const ImVec2& size, const bool flipX = false, const bool flipY = false, const int& framePadding = -1, const ImVec4& bgColor = {0,0,0,0}, const ImVec4& tintColor = {1,1,1,1}) {
+		ImVec2 uv1;
+		ImVec2 uv2;
+		if (flipX && flipY) {
+			uv1 = { 1, 1 };
+			uv2 = { 0, 0 };
+		}
+		else if (flipX && !flipY) {
+			uv1 = { 1, 0 };
+			uv2 = { 0, 1 };
+		}
+		else if (!flipX && flipY) {
+			uv1 = {0, 1};
+			uv2 = {1, 0};
+		}
+		else if (!flipX && !flipY) {
+			uv1 = { 0, 0 };
+			uv2 = { 1, 1 };
+		}
+		return ImGui::ImageButton(Cast<ImTextureID>(texture->GetDescriptorSet()), size, uv1, uv2, framePadding, bgColor, tintColor);
+	}
 }
+/*
+* { 0,1 }, { 1, 0 } // png default
+*/

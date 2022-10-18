@@ -18,7 +18,11 @@ void EditorAssetManager::Init() {
 }
 
 ImTextureID EditorAssetManager::GetIcon(Icon icon) {
-	return Cast<ImTextureID>(Pit::Editor::EditorApplication::Instance->AssetManager().m_Icons[icon]->GetDescriptorSet());
+	return Cast<ImTextureID>(Pit::Editor::EditorApplication::AssetManager().m_Icons[icon]->GetDescriptorSet());
+}
+
+const Pit::Rendering::Texture* EditorAssetManager::GetIconTexture(Icon icon) {
+	return (Pit::Editor::EditorApplication::AssetManager().m_Icons[icon]);
 }
 
 void EditorAssetManager::Shutdown() {

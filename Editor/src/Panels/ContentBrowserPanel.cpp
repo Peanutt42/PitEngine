@@ -47,7 +47,7 @@ void ContentBrowserPanel::OnGui() {
 
 void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
-	if (ImGui::ImageButton(EditorAssetManager::GetIcon(BackIcon), { 20, 20 }, { 0,1 }, { 1,0 }, -1, { 0,0,0,0 }, tintColor) ||
+	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), { 20, 20 }, false, false, -1, { 0,0,0,0 }, tintColor) ||
 		/*Maybe concider hovering: prob: child blocks windowhovered*/
 		Input::IsMouseButtonDown(Button3)) {
 		if (m_CurrentDirectory != s_AssetPath) {
@@ -59,7 +59,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 
 	ImVec4 tintColor2 = (m_LastDirectory == m_CurrentDirectory ||
 						 m_LastDirectory == std::filesystem::path()) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
-	if (ImGui::ImageButton(EditorAssetManager::GetIcon(BackIcon), { 20, 20 }, { 1,0 }, { 0,1 }, -1, { 0,0,0,0 }, tintColor2) ||
+	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), { 20, 20 }, true, false, -1, { 0,0,0,0 }, tintColor2) ||
 		(ImGui::IsWindowHovered() && Input::IsMouseButtonDown(Button4))) {
 		if (m_LastDirectory != m_CurrentDirectory) {
 			m_CurrentDirectory = m_LastDirectory;
@@ -67,7 +67,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 	}
 
 	ImGui::SameLine();
-	if (ImGui::ImageButton(EditorAssetManager::GetIcon(RefreshIcon), { 20, 20 }, { 0,1 }, { 1, 0 }) ||
+	if (UI::ImageButton(EditorAssetManager::GetIconTexture(RefreshIcon), { 20, 20 }, false, false) ||
 		(Input::IsKeyDown(LeftControl) && Input::IsKeyDown(R))) {
 
 		// Todo: research all elements in relative path
@@ -75,9 +75,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 
 	ImGui::SameLine();
 
-	ImGui::Spacing();
-
-	if (ImGui::ImageButton(EditorAssetManager::GetIcon(OptionsIcon), {20, 20}, {1, 0}, {0, 1}))
+	if (UI::ImageButton(EditorAssetManager::GetIconTexture(OptionsIcon), {20, 20}))
 		drawSettingsWindow = true;
 	if (drawSettingsWindow)
 		_DrawSettings();
@@ -162,29 +160,27 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 
 		ImGui::PushID(filenameString.c_str());
 
-		auto icon = directoryEntry.is_directory() ? EditorAssetManager::GetIcon(FolderIcon) :
-													EditorAssetManager::GetIcon(TextIcon);
+		auto* icon = directoryEntry.is_directory() ? EditorAssetManager::GetIconTexture(FolderIcon) :
+													EditorAssetManager::GetIconTexture(TextIcon);
 		auto extention = path.extension();
 		if (extention == ".wav" ||
 			extention == ".mp3")
-			icon = EditorAssetManager::GetIcon(AudioIcon);
+			icon = EditorAssetManager::GetIconTexture(AudioIcon);
 
 		if (extention == ".obj" ||
 			extention == ".fbx")
-			icon = EditorAssetManager::GetIcon(MeshIcon);
+			icon = EditorAssetManager::GetIconTexture(MeshIcon);
 
 		if (extention == ".png" ||
 			extention == ".jpg")
-			icon = EditorAssetManager::GetIcon(ImageIcon);
+			icon = EditorAssetManager::GetIconTexture(ImageIcon);
 
 		if (extention == ".vert" ||
 			extention == ".frag")
-			icon = EditorAssetManager::GetIcon(ShaderIcon);
+			icon = EditorAssetManager::GetIconTexture(ShaderIcon);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		ImGui::ImageButton(icon,
-						   { thumbnailSize, thumbnailSize },
-						   { 0, 1 }, { 1, 0 });
+		UI::ImageButton(icon, { thumbnailSize, thumbnailSize });
 
 		if (ImGui::BeginDragDropSource()) {
 			std::string itemPath_str = relativePath.string();

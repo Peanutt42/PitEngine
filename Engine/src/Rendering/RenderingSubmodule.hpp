@@ -6,8 +6,6 @@
 #include "UI/UIRenderer.hpp"
 
 namespace Pit {
-	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingUpdate, Rendering, "Rendering-Update");
-
 	class RenderingSubmodule : public Submodule {
 	public:
 		virtual void Init() {
@@ -21,16 +19,14 @@ namespace Pit {
 		}
 		
 		virtual void Update() {
-			SCOPE_STAT(RenderingUpdate);
-
 			Renderer->Update();
 		}
 
 		Rendering::Renderer* GetRenderer() { return Renderer; }
-		UI::Renderer* GetUIRenderer() { return UIRenderer; }
+		Pit::UI::Renderer* GetUIRenderer() { return UIRenderer; }
 
 	private:
 		Rendering::Renderer* Renderer = nullptr;
-		UI::Renderer* UIRenderer = nullptr;
+		Pit::UI::Renderer* UIRenderer = nullptr;
 	};
 }

@@ -1,4 +1,5 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "ECSSubmodule.hpp"
 
 using namespace Pit;

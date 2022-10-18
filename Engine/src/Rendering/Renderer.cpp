@@ -1,4 +1,5 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "Renderer.hpp"
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -6,6 +7,9 @@
 #include "Main/Engine.hpp"
 
 using namespace Pit::Rendering;
+
+DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering);
+DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering);
 
 struct SimplePushConstantData {
 	glm::vec2 offset;
@@ -35,13 +39,16 @@ bool Renderer::ShouldClose() {
 void Renderer::Update() {
 	Window::UpdateAllWindows();
 
-	_DrawFrame();
+	if (Window.IsMinimized()) return;
+	_BeginFrame();
+
+	Engine::Rendering()->GetUIRenderer()->Record();
+
+	uint32_t imageIndex = _RenderFrame();
+	_PresentFrame(imageIndex);
 }
 
-
-void Renderer::_DrawFrame() {
-	if (Window.IsMinimized()) return;
-
+void Renderer::_BeginFrame() {
 	if (Window.WasWindowResized()) {
 		int width, height;
 		glfwGetFramebufferSize(Window.GetWindowHandle(), &width, &height);
@@ -50,33 +57,33 @@ void Renderer::_DrawFrame() {
 		_RecreateSwapChain();
 		Window.SetWindowResizedFlag(false);
 	}
+}
 
-	Engine::Rendering()->GetUIRenderer()->BeginFrame();
-	Engine::Rendering()->GetUIRenderer()->DrawLayers();
-	Engine::UIRenderEvent.Invoke();
-	Engine::Rendering()->GetUIRenderer()->EndFrame();
+uint32_t Renderer::_RenderFrame() {
+	SCOPE_STAT(RenderingRender);
 
-	const bool isMinimized = ImGui::GetDrawData()->DisplaySize.x <= 0 ||
-		ImGui::GetDrawData()->DisplaySize.y <= 0;
+	uint32_t imageIndex = -1;
+	auto result = SwapChain->acquireNextImage(imageIndex);
 
-	if (!isMinimized) {
-		uint32_t imageIndex = -1;
-		auto result = SwapChain->acquireNextImage(imageIndex);
-
-		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
-			Window.SetWindowResizedFlag(true);
-			return;
-		}
-		if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-			PIT_ENGINE_FATAL(Log::Rendering, "Failed to acquire swapChainImage!");
-
-		_RecordCommandBuffer(imageIndex);
-
-		result = SwapChain->submitCommandBuffers(&CommandBuffers[imageIndex], &imageIndex);
-
-		if (result != VK_SUCCESS)
-			PIT_ENGINE_FATAL(Log::Rendering, "Failed to present swapChainImage!");
+	if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+		Window.SetWindowResizedFlag(true);
+		return imageIndex;
 	}
+	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+		PIT_ENGINE_FATAL(Log::Rendering, "Failed to acquire swapChainImage!");
+
+	_RecordCommandBuffer(imageIndex);
+
+	return imageIndex;
+}
+
+void Renderer::_PresentFrame(uint32_t imageIndex) {
+	SCOPE_STAT(RenderingPresent);
+
+	VkResult result = SwapChain->submitCommandBuffers(&CommandBuffers[imageIndex], &imageIndex);
+
+	if (result != VK_SUCCESS)
+		PIT_ENGINE_FATAL(Log::Rendering, "Failed to present swapChainImage!");
 
 	// Update floating ImGui windows
 	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
@@ -84,7 +91,6 @@ void Renderer::_DrawFrame() {
 		ImGui::RenderPlatformWindowsDefault();
 	}
 }
-
 
 void Renderer::_CreatePipelineLayout() {
 	VkPushConstantRange pushConstantRange{};

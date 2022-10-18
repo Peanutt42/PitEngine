@@ -22,6 +22,7 @@ namespace Pit::Editor {
 		void Init(), Shutdown();
 
 		static ImTextureID GetIcon(Icon icon);
+		static const Rendering::Texture* GetIconTexture(Icon icon);
 	
 	private:
 		std::vector<Rendering::Texture*> m_Icons;
