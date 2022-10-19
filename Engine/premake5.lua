@@ -3,6 +3,8 @@ project "Engine"
 	language "C++"
 	cppdialect "C++20"
 	staticruntime "on"
+	
+	debugdir "$(SolutionDir)"
 
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
@@ -56,6 +58,12 @@ project "Engine"
 		buildoptions "/MT"
 		runtime "Release"
 		optimize "on"
+		symbols "on"
+
+	filter { "configurations:Dist" }
+		buildoptions "/MT"
+		runtime "Release"
+		optimize "on"
 
 	filter { "system:windows" }
 		defines {
@@ -69,3 +77,10 @@ project "Engine"
 		defines {
 			"PIT_MACOS"
 		}
+
+	filter { "configurations:Debug" }
+		defines { "DEBUG" }
+	filter { "configurations:Release" }
+		defines { "RELEASE" }
+	filter { "configurations:Dist" }
+		defines { "DIST" }

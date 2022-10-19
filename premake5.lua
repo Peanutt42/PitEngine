@@ -3,7 +3,8 @@ workspace "PitEngine"
 
 	configurations {
 		"Debug",
-		"Release"
+		"Release",
+		"Dist"
 	}
 
 	flags {

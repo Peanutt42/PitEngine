@@ -31,3 +31,9 @@ project "glm"
 		buildoptions "/MT"
 		runtime "Release"
 		optimize "on"
+		symbols "on"
+
+	filter { "configurations:Dist" }
+		buildoptions "/MT"
+		runtime "Release"
+		optimize "on"

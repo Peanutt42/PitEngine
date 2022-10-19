@@ -13,7 +13,7 @@ namespace Pit::Rendering {
 
     class Device {
     public:
-        const bool enableValidationLayers = PIT_ENGINE_DEBUG || PIT_ENGINE_DEVELOPMENT;
+        const bool enableValidationLayers = PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE;
 
         Device(Window& window);
         ~Device();

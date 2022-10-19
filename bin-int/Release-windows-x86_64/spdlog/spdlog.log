@@ -1,8 +1,1 @@
-﻿  async.cpp
-  cfg.cpp
-  color_sinks.cpp
-  file_sinks.cpp
-  fmt.cpp
-  spdlog.cpp
-  stdout_sinks.cpp
-  spdlog.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\spdlog\spdlog.lib
+﻿  spdlog.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\spdlog\spdlog.lib

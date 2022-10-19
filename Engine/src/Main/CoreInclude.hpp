@@ -18,16 +18,16 @@ using namespace std::chrono_literals; // for ex: 200ms
 #include <atomic>
 
 // Own
+#include "PlatformDetection.hpp"
+#include "EngineConfig.hpp"
+#include "Result.hpp"
+#include "Time.hpp"
+#include "FileSystem.hpp"
+#include "UUID.hpp"
+#include "Types.hpp"
 #include "Debug/Logging.hpp"
 #include "Debug/ProfileStats.hpp"
 #include "Event/Event.hpp"
-#include "Time.hpp"
-#include "FileSystem.hpp"
-#include "Types.hpp"
-#include "EngineConfig.hpp"
-#include "PlatformDetection.hpp"
-#include "UUID.hpp"
-#include "Result.hpp"
 #include "Input/Input.hpp"
 #include "Input/KeyCode.hpp"
 #include "Utils/StringUtils.hpp"
