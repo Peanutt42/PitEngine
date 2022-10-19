@@ -1,13 +1,33 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
 #include "ECSComponents.hpp"
 
 using namespace Pit::ECS;
 
+static void UpdateRendering() {
+	Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Render);
+}
+static void UpdateNetworking() {
+	Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Networking);
+}
+static void UpdatePhysics() {
+	Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Physic);
+}
+static void UpdateMain() {
+	Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::General);
+	Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
+}
+
 bool World::Init() {
 	// Set Specs
 	SetWorldSpecs(m_Specs);
+
+	Engine::NetworkingUpdateEvent += &UpdateNetworking;
+	Engine::PhysicsUpdateEvent += &UpdatePhysics;
+	Engine::UpdateEvent += &UpdateMain;
+	Engine::RenderEvent += &UpdateRendering;
 
 	PIT_ENGINE_INFO(Log::ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
 	PIT_ENGINE_INFO(Log::ECS, "[Specs]");
@@ -16,13 +36,17 @@ bool World::Init() {
 	return true;
 }
 
-bool World::Update() {
-	if (Paused) return true;
+void World::Update(const SystemTopic topic) {
+	if (Paused) return;
 
-	for (auto& system : m_Systems)
-		system.Update(*this);
+	if (topic == SystemTopic::Networking/*First off new frame*/) STAT_RESET(ECSUpdate);
 
-	return true;
+	SCOPE_STAT_ADD(ECSUpdate);
+
+	for (auto& system : m_Systems) {
+		if (system.Topic == topic)
+			system.Update(*this);
+	}
 }
 
 void World::Clear() {

@@ -22,9 +22,11 @@ int main() {
 	}
 	catch (const std::exception& e) {
 		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
+		return 1;
 	}
 	catch (...) {
 		std::cerr << "[Engine] Exception catched!" << std::endl;
+		return 1;
 	}
 
 

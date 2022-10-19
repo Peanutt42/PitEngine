@@ -23,26 +23,30 @@ namespace Pit::Rendering {
 		const uint32_t GetWidth() { return Window.GetWidth(); }
 		const uint32_t GetHeight() { return Window.GetHeight(); }
 
-		Window Window{ "PitEngine", 800, 600};
+#ifdef PIT_EDITOR
+		Window Window{ "PitEngine - Editor", 800, 600};
+#else
+		Window Window{ "PitEngine - Sandbox", 800, 600};
+#endif
 		Device Device{ Window };
-		ScopeRef<Rendering::SwapChain> SwapChain;
-		ScopeRef<Rendering::Pipeline> Pipeline;
-		VkPipelineLayout PipelineLayout;
+		std::unique_ptr<Rendering::SwapChain> SwapChain;
+		uint32_t ImageIndex = 0;
+		int FrameIndex = 0;
 		std::vector<VkCommandBuffer> CommandBuffers;
 		VkDescriptorPool DescriptorPool;
 		uint32_t MinImageCount;
 
+		ScopeRef<Mesh>& TestMesh() { return m_TestMesh; }
+
 	private:
-		void _CreatePipelineLayout();
-		void _CreatePipeline();
 		void _CreateCommandBuffers();
 		void _FreeCommandBuffers();
 		void _BeginFrame();
-		uint32_t _RenderFrame();
-		void _PresentFrame(uint32_t imageIndex);
+		void _RenderFrame();
+		void _PresentFrame();
 
 		void _RecreateSwapChain();
-		void _RecordCommandBuffer(int imageIndex);
+		void _RecordCommandBuffer();
 		void _CreateDescriptorPool();
 
 		ScopeRef<Mesh> m_TestMesh;

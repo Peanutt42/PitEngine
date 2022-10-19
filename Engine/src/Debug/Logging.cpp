@@ -24,7 +24,7 @@ void Logging::Init() {
 			}
 		}
 	}
-	std::string filepath = std::string("Logs/") + CurrentTimeToString() + std::string("_Log.txt");
+	std::string filepath = std::string("Logs/") + CurrentTimeToString() + std::string("_Log.log");
 
 	s_FileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(filepath);
 	s_FileSink->set_pattern(pattern);

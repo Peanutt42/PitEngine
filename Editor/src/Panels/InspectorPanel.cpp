@@ -90,13 +90,13 @@ void InspectorPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
 			name = std::string(buffer);
 	}
 
-	DrawComponent<ECS::TransformComponent>("Transform", world, entity, [](ECS::TransformComponent& component) {
+	/*DrawComponent<ECS::TransformComponent>("Transform", world, entity, [](ECS::TransformComponent& component) {
 		UI::Vec3("Translation", component.position);
 		glm::vec3 rotation = glm::degrees(component.rotation);
 		UI::Vec3("Rotation", rotation);
 		component.rotation = glm::radians(rotation);
 		UI::Vec3("Scale", component.scale, 1.0f);
-	});
+	});*/
 
 	ImGui::Spacing();
 	ImGui::Spacing();

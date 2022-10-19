@@ -29,7 +29,7 @@ namespace Pit::ECS {
 			m_Specs(specs) { }
 
 		bool Init();
-		bool Update();
+		void Update(const SystemTopic topic);
 		void Clear();
 
 #pragma region Entity
@@ -150,12 +150,12 @@ namespace Pit::ECS {
 		}
 
 		void SortSystemsOnExecuteOrder() {
-			/*m_Systems.Sort([&](const SystemHandle& First, const SystemHandle& Other) {
-				if (First.Topic != Other.Topic)
-					return First.Topic >= Other.Topic;
+			std::sort(m_Systems.begin(), m_Systems.end(), [](const SystemHandle& s1, const SystemHandle& s2) {
+				if (s1.Topic != s2.Topic)
+					return s1.Topic >= s2.Topic;
 				else
-					return First.ExecuteOrder >= Other.ExecuteOrder;
-			});*/
+					return s1.ExecuteOrder >= s2.ExecuteOrder;
+			});
 		}
 #pragma endregion
 

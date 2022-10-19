@@ -60,7 +60,7 @@ Renderer::Renderer(Rendering::Renderer* renderer)
     io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), 18.f);
     io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), 18.f);
     
-    VkCommandBuffer command_buffer = renderer->CommandBuffers[renderer->SwapChain->getImageIndex()];
+    VkCommandBuffer command_buffer = renderer->CommandBuffers[renderer->FrameIndex];
 
     VkCommandBufferBeginInfo begin_info = {};
     begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;

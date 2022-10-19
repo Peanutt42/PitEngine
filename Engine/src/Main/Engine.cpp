@@ -1,6 +1,5 @@
 #include "Main/CoreInclude.hpp"
 #include "Engine.hpp"
-#include "ECS/Examples/ECSExampleMovement.hpp"
 
 
 using namespace Pit;
@@ -8,13 +7,13 @@ using namespace std::chrono;
 
 Engine* Engine::m_Instance = nullptr;
 Event<> Engine::InitEvent;
-Event<> Engine::TickEvent;
+Event<> Engine::NetworkingUpdateEvent;
+Event<> Engine::PhysicsUpdateEvent;
 Event<> Engine::PreUpdateEvent;
 Event<> Engine::UpdateEvent;
 Event<> Engine::PostUpdateEvent;
 Event<> Engine::RenderEvent;
 Event<> Engine::UIRenderEvent;
-Event<> Engine::OnWindowCloseEvent;
 Event<> Engine::OnWindowResizeEvent;
 Event<> Engine::ShutdownEvent;
 
@@ -33,7 +32,6 @@ void Engine::Init() {
 
 	m_ECSSubmodule = new ECSSubmodule();
 	m_ECSSubmodule->Init();
-	m_ECSSubmodule->GetEcsWorld().AddSystem<ECS::ExampleMovementSystem>();
 
 	m_RenderingSubmodule = new RenderingSubmodule();
 	m_RenderingSubmodule->Init();
@@ -64,8 +62,11 @@ void Engine::Update() {
 	Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.001f * 0.001f * 0.001f);
 	lastUpdate = now;
 
+	// TODO
+	Engine::NetworkingUpdateEvent.Invoke();
+	Engine::PhysicsUpdateEvent.Invoke();
+
 	Engine::PreUpdateEvent.Invoke();
-	Engine::TickEvent.Invoke();
 	Engine::UpdateEvent.Invoke();
 	m_ECSSubmodule->Update();
 	m_RenderingSubmodule->Update();

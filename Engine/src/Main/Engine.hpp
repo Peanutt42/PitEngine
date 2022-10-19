@@ -2,7 +2,6 @@
 
 #include "ECS/ECSSubmodule.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
-#include "ECS/Examples/ECSExampleMovement.hpp"
 #include "Rendering/Renderer.hpp"
 #include "UI/UIRenderer.hpp"
 
@@ -30,13 +29,13 @@ namespace Pit {
 		static bool Exists() { return m_Instance; }
 
 		static Event<> InitEvent;
-		static Event<> TickEvent;
+		static Event<> NetworkingUpdateEvent;
+		static Event<> PhysicsUpdateEvent;
 		static Event<> PreUpdateEvent;
 		static Event<> UpdateEvent;
 		static Event<> PostUpdateEvent;
 		static Event<> RenderEvent;
 		static Event<> UIRenderEvent;
-		static Event<> OnWindowCloseEvent;
 		static Event<> OnWindowResizeEvent;
 		static Event<> ShutdownEvent;
 

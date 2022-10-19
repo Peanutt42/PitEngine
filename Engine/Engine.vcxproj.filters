@@ -63,9 +63,6 @@
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp">
       <Filter>ECS\Examples</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Examples\ECSExampleMovement.hpp">
-      <Filter>ECS\Examples</Filter>
-    </ClInclude>
     <ClInclude Include="src\Event\Event.hpp">
       <Filter>Event</Filter>
     </ClInclude>
@@ -156,6 +153,8 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
+    <ClInclude Include="src\Rendering\Camera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">
@@ -221,5 +220,8 @@
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
+    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
+    <ClCompile Include="src\Rendering\Camera.cpp" />
   </ItemGroup>
 </Project>

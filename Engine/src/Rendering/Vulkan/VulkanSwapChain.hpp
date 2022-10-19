@@ -33,6 +33,10 @@ namespace Pit::Rendering {
         VkResult acquireNextImage(uint32_t& imageIndex);
         VkResult submitCommandBuffers(const VkCommandBuffer* buffers, uint32_t* imageIndex);
 
+        bool compareSwapFormats(const SwapChain& swapChain) const {
+            return swapChain.swapChainDepthFormat == swapChainDepthFormat && swapChain.swapChainImageFormat == swapChainImageFormat;
+        }
+
         VkPresentModeKHR GetPresentMode() { return presentMode; }
 
     private:
@@ -52,6 +56,7 @@ namespace Pit::Rendering {
 
         VkPresentModeKHR presentMode;
         VkFormat swapChainImageFormat;
+        VkFormat swapChainDepthFormat;
         VkExtent2D swapChainExtent;
 
         std::vector<VkFramebuffer> swapChainFramebuffers;

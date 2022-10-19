@@ -36,3 +36,6 @@
 # Excluded Folders
 x64/
 .vs/
+Logs/
+bin/
+bin-int/

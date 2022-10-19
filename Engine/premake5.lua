@@ -46,7 +46,7 @@ project "Engine"
 
 	defines {
 		-- if compiled for editor use
-		"PIT_EDITOR"
+		--"PIT_EDITOR"
 	}
 
 	filter { "configurations:Debug" }

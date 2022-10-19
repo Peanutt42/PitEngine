@@ -19,16 +19,16 @@ namespace Pit::ECS {
         glm::vec3 scale{ 1.f, 1.f, 1.f };
 
         glm::mat4 mat4() {
-            /* Simplified but slower:
-            auto transform = glm::translate(glm::mat4(1.f), position);
+            // Simplified but slower:
+            // auto transform = glm::translate(glm::mat4(1.f), position);
 
-            transform = glm::rotate(transform, rotation.y, {0.f, 1.f, 0.f});
-            transform = glm::rotate(transform, rotation.x, {1.f, 0.f, 0.f});
-            transform = glm::rotate(transform, rotation.z, {0.f, 0.f, 1.f});
+            // transform = glm::rotate(transform, rotation.y, {0.f, 1.f, 0.f});
+            // transform = glm::rotate(transform, rotation.x, {1.f, 0.f, 0.f});
+            // transform = glm::rotate(transform, rotation.z, {0.f, 0.f, 1.f});
 
-            transform = glm::scale(transform, scale);
-            return transform;
-            */
+            // transform = glm::scale(transform, scale);
+            // return transform;
+            
             const float c3 = glm::cos(rotation.z);
             const float s3 = glm::sin(rotation.z);
             const float c2 = glm::cos(rotation.x);
@@ -84,18 +84,7 @@ namespace Pit::ECS {
         }
     };
 
-    struct Transform2DComponent : public Component {
-        glm::vec2 position{};
-        glm::vec2 scale{ 1.f, 1.f };
-        float rotation;
-
-        glm::mat2 mat2() {
-            const float s = glm::sin(rotation);
-            const float c = glm::cos(rotation);
-            glm::mat2 rotMatrix{ {c, s}, {-s, c} };
-
-            glm::mat2 scaleMat{ {scale.x, 0.f}, {0.f, scale.y} };
-            return rotMatrix * scaleMat;
-        }
+    struct MeshRendererComponent : public Component {
+        
     };
 }

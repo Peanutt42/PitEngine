@@ -74,7 +74,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>PIT_EDITOR;PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -98,7 +98,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>PIT_EDITOR;PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -161,7 +161,6 @@
     <ClInclude Include="src\ECS\ECSSystem.hpp" />
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
-    <ClInclude Include="src\ECS\Examples\ECSExampleMovement.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
     <ClInclude Include="src\Main\CoreInclude.hpp" />
     <ClInclude Include="src\Main\Engine.hpp" />
@@ -176,8 +175,10 @@
     <ClInclude Include="src\Main\Time.hpp" />
     <ClInclude Include="src\Main\Types.hpp" />
     <ClInclude Include="src\Main\UUID.hpp" />
+    <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
+    <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp" />
@@ -205,7 +206,10 @@
     <ClCompile Include="src\Main\Time.cpp" />
     <ClCompile Include="src\Main\UUID.cpp" />
     <ClCompile Include="src\Main\pch.cpp" />
+    <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
+    <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp" />

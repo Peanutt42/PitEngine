@@ -1,6 +1,6 @@
 === ENGINE ===
-- Custom String & Array(dynamic ofcourse!) structs
-- Crash Handler
+- AssetManager/-Managment : Meshes, Shaders, Textures, Materials, ...
+- Material system: shader plus parameters ->Bind() easily
 
 - fix contentbrowser searching every tick for content again
 - ? Event/Callback System // TODO: if needed, small: Action, big Event with bool Handled and Dispatchers ...

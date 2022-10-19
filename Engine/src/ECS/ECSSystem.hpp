@@ -6,6 +6,7 @@ namespace Pit::ECS {
 	enum SystemTopic {
 		None,
 		Physic,
+		Networking,
 		General,
 		Gameplay,
 		Render

@@ -3,30 +3,27 @@
 #include "Main/CoreInclude.hpp"
 #include "Main/Submodule.hpp"
 #include "Renderer.hpp"
+#include "RenderingSystem.hpp"
+#include "Camera.hpp"
 #include "UI/UIRenderer.hpp"
 
 namespace Pit {
 	class RenderingSubmodule : public Submodule {
 	public:
-		virtual void Init() {
-			Renderer = new Rendering::Renderer();
-			UIRenderer = new UI::Renderer(Renderer);
-		}
+		virtual void Init();
 		
-		virtual void Shutdown() {
-			delete UIRenderer;
-			delete Renderer;
-		}
+		virtual void Shutdown();
 		
-		virtual void Update() {
-			Renderer->Update();
-		}
+		virtual void Update();
 
 		Rendering::Renderer* GetRenderer() { return Renderer; }
+		Rendering::RenderingSystem* GetRenderingSystem() { return RenderingSystem; }
 		Pit::UI::Renderer* GetUIRenderer() { return UIRenderer; }
 
 	private:
 		Rendering::Renderer* Renderer = nullptr;
+		Rendering::RenderingSystem* RenderingSystem = nullptr;
+		Rendering::Camera* CurrentCamera = nullptr;
 		Pit::UI::Renderer* UIRenderer = nullptr;
 	};
 }

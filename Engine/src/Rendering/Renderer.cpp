@@ -11,15 +11,9 @@ using namespace Pit::Rendering;
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering);
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering);
 
-struct SimplePushConstantData {
-	glm::vec2 offset;
-	alignas(16) glm::vec3 color;
-};
-
 Renderer::Renderer() {
 	SetGLFWWindowIcon(Window.GetWindowHandle(), FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
 	_LoadModels();
-	_CreatePipelineLayout();
 	_RecreateSwapChain();
 	_CreateCommandBuffers();
 	_CreateDescriptorPool();
@@ -29,7 +23,6 @@ Renderer::~Renderer() {
 	vkDeviceWaitIdle(Device.device());
 
 	vkDestroyDescriptorPool(Device.device(), DescriptorPool, nullptr);
-	vkDestroyPipelineLayout(Device.device(), PipelineLayout, nullptr);
 }
 
 bool Renderer::ShouldClose() {
@@ -44,8 +37,8 @@ void Renderer::Update() {
 
 	Engine::Rendering()->GetUIRenderer()->Record();
 
-	uint32_t imageIndex = _RenderFrame();
-	_PresentFrame(imageIndex);
+	_RenderFrame();
+	_PresentFrame();
 }
 
 void Renderer::_BeginFrame() {
@@ -59,28 +52,25 @@ void Renderer::_BeginFrame() {
 	}
 }
 
-uint32_t Renderer::_RenderFrame() {
+void Renderer::_RenderFrame() {
 	SCOPE_STAT(RenderingRender);
 
-	uint32_t imageIndex = -1;
-	auto result = SwapChain->acquireNextImage(imageIndex);
+	auto result = SwapChain->acquireNextImage(ImageIndex);
 
 	if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
 		Window.SetWindowResizedFlag(true);
-		return imageIndex;
+		return;
 	}
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to acquire swapChainImage!");
 
-	_RecordCommandBuffer(imageIndex);
-
-	return imageIndex;
+	_RecordCommandBuffer();
 }
 
-void Renderer::_PresentFrame(uint32_t imageIndex) {
+void Renderer::_PresentFrame() {
 	SCOPE_STAT(RenderingPresent);
 
-	VkResult result = SwapChain->submitCommandBuffers(&CommandBuffers[imageIndex], &imageIndex);
+	VkResult result = SwapChain->submitCommandBuffers(&CommandBuffers[FrameIndex], &ImageIndex);
 
 	if (result != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to present swapChainImage!");
@@ -90,35 +80,8 @@ void Renderer::_PresentFrame(uint32_t imageIndex) {
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 	}
-}
 
-void Renderer::_CreatePipelineLayout() {
-	VkPushConstantRange pushConstantRange{};
-	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-	pushConstantRange.offset = 0;
-	pushConstantRange.size = sizeof(SimplePushConstantData);
-
-
-	VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-	pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-	pipelineLayoutInfo.setLayoutCount = 0;
-	pipelineLayoutInfo.pSetLayouts = nullptr;
-	pipelineLayoutInfo.pushConstantRangeCount = 1;
-	pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-	if (vkCreatePipelineLayout(Device.device(), &pipelineLayoutInfo, nullptr, &PipelineLayout) != VK_SUCCESS)
-		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create pipelineLayout!");
-}
-
-void Renderer::_CreatePipeline() {
-	PipelineConfigInfo pipelineConfig{};
-	Pipeline::DefaultConfigInfo(pipelineConfig);
-	pipelineConfig.renderPass = SwapChain->getRenderPass();
-	pipelineConfig.pipelineLayout = PipelineLayout;
-	Pipeline = std::make_unique<Rendering::Pipeline>(Device,
-											pipelineConfig,
-											FileSystem::GetSandboxDir() + "assets/shaders/vert.spv",
-											FileSystem::GetSandboxDir() + "assets/shaders/frag.spv");
-
+	FrameIndex = (FrameIndex + 1) % Rendering::SwapChain::MAX_FRAMES_IN_FLIGHT;
 }
 
 static int _GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode) {
@@ -144,20 +107,19 @@ void Renderer::_RecreateSwapChain() {
 	if (SwapChain == nullptr)
 		SwapChain = std::make_unique<Rendering::SwapChain>(Device, extent);
 	else {
-		SwapChain = std::make_unique<Rendering::SwapChain>(Device, extent, std::move(SwapChain));
-		if (SwapChain->imageCount() != CommandBuffers.size()) {
-			_FreeCommandBuffers();
-			_CreateCommandBuffers();
-		}
+		std::shared_ptr<Rendering::SwapChain> oldSwapChain = std::move(SwapChain);
+		SwapChain = std::make_unique<Rendering::SwapChain>(Device, extent, oldSwapChain);
+		if (!oldSwapChain->compareSwapFormats(*SwapChain.get()))
+			PIT_ENGINE_FATAL(Log::Rendering, "Swapchain image/depth format has changed");
 	}
-	_CreatePipeline();
+	Engine::OnWindowResizeEvent.Invoke();
 
 	MinImageCount = _GetMinImageCountFromPresentMode(SwapChain->GetPresentMode());
 	//ImGui_ImplVulkan_SetMinImageCount(_GetMinImageCountFromPresentMode(SwapChain->GetPresentMode()));
 }
 
 void Renderer::_CreateCommandBuffers() {
-	CommandBuffers.resize(SwapChain->imageCount());
+	CommandBuffers.resize(Rendering::SwapChain::MAX_FRAMES_IN_FLIGHT);
 
 	VkCommandBufferAllocateInfo allocInfo{};
 	allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -174,17 +136,17 @@ void Renderer::_FreeCommandBuffers() {
 	CommandBuffers.clear();
 }
 
-void Renderer::_RecordCommandBuffer(int imageIndex) {
+void Renderer::_RecordCommandBuffer() {
 	VkCommandBufferBeginInfo beginInfo{};
 	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
-	if (vkBeginCommandBuffer(CommandBuffers[imageIndex], &beginInfo) != VK_SUCCESS)
+	if (vkBeginCommandBuffer(CommandBuffers[FrameIndex], &beginInfo) != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to Begin commandBuffer!");
 
 	VkRenderPassBeginInfo renderPassInfo{};
 	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	renderPassInfo.renderPass = SwapChain->getRenderPass();
-	renderPassInfo.framebuffer = SwapChain->getFrameBuffer(imageIndex);
+	renderPassInfo.framebuffer = SwapChain->getFrameBuffer(ImageIndex);
 	renderPassInfo.renderArea.offset = { 0, 0 };
 	renderPassInfo.renderArea.extent = SwapChain->getSwapChainExtent();
 
@@ -194,7 +156,7 @@ void Renderer::_RecordCommandBuffer(int imageIndex) {
 	renderPassInfo.clearValueCount = 2;
 	renderPassInfo.pClearValues = clearValues;
 
-	vkCmdBeginRenderPass(CommandBuffers[imageIndex], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+	vkCmdBeginRenderPass(CommandBuffers[FrameIndex], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 	VkViewport viewport{};
 	viewport.x = viewport.y = 0;
@@ -203,28 +165,16 @@ void Renderer::_RecordCommandBuffer(int imageIndex) {
 	viewport.minDepth = 0.f;
 	viewport.maxDepth = 1.f;
 	VkRect2D scissors{ {0, 0}, SwapChain->getSwapChainExtent() };
-	vkCmdSetViewport(CommandBuffers[imageIndex], 0, 1, &viewport);
-	vkCmdSetScissor(CommandBuffers[imageIndex], 0, 1, &scissors);
-
-	Pipeline->Bind(CommandBuffers[imageIndex]);
-	m_TestMesh->Bind(CommandBuffers[imageIndex]);
-
-
-	for (int j = 0; j < 4; j++) {
-		SimplePushConstantData push{};
-		push.offset = { -0.5f + Time::Frame() * 0.001f, -0.4f + j * 0.25f};
-		push.color = { 0.f, 0.f, 0.2f + 0.2f * j };
-		vkCmdPushConstants(CommandBuffers[imageIndex], PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
-		m_TestMesh->Draw(CommandBuffers[imageIndex]);
-	}
+	vkCmdSetViewport(CommandBuffers[FrameIndex], 0, 1, &viewport);
+	vkCmdSetScissor(CommandBuffers[FrameIndex], 0, 1, &scissors);
 
 	Engine::RenderEvent.Invoke();
 
 
-	Engine::Rendering()->GetUIRenderer()->Render(CommandBuffers[imageIndex]);
+	Engine::Rendering()->GetUIRenderer()->Render(CommandBuffers[FrameIndex]);
 
-	vkCmdEndRenderPass(CommandBuffers[imageIndex]);
-	if (vkEndCommandBuffer(CommandBuffers[imageIndex]) != VK_SUCCESS)
+	vkCmdEndRenderPass(CommandBuffers[FrameIndex]);
+	if (vkEndCommandBuffer(CommandBuffers[FrameIndex]) != VK_SUCCESS)
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to record commandBuffer!");
 }
 
@@ -254,31 +204,64 @@ void Renderer::_CreateDescriptorPool() {
 }
 
 
+std::unique_ptr<Mesh> createCubeModel(Device& device, glm::vec3 offset) {
+	std::vector<Vertex> vertices{
 
+		// left face (white)
+		{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f}},
+		{{-.5f, .5f, .5f}, {.9f, .9f, .9f}},
+		{{-.5f, -.5f, .5f}, {.9f, .9f, .9f}},
+		{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f}},
+		{{-.5f, .5f, -.5f}, {.9f, .9f, .9f}},
+		{{-.5f, .5f, .5f}, {.9f, .9f, .9f}},
 
-void Renderer::_Sierpinski(
-	std::vector<Vertex>& vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top) {
-	if (depth <= 0) {
-		vertices.push_back({ top, {1.f, 0.f, 0.f} });
-		vertices.push_back({ right, {0.f, 1.f, 0.f} });
-		vertices.push_back({ left, {0.f, 0.f, 1.f} });
+		// right face (yellow)
+		{{.5f, -.5f, -.5f}, {.8f, .8f, .1f}},
+		{{.5f, .5f, .5f}, {.8f, .8f, .1f}},
+		{{.5f, -.5f, .5f}, {.8f, .8f, .1f}},
+		{{.5f, -.5f, -.5f}, {.8f, .8f, .1f}},
+		{{.5f, .5f, -.5f}, {.8f, .8f, .1f}},
+		{{.5f, .5f, .5f}, {.8f, .8f, .1f}},
+
+		// top face (orange, remember y axis points down)
+		{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f}},
+		{{.5f, -.5f, .5f}, {.9f, .6f, .1f}},
+		{{-.5f, -.5f, .5f}, {.9f, .6f, .1f}},
+		{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f}},
+		{{.5f, -.5f, -.5f}, {.9f, .6f, .1f}},
+		{{.5f, -.5f, .5f}, {.9f, .6f, .1f}},
+
+		// bottom face (red)
+		{{-.5f, .5f, -.5f}, {.8f, .1f, .1f}},
+		{{.5f, .5f, .5f}, {.8f, .1f, .1f}},
+		{{-.5f, .5f, .5f}, {.8f, .1f, .1f}},
+		{{-.5f, .5f, -.5f}, {.8f, .1f, .1f}},
+		{{.5f, .5f, -.5f}, {.8f, .1f, .1f}},
+		{{.5f, .5f, .5f}, {.8f, .1f, .1f}},
+
+		// nose face (blue)
+		{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f}},
+		{{.5f, .5f, 0.5f}, {.1f, .1f, .8f}},
+		{{-.5f, .5f, 0.5f}, {.1f, .1f, .8f}},
+		{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f}},
+		{{.5f, -.5f, 0.5f}, {.1f, .1f, .8f}},
+		{{.5f, .5f, 0.5f}, {.1f, .1f, .8f}},
+
+		// tail face (green)
+		{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f}},
+		{{.5f, .5f, -0.5f}, {.1f, .8f, .1f}},
+		{{-.5f, .5f, -0.5f}, {.1f, .8f, .1f}},
+		{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f}},
+		{{.5f, -.5f, -0.5f}, {.1f, .8f, .1f}},
+		{{.5f, .5f, -0.5f}, {.1f, .8f, .1f}},
+
+	};
+	for (auto& v : vertices) {
+		v.position += offset;
 	}
-	else {
-		auto leftTop = 0.5f * (left + top);
-		auto rightTop = 0.5f * (right + top);
-		auto leftRight = 0.5f * (left + right);
-		_Sierpinski(vertices, depth - 1, left, leftRight, leftTop);
-		_Sierpinski(vertices, depth - 1, leftRight, right, rightTop);
-		_Sierpinski(vertices, depth - 1, leftTop, rightTop, top);
-	}
+	return std::make_unique<Mesh>(device, vertices);
 }
 
-void Renderer::_LoadModels() {
-	std::vector<Vertex> vertices = {
-		{{ -0.5f,0.5f }, {1.f, 0.f, 0.f}},
-		{{ 0.5f,0.5f }, {0.f, 1.f, 0.f}},
-		{{ 0.f, -0.5f }, {0.f, 0.f, 1.f}}
-	};
-	
-	m_TestMesh = std::make_unique<Mesh>(Device, vertices);
+void Renderer::_LoadModels() {	
+	m_TestMesh = createCubeModel(Device, {0, 0, 0});
 }

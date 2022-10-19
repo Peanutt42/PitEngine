@@ -34,13 +34,13 @@ namespace Pit::Debug {
 }
 
 
-// Engine logging
 using Log = Pit::Debug::Category;
 
+// Engine logging
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 #define _GetEngineLogger() \
 	Pit::Debug::Logging::GetEngineLogger()
 
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 #define PIT_ENGINE_TRACE(category, msg, ...)	if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_TRACE(_GetEngineLogger(), msg, ##__VA_ARGS__)
 #define PIT_ENGINE_INFO(category, msg, ...)		if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_INFO(_GetEngineLogger(), msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_WARN(_GetEngineLogger(), msg, ##__VA_ARGS__)
@@ -55,8 +55,19 @@ using Log = Pit::Debug::Category;
 #endif
 
 // Game logging
-#define PIT_TRACE(msg, ...)			SPDLOG_LOGGER_TRACE(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_INFO(msg, ...)			SPDLOG_LOGGER_INFO(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_WARN(msg, ...)			SPDLOG_LOGGER_WARN(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_ERR(msg, ...)			SPDLOG_LOGGER_ERROR(Pit::Debug::Logging::GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#define _GetGameLogger() \
+	Pit::Debug::Logging::GetGameLogger();
+
+#define PIT_TRACE(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_TRACE(_GetGameLogger(), msg, ##__VA_ARGS__)
+#define PIT_INFO(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_INFO(_GetGameLogger(), msg, ##__VA_ARGS__)
+#define PIT_WARN(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_WARN(_GetGameLogger(), msg, ##__VA_ARGS__)
+#define PIT_ERR(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_ERROR(_GetGameLogger(), msg, ##__VA_ARGS__)
+#define PIT_FATAL(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) { PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
+#else
+#define PIT_TRACE(msg, ...)	{}
+#define PIT_INFO(msg, ...)	{}
+#define PIT_WARN(msg, ...)	{}
+#define PIT_ERR(msg, ...)	{}
+#define PIT_FATAL(msg, ...)	{ throw std::runtime_error(msg); while (true){}; }
+#endif

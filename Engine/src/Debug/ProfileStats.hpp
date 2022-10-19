@@ -223,6 +223,8 @@ namespace Pit::Debug {
 
 #define SCOPE_STAT(name) \
 	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::Value = millis; });
+#define SCOPE_STAT_ADD(name) \
+	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::Value += millis; });
 
 #define STAT_RESET(name) \
 	STAT_##name::Value = NULL

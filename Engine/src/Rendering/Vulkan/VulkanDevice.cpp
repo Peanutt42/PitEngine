@@ -349,6 +349,7 @@ namespace Pit::Rendering {
             }
         }
         PIT_ENGINE_FATAL(Log::Rendering, "Failed to find supported format!");
+        return VK_FORMAT_UNDEFINED;
     }
 
     uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
@@ -362,6 +363,7 @@ namespace Pit::Rendering {
         }
 
         PIT_ENGINE_FATAL(Log::Rendering, "Failed to find suitable memory type!");
+        return -1;
     }
 
     void Device::createBuffer(
