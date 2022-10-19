@@ -1,231 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{0C95060D-78A9-2EBE-412B-D21DADFE2AEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Debug">
-      <UniqueIdentifier>{63A3C3B2-CF0D-7829-184C-29CF84F5557E}</UniqueIdentifier>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{60E1870B-CCEA-877C-5566-9E7CC16E937C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ECS">
-      <UniqueIdentifier>{F76D2FA9-634D-AE44-6C65-391BD8C314A6}</UniqueIdentifier>
+    <Filter Include="ECS\Examples">
+      <UniqueIdentifier>{EE1E07D1-DA81-9675-8307-CF2B6F4962F8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ECS\Examples">
-      <UniqueIdentifier>{65C527E4-51BE-4636-7AF0-2BBB66482642}</UniqueIdentifier>
+    <Filter Include="Event">
+      <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Event">
-      <UniqueIdentifier>{3E1ADFB2-AA84-9329-F3C2-44CF5F6C717E}</UniqueIdentifier>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4AF3887C-362A-8A0D-DF16-7010CB2C060F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Main">
-      <UniqueIdentifier>{C11222CF-ADDF-7CDA-D6F8-6A82C224B268}</UniqueIdentifier>
+    <Filter Include="Main\Input">
+      <UniqueIdentifier>{C97292FD-B52A-D44A-1E32-ADA60A096F3B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Main\Input">
-      <UniqueIdentifier>{800F9934-6CDD-8C3A-5571-FD6041DE689F}</UniqueIdentifier>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Rendering">
-      <UniqueIdentifier>{BA10DABB-26D1-55F2-EF0B-9F6F5B8B9ACE}</UniqueIdentifier>
+    <Filter Include="Rendering\Vulkan">
+      <UniqueIdentifier>{03BF5EF3-EFB7-7D45-18EA-62CA04425D51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Rendering\Vulkan">
-      <UniqueIdentifier>{FAC8CB5A-E657-5524-8F76-691F7BE465CA}</UniqueIdentifier>
+    <Filter Include="UI">
+      <UniqueIdentifier>{83755900-6F01-880B-D8AF-880BC45A880B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\UI">
-      <UniqueIdentifier>{3A4B661C-26ED-90F2-0FA8-A446FBE81743}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Utils">
-      <UniqueIdentifier>{4D9AFFB3-B904-B42A-0243-65D06EEC917F}</UniqueIdentifier>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Debug\Logging.hpp">
-      <Filter>src\Debug</Filter>
+      <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Debug\ProfileStats.hpp">
-      <Filter>src\Debug</Filter>
+      <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSComponent.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSComponents.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSGameloop.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSInclude.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSSystem.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSWorld.hpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp">
-      <Filter>src\ECS\Examples</Filter>
+      <Filter>ECS\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\Examples\ECSExampleMovement.hpp">
-      <Filter>src\ECS\Examples</Filter>
+      <Filter>ECS\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\Event\Event.hpp">
-      <Filter>src\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\CoreInclude.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Engine.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\EngineConfig.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\FileSystem.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Input\Input.hpp">
-      <Filter>src\Main\Input</Filter>
+      <Filter>Main\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Input\KeyCode.hpp">
-      <Filter>src\Main\Input</Filter>
+      <Filter>Main\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\PlatformDetection.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Random.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Result.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Submodule.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Time.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Types.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\UUID.hpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
-      <Filter>src\Rendering</Filter>
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp">
-      <Filter>src\Rendering</Filter>
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanSwapChain.hpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanTexture.hpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
-      <Filter>src\Rendering</Filter>
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UI.hpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UIFonts.hpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UILayer.hpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UILayerManager.hpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UIRenderer.hpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\DateUtils.hpp">
-      <Filter>src\Utils</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\PlatformUtils.hpp">
-      <Filter>src\Utils</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\StringUtils.hpp">
-      <Filter>src\Utils</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">
-      <Filter>src\Debug</Filter>
+      <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\ProfileStats.cpp">
-      <Filter>src\Debug</Filter>
+      <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\ECSWorld.cpp">
-      <Filter>src\ECS</Filter>
+      <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
-      <Filter>src\ECS\Examples</Filter>
+      <Filter>ECS\Examples</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\Engine.cpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\Input\Input.cpp">
-      <Filter>src\Main\Input</Filter>
+      <Filter>Main\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\Random.cpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\Time.cpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\UUID.cpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\pch.cpp">
-      <Filter>src\Main</Filter>
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
-      <Filter>src\Rendering</Filter>
+      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanSwapChain.cpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanTexture.cpp">
-      <Filter>src\Rendering\Vulkan</Filter>
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">
-      <Filter>src\Rendering</Filter>
+      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\UILayerManager.cpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\UIRenderer.cpp">
-      <Filter>src\UI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
-      <Filter>src\Utils</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

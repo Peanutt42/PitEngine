@@ -1,72 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Panels">
-      <UniqueIdentifier>{DFE6F326-CB9E-3574-34A6-0ED0207DD064}</UniqueIdentifier>
+    <Filter Include="Panels">
+      <UniqueIdentifier>{A80D95C9-94AF-BF9F-7D6A-D3F369AB46F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\EditorApplication.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EditorAssetManager.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EditorWindowPanel.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
+    <ClInclude Include="src\EditorApplication.hpp" />
+    <ClInclude Include="src\EditorAssetManager.hpp" />
+    <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\HierachyPanel.hpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\InspectorPanel.hpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\ProfilerPanel.hpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\SceneViewportPanel.hpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClInclude>
-    <ClInclude Include="src\pch.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
+    <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EditorApplication.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EditorAssetManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
+    <ClCompile Include="src\EditorApplication.cpp" />
+    <ClCompile Include="src\EditorAssetManager.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\HierachyPanel.cpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\InspectorPanel.cpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\ProfilerPanel.cpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\SceneViewportPanel.cpp">
-      <Filter>src\Panels</Filter>
+      <Filter>Panels</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pch.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
 </Project>

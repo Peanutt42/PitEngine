@@ -10,7 +10,6 @@
   UUID.cpp
   pch.cpp
   Renderer.cpp
-  RenderingSubmodule.cpp
   VulkanDevice.cpp
   VulkanMesh.cpp
   VulkanPipeline.cpp
