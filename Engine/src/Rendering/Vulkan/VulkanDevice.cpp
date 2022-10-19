@@ -24,12 +24,10 @@ namespace Pit::Rendering {
         auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
             instance,
             "vkCreateDebugUtilsMessengerEXT");
-        if (func != nullptr) {
+        if (func != nullptr)
             return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-        }
-        else {
+        else
             return VK_ERROR_EXTENSION_NOT_PRESENT;
-        }
     }
 
     void DestroyDebugUtilsMessengerEXT(
@@ -39,9 +37,8 @@ namespace Pit::Rendering {
         auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
             instance,
             "vkDestroyDebugUtilsMessengerEXT");
-        if (func != nullptr) {
+        if (func != nullptr)
             func(instance, debugMessenger, pAllocator);
-        }
     }
 
     // class member functions
@@ -58,24 +55,22 @@ namespace Pit::Rendering {
         vkDestroyCommandPool(device_, commandPool, nullptr);
         vkDestroyDevice(device_, nullptr);
 
-        if (enableValidationLayers) {
+        if (enableValidationLayers)
             DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
-        }
 
         vkDestroySurfaceKHR(instance, surface_, nullptr);
         vkDestroyInstance(instance, nullptr);
     }
 
     void Device::createInstance() {
-        if (enableValidationLayers && !checkValidationLayerSupport()) {
-            throw std::runtime_error("validation layers requested, but not available!");
-        }
+        if (enableValidationLayers && !checkValidationLayerSupport())
+            PIT_ENGINE_FATAL(Log::Rendering, "Validation layers requested, but not available!");
 
         VkApplicationInfo appInfo = {};
         appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.pApplicationName = "LittleVulkanEngine App";
+        appInfo.pApplicationName = "Sandbox App";
         appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.pEngineName = "No Engine";
+        appInfo.pEngineName = "PitEngine";
         appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
         appInfo.apiVersion = VK_API_VERSION_1_0;
 
@@ -100,9 +95,8 @@ namespace Pit::Rendering {
             createInfo.pNext = nullptr;
         }
 
-        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create instance!");
-        }
+        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create instance!");
 
         hasGflwRequiredInstanceExtensions();
     }
@@ -162,13 +156,11 @@ namespace Pit::Rendering {
             createInfo.enabledLayerCount = Cast<uint32_t>(validationLayers.size());
             createInfo.ppEnabledLayerNames = validationLayers.data();
         }
-        else {
+        else
             createInfo.enabledLayerCount = 0;
-        }
 
-        if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device_) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create logical device!");
-        }
+        if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device_) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create logical device!");
 
         vkGetDeviceQueue(device_, queueFamily_, 0, &queue_);
     }
@@ -182,9 +174,8 @@ namespace Pit::Rendering {
         poolInfo.flags =
             VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
-        if (vkCreateCommandPool(device_, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create command pool!");
-        }
+        if (vkCreateCommandPool(device_, &poolInfo, nullptr, &commandPool) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create command pool!");
     }
 
     void Device::createSurface() { window.CreateVKSurface(instance, &surface_); }
@@ -201,8 +192,7 @@ namespace Pit::Rendering {
         VkPhysicalDeviceFeatures supportedFeatures;
         vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
 
-        return extensionsSupported && swapChainAdequate &&
-            supportedFeatures.samplerAnisotropy;
+        return extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
     }
 
     void Device::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
@@ -218,9 +208,8 @@ namespace Pit::Rendering {
         if (!enableValidationLayers) return;
         VkDebugUtilsMessengerCreateInfoEXT createInfo;
         populateDebugMessengerCreateInfo(createInfo);
-        if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
-            throw std::runtime_error("failed to set up debug messenger!");
-        }
+        if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to set up debug messenger!");
     }
 
     bool Device::checkValidationLayerSupport() {
@@ -359,7 +348,7 @@ namespace Pit::Rendering {
                 return format;
             }
         }
-        throw std::runtime_error("failed to find supported format!");
+        PIT_ENGINE_FATAL(Log::Rendering, "Failed to find supported format!");
     }
 
     uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
@@ -372,7 +361,7 @@ namespace Pit::Rendering {
             }
         }
 
-        throw std::runtime_error("failed to find suitable memory type!");
+        PIT_ENGINE_FATAL(Log::Rendering, "Failed to find suitable memory type!");
     }
 
     void Device::createBuffer(
@@ -387,9 +376,8 @@ namespace Pit::Rendering {
         bufferInfo.usage = usage;
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-        if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create vertex buffer!");
-        }
+        if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create vertex buffer!");
 
         VkMemoryRequirements memRequirements;
         vkGetBufferMemoryRequirements(device_, buffer, &memRequirements);
@@ -399,9 +387,8 @@ namespace Pit::Rendering {
         allocInfo.allocationSize = memRequirements.size;
         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
-        if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate vertex buffer memory!");
-        }
+        if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to allocate vertex buffer memory!");
 
         vkBindBufferMemory(device_, buffer, bufferMemory, 0);
     }
@@ -482,9 +469,8 @@ namespace Pit::Rendering {
         VkMemoryPropertyFlags properties,
         VkImage& image,
         VkDeviceMemory& imageMemory) {
-        if (vkCreateImage(device_, &imageInfo, nullptr, &image) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create image!");
-        }
+        if (vkCreateImage(device_, &imageInfo, nullptr, &image) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create image!");
 
         VkMemoryRequirements memRequirements;
         vkGetImageMemoryRequirements(device_, image, &memRequirements);
@@ -494,13 +480,11 @@ namespace Pit::Rendering {
         allocInfo.allocationSize = memRequirements.size;
         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
-        if (vkAllocateMemory(device_, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate image memory!");
-        }
+        if (vkAllocateMemory(device_, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to allocate image memory!");
 
-        if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS) {
-            throw std::runtime_error("failed to bind image memory!");
-        }
+        if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to bind image memory!");
     }
 
 }

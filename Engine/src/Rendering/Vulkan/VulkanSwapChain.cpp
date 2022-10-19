@@ -99,10 +99,8 @@ namespace Pit::Rendering {
         submitInfo.pSignalSemaphores = signalSemaphores;
 
         vkResetFences(device.device(), 1, &inFlightFences[currentFrame]);
-        if (vkQueueSubmit(device.queue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
-            VK_SUCCESS) {
-            throw std::runtime_error("failed to submit draw command buffer!");
-        }
+        if (vkQueueSubmit(device.queue(), 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to submit draw command buffer!");
 
         VkPresentInfoKHR presentInfo = {};
         presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -160,9 +158,8 @@ namespace Pit::Rendering {
 
         createInfo.oldSwapchain = oldSwapChain == nullptr ? VK_NULL_HANDLE : oldSwapChain->swapChain;
 
-        if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create swap chain!");
-        }
+        if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create swap chain!");
 
         // we only specified a minimum number of images in the swap chain, so the implementation is
         // allowed to create a swap chain with more. That's why we'll first query the final number of
@@ -190,10 +187,8 @@ namespace Pit::Rendering {
             viewInfo.subresourceRange.baseArrayLayer = 0;
             viewInfo.subresourceRange.layerCount = 1;
 
-            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
-                VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
-            }
+            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS)
+                PIT_ENGINE_FATAL(Log::Rendering, "Failed to create texture image view!");
         }
     }
 
@@ -253,9 +248,8 @@ namespace Pit::Rendering {
         renderPassInfo.dependencyCount = 1;
         renderPassInfo.pDependencies = &dependency;
 
-        if (vkCreateRenderPass(device.device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create render pass!");
-        }
+        if (vkCreateRenderPass(device.device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+            PIT_ENGINE_FATAL(Log::Rendering, "Failed to create render pass!");
     }
 
     void SwapChain::createFramebuffers() {
@@ -273,13 +267,8 @@ namespace Pit::Rendering {
             framebufferInfo.height = swapChainExtent.height;
             framebufferInfo.layers = 1;
 
-            if (vkCreateFramebuffer(
-                device.device(),
-                &framebufferInfo,
-                nullptr,
-                &swapChainFramebuffers[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create framebuffer!");
-            }
+            if (vkCreateFramebuffer( device.device(), &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS)
+                PIT_ENGINE_FATAL(Log::Rendering, "Failed to create framebuffer!");
         }
     }
 
@@ -325,9 +314,8 @@ namespace Pit::Rendering {
             viewInfo.subresourceRange.baseArrayLayer = 0;
             viewInfo.subresourceRange.layerCount = 1;
 
-            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
-            }
+            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS)
+                PIT_ENGINE_FATAL(Log::Rendering, "Failed to create texture image view!");
         }
     }
 
@@ -345,12 +333,11 @@ namespace Pit::Rendering {
         fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-            if (vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) !=
-                VK_SUCCESS ||
-                vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
-                VK_SUCCESS ||
+            if (vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != VK_SUCCESS ||
+                vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != VK_SUCCESS ||
                 vkCreateFence(device.device(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create synchronization objects for a frame!");
+
+                PIT_ENGINE_FATAL(Log::Rendering, "Failed to create synchronization objects for a frame!");
             }
         }
     }
