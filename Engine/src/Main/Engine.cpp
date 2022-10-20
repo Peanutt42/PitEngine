@@ -26,51 +26,82 @@ Engine::~Engine() {
 }
 
 void Engine::Init() {
-	m_Instance = this;
+	try {
+		m_Instance = this;
 
-	PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
+		PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
 
-	m_ECSSubmodule = new ECSSubmodule();
-	m_ECSSubmodule->Init();
+		m_ECSSubmodule = new ECSSubmodule();
+		m_ECSSubmodule->Init();
 
-	m_RenderingSubmodule = new RenderingSubmodule();
-	m_RenderingSubmodule->Init();
+		m_RenderingSubmodule = new RenderingSubmodule();
+		m_RenderingSubmodule->Init();
 	
-	Engine::InitEvent.Invoke();
+		Engine::InitEvent.Invoke();
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
+		return;
+	}
+	catch (...) {
+		std::cerr << "[Engine] Exception catched!" << std::endl;
+		return ;
+	}
 }
 
 void Engine::Shutdown() {
-	Engine::ShutdownEvent.Invoke();
+	try {
+		Engine::ShutdownEvent.Invoke();
 
-	m_RenderingSubmodule->Shutdown();
-	delete m_RenderingSubmodule;
-	m_ECSSubmodule->Shutdown();
-	delete m_ECSSubmodule;
+		m_RenderingSubmodule->Shutdown();
+		delete m_RenderingSubmodule;
+		m_ECSSubmodule->Shutdown();
+		delete m_ECSSubmodule;
 
-	PIT_ENGINE_INFO(Log::General, "=== PIT::ENGINE Shutdown ===");
+		PIT_ENGINE_INFO(Log::General, "=== PIT::ENGINE Shutdown ===");
 
-	Debug::Logging::Shutdown();
+		Debug::Logging::Shutdown();
 
-	m_Instance = nullptr;
+		m_Instance = nullptr;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
+		return;
+	}
+	catch (...) {
+		std::cerr << "[Engine] Exception catched!" << std::endl;
+		return;
+	}
 }
 
 void Engine::Update() {
-	Time::SetFrame((Time::Frame() + 1) % 1000);
+	try {
+		Time::SetFrame((Time::Frame() + 1) % 1000);
 
-	static time_point<high_resolution_clock> lastUpdate;
-	time_point<high_resolution_clock> now = high_resolution_clock::now();
-	Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.001f * 0.001f * 0.001f);
-	lastUpdate = now;
+		static time_point<high_resolution_clock> lastUpdate;
+		time_point<high_resolution_clock> now = high_resolution_clock::now();
+		Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.001f * 0.001f * 0.001f);
+		lastUpdate = now;
 
-	// TODO
-	Engine::NetworkingUpdateEvent.Invoke();
-	Engine::PhysicsUpdateEvent.Invoke();
+		// TODO
+		Input::Update();
+		Engine::NetworkingUpdateEvent.Invoke();
+		Engine::PhysicsUpdateEvent.Invoke();
 
-	Engine::PreUpdateEvent.Invoke();
-	Engine::UpdateEvent.Invoke();
-	m_ECSSubmodule->Update();
-	m_RenderingSubmodule->Update();
-	Engine::PostUpdateEvent.Invoke();
+		Engine::PreUpdateEvent.Invoke();
+		Engine::UpdateEvent.Invoke();
+		m_ECSSubmodule->Update();
+		m_RenderingSubmodule->Update();
+		Engine::PostUpdateEvent.Invoke();
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
+		return;
+	}
+	catch (...) {
+		std::cerr << "[Engine] Exception catched!" << std::endl;
+		return;
+	}
 }
 
 bool Engine::ShouldClose() {

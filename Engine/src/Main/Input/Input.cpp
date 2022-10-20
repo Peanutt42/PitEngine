@@ -1,12 +1,22 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "Input.hpp"
 #include "Main/Engine.hpp"
 #include <GLFW/glfw3.h>
 
 using namespace Pit;
 
+glm::vec2 Input::m_LastMousePos;
+glm::vec2 Input::m_LastMousePosDelta;
+
 static GLFWwindow* GetWindow() {
 	return Engine::Rendering()->GetRenderer()->Window.GetWindowHandle();
+}
+
+void Input::Update() {
+	auto currentMousePos = _GetMousePosition();
+	m_LastMousePosDelta = currentMousePos - m_LastMousePos;
+	m_LastMousePos = currentMousePos;
 }
 
 bool Input::IsKeyDown(KeyCode key) {
@@ -23,20 +33,10 @@ bool Input::IsMouseButtonDown(MouseButton button) {
 	return state == GLFW_PRESS;
 }
 
-glm::vec2 Input::GetMousePosition() {
+glm::vec2 Input::_GetMousePosition() {
 	double x, y;
 	glfwGetCursorPos(GetWindow(), &x, &y);
 	return { Cast<float>(x), Cast<float>(y) };
-}
-
-glm::vec2 Input::GetMousePositionDelta() {
-	static double last_x, last_y;
-	static double x, y;
-	glfwGetCursorPos(GetWindow(), &x, &y);
-	glm::vec2 delta{ x - last_x, y - last_y };
-	last_x = x;
-	last_y = y;
-	return delta;
 }
 
 void Input::SetCursorMode(CursorMode mode) {

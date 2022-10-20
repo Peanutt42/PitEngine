@@ -5,30 +5,25 @@ using namespace Pit;
 using namespace Editor;
 
 int main() {
-	try {
-		Engine engine;
-		engine.Init();
+	Engine engine;
+	engine.Init();
 
-		EditorApplication editor(engine);
-		editor.Init();
+	EditorApplication editor(engine);
+	editor.Init();
 
-		while (!engine.ShouldClose()) {
-			editor.Update();
-			engine.Update();
-		}
+	while (!engine.ShouldClose()) {
+		std::chrono::time_point<std::chrono::high_resolution_clock> now = std::chrono::high_resolution_clock::now();
+		editor.Update();
+		engine.Update();
 
-		editor.Shutdown();
-		engine.Shutdown();
-	}
-	catch (const std::exception& e) {
-		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
-		return 1;
-	}
-	catch (...) {
-		std::cerr << "[Engine] Exception catched!" << std::endl;
-		return 1;
+		// editor sleeps when not in use
+		if (Engine::Rendering()->GetRenderer()->Window.IsMinimized() ||
+			!Engine::Rendering()->GetRenderer()->Window.IsFocused() && !Engine::Rendering()->GetRenderer()->Window.IsHovered())
+			std::this_thread::sleep_for(16ms);
 	}
 
+	editor.Shutdown();
+	engine.Shutdown();
 
 	return 0;
 }

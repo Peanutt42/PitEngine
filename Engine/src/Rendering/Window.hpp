@@ -21,6 +21,8 @@ namespace Pit::Rendering {
 		void SetMaximized(bool maximized) { return glfwSetWindowAttrib(m_Window, GLFW_MAXIMIZED, maximized ? GLFW_TRUE : GLFW_FALSE); }
 		GLFWwindow* GetWindowHandle() { return m_Window; }
 		bool IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
+		bool IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
+		bool IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
 
 		bool WasWindowResized() { return m_FramebufferResized; }
 		void SetWindowResizedFlag(bool resized) { m_FramebufferResized = resized; }

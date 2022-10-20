@@ -26,9 +26,9 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		auto& transform = group.get<ECS::TransformComponent>(e);
 		auto& mesh = group.get<ECS::MeshRendererComponent>(e);
 
-		transform.rotation.y = glm::mod(transform.rotation.y + 0.001f, glm::two_pi<float>());
-		transform.rotation.x = glm::mod(transform.rotation.x + 0.0005f, glm::two_pi<float>());
-		transform.rotation.z = glm::mod(transform.rotation.z + 0.0002f, glm::two_pi<float>());
+		transform.rotation.y = glm::mod(transform.rotation.y + 1.f * Time::DeltaTime(), glm::two_pi<float>());
+		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
+		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());
 		transform.position = { 0, 0, 2.5f };
 		transform.scale = { .5f, .5f, .5f };
 
