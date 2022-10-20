@@ -1,0 +1,3 @@
+[submodule "vendor/PitTest"]
+	path = vendor/PitTest
+	url = https://github.com/Peanutt42/PitTest.git
