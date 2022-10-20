@@ -9,8 +9,6 @@ project "Tests"
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
-	nuget { "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn:1.8.1.6" }
-
 	files {
 		"src/**.h",
 		"src/**.c",
@@ -19,12 +17,12 @@ project "Tests"
 	}
 
 	includedirs {
-		"%{wks.location}/packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.6/build/native/include",
-		"src"
+		"src",
+		"%{wks.location}/vendor/PitTest/include"
 	}
 
 	libdirs {
-		"%{wks.location}/packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.6/lib/native/v140/windesktop/msvcstl/static/rt-dyn/x64/Release"
+
 	}
 
 	defines {
@@ -32,23 +30,21 @@ project "Tests"
 	}
 
 	links {
-		"gtest.lib",
-		"gtest_main.lib"
 	}
 
 	filter { "configurations:Debug" }
-		buildoptions "/MDd"
+		buildoptions "/MTd"
 		runtime "Debug"
 		symbols "on"
 		
 	filter { "configurations:Release" }
-		buildoptions "/MD"
+		buildoptions "/MT"
 		runtime "Release"
 		optimize "on"
 		symbols "on"
 
 	filter { "configurations:Dist" }
-		buildoptions "/MD"
+		buildoptions "/MT"
 		runtime "Release"
 		optimize "on"
 

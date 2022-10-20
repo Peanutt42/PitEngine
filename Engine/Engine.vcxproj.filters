@@ -105,10 +105,16 @@
     <ClInclude Include="src\Main\UUID.hpp">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rendering\Camera.hpp">
+      <Filter>Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\RenderingSystem.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp">
@@ -153,8 +159,6 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
-    <ClInclude Include="src\Rendering\Camera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">
@@ -190,7 +194,16 @@
     <ClCompile Include="src\Main\pch.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Camera.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\RenderingSystem.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
@@ -220,8 +233,5 @@
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
-    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
-    <ClCompile Include="src\Rendering\Camera.cpp" />
   </ItemGroup>
 </Project>

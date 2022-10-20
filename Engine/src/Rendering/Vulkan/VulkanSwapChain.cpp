@@ -361,6 +361,13 @@ namespace Pit::Rendering {
                     }
                     return availablePresentMode;
                 }
+                if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
+                    if (!debugMessageSent) {
+                        PIT_ENGINE_INFO(Log::Rendering, "Present mode: Immediate");
+                        debugMessageSent = true;
+                    }
+                    return availablePresentMode;
+                }
             }
         }
 

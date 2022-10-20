@@ -9,14 +9,13 @@ void RenderingSubmodule::Init() {
 	Renderer = new Rendering::Renderer();
 	RenderingSystem = new Rendering::RenderingSystem();
 	CurrentCamera = new Rendering::Camera();
-	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Orthographic;
-	CurrentCamera->Left = -1;
-	CurrentCamera->Right = 1;
-	CurrentCamera->Top = -1;
-	CurrentCamera->Bottom = 1;
-	CurrentCamera->NearClip = -1;
-	CurrentCamera->FarClip = 1;
+	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
+	CurrentCamera->FOV = 50;
+	CurrentCamera->AspectRatio = Engine::Rendering()->GetRenderer()->SwapChain->extentAspectRatio();
+	CurrentCamera->NearClip = 0.1f;
+	CurrentCamera->FarClip = 500;
 	CurrentCamera->SetProjection();
+	CurrentCamera->SetViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
 	Rendering::RenderEntitiesSystem::CameraToUse = CurrentCamera;
 	UIRenderer = new UI::Renderer(Renderer);
 	Engine::ECS()->GetEcsWorld().AddSystem<Rendering::RenderEntitiesSystem>();
@@ -31,10 +30,10 @@ void RenderingSubmodule::Shutdown() {
 void RenderingSubmodule::Update() {
 	float aspect = Engine::Rendering()->GetRenderer()->SwapChain->extentAspectRatio();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
-	CurrentCamera->FOV = 70;
+	CurrentCamera->FOV = 50;
 	CurrentCamera->AspectRatio = aspect;
 	CurrentCamera->NearClip = 0.1f;
-	CurrentCamera->FarClip = 10;
+	CurrentCamera->FarClip = 500;
 	CurrentCamera->SetProjection();
 	Renderer->Update();
 }

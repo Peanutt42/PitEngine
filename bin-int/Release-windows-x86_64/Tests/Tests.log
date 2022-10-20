@@ -1,3 +1,2 @@
-﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
-  test.cpp
+﻿  test.cpp
   Tests.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Tests\Tests.exe

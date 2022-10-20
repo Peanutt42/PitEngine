@@ -11,6 +11,7 @@ namespace Pit {
 		static bool IsMouseButtonDown(MouseButton button);
 
 		static glm::vec2 GetMousePosition();
+		static glm::vec2 GetMousePositionDelta();
 
 		static void SetCursorMode(CursorMode mode);
 	};

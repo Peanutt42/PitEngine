@@ -19,7 +19,7 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 	Engine::Rendering()->GetRenderingSystem()->Pipeline->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
 
 	renderer->TestMesh()->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
-	const auto& camProjection = CameraToUse->GetProjection();
+	const auto& camProjection = CameraToUse->GetProjection() * CameraToUse->GetView();
 
 	auto group = world.Group<ECS::TransformComponent, ECS::MeshRendererComponent>();
 	for (auto e : group) {
