@@ -15,8 +15,8 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		return;
 	}
 
-	auto* renderer = Engine::Rendering()->GetRenderer();
-	Engine::Rendering()->GetRenderingSystem()->Pipeline->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
+	auto* renderer = Engine::Rendering()->Renderer;
+	Engine::Rendering()->RenderingSystem->Pipeline->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
 
 	renderer->TestMesh()->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
 	const auto& camProjection = CameraToUse->GetProjection() * CameraToUse->GetView();
@@ -35,24 +35,24 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		SimplePushConstantData push{};
 		push.transform = camProjection * transform.mat4();
 		push.color = { 0.f, 0.f, 0.8f };
-		vkCmdPushConstants(renderer->CommandBuffers[renderer->FrameIndex], Engine::Rendering()->GetRenderingSystem()->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
+		vkCmdPushConstants(renderer->CommandBuffers[renderer->FrameIndex], Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
 		renderer->TestMesh()->Draw(renderer->CommandBuffers[renderer->FrameIndex]);
 	}
 }
 
 
 static void RecreatePipeline() {
-	Pit::Engine::Rendering()->GetRenderingSystem()->CreatePipeline(Pit::Engine::Rendering()->GetRenderer()->SwapChain->getRenderPass());
+	Pit::Engine::Rendering()->RenderingSystem->CreatePipeline(Pit::Engine::Rendering()->Renderer->SwapChain->getRenderPass());
 }
 
 RenderingSystem::RenderingSystem() {
 	CreatePipelineLayout();
-	CreatePipeline(Engine::Rendering()->GetRenderer()->SwapChain->getRenderPass());
+	CreatePipeline(Engine::Rendering()->Renderer->SwapChain->getRenderPass());
 	Engine::OnWindowResizeEvent += RecreatePipeline;
 }
 
 RenderingSystem::~RenderingSystem() {
-	vkDestroyPipelineLayout(Engine::Rendering()->GetRenderer()->Device.device(), PipelineLayout, nullptr);
+	vkDestroyPipelineLayout(Engine::Rendering()->Renderer->Device.device(), PipelineLayout, nullptr);
 }
 
 void RenderingSystem::CreatePipelineLayout() {
@@ -68,7 +68,7 @@ void RenderingSystem::CreatePipelineLayout() {
 	pipelineLayoutInfo.pSetLayouts = nullptr;
 	pipelineLayoutInfo.pushConstantRangeCount = 1;
 	pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-	if (vkCreatePipelineLayout(Engine::Rendering()->GetRenderer()->Device.device(), &pipelineLayoutInfo, nullptr, &PipelineLayout) != VK_SUCCESS)
+	if (vkCreatePipelineLayout(Engine::Rendering()->Renderer->Device.device(), &pipelineLayoutInfo, nullptr, &PipelineLayout) != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create pipelineLayout!");
 }
 
@@ -77,7 +77,7 @@ void RenderingSystem::CreatePipeline(VkRenderPass renderPass) {
 	Pipeline::DefaultConfigInfo(pipelineConfig);
 	pipelineConfig.renderPass = renderPass;
 	pipelineConfig.pipelineLayout = PipelineLayout;
-	Pipeline = std::make_unique<Rendering::Pipeline>(Engine::Rendering()->GetRenderer()->Device,
+	Pipeline = std::make_unique<Rendering::Pipeline>(Engine::Rendering()->Renderer->Device,
 													 pipelineConfig,
 													 FileSystem::GetSandboxDir() + "assets/shaders/vert.spv",
 													 FileSystem::GetSandboxDir() + "assets/shaders/frag.spv");

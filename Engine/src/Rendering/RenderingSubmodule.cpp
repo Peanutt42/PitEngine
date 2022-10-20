@@ -11,7 +11,7 @@ void RenderingSubmodule::Init() {
 	CurrentCamera = new Rendering::Camera();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
 	CurrentCamera->FOV = 50;
-	CurrentCamera->AspectRatio = Engine::Rendering()->GetRenderer()->SwapChain->extentAspectRatio();
+	CurrentCamera->AspectRatio = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
 	CurrentCamera->NearClip = 0.1f;
 	CurrentCamera->FarClip = 500;
 	CurrentCamera->SetProjection();
@@ -28,7 +28,7 @@ void RenderingSubmodule::Shutdown() {
 }
 
 void RenderingSubmodule::Update() {
-	float aspect = Engine::Rendering()->GetRenderer()->SwapChain->extentAspectRatio();
+	float aspect = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
 	CurrentCamera->FOV = 50;
 	CurrentCamera->AspectRatio = aspect;

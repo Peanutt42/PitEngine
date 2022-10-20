@@ -1,13 +1,2 @@
-﻿  ECSSubmodule.cpp
-  ECSWorld.cpp
-  Engine.cpp
-  Input.cpp
-  Renderer.cpp
-  RenderingSubmodule.cpp
-  RenderingSystem.cpp
-  VulkanTexture.cpp
-  Window.cpp
-  UILayerManager.cpp
-  UIRenderer.cpp
-  WindowsPlatformUtils.cpp
+﻿  Window.cpp
   Engine.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Engine\Engine.lib

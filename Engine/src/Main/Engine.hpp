@@ -29,7 +29,7 @@ namespace Pit {
 
 		static RenderingSubmodule* Rendering() { return m_Instance->m_RenderingSubmodule; }
 		static ECSSubmodule* ECS() { return m_Instance->m_ECSSubmodule; }
-		static UI::LayerManager* LayerManager() { return m_Instance->m_RenderingSubmodule->GetUIRenderer()->GetUILayerManager(); }
+		static UI::LayerManager* LayerManager() { return m_Instance->m_RenderingSubmodule->UIRenderer->GetUILayerManager(); }
 
 
 		static bool Exists() { return m_Instance; }

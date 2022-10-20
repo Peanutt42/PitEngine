@@ -37,7 +37,7 @@ void Renderer::Update() {
 	if (Window.IsMinimized()) return;
 	_BeginFrame();
 
-	Engine::Rendering()->GetUIRenderer()->Record();
+	Engine::Rendering()->UIRenderer->Record();
 
 	_RenderFrame();
 	_PresentFrame();
@@ -173,7 +173,7 @@ void Renderer::_RecordCommandBuffer() {
 	Engine::RenderEvent.Invoke();
 
 
-	Engine::Rendering()->GetUIRenderer()->Render(CommandBuffers[FrameIndex]);
+	Engine::Rendering()->UIRenderer->Render(CommandBuffers[FrameIndex]);
 
 	vkCmdEndRenderPass(CommandBuffers[FrameIndex]);
 	if (vkEndCommandBuffer(CommandBuffers[FrameIndex]) != VK_SUCCESS)

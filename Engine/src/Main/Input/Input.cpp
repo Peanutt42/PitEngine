@@ -10,7 +10,7 @@ glm::vec2 Input::m_LastMousePos;
 glm::vec2 Input::m_LastMousePosDelta;
 
 static GLFWwindow* GetWindow() {
-	return Engine::Rendering()->GetRenderer()->Window.GetWindowHandle();
+	return Engine::Rendering()->Renderer->Window.GetWindowHandle();
 }
 
 void Input::Update() {

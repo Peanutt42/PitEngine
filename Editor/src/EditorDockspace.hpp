@@ -7,7 +7,7 @@
 namespace Pit::Editor {
 	class EditorDockspace {
 	public:
-		void OnBegin() {
+		static void OnBegin(std::function<void()> MenubarCallback) {
             if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
                 static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
@@ -50,12 +50,10 @@ namespace Pit::Editor {
                 }
             }
 		}
-        void OnEnd() {
+        static void OnEnd() {
             if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
                 ImGui::End();
             }
         }
-
-        std::function<void()> MenubarCallback;
 	};
 }

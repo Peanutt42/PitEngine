@@ -16,11 +16,6 @@ namespace Pit {
 		
 		virtual void Update();
 
-		Rendering::Renderer* GetRenderer() { return Renderer; }
-		Rendering::RenderingSystem* GetRenderingSystem() { return RenderingSystem; }
-		Pit::UI::Renderer* GetUIRenderer() { return UIRenderer; }
-
-	private:
 		Rendering::Renderer* Renderer = nullptr;
 		Rendering::RenderingSystem* RenderingSystem = nullptr;
 		Rendering::Camera* CurrentCamera = nullptr;

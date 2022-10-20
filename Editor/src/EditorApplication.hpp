@@ -14,6 +14,8 @@ namespace Pit::Editor {
 
 		void Update();
 
+		static void MenubarCallback();
+
 		static EditorApplication* Instance;
 
 		static EditorAssetManager& AssetManager() { return Instance->m_AssetManager; }

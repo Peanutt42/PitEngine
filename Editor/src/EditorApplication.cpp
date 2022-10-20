@@ -25,34 +25,19 @@ EditorApplication::~EditorApplication() {
 void EditorApplication::Init() {
 	m_AssetManager.Init();
 
-	static EditorDockspace dockspace;
-	dockspace.MenubarCallback = [&]() {
-		std::vector<bool> openWindows(m_WindowPanels.size());
-		if (ImGui::BeginMenu("Windows")) {
-			for (int i = 0; i < m_WindowPanels.size(); i++) {
-				if (ImGui::MenuItem(m_WindowPanels[i]->Name.c_str(), "wip", nullptr, m_WindowPanels[i]->Enabled))
-					openWindows[i] = true;
-			}
-			ImGui::EndMenu();
-		}
-		for (int i = 0; i < m_WindowPanels.size(); i++) {
-			if (openWindows[i] || m_PanelKeyShortcutsPressed[i])
-				m_WindowPanels[i]->Opened = true;
-		}
-	};
 	m_WindowPanels.push_back(new HierachyPanel());
 	m_WindowPanels.push_back(new InspectorPanel());
 	m_WindowPanels.push_back(new SceneViewportPanel());
 	m_WindowPanels.push_back(new ProfilerPanel());
 	m_WindowPanels.push_back(new ContentBrowserPanel());
 
-	Engine::LayerManager()->SetCallbacks([&]() {dockspace.OnBegin(); }, [&]() {dockspace.OnEnd(); });
+	Engine::LayerManager()->SetCallbacks([&]() {EditorDockspace::OnBegin(MenubarCallback); }, [&]() {EditorDockspace::OnEnd(); });
 	for (auto layer : m_WindowPanels)
 		Engine::LayerManager()->PushLayer(layer);
 }
 
 void EditorApplication::Shutdown() {
-	vkDeviceWaitIdle(Engine::Rendering()->GetRenderer()->Device.device());
+	vkDeviceWaitIdle(Engine::Rendering()->Renderer->Device.device());
 
 	m_AssetManager.Shutdown();
 }
@@ -71,5 +56,20 @@ void EditorApplication::Update() {
 
 	if (Input::IsKeyDown(Space)) {
 		test1();
+	}
+}
+
+void EditorApplication::MenubarCallback() {
+	std::vector<bool> openWindows(EditorApplication::Instance->m_WindowPanels.size());
+	if (ImGui::BeginMenu("Windows")) {
+		for (int i = 0; i < EditorApplication::Instance->m_WindowPanels.size(); i++) {
+			if (ImGui::MenuItem(EditorApplication::Instance->m_WindowPanels[i]->Name.c_str(), "wip", nullptr, EditorApplication::Instance->m_WindowPanels[i]->Enabled))
+				openWindows[i] = true;
+		}
+		ImGui::EndMenu();
+	}
+	for (int i = 0; i < EditorApplication::Instance->m_WindowPanels.size(); i++) {
+		if (openWindows[i] || EditorApplication::Instance->m_PanelKeyShortcutsPressed[i])
+			EditorApplication::Instance->m_WindowPanels[i]->Opened = true;
 	}
 }

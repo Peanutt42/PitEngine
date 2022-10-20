@@ -15,7 +15,7 @@ static void check_vk_result(VkResult err) {
 
 static uint32_t GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32_t type_bits) {
 	VkPhysicalDeviceMemoryProperties prop;
-	vkGetPhysicalDeviceMemoryProperties(Pit::Engine::Rendering()->GetRenderer()->Device.getPhysicalDevice(), &prop);
+	vkGetPhysicalDeviceMemoryProperties(Pit::Engine::Rendering()->Renderer->Device.getPhysicalDevice(), &prop);
 	for (uint32_t i = 0; i < prop.memoryTypeCount; i++) {
 		if ((prop.memoryTypes[i].propertyFlags & properties) == properties && type_bits & (1 << i))
 			return i;
@@ -66,7 +66,7 @@ Texture::~Texture() {
 }
 
 void Texture::SetData(void* data) {
-	auto* renderer = Pit::Engine::Rendering()->GetRenderer();
+	auto* renderer = Pit::Engine::Rendering()->Renderer;
 	VkDevice device = renderer->Device.device();
 
 	size_t upload_size = m_Width * m_Height * BytesPerPixel(m_Format);
@@ -123,7 +123,7 @@ void Texture::SetData(void* data) {
 		VkCommandBufferAllocateInfo alloc_info{};
 		alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		alloc_info.commandPool = Pit::Engine::Rendering()->GetRenderer()->Device.getCommandPool();
+		alloc_info.commandPool = Pit::Engine::Rendering()->Renderer->Device.getCommandPool();
 		alloc_info.commandBufferCount = 1;
 
 		err = vkAllocateCommandBuffers(renderer->Device.device(), &alloc_info, &command_buffer);
@@ -203,7 +203,7 @@ void Texture::Resize(uint32_t width, uint32_t height) {
 }
 
 void Texture::AllocateMemory(uint64_t size) {
-	VkDevice device = Pit::Engine::Rendering()->GetRenderer()->Device.device();
+	VkDevice device = Pit::Engine::Rendering()->Renderer->Device.device();
 
 	VkResult err;
 
@@ -275,7 +275,7 @@ void Texture::AllocateMemory(uint64_t size) {
 }
 
 void Texture::Release() {
-	VkDevice device = Pit::Engine::Rendering()->GetRenderer()->Device.device();
+	VkDevice device = Pit::Engine::Rendering()->Renderer->Device.device();
 
 	vkDestroySampler(device, m_Sampler, nullptr);
 	vkDestroyImageView(device, m_ImageView, nullptr);

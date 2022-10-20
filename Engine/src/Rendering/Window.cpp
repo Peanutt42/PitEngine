@@ -60,7 +60,7 @@ void Window::_FramebufferResizedCallback(GLFWwindow* window, int width, int heig
 		_window->m_Width = width;
 		_window->m_Height = height;
 		if (Engine::Exists())
-			Engine::Rendering()->GetRenderer()->Update();
+			Engine::Rendering()->Renderer->Update();
 	}
 }
 
@@ -71,6 +71,6 @@ void Window::_WindowResizedCallback(GLFWwindow* window, int width, int height) {
 		_window->m_Width = width;
 		_window->m_Height = height;
 		if (Engine::Exists())
-			Engine::Rendering()->GetRenderer()->Update();
+			Engine::Rendering()->Renderer->Update();
 	}
 }

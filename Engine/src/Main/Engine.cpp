@@ -110,5 +110,5 @@ bool Engine::ShouldClose() {
 	if (m_Quit.load())
 		return true;
 	else
-		return m_RenderingSubmodule->GetRenderer()->ShouldClose();
+		return m_RenderingSubmodule->Renderer->ShouldClose();
 }
