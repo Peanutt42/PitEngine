@@ -18,7 +18,7 @@ project "Tests"
 
 	includedirs {
 		"src",
-		"%{wks.location}/vendor/PitTest/include"
+		"%{wks.location}/vendor/PitTest/PitTest/include"
 	}
 
 	libdirs {

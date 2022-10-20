@@ -9,7 +9,12 @@ namespace Pit::UI {
 		LayerManager();
 		~LayerManager();
 
-		void RenderLayers(std::function<void()> menubarCallback);
+		void RenderLayers();
+
+		void SetCallbacks(std::function<void()> beginCallback, std::function<void()> endCallback) {
+			m_OnBeginCallback = beginCallback;
+			m_OnEndCallback = endCallback;
+		}
 
 		template<typename T>
 		void PushLayer() {
@@ -31,5 +36,7 @@ namespace Pit::UI {
 
 	private:
 		std::vector<Layer*> m_LayerStack;
+		std::function<void()> m_OnBeginCallback;
+		std::function<void()> m_OnEndCallback;
 	};
 }

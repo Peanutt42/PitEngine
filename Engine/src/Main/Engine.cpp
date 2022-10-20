@@ -17,7 +17,9 @@ Event<> Engine::UIRenderEvent;
 Event<> Engine::OnWindowResizeEvent;
 Event<> Engine::ShutdownEvent;
 
-Engine::Engine() {
+Engine::Engine(const CreateInfo& createInfo) 
+	: m_CreateInfo(createInfo) {
+
 	Debug::Logging::Init();
 }
 

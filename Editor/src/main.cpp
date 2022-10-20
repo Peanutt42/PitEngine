@@ -5,7 +5,8 @@ using namespace Pit;
 using namespace Editor;
 
 int main() {
-	Engine engine;
+	Engine::CreateInfo engineInfo{ "PitEngine - Sandbox", false };
+	Engine engine(engineInfo);
 	engine.Init();
 
 	EditorApplication editor(engine);
@@ -17,9 +18,7 @@ int main() {
 		engine.Update();
 
 		// editor sleeps when not in use
-		if (Engine::Rendering()->GetRenderer()->Window.IsMinimized() ||
-			!Engine::Rendering()->GetRenderer()->Window.IsFocused() && !Engine::Rendering()->GetRenderer()->Window.IsHovered())
-			std::this_thread::sleep_for(16ms);
+		
 	}
 
 	editor.Shutdown();

@@ -6,15 +6,15 @@ using namespace Pit::Editor;
 
 void EditorAssetManager::Init() {
 	// see Icon enum for indexing
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/FolderIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/TextIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/AudioIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/MeshIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/ImageIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/ShaderIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/BackIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/RefreshIcon.png"));
-	m_Icons.push_back(new Rendering::Texture(FileSystem::GetEditorDir() + "assets/Icons/Options.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/FolderIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/TextIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/AudioIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/MeshIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/ImageIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/ShaderIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/BackIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/RefreshIcon.png"));
+	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/Options.png"));
 }
 
 ImTextureID EditorAssetManager::GetIcon(Icon icon) {

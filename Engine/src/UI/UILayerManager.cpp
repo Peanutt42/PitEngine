@@ -16,8 +16,8 @@ LayerManager::~LayerManager() {
     }
 }
 
-void LayerManager::RenderLayers(std::function<void()> menubarCallback) {
-#ifdef PIT_EDITOR
+void LayerManager::RenderLayers() {
+    #if 0
     float minWinSizeX = ImGui::GetStyle().WindowMinSize.x;
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
         ImGui::GetStyle().WindowMinSize.x = 300;
@@ -56,21 +56,22 @@ void LayerManager::RenderLayers(std::function<void()> menubarCallback) {
 
                 ImGui::EndMenu();
             }
-            if (menubarCallback)
-                menubarCallback();
             ImGui::EndMenuBar();
         }
     }
 #endif
+    if (m_OnBeginCallback) m_OnBeginCallback();
 
     for (auto layer : m_LayerStack)
         if (layer)
             layer->OnGUI();
+    if (m_OnEndCallback) m_OnEndCallback();
 
-#ifdef PIT_EDITOR
+#if 0
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
         ImGui::End();
         ImGui::GetStyle().WindowMinSize.x = minWinSizeX;
     }
+
 #endif
 }

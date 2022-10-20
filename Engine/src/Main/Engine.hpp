@@ -12,14 +12,20 @@ namespace Pit {
 	};
 	class Engine {
 	public:
+		struct CreateInfo {
+			std::string WindowName;
+			bool WindowToolbar;
+		};
 
-		Engine();
+		Engine(const CreateInfo& createInfo);
 		~Engine();
 		
 		void Init(), Shutdown();
 		static void ForceShutdown() { m_Instance->m_Quit.store(true); }
 		bool ShouldClose();
 		void Update();
+
+		static const CreateInfo& GetInfo() { return m_Instance->m_CreateInfo; }
 
 		static RenderingSubmodule* Rendering() { return m_Instance->m_RenderingSubmodule; }
 		static ECSSubmodule* ECS() { return m_Instance->m_ECSSubmodule; }
@@ -41,6 +47,8 @@ namespace Pit {
 
 	private:
 		static Engine* m_Instance;
+
+		CreateInfo m_CreateInfo;
 
 		ECSSubmodule* m_ECSSubmodule = nullptr;
 		RenderingSubmodule* m_RenderingSubmodule = nullptr;

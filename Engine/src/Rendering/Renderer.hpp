@@ -23,12 +23,9 @@ namespace Pit::Rendering {
 		const uint32_t GetWidth() { return Window.GetWidth(); }
 		const uint32_t GetHeight() { return Window.GetHeight(); }
 
-#ifdef PIT_EDITOR
-		Window Window{ "PitEngine - Editor", 800, 600};
-#else
-		Window Window{ "PitEngine - Sandbox", 800, 600};
-#endif
-		Device Device{ Window };
+		Window Window;
+
+		Device Device;
 		std::unique_ptr<Rendering::SwapChain> SwapChain;
 		uint32_t ImageIndex = 0;
 		int FrameIndex = 0;

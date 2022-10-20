@@ -5,6 +5,7 @@
 #include "Panels/SceneViewportPanel.hpp"
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
+#include "EditorDockspace.hpp"
 #include <vulkan/vulkan.h>
 
 using namespace Pit::Editor;
@@ -24,18 +25,10 @@ EditorApplication::~EditorApplication() {
 void EditorApplication::Init() {
 	m_AssetManager.Init();
 
-	m_WindowPanels.push_back(new HierachyPanel());
-	m_WindowPanels.push_back(new InspectorPanel());
-	m_WindowPanels.push_back(new SceneViewportPanel());
-	m_WindowPanels.push_back(new ProfilerPanel());
-	m_WindowPanels.push_back(new ContentBrowserPanel());
-
-	for (auto layer : m_WindowPanels)
-		Engine::LayerManager()->PushLayer(layer);
-	
-	Engine::Rendering()->GetUIRenderer()->SetMenubarCallback([&]() {
+	static EditorDockspace dockspace;
+	dockspace.MenubarCallback = [&]() {
 		std::vector<bool> openWindows(m_WindowPanels.size());
-		if (ImGui::BeginMenu("Windows"))  {
+		if (ImGui::BeginMenu("Windows")) {
 			for (int i = 0; i < m_WindowPanels.size(); i++) {
 				if (ImGui::MenuItem(m_WindowPanels[i]->Name.c_str(), "wip", nullptr, m_WindowPanels[i]->Enabled))
 					openWindows[i] = true;
@@ -46,7 +39,16 @@ void EditorApplication::Init() {
 			if (openWindows[i] || m_PanelKeyShortcutsPressed[i])
 				m_WindowPanels[i]->Opened = true;
 		}
-	});
+	};
+	m_WindowPanels.push_back(new HierachyPanel());
+	m_WindowPanels.push_back(new InspectorPanel());
+	m_WindowPanels.push_back(new SceneViewportPanel());
+	m_WindowPanels.push_back(new ProfilerPanel());
+	m_WindowPanels.push_back(new ContentBrowserPanel());
+
+	Engine::LayerManager()->SetCallbacks([&]() {dockspace.OnBegin(); }, [&]() {dockspace.OnEnd(); });
+	for (auto layer : m_WindowPanels)
+		Engine::LayerManager()->PushLayer(layer);
 }
 
 void EditorApplication::Shutdown() {

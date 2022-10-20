@@ -115,7 +115,7 @@ void Renderer::EndFrame() {
 }
 
 void Renderer::DrawLayers() {
-    m_UILayerManager->RenderLayers(m_MenubarCallback);
+    m_UILayerManager->RenderLayers();
 }
 
 void Renderer::Render(VkCommandBuffer commandBuffer) {

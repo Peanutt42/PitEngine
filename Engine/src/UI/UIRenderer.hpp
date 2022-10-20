@@ -25,13 +25,10 @@ namespace Pit::UI {
 		void DrawLayers();
 		void Render(VkCommandBuffer commandBuffer);
 
-		void SetMenubarCallback(std::function<void()> callback) { m_MenubarCallback = callback; }
-
 		LayerManager* GetUILayerManager() { return m_UILayerManager; }
 
 	private:
 		VkDevice m_Device;
 		LayerManager* m_UILayerManager;
-		std::function<void()> m_MenubarCallback;
 	};
 }

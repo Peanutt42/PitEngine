@@ -13,12 +13,6 @@ namespace Pit::FileSystem {
 		return "Engine/";
 	}
 
-#ifdef PIT_EDITOR
-	inline std::string GetEditorDir() {
-		return "Editor/";
-	}
-#endif
-
 	inline std::string GetSandboxDir() {
 		return "Sandbox/";
 	}

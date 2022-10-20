@@ -11,7 +11,9 @@ using namespace Pit::Rendering;
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering);
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering);
 
-Renderer::Renderer() {
+Renderer::Renderer() 
+	: Window(Pit::Engine::GetInfo().WindowName, 800, 600),
+	  Device(Window) {
 	SetGLFWWindowIcon(Window.GetWindowHandle(), FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
 	_LoadModels();
 	_RecreateSwapChain();

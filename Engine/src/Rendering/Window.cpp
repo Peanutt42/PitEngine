@@ -15,17 +15,13 @@ Window::Window(const std::string& title, int width, int height, bool fullscreen)
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-#ifndef PIT_EDITOR
-	//glfwWindowHint(GLFW_DECORATED, NULL);
-#endif
-
 	GLFWmonitor* primaryMonitor = nullptr;
-#ifndef PIT_EDITOR
-	/*
-	primaryMonitor = glfwGetPrimaryMonitor();
-	m_Width = glfwGetVideoMode(primaryMonitor)->width;
-	m_Height = glfwGetVideoMode(primaryMonitor)->height;*/
-#endif
+	if (Engine::GetInfo().WindowToolbar) {
+		glfwWindowHint(GLFW_DECORATED, NULL);
+		primaryMonitor = glfwGetPrimaryMonitor();
+		m_Width = glfwGetVideoMode(primaryMonitor)->width;
+		m_Height = glfwGetVideoMode(primaryMonitor)->height;
+	}
 
 	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);
 

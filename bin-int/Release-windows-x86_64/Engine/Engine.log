@@ -5,10 +5,6 @@
   Renderer.cpp
   RenderingSubmodule.cpp
   RenderingSystem.cpp
-  VulkanDevice.cpp
-  VulkanMesh.cpp
-  VulkanPipeline.cpp
-  VulkanSwapChain.cpp
   VulkanTexture.cpp
   Window.cpp
   UILayerManager.cpp

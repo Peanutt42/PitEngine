@@ -152,6 +152,7 @@
     <ClInclude Include="src\EditorAssetManager.hpp" />
     <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
+    <ClInclude Include="src\EditorDockspace.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
     <ClInclude Include="src\Panels\InspectorPanel.hpp" />
     <ClInclude Include="src\Panels\ProfilerPanel.hpp" />
