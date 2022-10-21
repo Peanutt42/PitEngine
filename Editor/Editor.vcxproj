@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="src\EditorApplication.hpp" />
     <ClInclude Include="src\EditorAssetManager.hpp" />
+    <ClInclude Include="src\EditorCameraController.hpp" />
     <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\EditorDockspace.hpp" />

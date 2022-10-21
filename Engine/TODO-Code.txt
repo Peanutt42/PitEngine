@@ -1,4 +1,5 @@
 === ENGINE ===
+- ECSEntityHandle
 - AssetManager/-Managment : Meshes, Shaders, Textures, Materials, ...
 - Material system: shader plus parameters ->Bind() easily
 

@@ -4,7 +4,7 @@
 using namespace Pit;
 
 int main() {
-	Engine::CreateInfo engineInfo{ "PitEngine - Editor", true };
+	Engine::CreateInfo engineInfo{ "PitEngine - Sandbox", false };
 	Engine engine(engineInfo);
 	engine.Init();
 

@@ -14,9 +14,10 @@ Window::Window(const std::string& title, int width, int height, bool fullscreen)
 		glfwInitialized = true;
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+	if (fullscreen)
+		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 	GLFWmonitor* primaryMonitor = nullptr;
-	if (Engine::GetInfo().WindowToolbar) {
+	if (!Engine::GetInfo().WindowToolbar) {
 		glfwWindowHint(GLFW_DECORATED, NULL);
 		primaryMonitor = glfwGetPrimaryMonitor();
 		m_Width = glfwGetVideoMode(primaryMonitor)->width;

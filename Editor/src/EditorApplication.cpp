@@ -45,8 +45,7 @@ void EditorApplication::Shutdown() {
 void EditorApplication::Update() {
 	m_PanelKeyShortcutsPressed.resize(m_WindowPanels.size());
 	for (int i = 0; i < m_WindowPanels.size(); i++) {
-		bool pressed = m_WindowPanels[i]->Shortcut.size() <= 0 ?
-						false : true;
+		bool pressed = m_WindowPanels[i]->Shortcut.size() > 0;
 		for (auto keycode : m_WindowPanels[i]->Shortcut) {
 			if (!Input::IsKeyDown(keycode))
 				pressed = false;

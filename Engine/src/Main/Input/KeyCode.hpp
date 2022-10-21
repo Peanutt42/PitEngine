@@ -55,10 +55,10 @@ namespace Pit {
 		Enter = 257,			// GLFW_KEY_ENTER
 		Delete = 261,			// GLFW_KEY_DELETE
 
-		ARROW_Left = 263,		// GLFW_KEY_LEFT
-		ARROW_Right = 262,		// GLFW_KEY_RIGHT
-		ARROW_Up = 265,			// GLFW_KEY_UP
-		ARROW_Down = 264,		// GLFW_KEY_DOWN
+		Arrow_Left = 263,		// GLFW_KEY_LEFT
+		Arrow_Right = 262,		// GLFW_KEY_RIGHT
+		Arrow_Up = 265,			// GLFW_KEY_UP
+		Arrow_Down = 264,		// GLFW_KEY_DOWN
 
 		F1 = 290,				// GLFW_KEY_F1
 		F2 = 291,				// GLFW_KEY_F2
