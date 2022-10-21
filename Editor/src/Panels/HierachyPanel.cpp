@@ -15,7 +15,7 @@ void HierachyPanel::OnCreate() {
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	for (int i = 0; i < 15; i++) {
 		auto e = ecsworld.CreateEntity();
-		ecsworld.GetComponent<ECS::NameComponent>(e).Name = "Entity" + std::to_string((uint32_t)e);
+		e.GetComponent<ECS::NameComponent>().Name = "Entity" + std::to_string((uint32_t)e.GetID());
 	}
 }
 

@@ -4,10 +4,11 @@
 #include "RenderingSubmodule.hpp"
 #include "C:\dev\cpp\PitEngine\Editor\src\EditorCameraController.hpp"
 #include "ECS/ECSWorld.hpp"
-
-static entt::entity CameraEntity = entt::null;
+#include "ECS/ECSEntityHandle.hpp"
 
 using namespace Pit;
+
+static ECS::EntityHandle CameraEntity = {nullptr, entt::null};
 
 void RenderingSubmodule::Init() {
 	Renderer = new Rendering::Renderer();
@@ -39,7 +40,7 @@ void RenderingSubmodule::Update() {
 	CurrentCamera->AspectRatio = aspect;
 	CurrentCamera->NearClip = 0.1f;
 	CurrentCamera->FarClip = 500;
-	auto& camEntityTransform = Engine::ECS()->GetEcsWorld().GetComponent<ECS::TransformComponent>(CameraEntity);
+	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
 	Editor::EditorCameraController::MoveInPlaneXZ(camEntityTransform.position, camEntityTransform.rotation);
 	CurrentCamera->SetViewYXZ(camEntityTransform.position, camEntityTransform.rotation);
 	CurrentCamera->SetProjection();

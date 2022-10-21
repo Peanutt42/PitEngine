@@ -33,7 +33,8 @@ namespace Pit::ECS {
 		void Clear();
 
 #pragma region Entity
-		entt::entity CreateEntity();
+		entt::entity CreateEntityID();
+		EntityHandle CreateEntity();
 		void DestroyEntity(entt::entity entity);
 #pragma endregion
 
@@ -83,6 +84,13 @@ namespace Pit::ECS {
 				return true;
 			}
 			return false;
+		}
+
+		template<typename T>
+		void ReplaceComponent(entt::entity entity, T& newComponent) {
+			if (!HasComponent<T>(entity)) return;
+
+			m_Registry.replace(entity, newComponent);
 		}
 
 		template<typename T, typename... Args>

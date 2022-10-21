@@ -155,6 +155,7 @@
     <ClInclude Include="src\Debug\ProfileStats.hpp" />
     <ClInclude Include="src\ECS\ECSComponent.hpp" />
     <ClInclude Include="src\ECS\ECSComponents.hpp" />
+    <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
     <ClInclude Include="src\ECS\ECSGameloop.hpp" />
     <ClInclude Include="src\ECS\ECSInclude.hpp" />
     <ClInclude Include="src\ECS\ECSSubmodule.hpp" />

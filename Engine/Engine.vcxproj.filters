@@ -159,6 +159,7 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">

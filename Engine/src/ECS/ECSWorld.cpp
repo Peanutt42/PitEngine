@@ -3,6 +3,7 @@
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
 #include "ECSComponents.hpp"
+#include "ECSEntityHandle.hpp"
 
 using namespace Pit::ECS;
 
@@ -54,12 +55,17 @@ void World::Clear() {
 }
 
 #pragma region Entity
-entt::entity World::CreateEntity() {
+entt::entity World::CreateEntityID() {
 	auto e = m_Registry.create();
 	m_Registry.emplace<UUIDComponent>(e);
 	m_Registry.emplace<NameComponent>(e);
 	m_Registry.emplace<TransformComponent>(e);
 	return e;
+}
+
+EntityHandle World::CreateEntity() {
+	auto e = CreateEntityID();
+	return { this, e };
 }
 
 void World::DestroyEntity(entt::entity entity) {

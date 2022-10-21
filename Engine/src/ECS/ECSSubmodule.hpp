@@ -5,6 +5,7 @@
 #include "ECSWorld.hpp"
 #include "Examples/ECSBasicGameloop.hpp"
 #include "ECSComponents.hpp"
+#include "ECSEntityHandle.hpp"
 #include "Main/Submodule.hpp"
 
 namespace Pit {
@@ -21,7 +22,7 @@ namespace Pit {
 			PIT_ENGINE_INFO(Log::ECS, "ECSSubmodule has initialized!");
 
 			auto e = m_ECSWorld.CreateEntity();
-			m_ECSWorld.AddComponent<ECS::MeshRendererComponent>(e);
+			e.AddComponent<ECS::MeshRendererComponent>();
 		}
 
 		virtual void Shutdown() {
