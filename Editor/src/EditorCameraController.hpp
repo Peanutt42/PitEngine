@@ -20,14 +20,16 @@ namespace Pit::Editor {
 		static constexpr KeyCode LookDown = K;
 		
 		static constexpr float MoveSpeed = 3.f;
-		static constexpr float LookSpeed = 2.5f;
+		static constexpr float LookSpeed = 10.f;
 
 		static void MoveInPlaneXZ(glm::vec3& position, glm::vec3& rotation) {
-			glm::vec3 rotate{ 0 };
-			if (Input::IsKeyDown(LookRight)) rotate.y += 1.f;
-			if (Input::IsKeyDown(LookLeft)) rotate.y -= 1.f;
-			if (Input::IsKeyDown(LookUp)) rotate.x += 1.f;
-			if (Input::IsKeyDown(LookDown)) rotate.x -= 1.f;
+			glm::vec3 rotate;
+			if (Input::IsMouseButtonDown(Button1)) {
+				Input::SetCursorMode(CursorMode::Locked);
+				rotate = { -Input::GetMouseDelta().y, Input::GetMouseDelta().x, 0 };
+			}
+			else
+				Input::SetCursorMode(CursorMode::Normal);
 
 			if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon())
 				rotation += LookSpeed * Time::DeltaTime() * glm::normalize(rotate);			

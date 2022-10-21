@@ -14,6 +14,7 @@ static GLFWwindow* GetWindow() {
 }
 
 void Input::Update() {
+
 	auto currentMousePos = _GetMousePosition();
 	m_LastMousePosDelta = currentMousePos - m_LastMousePos;
 	m_LastMousePos = currentMousePos;
@@ -37,6 +38,10 @@ glm::vec2 Input::_GetMousePosition() {
 	double x, y;
 	glfwGetCursorPos(GetWindow(), &x, &y);
 	return { Cast<float>(x), Cast<float>(y) };
+}
+
+glm::vec2 Input::GetMousePositionDelta() {
+	return m_LastMousePosDelta;
 }
 
 void Input::SetCursorMode(CursorMode mode) {

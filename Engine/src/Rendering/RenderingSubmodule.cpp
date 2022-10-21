@@ -16,7 +16,7 @@ void RenderingSubmodule::Init() {
 	CameraEntity = Engine::ECS()->GetEcsWorld().CreateEntity();
 	CurrentCamera = new Rendering::Camera();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
-	CurrentCamera->FOV = 50;
+	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
 	CurrentCamera->NearClip = 0.1f;
 	CurrentCamera->FarClip = 500;
@@ -36,7 +36,7 @@ void RenderingSubmodule::Shutdown() {
 void RenderingSubmodule::Update() {
 	float aspect = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
-	CurrentCamera->FOV = 90;
+	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = aspect;
 	CurrentCamera->NearClip = 0.1f;
 	CurrentCamera->FarClip = 500;

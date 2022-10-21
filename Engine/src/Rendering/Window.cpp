@@ -25,7 +25,8 @@ Window::Window(const std::string& title, int width, int height, bool fullscreen)
 	}
 
 	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);
-
+	if (glfwRawMouseMotionSupported())
+		glfwSetInputMode(m_Window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizedCallback);
 	glfwSetWindowSizeCallback(m_Window, _WindowResizedCallback);
