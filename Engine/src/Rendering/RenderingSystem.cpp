@@ -30,11 +30,12 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
 		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());*/
 		transform.position = { 0, 0, 2.5f };
-		transform.scale = { 1, 1, 1 };
+		transform.scale = { .5f, .5f, .5f };
 
 		SimplePushConstantData push{};
-		push.transform = camProjection * transform.mat4();
-		push.color = { 0.f, 0.f, 0.8f };
+		auto modelMatrix = transform.mat4();
+		push.transform = camProjection * modelMatrix;
+		push.normalMatrix = transform.normalMatrix();
 		vkCmdPushConstants(renderer->CommandBuffers[renderer->FrameIndex], Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
 		renderer->TestMesh()->Draw(renderer->CommandBuffers[renderer->FrameIndex]);
 	}

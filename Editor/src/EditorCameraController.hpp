@@ -23,7 +23,13 @@ namespace Pit::Editor {
 		static constexpr float LookSpeed = .001f;
 
 		static void MoveInPlaneXZ(glm::vec3& position, glm::vec3& rotation) {
-			glm::vec3 rotate{ -Input::GetMouseDelta().y, Input::GetMouseDelta().y, 0.f};
+			glm::vec3 rotate;
+			if (Input::IsMouseButtonDown(Button1)) {
+				Input::SetCursorMode(Locked);
+				rotate = glm::vec3{ -Input::GetMouseDelta().y, Input::GetMouseDelta().x, 0.f };
+			}
+			else
+				Input::SetCursorMode(Normal);
 
 			if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon())
 				rotation += LookSpeed * rotate;
@@ -45,8 +51,12 @@ namespace Pit::Editor {
 			if (Input::IsKeyDown(MoveUp)) moveDir += upDir;
 			if (Input::IsKeyDown(MoveDown)) moveDir -= upDir;
 
+			float speed = MoveSpeed;
+			if (Input::IsKeyDown(LeftShift)) speed *= 2;
+			if (Input::IsKeyDown(LeftControl)) speed /= 2;
+
 			if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon())
-				position += MoveSpeed * Time::DeltaTime() * glm::normalize(moveDir);
+				position += speed * Time::DeltaTime() * glm::normalize(moveDir);
 		}
 	};
 }

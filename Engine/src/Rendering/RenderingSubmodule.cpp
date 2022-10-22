@@ -18,7 +18,7 @@ void RenderingSubmodule::Init() {
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
 	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
-	CurrentCamera->NearClip = 0.1f;
+	CurrentCamera->NearClip = 0.01f;
 	CurrentCamera->FarClip = 5000;
 	CurrentCamera->SetProjection();
 	CurrentCamera->SetViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
@@ -38,7 +38,7 @@ void RenderingSubmodule::Update() {
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
 	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = aspect;
-	CurrentCamera->NearClip = 0.1f;
+	CurrentCamera->NearClip = 0.01f;
 	CurrentCamera->FarClip = 5000;
 	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
 	Editor::EditorCameraController::MoveInPlaneXZ(camEntityTransform.position, camEntityTransform.rotation);
