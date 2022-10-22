@@ -19,7 +19,7 @@ void RenderingSubmodule::Init() {
 	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
 	CurrentCamera->NearClip = 0.1f;
-	CurrentCamera->FarClip = 500;
+	CurrentCamera->FarClip = 5000;
 	CurrentCamera->SetProjection();
 	CurrentCamera->SetViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
 	Rendering::RenderEntitiesSystem::CameraToUse = CurrentCamera;
@@ -39,7 +39,7 @@ void RenderingSubmodule::Update() {
 	CurrentCamera->FOV = 70;
 	CurrentCamera->AspectRatio = aspect;
 	CurrentCamera->NearClip = 0.1f;
-	CurrentCamera->FarClip = 500;
+	CurrentCamera->FarClip = 5000;
 	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
 	Editor::EditorCameraController::MoveInPlaneXZ(camEntityTransform.position, camEntityTransform.rotation);
 	CurrentCamera->SetViewYXZ(camEntityTransform.position, camEntityTransform.rotation);

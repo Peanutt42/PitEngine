@@ -36,9 +36,9 @@ namespace Pit {
 		// Set CursorMode of the mouse
 		static void SetCursorMode(CursorMode mode);
 
-	private:
 		static glm::vec2 m_LastMousePos;
 		static glm::vec2 m_LastMousePosDelta;
+	private:
 		static constexpr int KEY_COUNT = 348;
 		static constexpr int MIN_KEY = 32;
 		static constexpr int MOUSEBUTTON_COUNT = 6;

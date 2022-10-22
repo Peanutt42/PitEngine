@@ -21,8 +21,10 @@ namespace Pit {
 
 			PIT_ENGINE_INFO(Log::ECS, "ECSSubmodule has initialized!");
 
-			auto e = m_ECSWorld.CreateEntity();
-			e.AddComponent<ECS::MeshRendererComponent>();
+			for (int i = 0; i < 1; i++) {
+				auto e = m_ECSWorld.CreateEntity();
+				e.AddComponent<ECS::MeshRendererComponent>();
+			}
 		}
 
 		virtual void Shutdown() {

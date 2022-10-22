@@ -1,3 +1,2 @@
 ﻿  test.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(702,5): error MSB6006: "CL.exe" wurde mit dem Code 2 beendet.
 C:\dev\cpp\PitEngine\Tests\src\test.cpp(1,10): fatal  error C1083: Datei (Include) kann nicht geöffnet werden: "PitTest/PitTest.hpp": No such file or directory

@@ -25,12 +25,12 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 	for (auto e : group) {
 		auto& transform = group.get<ECS::TransformComponent>(e);
 		auto& mesh = group.get<ECS::MeshRendererComponent>(e);
-
+		/*
 		transform.rotation.y = glm::mod(transform.rotation.y + 1.f * Time::DeltaTime(), glm::two_pi<float>());
 		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
-		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());
+		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());*/
 		transform.position = { 0, 0, 2.5f };
-		transform.scale = { .5f, .5f, .5f };
+		transform.scale = { 1, 1, 1 };
 
 		SimplePushConstantData push{};
 		push.transform = camProjection * transform.mat4();
@@ -79,7 +79,7 @@ void RenderingSystem::CreatePipeline(VkRenderPass renderPass) {
 	pipelineConfig.pipelineLayout = PipelineLayout;
 	Pipeline = std::make_unique<Rendering::Pipeline>(Engine::Rendering()->Renderer->Device,
 													 pipelineConfig,
-													 FileSystem::GetSandboxDir() + "assets/shaders/vert.spv",
-													 FileSystem::GetSandboxDir() + "assets/shaders/frag.spv");
+													 FileSystem::GetSandboxDir() + "cache/shaders/vert.spv",
+													 FileSystem::GetSandboxDir() + "cache/shaders/frag.spv");
 
 }

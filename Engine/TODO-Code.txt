@@ -1,4 +1,5 @@
 === ENGINE ===
+- Compile cache/binary versions of assets into Sandbox/cache/shaders(example): for Meshes-> faster with ready to go version etc., Shaders->.spv
 - Math (own) Utils: Lerp, Lerp(Vec2/3)
 - AssetManager/-Managment : Meshes, Shaders, Textures, Materials, ...
 - Material system: shader plus parameters ->Bind() easily
