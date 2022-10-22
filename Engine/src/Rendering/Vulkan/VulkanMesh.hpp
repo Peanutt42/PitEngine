@@ -13,11 +13,16 @@ namespace Pit::Rendering {
 
 		static std::vector<VkVertexInputBindingDescription> GetBindingDescription();
 		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescription();
+
+		struct Builder {
+			std::vector<Vertex> vertices;
+			std::vector<uint32_t> indices;
+		};
 	};
 
 	class Mesh {
 	public:
-		Mesh(Device& device, const std::vector<Vertex>& vertices);
+		Mesh(Device& device, const Vertex::Builder& builder);
 		~Mesh();
 
 		void Bind(VkCommandBuffer commandBuffer);
@@ -28,10 +33,17 @@ namespace Pit::Rendering {
 
 	private:
 		void _CreateVertexBuffers(const std::vector<Vertex>& vertices);
+		void _CreateIndexBuffers(const std::vector<uint32_t>& indices);
 
 		Device& m_Device;
+
 		VkBuffer m_VertexBuffer;
 		VkDeviceMemory m_VertexBufferMemory;
 		uint32_t m_VertexCount;
+
+		bool m_HasIndexBuffer = false;
+		VkBuffer m_IndexBuffer;
+		VkDeviceMemory m_IndexBufferMemory;
+		uint32_t m_IndexCount;
 	};
 }
