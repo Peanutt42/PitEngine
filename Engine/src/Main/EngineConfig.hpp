@@ -8,6 +8,7 @@ enum RenderingAPI {
 const static RenderingAPI RendereringAPI = RenderingAPI::VulkanAPI;
 
 const static bool UseVsync = false;
+const static int AntiAliasing = 4;
 
 #define PIT_CONFIGURATION_DEBUG 1
 #define PIT_CONFIGURATION_RELEASE 2
