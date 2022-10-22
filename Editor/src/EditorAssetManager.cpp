@@ -6,6 +6,7 @@ using namespace Pit::Editor;
 
 void EditorAssetManager::Init() {
 	// see Icon enum for indexing
+	m_Icons.reserve(9);
 	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/FolderIcon.png"));
 	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/TextIcon.png"));
 	m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/AudioIcon.png"));

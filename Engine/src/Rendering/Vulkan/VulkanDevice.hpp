@@ -56,12 +56,14 @@ namespace Pit::Rendering {
             VkDeviceMemory& imageMemory);
 
         VkPhysicalDeviceProperties properties;
+        VkSampleCountFlagBits sampleCount() { return msaaSamples; }
 
     private:
         void createInstance();
         void setupDebugMessenger();
         void createSurface();
         void pickPhysicalDevice();
+        VkSampleCountFlagBits chooseSampleCount();
         void createLogicalDevice();
         void createCommandPool();
 
@@ -80,6 +82,7 @@ namespace Pit::Rendering {
         VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
         Window& window;
         VkCommandPool commandPool;
+        VkSampleCountFlagBits msaaSamples;
 
         VkDevice device_;
         VkSurfaceKHR surface_;

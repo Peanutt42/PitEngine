@@ -1,4 +1,5 @@
 #include "Main/CoreInclude.hpp"
+#include "Main/Engine.hpp"
 #include "Rendering/Renderer.hpp"
 #include "VulkanPipeline.hpp"
 #include "VulkanMesh.hpp"
@@ -60,8 +61,8 @@ void Pipeline::DefaultConfigInfo(PipelineConfigInfo& configInfo) {
 	configInfo.rasterizationInfo.depthBiasSlopeFactor = 0.0f;     // Optional
 
 	configInfo.multisampleInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-	configInfo.multisampleInfo.sampleShadingEnable = VK_FALSE;
-	configInfo.multisampleInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+	configInfo.multisampleInfo.sampleShadingEnable = VK_TRUE;
+	configInfo.multisampleInfo.rasterizationSamples = Engine::Rendering()->Renderer->Device.sampleCount();
 	configInfo.multisampleInfo.minSampleShading = 1.0f;           // Optional
 	configInfo.multisampleInfo.pSampleMask = nullptr;             // Optional
 	configInfo.multisampleInfo.alphaToCoverageEnable = VK_FALSE;  // Optional

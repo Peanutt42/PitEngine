@@ -50,7 +50,7 @@ Renderer::Renderer(Rendering::Renderer* renderer)
     init_info.Subpass = 0;
     init_info.MinImageCount = renderer->MinImageCount;
     init_info.ImageCount = Cast<uint32_t>(renderer->SwapChain->imageCount());
-    init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+    init_info.MSAASamples = renderer->Device.sampleCount();
     init_info.Allocator = nullptr;
     init_info.CheckVkResultFn = check_vk_result;
     ImGui_ImplVulkan_Init(&init_info, renderer->SwapChain->getRenderPass());

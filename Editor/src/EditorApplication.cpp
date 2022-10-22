@@ -25,6 +25,7 @@ EditorApplication::~EditorApplication() {
 void EditorApplication::Init() {
 	m_AssetManager.Init();
 
+	m_WindowPanels.reserve(5);
 	m_WindowPanels.push_back(new HierachyPanel());
 	m_WindowPanels.push_back(new InspectorPanel());
 	m_WindowPanels.push_back(new SceneViewportPanel());
