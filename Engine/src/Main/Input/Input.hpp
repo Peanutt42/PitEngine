@@ -8,20 +8,43 @@ namespace Pit {
 	public:
 		static void Update();
 
+		// Is Key up
+		static bool IsKeyUp(KeyCode key);
+		// Is Key down
 		static bool IsKeyDown(KeyCode key);
+		// Is Key clicked this frame
+		static bool IsKeyPressed(KeyCode key);
+		// Is Key released this frame
+		static bool IsKeyReleased(KeyCode key);
+		// Get State of key
 		static KeyState GetKey(KeyCode key);
-		static bool IsMouseButtonDown(MouseButton button);
 
+		// Is MouseButton up
+		static bool IsMouseButtonUp(MouseButton button);
+		// Is MouseButton clicked this frame
+		static bool IsMouseButtonDown(MouseButton button);
+		// Is MouseButton released this frame
+		static bool IsMouseButtonPressed(MouseButton button);
+		// Get State of MouseButton
+		static bool IsMouseButtonReleased(MouseButton button);
+
+		// Get current position of mouse
 		static const glm::vec2& GetMousePos() { return m_LastMousePos; }
+		// Get current change in position of mouse
 		static const glm::vec2& GetMouseDelta() { return m_LastMousePosDelta; }
 
-		static glm::vec2 GetMousePositionDelta();
-
+		// Set CursorMode of the mouse
 		static void SetCursorMode(CursorMode mode);
 
 	private:
-		static glm::vec2 _GetMousePosition();
 		static glm::vec2 m_LastMousePos;
 		static glm::vec2 m_LastMousePosDelta;
+		static constexpr int KEY_COUNT = 348;
+		static constexpr int MIN_KEY = 32;
+		static constexpr int MOUSEBUTTON_COUNT = 6;
+		static KeyState s_KeyStates[KEY_COUNT];
+		static bool s_KeyStateChanged[KEY_COUNT];
+		static bool s_MouseButtonStates[MOUSEBUTTON_COUNT];
+		static bool s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
 	};
 }
