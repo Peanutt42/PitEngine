@@ -18,7 +18,7 @@ namespace Pit::Rendering {
         VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
         VkRenderPass getRenderPass() { return renderPass; }
         VkImageView getImageView(int index) { return swapChainImageViews[index]; }
-        size_t imageCount() { return swapChainImages.size(); }
+        size_t getImageCount() { return swapChainImages.size(); }
         VkFormat getSwapChainImageFormat() { return swapChainImageFormat; }
         VkExtent2D getSwapChainExtent() { return swapChainExtent; }
         uint32_t width() { return swapChainExtent.width; }
@@ -64,13 +64,13 @@ namespace Pit::Rendering {
         std::vector<VkFramebuffer> swapChainFramebuffers;
         VkRenderPass renderPass;
 
-        VkImage colorImage;
-        VkDeviceMemory colorImageMemory;
-        VkImageView colorImageView;
+        std::vector<VkImage> colorImages;
+        std::vector<VkDeviceMemory> colorImageMemorys;
+        std::vector<VkImageView> colorImageViews;
 
-        VkImage depthImage;
-        VkDeviceMemory depthImageMemory;
-        VkImageView depthImageView;
+        std::vector<VkImage> depthImages;
+        std::vector<VkDeviceMemory> depthImageMemorys;
+        std::vector<VkImageView> depthImageViews;
 
         std::vector<VkImage> swapChainImages;
         std::vector<VkDeviceMemory> swapChainImageMemorys;

@@ -38,13 +38,17 @@ namespace Pit::Rendering {
             swapChain = nullptr;
         }
 
-        vkDestroyImageView(device.device(), colorImageView, nullptr);
-        vkDestroyImage(device.device(), colorImage, nullptr);
-        vkFreeMemory(device.device(), colorImageMemory, nullptr);
+        for (int i = 0; i < colorImages.size(); i++) {
+            vkDestroyImageView(device.device(), colorImageViews[i], nullptr);
+            vkDestroyImage(device.device(), colorImages[i], nullptr);
+            vkFreeMemory(device.device(), colorImageMemorys[i], nullptr);
+        }
 
-        vkDestroyImageView(device.device(), depthImageView, nullptr);
-        vkDestroyImage(device.device(), depthImage, nullptr);
-        vkFreeMemory(device.device(), depthImageMemory, nullptr);
+        for (int i = 0; i < depthImages.size(); i++) {
+            vkDestroyImageView(device.device(), depthImageViews[i], nullptr);
+            vkDestroyImage(device.device(), depthImages[i], nullptr);
+            vkFreeMemory(device.device(), depthImageMemorys[i], nullptr);
+        }
 
         for (auto framebuffer : swapChainFramebuffers) {
             vkDestroyFramebuffer(device.device(), framebuffer, nullptr);
@@ -199,8 +203,15 @@ namespace Pit::Rendering {
     void SwapChain::createColorResources() {
         VkFormat colorFormat = swapChainImageFormat;
 
-        createImage(swapChainExtent.width, swapChainExtent.height, 1, device.sampleCount(), colorFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, colorImage, colorImageMemory);
-        colorImageView = createImageView(colorImage, colorFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
+        size_t imageCount = getImageCount();
+        colorImages.resize(imageCount);
+        colorImageMemorys.resize(imageCount);
+        colorImageViews.resize(imageCount);
+
+        for (int i = 0; i < imageCount; i++) {
+            createImage(swapChainExtent.width, swapChainExtent.height, 1, device.sampleCount(), colorFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, colorImages[i], colorImageMemorys[i]);
+            colorImageViews[i] = createImageView(colorImages[i], colorFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
+        }
     }
 
     void SwapChain::createRenderPass() {
@@ -276,11 +287,11 @@ namespace Pit::Rendering {
     }
 
     void SwapChain::createFramebuffers() {
-        swapChainFramebuffers.resize(imageCount());
-        for (size_t i = 0; i < imageCount(); i++) {
+        swapChainFramebuffers.resize(getImageCount());
+        for (size_t i = 0; i < getImageCount(); i++) {
             std::array<VkImageView, 3> attachments = {
-                colorImageView,
-                depthImageView,
+                colorImageViews[i],
+                depthImageViews[i],
                 swapChainImageViews[i]
             };
 
@@ -301,16 +312,24 @@ namespace Pit::Rendering {
 
     void SwapChain::createDepthResources() {
         VkFormat depthFormat = findDepthFormat();
+        swapChainDepthFormat = depthFormat;
 
-        createImage(swapChainExtent.width, swapChainExtent.height, 1, device.sampleCount(), depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImage, depthImageMemory);
-        depthImageView = createImageView(depthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1);
+        size_t imageCount = getImageCount();
+        depthImages.resize(imageCount);
+        depthImageMemorys.resize(imageCount);
+        depthImageViews.resize(imageCount);
+
+        for (int i = 0; i < imageCount; i++) {
+            createImage(swapChainExtent.width, swapChainExtent.height, 1, device.sampleCount(), depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImages[i], depthImageMemorys[i]);
+            depthImageViews[i] = createImageView(depthImages[i], depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1);
+        }
     }
 
     void SwapChain::createSyncObjects() {
         imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
         renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
         inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
-        imagesInFlight.resize(imageCount(), VK_NULL_HANDLE);
+        imagesInFlight.resize(getImageCount(), VK_NULL_HANDLE);
 
         VkSemaphoreCreateInfo semaphoreInfo = {};
         semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;

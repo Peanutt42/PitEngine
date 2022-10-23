@@ -5,11 +5,17 @@
 #include "Vulkan/VulkanDevice.hpp"
 #include "Vulkan/VulkanSwapChain.hpp"
 #include "Vulkan/VulkanMesh.hpp"
+#include "Vulkan/VulkanBuffer.hpp"
 #include "Window.hpp"
 
 namespace Pit::Rendering {
 	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering, "Rendering-Render");
 	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering, "Rendering-Present");
+
+	struct GlobalUBO {
+		glm::mat4 projectionView{ 1.f };
+		glm::vec3 lightDirection = glm::normalize(glm::vec3(1.f, -3.f, -1.f));
+	};
 
 	class Renderer {
 	public:
@@ -34,6 +40,8 @@ namespace Pit::Rendering {
 		uint32_t MinImageCount;
 
 		ScopeRef<Mesh>& TestMesh() { return m_TestMesh; }
+
+		std::vector<std::unique_ptr<Buffer>> UBOBuffers = std::vector<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
 	private:
 		void _CreateCommandBuffers();

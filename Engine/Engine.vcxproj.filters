@@ -160,6 +160,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">
@@ -234,5 +235,6 @@
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Vulkan\VulkanBuffer.cpp" />
   </ItemGroup>
 </Project>

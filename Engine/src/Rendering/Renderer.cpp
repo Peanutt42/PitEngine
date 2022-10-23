@@ -19,6 +19,15 @@ Renderer::Renderer()
 	_RecreateSwapChain();
 	_CreateCommandBuffers();
 	_CreateDescriptorPool();
+	for (int i = 0; i < UBOBuffers.size(); i++) {
+		UBOBuffers[i] = std::make_unique<Buffer>(Device,
+												 sizeof(GlobalUBO),
+												 SwapChain::MAX_FRAMES_IN_FLIGHT,
+												 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+												 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+												 Device.properties.limits.minUniformBufferOffsetAlignment);
+		UBOBuffers[i]->map();
+	}
 }
 
 Renderer::~Renderer() {
@@ -52,6 +61,13 @@ void Renderer::_BeginFrame() {
 		_RecreateSwapChain();
 		Window.SetWindowResizedFlag(false);
 	}
+
+	// Update Data
+	GlobalUBO ubo{};
+	ubo.projectionView = Engine::Rendering()->CurrentCamera->GetProjection() * Engine::Rendering()->CurrentCamera->GetView();
+	UBOBuffers[FrameIndex]->writeToBuffer(&ubo);
+	UBOBuffers[FrameIndex]->flush();
+
 }
 
 void Renderer::_RenderFrame() {

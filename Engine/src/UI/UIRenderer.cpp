@@ -49,7 +49,7 @@ Renderer::Renderer(Rendering::Renderer* renderer)
     init_info.DescriptorPool = renderer->DescriptorPool;
     init_info.Subpass = 0;
     init_info.MinImageCount = renderer->MinImageCount;
-    init_info.ImageCount = Cast<uint32_t>(renderer->SwapChain->imageCount());
+    init_info.ImageCount = Cast<uint32_t>(renderer->SwapChain->getImageCount());
     init_info.MSAASamples = renderer->Device.sampleCount();
     init_info.Allocator = nullptr;
     init_info.CheckVkResultFn = check_vk_result;

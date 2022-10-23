@@ -180,6 +180,7 @@
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
+    <ClInclude Include="src\Rendering\Vulkan\VulkanBuffer.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp" />
     <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
+    <ClCompile Include="src\Rendering\Vulkan\VulkanBuffer.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp" />
     <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp" />
