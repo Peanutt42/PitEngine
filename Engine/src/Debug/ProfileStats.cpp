@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "ProfileStats.hpp"
 
 std::vector<Pit::Debug::ProfileStatGroupEntry> Pit::Debug::ProfileStatGroups::s_ProfileStatGroups;

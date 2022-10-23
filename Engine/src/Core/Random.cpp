@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "Random.hpp"
 
 using namespace Pit;

@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "ECSBasicGameloop.hpp"
 
 using namespace Pit::ECS::Example;

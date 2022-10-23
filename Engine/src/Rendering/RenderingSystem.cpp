@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "RenderingSystem.hpp"
 #include "ECS/ECSComponents.hpp"

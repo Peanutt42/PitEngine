@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
@@ -26,7 +26,7 @@ bool World::Init() {
 	SetWorldSpecs(m_Specs);
 
 	Engine::NetworkingUpdateEvent += &UpdateNetworking;
-	Engine::PhysicsUpdateEvent += &UpdatePhysics;
+	Engine::PhysicUpdateEvent += &UpdatePhysics;
 	Engine::UpdateEvent += &UpdateMain;
 	Engine::RenderEvent += &UpdateRendering;
 

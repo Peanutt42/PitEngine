@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #include "Logging.hpp"
 #if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 #include "ProfileStats.hpp"

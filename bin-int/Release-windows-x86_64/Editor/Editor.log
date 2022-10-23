@@ -1,4 +1,5 @@
-﻿  EditorApplication.cpp
+﻿  pch.cpp
+  EditorApplication.cpp
   EditorAssetManager.cpp
   ContentBrowserPanel.cpp
   HierachyPanel.cpp
@@ -6,5 +7,4 @@
   ProfilerPanel.cpp
   SceneViewportPanel.cpp
   main.cpp
-  pch.cpp
   Editor.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Editor\Editor.exe

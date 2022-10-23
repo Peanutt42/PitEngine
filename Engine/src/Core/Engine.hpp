@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Audio/AudioSubmodule.hpp"
 #include "ECS/ECSSubmodule.hpp"
+#include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
 
@@ -35,7 +37,7 @@ namespace Pit {
 
 		static Event<> InitEvent;
 		static Event<> NetworkingUpdateEvent;
-		static Event<> PhysicsUpdateEvent;
+		static Event<> PhysicUpdateEvent;
 		static Event<> PreUpdateEvent;
 		static Event<> UpdateEvent;
 		static Event<> PostUpdateEvent;
@@ -49,7 +51,9 @@ namespace Pit {
 
 		CreateInfo m_CreateInfo;
 
+		AudioSubmodule* m_AudioSubmodule = nullptr;
 		ECSSubmodule* m_ECSSubmodule = nullptr;
+		NetworkingSubmodule* m_NetworkingSubmodule = nullptr;
 		PhysicsSubmodule* m_PhysicsSubmodule = nullptr;
 		RenderingSubmodule* m_RenderingSubmodule = nullptr;
 		

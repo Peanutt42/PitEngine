@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Input">
+      <UniqueIdentifier>{AD4E7BCD-9906-BD1A-020E-9676EEE4570B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{0C95060D-78A9-2EBE-412B-D21DADFE2AEF}</UniqueIdentifier>
     </Filter>
@@ -12,12 +18,6 @@
     </Filter>
     <Filter Include="Event">
       <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main">
-      <UniqueIdentifier>{4AF3887C-362A-8A0D-DF16-7010CB2C060F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\Input">
-      <UniqueIdentifier>{C97292FD-B52A-D44A-1E32-ADA60A096F3B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
@@ -36,6 +36,45 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\CoreInclude.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Engine.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\EngineConfig.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\FileSystem.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Input\Input.hpp">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Input\KeyCode.hpp">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\PlatformDetection.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Random.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Result.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Submodule.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Time.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Types.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\UUID.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Debug\Logging.hpp">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -71,45 +110,6 @@
     </ClInclude>
     <ClInclude Include="src\Event\Event.hpp">
       <Filter>Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\CoreInclude.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Engine.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\EngineConfig.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\FileSystem.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Input\Input.hpp">
-      <Filter>Main\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Input\KeyCode.hpp">
-      <Filter>Main\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\PlatformDetection.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Random.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Result.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Submodule.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Time.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Types.hpp">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\UUID.hpp">
-      <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
       <Filter>Physics</Filter>
@@ -171,8 +171,26 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
+    <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Engine.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Input\Input.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Random.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Time.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\UUID.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Debug\Logging.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -187,24 +205,6 @@
     </ClCompile>
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
       <Filter>ECS\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Engine.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Input\Input.cpp">
-      <Filter>Main\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Random.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Time.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\UUID.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\pch.cpp">
-      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
       <Filter>Physics</Filter>
@@ -251,5 +251,8 @@
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
+    <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
   </ItemGroup>
 </Project>

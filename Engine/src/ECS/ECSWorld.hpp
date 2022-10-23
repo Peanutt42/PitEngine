@@ -160,7 +160,7 @@ namespace Pit::ECS {
 		void SortSystemsOnExecuteOrder() {
 			std::sort(m_Systems.begin(), m_Systems.end(), [](const SystemHandle& s1, const SystemHandle& s2) {
 				if (s1.Topic != s2.Topic)
-					return s1.Topic >= s2.Topic;
+					return s1.Topic > s2.Topic;
 				else
 					return s1.ExecuteOrder >= s2.ExecuteOrder;
 			});

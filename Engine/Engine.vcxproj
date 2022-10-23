@@ -72,7 +72,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -84,6 +85,7 @@
       <AdditionalOptions>/MTd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,7 +98,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -111,6 +114,7 @@
       <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -125,7 +129,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -139,6 +144,7 @@
       <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,18 +157,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Debug\Logging.hpp" />
-    <ClInclude Include="src\Debug\ProfileStats.hpp" />
-    <ClInclude Include="src\ECS\ECSComponent.hpp" />
-    <ClInclude Include="src\ECS\ECSComponents.hpp" />
-    <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
-    <ClInclude Include="src\ECS\ECSGameloop.hpp" />
-    <ClInclude Include="src\ECS\ECSInclude.hpp" />
-    <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
-    <ClInclude Include="src\ECS\ECSSystem.hpp" />
-    <ClInclude Include="src\ECS\ECSWorld.hpp" />
-    <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
-    <ClInclude Include="src\Event\Event.hpp" />
+    <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
     <ClInclude Include="src\Core\EngineConfig.hpp" />
@@ -176,6 +171,19 @@
     <ClInclude Include="src\Core\Time.hpp" />
     <ClInclude Include="src\Core\Types.hpp" />
     <ClInclude Include="src\Core\UUID.hpp" />
+    <ClInclude Include="src\Debug\Logging.hpp" />
+    <ClInclude Include="src\Debug\ProfileStats.hpp" />
+    <ClInclude Include="src\ECS\ECSComponent.hpp" />
+    <ClInclude Include="src\ECS\ECSComponents.hpp" />
+    <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
+    <ClInclude Include="src\ECS\ECSGameloop.hpp" />
+    <ClInclude Include="src\ECS\ECSInclude.hpp" />
+    <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
+    <ClInclude Include="src\ECS\ECSSystem.hpp" />
+    <ClInclude Include="src\ECS\ECSWorld.hpp" />
+    <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
+    <ClInclude Include="src\Event\Event.hpp" />
+    <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
     <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
@@ -196,19 +204,21 @@
     <ClInclude Include="src\Utils\DateUtils.hpp" />
     <ClInclude Include="src\Utils\PlatformUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
+    <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Debug\Logging.cpp" />
-    <ClCompile Include="src\Debug\ProfileStats.cpp" />
-    <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
-    <ClCompile Include="src\ECS\ECSWorld.cpp" />
-    <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\Input\Input.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
-    <ClCompile Include="src\Core\pch.cpp" />
+    <ClCompile Include="src\Debug\Logging.cpp" />
+    <ClCompile Include="src\Debug\ProfileStats.cpp" />
+    <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
+    <ClCompile Include="src\ECS\ECSWorld.cpp" />
+    <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
@@ -224,6 +234,17 @@
     <ClCompile Include="src\UI\UILayerManager.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\vendor\glm\glm.vcxproj">

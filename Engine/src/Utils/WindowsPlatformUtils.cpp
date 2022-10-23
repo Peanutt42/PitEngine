@@ -1,4 +1,4 @@
-#include "Core/CoreInclude.hpp"
+#include "pch.hpp"
 #ifdef PIT_WINDOWS
 
 #include "PlatformUtils.hpp"
