@@ -1,14 +1,26 @@
-﻿  ECSSubmodule.cpp
+﻿  Logging.cpp
+  ProfileStats.cpp
+  ECSSubmodule.cpp
   ECSWorld.cpp
+  ECSBasicGameloop.cpp
   Engine.cpp
   Input.cpp
+  Random.cpp
+  Time.cpp
+  UUID.cpp
+  pch.cpp
+  Camera.cpp
   Renderer.cpp
   RenderingSubmodule.cpp
   RenderingSystem.cpp
+  VulkanBuffer.cpp
+  VulkanDevice.cpp
+  VulkanMesh.cpp
   VulkanPipeline.cpp
   VulkanSwapChain.cpp
   VulkanTexture.cpp
   Window.cpp
   UILayerManager.cpp
+  UIRenderer.cpp
   WindowsPlatformUtils.cpp
   Engine.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Engine\Engine.lib

@@ -5,7 +5,7 @@
 #include <string>
 
 namespace Pit::Debug {
-
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 	enum ProfileStatType {
 		Float,
 		Int,
@@ -24,6 +24,7 @@ namespace Pit::Debug {
 	struct ProfileStatEntry {
 		std::string name;
 		T* pValue;
+		std::function<T()> avarageFunc;
 	};
 
 	struct ProfileStatGroupEntry {
@@ -46,7 +47,30 @@ namespace Pit::Debug {
 																			&T::s_MemoryProfileStats });
 			return true;
 		}
+
+		static std::string InfoToString() {
+			std::stringstream result;
+
+			result << "ProfileStatGroups:\n";
+			for (auto& profileStatGroup : s_ProfileStatGroups) {
+				result << "\t" << profileStatGroup.name << ":\n";
+				for (auto& floatStat : *profileStatGroup.pFloatStats)
+					result << "\t\t" << floatStat.name << ": " << floatStat.avarageFunc() << '\n';
+
+				for (auto& intStat : *profileStatGroup.pIntStats)
+					result << "\t\t" << intStat.name << ": " << intStat.avarageFunc() << '\n';
+
+				for (auto& stringStat : *profileStatGroup.pStringStats)
+					result << "\t\t" << stringStat.name << ": " << stringStat.avarageFunc() << '\n';
+
+				for (auto& memoryStat : *profileStatGroup.pMemoryStats)
+					result << "\t\t" << memoryStat.name << ": " << memoryStat.avarageFunc() << '\n';
+			}
+
+			return result.str();
+		}
 	};
+#endif
 
 	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
 #define DECLARE_PROFILE_STAT_GROUP(name, statName)																		\
@@ -62,19 +86,27 @@ namespace Pit::Debug {
 		template<typename T>																							\
 		static bool Register() {																						\
 			if constexpr (T::Type == Pit::Debug::Float) {																\
-				s_FloatProfileStats.push_back(Pit::Debug::ProfileStatEntry<float>{T::GetName(), &T::Value});			\
+				s_FloatProfileStats.emplace_back(T::GetName(),															\
+												 &T::GetValue(),														\
+												 [](){return T::GetAvarageValue();});							\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::Int) {																	\
-				s_IntProfileStats.push_back(Pit::Debug::ProfileStatEntry<int>{T::GetName(), &T::Value});				\
+				s_IntProfileStats.emplace_back(T::GetName(),															\
+											   &T::GetValue(),															\
+											   [](){return T::GetAvarageValue();});								\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::String) {																\
-				s_StringProfileStats.push_back(Pit::Debug::ProfileStatEntry<std::string>{T::GetName(), &T::Value});		\
+				s_StringProfileStats.emplace_back(T::GetName(),															\
+												  &T::GetValue(),														\
+												  [](){return T::GetAvarageValue();});						\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::Memory) {																\
-				s_MemoryProfileStats.push_back(Pit::Debug::ProfileStatEntry<size_t>{T::GetName(), &T::Value});			\
+				s_MemoryProfileStats.emplace_back(T::GetName(),															\
+												  &T::GetValue(),														\
+												  [](){return T::GetAvarageValue();});							\
 				return true;																							\
 			}																											\
 		}																												\
@@ -99,19 +131,27 @@ namespace Pit::Debug {
 		template<typename T>																							\
 		static bool Register() {																						\
 			if constexpr (T::Type == Pit::Debug::Float) {																\
-				s_FloatProfileStats.push_back(Pit::Debug::ProfileStatEntry<float>{T::GetName(), &T::Value});			\
+				s_FloatProfileStats.emplace_back(T::GetName(),															\
+												 &T::GetValue(),														\
+												 [](){return T::GetAvarageValue();});							\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::Int) {																	\
-				s_IntProfileStats.push_back(Pit::Debug::ProfileStatEntry<int>{T::GetName(), &T::Value});				\
+				s_IntProfileStats.emplace_back(T::GetName(),															\
+											   &T::GetValue(),															\
+											   [](){return T::GetAvarageValue();});								\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::String) {																\
-				s_StringProfileStats.push_back(Pit::Debug::ProfileStatEntry<std::string>{T::GetName(), &T::Value});		\
+				s_StringProfileStats.emplace_back(T::GetName(),															\
+												  &T::GetValue(),														\
+												  [](){return T::GetAvarageValue();});						\
 				return true;																							\
 			}																											\
 			if constexpr (T::Type == Pit::Debug::Memory) {																\
-				s_MemoryProfileStats.push_back(Pit::Debug::ProfileStatEntry<size_t>{T::GetName(), &T::Value});			\
+				s_MemoryProfileStats.emplace_back(T::GetName(),															\
+												  &T::GetValue(),														\
+												  [](){return T::GetAvarageValue();});							\
 				return true;																							\
 			}																											\
 		}																												\
@@ -136,11 +176,34 @@ namespace Pit::Debug {
 			return std::is_same_v<T, STAT_GROUP_##statGroup>;															\
 		}																												\
 		static constexpr Pit::Debug::ProfileStatType Type = Pit::Debug::GetProfileType<type>();							\
-		static type Value;																								\
+		static void SetValue(type value) {																				\
+			Value = value;																								\
+			static size_t ValueRecordIndex = 0, shouldRecordTime = 0;													\
+			if (shouldRecordTime < 150) {																				\
+				shouldRecordTime++;																						\
+				return;																									\
+			}																											\
+			shouldRecordTime = 0;																						\
+			ValueRecord[ValueRecordIndex % 10] = value;																	\
+			ValueRecordIndex++;																							\
+		}																												\
+		static type& GetValue() {																						\
+			return Value;																								\
+		}																												\
+		static type GetAvarageValue() {																				\
+			if constexpr(std::is_same_v<type, std::string>) return Value;												\
+			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
+				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
+			return sum / 10;																							\
+		}																												\
+	private:																											\
 		static bool Registered;																							\
+		static type Value;																								\
+		static type ValueRecord[10];																					\
 	};																													\
 	type STAT_##name::Value = default_val;																				\
-	bool Registered = STAT_GROUP_##statGroup::Register<STAT_##name>()
+	bool Registered = STAT_GROUP_##statGroup::Register<STAT_##name>();													\
+	type STAT_##name::ValueRecord[10]
 
 #define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)													\
 	struct STAT_##name {																								\
@@ -151,14 +214,37 @@ namespace Pit::Debug {
 		static constexpr bool IsInGroup() {																				\
 			return std::is_same_v<T, STAT_GROUP_##statGroup>;															\
 		}																												\
+		static void SetValue(type value) {																				\
+			Value = value;																								\
+			static size_t ValueRecordIndex = 0, shouldRecordTime = 0;													\
+			if (shouldRecordTime < 150) {																				\
+				shouldRecordTime++;																						\
+				return;																									\
+			}																											\
+			shouldRecordTime = 0;																						\
+			ValueRecord[ValueRecordIndex % 10] = value;																	\
+			ValueRecordIndex++;																							\
+		}																												\
+		static type& GetValue() {																						\
+			return Value;																								\
+		}																												\
+		static type GetAvarageValue() {																					\
+			if constexpr(std::is_same_v<type, std::string>) return Value;												\
+			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
+				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
+			return sum / 10;																							\
+		}																												\
 		static constexpr Pit::Debug::ProfileStatType Type = Pit::Debug::GetProfileType<type>();							\
+	private:																											\
 		static type Value;																								\
 		static bool Registered;																							\
+		static type ValueRecord[10];																					\
 	}
 
 #define DEFINE_EXTERN_PROFILE_STAT(type, name, statGroup, default_val)													\
-	type STAT_##name::Value = default_val;																				\
 	bool STAT_##name::Registered = STAT_GROUP_##statGroup::Register<STAT_##name>();										\
+	type STAT_##name::Value = default_val;																				\
+	type STAT_##name::ValueRecord[10]
 
 
 
@@ -222,12 +308,12 @@ namespace Pit::Debug {
 	};
 
 #define SCOPE_STAT(name) \
-	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::Value = millis; });
+	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::SetValue(millis); });
 #define SCOPE_STAT_ADD(name) \
-	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::Value += millis; });
+	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::SetValue(STAT_##name::GetValue() + millis); });
 
 #define STAT_RESET(name) \
-	STAT_##name::Value = NULL
+	STAT_##name::SetValue(NULL)
 
 
 #define GET_STAT_VALUE(name) \

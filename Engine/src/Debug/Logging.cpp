@@ -1,5 +1,8 @@
 #include "Main/CoreInclude.hpp"
 #include "Logging.hpp"
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#include "ProfileStats.hpp"
+#endif
 
 using namespace Pit::Debug;
 
@@ -10,7 +13,10 @@ std::shared_ptr<spdlog::logger> Logging::s_GameLogger;
 
 bool Logging::LoggerInitialized = false;
 
+static std::ofstream PerformanceReportFile;
+
 void Logging::Init() {
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 	constexpr const char* pattern = "%^%v%$";
 	spdlog::set_pattern(pattern);
 
@@ -40,9 +46,13 @@ void Logging::Init() {
 	s_GameLogger->sinks().push_back(s_FileSink);
 
 	LoggerInitialized = true;
+
+	PerformanceReportFile = std::ofstream(std::string("Logs/") + CurrentTimeToString() + std::string("_ProfilingReport.log"));
+#endif
 }
 
 void Logging::Shutdown() {
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 	spdlog::shutdown();
 
 	s_FileSink.reset();
@@ -51,4 +61,8 @@ void Logging::Shutdown() {
 	s_GameLogger.reset();
 	
 	LoggerInitialized = false;
+
+	PerformanceReportFile << ProfileStatGroups::InfoToString();
+	PerformanceReportFile.close();
+#endif
 }

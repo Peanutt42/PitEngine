@@ -8,6 +8,7 @@
 #include <functional>
 #include <memory>
 #include <thread>
+#include <fstream>
 #include <set>
 #include <unordered_set>
 #include <map>
