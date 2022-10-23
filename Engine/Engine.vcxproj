@@ -127,7 +127,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>PIT_EDITOR;PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -163,19 +163,20 @@
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
-    <ClInclude Include="src\Main\CoreInclude.hpp" />
-    <ClInclude Include="src\Main\Engine.hpp" />
-    <ClInclude Include="src\Main\EngineConfig.hpp" />
-    <ClInclude Include="src\Main\FileSystem.hpp" />
-    <ClInclude Include="src\Main\Input\Input.hpp" />
-    <ClInclude Include="src\Main\Input\KeyCode.hpp" />
-    <ClInclude Include="src\Main\PlatformDetection.hpp" />
-    <ClInclude Include="src\Main\Random.hpp" />
-    <ClInclude Include="src\Main\Result.hpp" />
-    <ClInclude Include="src\Main\Submodule.hpp" />
-    <ClInclude Include="src\Main\Time.hpp" />
-    <ClInclude Include="src\Main\Types.hpp" />
-    <ClInclude Include="src\Main\UUID.hpp" />
+    <ClInclude Include="src\Core\CoreInclude.hpp" />
+    <ClInclude Include="src\Core\Engine.hpp" />
+    <ClInclude Include="src\Core\EngineConfig.hpp" />
+    <ClInclude Include="src\Core\FileSystem.hpp" />
+    <ClInclude Include="src\Core\Input\Input.hpp" />
+    <ClInclude Include="src\Core\Input\KeyCode.hpp" />
+    <ClInclude Include="src\Core\PlatformDetection.hpp" />
+    <ClInclude Include="src\Core\Random.hpp" />
+    <ClInclude Include="src\Core\Result.hpp" />
+    <ClInclude Include="src\Core\Submodule.hpp" />
+    <ClInclude Include="src\Core\Time.hpp" />
+    <ClInclude Include="src\Core\Types.hpp" />
+    <ClInclude Include="src\Core\UUID.hpp" />
+    <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
     <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
@@ -202,12 +203,13 @@
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
-    <ClCompile Include="src\Main\Engine.cpp" />
-    <ClCompile Include="src\Main\Input\Input.cpp" />
-    <ClCompile Include="src\Main\Random.cpp" />
-    <ClCompile Include="src\Main\Time.cpp" />
-    <ClCompile Include="src\Main\UUID.cpp" />
-    <ClCompile Include="src\Main\pch.cpp" />
+    <ClCompile Include="src\Core\Engine.cpp" />
+    <ClCompile Include="src\Core\Input\Input.cpp" />
+    <ClCompile Include="src\Core\Random.cpp" />
+    <ClCompile Include="src\Core\Time.cpp" />
+    <ClCompile Include="src\Core\UUID.cpp" />
+    <ClCompile Include="src\Core\pch.cpp" />
+    <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />

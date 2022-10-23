@@ -19,6 +19,9 @@
     <Filter Include="Main\Input">
       <UniqueIdentifier>{C97292FD-B52A-D44A-1E32-ADA60A096F3B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
@@ -45,6 +48,9 @@
     <ClInclude Include="src\ECS\ECSComponents.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\ECS\ECSEntityHandle.hpp">
+      <Filter>ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\ECS\ECSGameloop.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -66,44 +72,47 @@
     <ClInclude Include="src\Event\Event.hpp">
       <Filter>Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\CoreInclude.hpp">
+    <ClInclude Include="src\Core\CoreInclude.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Engine.hpp">
+    <ClInclude Include="src\Core\Engine.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\EngineConfig.hpp">
+    <ClInclude Include="src\Core\EngineConfig.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\FileSystem.hpp">
+    <ClInclude Include="src\Core\FileSystem.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Input\Input.hpp">
+    <ClInclude Include="src\Core\Input\Input.hpp">
       <Filter>Main\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Input\KeyCode.hpp">
+    <ClInclude Include="src\Core\Input\KeyCode.hpp">
       <Filter>Main\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\PlatformDetection.hpp">
+    <ClInclude Include="src\Core\PlatformDetection.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Random.hpp">
+    <ClInclude Include="src\Core\Random.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Result.hpp">
+    <ClInclude Include="src\Core\Result.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Submodule.hpp">
+    <ClInclude Include="src\Core\Submodule.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Time.hpp">
+    <ClInclude Include="src\Core\Time.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\Types.hpp">
+    <ClInclude Include="src\Core\Types.hpp">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="src\Main\UUID.hpp">
+    <ClInclude Include="src\Core\UUID.hpp">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
+      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Camera.hpp">
       <Filter>Rendering</Filter>
@@ -116,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\Rendering\RenderingSystem.hpp">
       <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\Vulkan\VulkanBuffer.hpp">
+      <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp">
       <Filter>Rendering\Vulkan</Filter>
@@ -159,8 +171,6 @@
     <ClInclude Include="src\Utils\StringUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
-    <ClInclude Include="src\Rendering\Vulkan\VulkanBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug\Logging.cpp">
@@ -178,23 +188,26 @@
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
       <Filter>ECS\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\Engine.cpp">
+    <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\Input\Input.cpp">
+    <ClCompile Include="src\Core\Input\Input.cpp">
       <Filter>Main\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\Random.cpp">
+    <ClCompile Include="src\Core\Random.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\Time.cpp">
+    <ClCompile Include="src\Core\Time.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\UUID.cpp">
+    <ClCompile Include="src\Core\UUID.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main\pch.cpp">
+    <ClCompile Include="src\Core\pch.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Camera.cpp">
       <Filter>Rendering</Filter>
@@ -207,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="src\Rendering\RenderingSystem.cpp">
       <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\Vulkan\VulkanBuffer.cpp">
+      <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
       <Filter>Rendering\Vulkan</Filter>
@@ -235,6 +251,5 @@
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanBuffer.cpp" />
   </ItemGroup>
 </Project>

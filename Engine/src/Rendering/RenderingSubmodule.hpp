@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
-#include "Main/Submodule.hpp"
+#include "Core/CoreInclude.hpp"
+#include "Core/Submodule.hpp"
 #include "Renderer.hpp"
 #include "RenderingSystem.hpp"
 #include "Camera.hpp"

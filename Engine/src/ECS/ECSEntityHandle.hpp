@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "ECSWorld.hpp"
 
 namespace Pit::ECS {

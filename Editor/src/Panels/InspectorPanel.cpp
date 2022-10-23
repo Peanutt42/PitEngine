@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "InspectorPanel.hpp"
 #include "HierachyPanel.hpp"
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 #include "ECS/ECSWorld.hpp"
 #include "ECS/ECSComponents.hpp"
 #include "UI/UI.hpp"

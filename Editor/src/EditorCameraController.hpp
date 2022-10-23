@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 

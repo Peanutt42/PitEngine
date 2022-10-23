@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "UI/UILayer.hpp"
 #include "Rendering/Vulkan/VulkanTexture.hpp"
 #include "EditorApplication.hpp"

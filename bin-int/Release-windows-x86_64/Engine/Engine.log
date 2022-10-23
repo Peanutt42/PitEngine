@@ -1,23 +1,12 @@
-﻿  Logging.cpp
-  ProfileStats.cpp
-  ECSSubmodule.cpp
+﻿  ECSSubmodule.cpp
   ECSWorld.cpp
-  ECSBasicGameloop.cpp
   Engine.cpp
   Input.cpp
-  Random.cpp
-  Time.cpp
-  UUID.cpp
-  pch.cpp
-  Camera.cpp
+  PhysicsSubmodule.cpp
   Renderer.cpp
   RenderingSubmodule.cpp
   RenderingSystem.cpp
-  VulkanBuffer.cpp
-  VulkanDevice.cpp
-  VulkanMesh.cpp
   VulkanPipeline.cpp
-  VulkanSwapChain.cpp
   VulkanTexture.cpp
   Window.cpp
   UILayerManager.cpp

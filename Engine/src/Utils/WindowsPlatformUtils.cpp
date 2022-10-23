@@ -1,8 +1,8 @@
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #ifdef PIT_WINDOWS
 
 #include "PlatformUtils.hpp"
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 #include <commdlg.h>
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32

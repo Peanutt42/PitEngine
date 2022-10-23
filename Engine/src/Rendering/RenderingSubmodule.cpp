@@ -1,5 +1,5 @@
-#include "Main/CoreInclude.hpp"
-#include "Main/Engine.hpp"
+#include "Core/CoreInclude.hpp"
+#include "Core/Engine.hpp"
 #include "RenderingSystem.hpp"
 #include "RenderingSubmodule.hpp"
 #include "C:\dev\cpp\PitEngine\Editor\src\EditorCameraController.hpp"

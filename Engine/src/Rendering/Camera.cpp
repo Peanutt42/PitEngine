@@ -1,4 +1,4 @@
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "Camera.hpp"
 
 using namespace Pit::Rendering;

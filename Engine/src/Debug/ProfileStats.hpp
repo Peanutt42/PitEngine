@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/Time.hpp"
+#include "Core/Time.hpp"
 #include <functional>
 #include <string>
 

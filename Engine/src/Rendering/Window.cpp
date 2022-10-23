@@ -1,6 +1,6 @@
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "Window.hpp"
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 
 using namespace Pit::Rendering;
 

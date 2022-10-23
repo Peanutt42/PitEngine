@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "ECSInclude.hpp"
 #include "ECSWorld.hpp"
 #include "Examples/ECSBasicGameloop.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
-#include "Main/Submodule.hpp"
+#include "Core/Submodule.hpp"
 
 namespace Pit {
 	DECLARE_EXTERN_PROFILE_STAT_FLOAT(ECSUpdate, ECS, "ECS-Update");

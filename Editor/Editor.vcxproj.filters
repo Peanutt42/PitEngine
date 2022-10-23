@@ -8,11 +8,10 @@
   <ItemGroup>
     <ClInclude Include="src\EditorApplication.hpp" />
     <ClInclude Include="src\EditorAssetManager.hpp" />
+    <ClInclude Include="src\EditorCameraController.hpp" />
+    <ClInclude Include="src\EditorDockspace.hpp" />
     <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EditorDockspace.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\HierachyPanel.hpp">
@@ -28,7 +27,6 @@
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\EditorCameraController.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />

@@ -1,7 +1,7 @@
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "UILayerManager.hpp"
 #include <imgui/imgui.h>
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 
 using namespace Pit::UI;
 

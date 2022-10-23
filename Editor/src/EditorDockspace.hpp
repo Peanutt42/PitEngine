@@ -2,7 +2,7 @@
 
 #include <imgui/imgui.h>
 #include <functional>
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 
 namespace Pit::Editor {
 	class EditorDockspace {

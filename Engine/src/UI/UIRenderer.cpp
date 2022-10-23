@@ -1,7 +1,7 @@
-#include "Main/CoreInclude.hpp"
-#include "Main/Engine.hpp"
+#include "Core/CoreInclude.hpp"
+#include "Core/Engine.hpp"
 #include "UIRenderer.hpp"
-#include "Main/Engine.hpp"
+#include "Core/Engine.hpp"
 
 using namespace Pit::UI;
 

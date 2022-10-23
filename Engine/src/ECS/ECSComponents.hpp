@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "ECS/ECSComponent.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 

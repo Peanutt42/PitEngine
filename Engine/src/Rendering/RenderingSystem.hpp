@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Main/CoreInclude.hpp"
+#include "Core/CoreInclude.hpp"
 #include "ECS/ECSSystem.hpp"
 #include "ECS/ECSWorld.hpp"
 #include "Camera.hpp"
