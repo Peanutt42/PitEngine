@@ -34,8 +34,6 @@ void Input::Update() {
 	glfwGetCursorPos(GetWindow(), &mouse_x, &mouse_y);
 	glm::vec2 currentMousePos = { Cast<float>((int)mouse_x), Cast<float>((int)mouse_y) };
 	m_LastMousePosDelta = currentMousePos - m_LastMousePos;
-	if (m_LastMousePosDelta != glm::vec2(0,0))
-		PIT_ENGINE_INFO(Log::Rendering, "x: {0}, y: {1}", m_LastMousePosDelta.x, m_LastMousePosDelta.y);
 	m_LastMousePos = currentMousePos;
 }
 

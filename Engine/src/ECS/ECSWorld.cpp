@@ -31,8 +31,6 @@ bool World::Init() {
 	Engine::RenderEvent += &UpdateRendering;
 
 	PIT_ENGINE_INFO(Log::ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
-	PIT_ENGINE_INFO(Log::ECS, "[Specs]");
-	PIT_ENGINE_INFO(Log::ECS, "[Name]: {}", m_Specs.name);
 
 	return true;
 }
@@ -40,7 +38,7 @@ bool World::Init() {
 void World::Update(const SystemTopic topic) {
 	if (Paused) return;
 
-	if (topic == SystemTopic::Networking/*First off new frame*/) STAT_RESET(ECSUpdate);
+	if (topic == 1/*First off new frame*/) STAT_RESET(ECSUpdate);
 
 	SCOPE_STAT_ADD(ECSUpdate);
 

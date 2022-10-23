@@ -11,7 +11,7 @@ std::shared_ptr<spdlog::logger> Logging::s_GameLogger;
 bool Logging::LoggerInitialized = false;
 
 void Logging::Init() {
-	constexpr const char* pattern = "%^[%n]: %v%$";
+	constexpr const char* pattern = "%^%v%$";
 	spdlog::set_pattern(pattern);
 
 	// Destroy the 10th saved log file if over 10

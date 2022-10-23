@@ -11,6 +11,7 @@ Window::Window(const std::string& title, int width, int height, bool fullscreen)
 
 	if (!glfwInitialized) {
 		glfwInit();
+		glfwSetErrorCallback(_GLFWErrorCallback);
 		glfwInitialized = true;
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -54,6 +55,10 @@ void Window::CreateVKSurface(VkInstance instance, VkSurfaceKHR* surface) {
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to create Vulkan surface!");
 }
 
+
+void Window::_GLFWErrorCallback(int errorCode, const char* description) {
+	PIT_ENGINE_ERR(Log::Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
+}
 
 void Window::_FramebufferResizedCallback(GLFWwindow* window, int width, int height) {
 	auto _window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));

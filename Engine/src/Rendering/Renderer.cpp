@@ -207,5 +207,5 @@ void Renderer::_CreateDescriptorPool() {
 
 
 void Renderer::_LoadModels() {	
-	m_TestMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/cube.obj");
+	m_TestMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/smooth_vase.obj");
 }

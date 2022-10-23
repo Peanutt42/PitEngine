@@ -41,11 +41,21 @@ using Log = Pit::Debug::Category;
 #define _GetEngineLogger() \
 	Pit::Debug::Logging::GetEngineLogger()
 
-#define PIT_ENGINE_TRACE(category, msg, ...)	if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_TRACE(_GetEngineLogger(), msg, ##__VA_ARGS__)
-#define PIT_ENGINE_INFO(category, msg, ...)		if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_INFO(_GetEngineLogger(), msg, ##__VA_ARGS__)
-#define PIT_ENGINE_WARN(category, msg, ...)		if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_WARN(_GetEngineLogger(), msg, ##__VA_ARGS__)
-#define PIT_ENGINE_ERR(category, msg, ...)		if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_ERROR(_GetEngineLogger(), msg, ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	if (Pit::Debug::Logging::LoggerInitialized) { PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
+#define PIT_ENGINE_BASE_LOG(logFunc, prefix, category, msg, ...)	\
+	if (Pit::Debug::Logging::LoggerInitialized) {																		\
+		if constexpr (category == Log::General) logFunc(_GetEngineLogger(), prefix "[General] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Audio) logFunc(_GetEngineLogger(), prefix "[Audio] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Networking) logFunc(_GetEngineLogger(), prefix "[Networking] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::ECS) logFunc(_GetEngineLogger(), prefix "[ECS] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Phyisics) logFunc(_GetEngineLogger(), prefix "[Phyisics] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Rendering) logFunc(_GetEngineLogger(), prefix "[Rendering] " msg, ##__VA_ARGS__);	\
+	}
+
+#define PIT_ENGINE_TRACE(category, msg, ...)	PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_TRACE, "[CoreTrace]: ", category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, "[CoreInfo]: ", category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, "[CoreWarn]: ", category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, "[CoreErr]: ", category, msg,  ##__VA_ARGS__)
+#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) throw std::runtime_error(msg); while (true){} }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}
@@ -59,11 +69,21 @@ using Log = Pit::Debug::Category;
 #define _GetGameLogger() \
 	Pit::Debug::Logging::GetGameLogger();
 
-#define PIT_TRACE(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_TRACE(_GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_INFO(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_INFO(_GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_WARN(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_WARN(_GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_ERR(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) SPDLOG_LOGGER_ERROR(_GetGameLogger(), msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			if (Pit::Debug::Logging::LoggerInitialized) { PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
+#define PIT_BASE_LOG(logFunc, prefix, category, msg, ...)	\
+	if (Pit::Debug::Logging::LoggerInitialized) {																		\
+		if constexpr (category == Log::General) logFunc(_GetEngineLogger(), prefix "[General] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Audio) logFunc(_GetEngineLogger(), prefix "[Audio] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Networking) logFunc(_GetEngineLogger(), prefix "[Networking] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::ECS) logFunc(_GetEngineLogger(), prefix "[ECS] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Phyisics) logFunc(_GetEngineLogger(), prefix "[Phyisics] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Rendering) logFunc(_GetEngineLogger(), prefix "[Rendering] " msg, ##__VA_ARGS__);	\
+	}
+
+#define PIT_TRACE(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_TRACE, "[GameTrace]", msg, ##__VA_ARGS__)
+#define PIT_INFO(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_INFO, "[GameInfo]", msg, ##__VA_ARGS__)
+#define PIT_WARN(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_WARN, "[GameWarn]", msg, ##__VA_ARGS__)
+#define PIT_ERR(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_ERROR, "[GameErr]", msg, ##__VA_ARGS__)
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
 #else
 #define PIT_TRACE(msg, ...)	{}
 #define PIT_INFO(msg, ...)	{}
