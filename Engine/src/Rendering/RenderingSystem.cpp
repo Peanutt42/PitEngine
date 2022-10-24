@@ -30,7 +30,7 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
 		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());*/
 		transform.position = { 0, 0, 2.5f };
-		transform.scale = { .5f, .5f, .5f };
+		transform.scale = { .01f, -.01f, .01f };
 
 		SimplePushConstantData push{};
 		auto modelMatrix = transform.mat4();

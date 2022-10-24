@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "Vulkan/VulkanPipeline.hpp"
-#include "Vulkan/VulkanDevice.hpp"
-#include "Vulkan/VulkanSwapChain.hpp"
-#include "Vulkan/VulkanMesh.hpp"
-#include "Vulkan/VulkanBuffer.hpp"
+#include "RenderingPipeline.hpp"
+#include "RenderingDevice.hpp"
+#include "RenderingSwapChain.hpp"
+#include "Mesh.hpp"
+#include "RenderingBuffer.hpp"
 #include "Window.hpp"
 
 namespace Pit::Rendering {

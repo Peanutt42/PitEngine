@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "VulkanTexture.hpp"
 #include "Core/Engine.hpp"
+#include "Texture.hpp"
 #include <stb_image.h>
 
 using namespace Pit::Rendering;

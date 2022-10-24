@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "Rendering/Renderer.hpp"
-#include "VulkanPipeline.hpp"
-#include "VulkanMesh.hpp"
+#include "RenderingPipeline.hpp"
+#include "Mesh.hpp"
 #include <fstream>
 
 using namespace Pit::Rendering;

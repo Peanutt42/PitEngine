@@ -2,7 +2,7 @@
 
 #include "Core/CoreInclude.hpp"
 #include "UI/UILayer.hpp"
-#include "Rendering/Vulkan/VulkanTexture.hpp"
+#include "Rendering/Texture.hpp"
 #include "EditorApplication.hpp"
 #include "EditorWindowPanel.hpp"
 #include <vulkan/vulkan.h>

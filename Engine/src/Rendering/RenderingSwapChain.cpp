@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "Rendering/Renderer.hpp"
-#include "VulkanSwapChain.hpp"
+#include "RenderingSwapChain.hpp"
 
 namespace Pit::Rendering {
 

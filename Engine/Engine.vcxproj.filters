@@ -126,22 +126,22 @@
     <ClInclude Include="src\Rendering\RenderingSystem.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanBuffer.hpp">
+    <ClInclude Include="src\Rendering\RenderingBuffer.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanDevice.hpp">
+    <ClInclude Include="src\Rendering\RenderingDevice.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanMesh.hpp">
+    <ClInclude Include="src\Rendering\Mesh.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanPipeline.hpp">
+    <ClInclude Include="src\Rendering\RenderingPipeline.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanSwapChain.hpp">
+    <ClInclude Include="src\Rendering\RenderingSwapChain.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Vulkan\VulkanTexture.hpp">
+    <ClInclude Include="src\Rendering\Texture.hpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
@@ -221,22 +221,22 @@
     <ClCompile Include="src\Rendering\RenderingSystem.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanBuffer.cpp">
+    <ClCompile Include="src\Rendering\RenderingBuffer.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanDevice.cpp">
+    <ClCompile Include="src\Rendering\RenderingDevice.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanMesh.cpp">
+    <ClCompile Include="src\Rendering\Mesh.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanPipeline.cpp">
+    <ClCompile Include="src\Rendering\RenderingPipeline.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanSwapChain.cpp">
+    <ClCompile Include="src\Rendering\RenderingSwapChain.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Vulkan\VulkanTexture.cpp">
+    <ClCompile Include="src\Rendering\Texture.cpp">
       <Filter>Rendering\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">

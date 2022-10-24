@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "VulkanDevice.hpp"
-#include "VulkanBuffer.hpp"
+#include "RenderingDevice.hpp"
+#include "RenderingBuffer.hpp"
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_ENABLE_EXPERIMENTAL

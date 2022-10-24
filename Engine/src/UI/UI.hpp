@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rendering/Vulkan/VulkanTexture.hpp"
+#include "Rendering/Texture.hpp"
 #include <imgui/imgui.h>
 #include <glm/glm.hpp>
 #include "UIFonts.hpp"

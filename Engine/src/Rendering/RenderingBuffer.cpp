@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "VulkanBuffer.hpp"
+#include "RenderingBuffer.hpp"
 
 
 using namespace Pit::Rendering;

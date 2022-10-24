@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "VulkanMesh.hpp"
+#include "Mesh.hpp"
 #include <tinyobjloader/tiny_obj_loader.h>
 
 using namespace Pit::Rendering;

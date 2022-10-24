@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VulkanDevice.hpp"
+#include "RenderingDevice.hpp"
 
 namespace Pit::Rendering {
 

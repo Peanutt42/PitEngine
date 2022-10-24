@@ -1,7 +1,7 @@
 #pragma once
 
 #include "pch.hpp"
-#include "Rendering/Vulkan/VulkanTexture.hpp"
+#include "Rendering/Texture.hpp"
 #include <imgui/imgui.h>
 
 namespace Pit::Editor {

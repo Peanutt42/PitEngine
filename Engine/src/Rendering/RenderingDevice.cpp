@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "VulkanDevice.hpp"
+#include "RenderingDevice.hpp"
 
 #include <unordered_set>
 

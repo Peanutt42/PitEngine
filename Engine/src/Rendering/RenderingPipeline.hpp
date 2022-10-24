@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "VulkanDevice.hpp"
+#include "RenderingDevice.hpp"
 
 namespace Pit::Rendering {
 	struct PipelineConfigInfo {
