@@ -1,3 +1,2 @@
-﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
-  test.cpp
-  Tests.vcxproj -> C:\dev\cpp\PitEngine\bin\Dist-windows-x86_64\Tests\Tests.exe
+﻿  test.cpp
+C:\dev\cpp\PitEngine\Tests\src\test.cpp(1,10): fatal  error C1083: Datei (Include) kann nicht geöffnet werden: "PitTest/PitTest.hpp": No such file or directory

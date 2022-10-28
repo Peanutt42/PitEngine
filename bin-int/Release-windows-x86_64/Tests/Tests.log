@@ -1,2 +1,2 @@
 ﻿  test.cpp
-C:\dev\cpp\PitEngine\Tests\src\test.cpp(1,10): fatal  error C1083: Datei (Include) kann nicht geöffnet werden: "PitTest/PitTest.hpp": No such file or directory
+  Tests.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Tests\Tests.exe

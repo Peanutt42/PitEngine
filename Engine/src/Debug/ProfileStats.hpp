@@ -70,7 +70,6 @@ namespace Pit::Debug {
 			return result.str();
 		}
 	};
-#endif
 
 	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
 #define DECLARE_PROFILE_STAT_GROUP(name, statName)																		\
@@ -322,6 +321,35 @@ namespace Pit::Debug {
 #define SET_STAT_VALUE(name, value) \
 	STAT_##name::Value = value
 
+#else
+#define DECLARE_PROFILE_STAT_GROUP(name, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_GROUP(name, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_GROUP(name)
+#define DECLARE_PROFILE_STAT(type, name, statGroup, statName, default_val)
+#define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT(type, name, statGroup, default_val)
+#define DECLARE_PROFILE_STAT_FUNC(name, statGroup, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_FUNC(name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_FUNC(name, statGroup)
+#define DECLARE_PROFILE_STAT_FLOAT(name, statGroup, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup)
+#define DECLARE_PROFILE_STAT_INT(name, statGroup, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_INT(name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_INT(name, statGroup)
+#define DECLARE_PROFILE_STAT_STRING(name, statGroup, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_STRING(name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_STRING(name, statGroup)
+#define DECLARE_PROFILE_STAT_MEMORY(name, statGroup, statName)
+#define DECLARE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup, statName)
+#define DEFINE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup)
+
+#define SCOPE_STAT(name)
+#define SCOPE_STAT_ADD(name)
+#define STAT_RESET(name)
+#define GET_STAT_VALUE(name)
+#define SET_STAT_VALUE(name, value)
+#endif
 }
 
 

@@ -85,7 +85,7 @@
       <AdditionalOptions>/MTd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -114,7 +114,7 @@
       <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,7 +144,7 @@
       <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <PrecompiledHeaderOutputFile>$(SolutionDir)Engine/src/.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
+    <ClInclude Include="src\Core\Assert.hpp" />
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
     <ClInclude Include="src\Core\EngineConfig.hpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
     <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
+    <ClInclude Include="src\Rendering\RenderingDescriptors.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
     <ClInclude Include="src\Rendering\RenderingBuffer.hpp" />
@@ -222,6 +224,7 @@
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Rendering\RenderingDescriptors.cpp" />
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="src\Rendering\RenderingBuffer.cpp" />
@@ -244,6 +247,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

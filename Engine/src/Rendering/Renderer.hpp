@@ -7,6 +7,7 @@
 #include "Mesh.hpp"
 #include "RenderingBuffer.hpp"
 #include "Window.hpp"
+#include "RenderingDescriptors.hpp"
 
 namespace Pit::Rendering {
 	DECLARE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering, "Rendering-Render");
@@ -14,7 +15,9 @@ namespace Pit::Rendering {
 
 	struct GlobalUBO {
 		glm::mat4 projectionView{ 1.f };
-		glm::vec3 lightDirection = glm::normalize(glm::vec3(1.f, -3.f, -1.f));
+		glm::vec4 ambientLightColor{ 1.f, 1.f, 1.f, .02f };  // w is intensity
+		glm::vec3 lightPosition{ -1.f };
+		alignas(16) glm::vec4 lightColor{ 1.f };  // w is light intensity
 	};
 
 	class Renderer {
@@ -36,12 +39,15 @@ namespace Pit::Rendering {
 		uint32_t ImageIndex = 0;
 		int FrameIndex = 0;
 		std::vector<VkCommandBuffer> CommandBuffers;
-		VkDescriptorPool DescriptorPool;
+		std::unique_ptr<DescriptorPool> GlobalPool;
+		std::unique_ptr<DescriptorSetLayout> GlobalSetLayout;
+		std::vector<VkDescriptorSet> GlobalDescriptorSets = std::vector<VkDescriptorSet>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 		uint32_t MinImageCount;
 
 		ScopeRef<Mesh>& TestMesh() { return m_TestMesh; }
 
 		std::vector<std::unique_ptr<Buffer>> UBOBuffers = std::vector<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
+
 
 	private:
 		void _CreateCommandBuffers();
@@ -52,7 +58,6 @@ namespace Pit::Rendering {
 
 		void _RecreateSwapChain();
 		void _RecordCommandBuffer();
-		void _CreateDescriptorPool();
 
 		ScopeRef<Mesh> m_TestMesh;
 		void _LoadModels();

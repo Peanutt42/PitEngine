@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Assert.hpp"
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -55,7 +56,7 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, "[CoreInfo]: ", category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, "[CoreWarn]: ", category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, "[CoreErr]: ", category, msg,  ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) throw std::runtime_error(msg); while (true){} }
+#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) PIT_DEBUGBREAK(); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}
@@ -83,7 +84,7 @@ using Log = Pit::Debug::Category;
 #define PIT_INFO(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_INFO, "[GameInfo]", msg, ##__VA_ARGS__)
 #define PIT_WARN(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_WARN, "[GameWarn]", msg, ##__VA_ARGS__)
 #define PIT_ERR(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_ERROR, "[GameErr]", msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); throw std::runtime_error(msg); while (true){} }
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); PIT_DEBUGBREAK(); }
 #else
 #define PIT_TRACE(msg, ...)	{}
 #define PIT_INFO(msg, ...)	{}

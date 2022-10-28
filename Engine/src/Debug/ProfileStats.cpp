@@ -1,7 +1,10 @@
 #include "pch.hpp"
 #include "ProfileStats.hpp"
 
+
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 std::vector<Pit::Debug::ProfileStatGroupEntry> Pit::Debug::ProfileStatGroups::s_ProfileStatGroups;
+#endif
 
 DEFINE_EXTERN_PROFILE_STAT_GROUP(General);
 DEFINE_EXTERN_PROFILE_STAT_GROUP(Game);

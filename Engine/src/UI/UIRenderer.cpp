@@ -11,7 +11,7 @@ DEFINE_EXTERN_PROFILE_STAT_FLOAT(UIRenderingRender, UIRendering);
 static void check_vk_result(VkResult err) {
     if (err == 0) return;
 
-    PIT_ENGINE_ERR(Log::Rendering, "[Vulkan] VkResult: %d", err);
+    PIT_ENGINE_ERR(Log::Rendering, "[Vulkan] VkResult: {}", (int)err);
 
     if (err < 0) abort();
 }
@@ -46,7 +46,7 @@ Renderer::Renderer(Rendering::Renderer* renderer)
     init_info.QueueFamily = renderer->Device.queueFamily();
     init_info.Queue = renderer->Device.queue();
     init_info.PipelineCache = VK_NULL_HANDLE;
-    init_info.DescriptorPool = renderer->DescriptorPool;
+    init_info.DescriptorPool = renderer->GlobalPool->GetPool();
     init_info.Subpass = 0;
     init_info.MinImageCount = renderer->MinImageCount;
     init_info.ImageCount = Cast<uint32_t>(renderer->SwapChain->getImageCount());

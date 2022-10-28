@@ -19,6 +19,7 @@ using namespace std::chrono_literals; // for ex: 200ms
 #include <atomic>
 
 // Own
+#include "Assert.hpp"
 #include "PlatformDetection.hpp"
 #include "EngineConfig.hpp"
 #include "Result.hpp"

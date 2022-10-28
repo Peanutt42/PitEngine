@@ -1,20 +1,30 @@
-﻿  Logging.cpp
-  ProfileStats.cpp
-  ECSSubmodule.cpp
-  ECSWorld.cpp
-  ECSBasicGameloop.cpp
+﻿  pch.cpp
+  AudioSubmodule.cpp
   Engine.cpp
   Input.cpp
   Random.cpp
   Time.cpp
   UUID.cpp
-  pch.cpp
+  Logging.cpp
+  ProfileStats.cpp
+  ECSSubmodule.cpp
+  ECSWorld.cpp
+  ECSBasicGameloop.cpp
+  NetworkingSubmodule.cpp
+  PhysicsSubmodule.cpp
+  Camera.cpp
   Renderer.cpp
-  VulkanDevice.cpp
-  VulkanMesh.cpp
-  VulkanPipeline.cpp
-  VulkanSwapChain.cpp
-  VulkanTexture.cpp
+  RenderingDescriptors.cpp
+  RenderingSubmodule.cpp
+C:\dev\cpp\PitEngine\Engine\src\Rendering\RenderingDescriptors.cpp(192,90): warning C4267: "Argument": Konvertierung von "size_t" nach "uint32_t", Datenverlust möglich
+  RenderingSystem.cpp
+  RenderingBuffer.cpp
+  RenderingDevice.cpp
+  Mesh.cpp
+  RenderingPipeline.cpp
+  RenderingSwapChain.cpp
+  Texture.cpp
+C:\dev\cpp\PitEngine\Engine\src\ECS\ECSWorld.cpp(41,62): warning C4390: ";": Leere kontrollierte Anweisung aufgetreten; ist dies beabsichtigt?
   Window.cpp
   UILayerManager.cpp
   UIRenderer.cpp

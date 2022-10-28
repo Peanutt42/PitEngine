@@ -16,10 +16,19 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 	}
 
 	auto* renderer = Engine::Rendering()->Renderer;
-	Engine::Rendering()->RenderingSystem->Pipeline->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
+	auto commandBuffer = renderer->CommandBuffers[renderer->FrameIndex];
+	Engine::Rendering()->RenderingSystem->Pipeline->Bind(commandBuffer);
 
-	renderer->TestMesh()->Bind(renderer->CommandBuffers[renderer->FrameIndex]);
-	const auto& camProjection = CameraToUse->GetProjection() * CameraToUse->GetView();
+	renderer->TestMesh()->Bind(commandBuffer);
+
+	vkCmdBindDescriptorSets(commandBuffer,
+							VK_PIPELINE_BIND_POINT_GRAPHICS,
+							Engine::Rendering()->RenderingSystem->PipelineLayout,
+							0,
+							1,
+							&renderer->GlobalDescriptorSets[renderer->FrameIndex],
+							0,
+							nullptr);
 
 	auto group = world.Group<ECS::TransformComponent, ECS::MeshRendererComponent>();
 	for (auto e : group) {
@@ -30,14 +39,13 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
 		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());*/
 		transform.position = { 0, 0, 2.5f };
-		transform.scale = { .01f, -.01f, .01f };
+		transform.scale = { .5f, .5f, .5f };
 
 		SimplePushConstantData push{};
-		auto modelMatrix = transform.mat4();
-		push.transform = camProjection * modelMatrix;
+		push.modelMatrix = transform.mat4();
 		push.normalMatrix = transform.normalMatrix();
-		vkCmdPushConstants(renderer->CommandBuffers[renderer->FrameIndex], Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
-		renderer->TestMesh()->Draw(renderer->CommandBuffers[renderer->FrameIndex]);
+		vkCmdPushConstants(commandBuffer, Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
+		renderer->TestMesh()->Draw(commandBuffer);
 	}
 }
 
@@ -62,11 +70,14 @@ void RenderingSystem::CreatePipelineLayout() {
 	pushConstantRange.offset = 0;
 	pushConstantRange.size = sizeof(SimplePushConstantData);
 
+	std::vector<VkDescriptorSetLayout> discriptorSetLayouts {
+		Engine::Rendering()->Renderer->GlobalSetLayout->getDescriptorSetLayout()
+	};
 
 	VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 	pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-	pipelineLayoutInfo.setLayoutCount = 0;
-	pipelineLayoutInfo.pSetLayouts = nullptr;
+	pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(discriptorSetLayouts.size());
+	pipelineLayoutInfo.pSetLayouts = discriptorSetLayouts.data();
 	pipelineLayoutInfo.pushConstantRangeCount = 1;
 	pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 	if (vkCreatePipelineLayout(Engine::Rendering()->Renderer->Device.device(), &pipelineLayoutInfo, nullptr, &PipelineLayout) != VK_SUCCESS)

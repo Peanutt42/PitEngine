@@ -10,30 +10,53 @@ using namespace Pit::Rendering;
 
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingRender, Rendering);
 DEFINE_EXTERN_PROFILE_STAT_FLOAT(RenderingPresent, Rendering);
-
-Renderer::Renderer() 
+Renderer::Renderer()
 	: Window(Pit::Engine::GetInfo().WindowName, 800, 600),
-	  Device(Window) {
+	Device(Window),
+#define POOL_SIZE 500 // Oversize, but if too low can cause weird and hard to find bugs
+	GlobalPool(DescriptorPool::Builder(Device)
+			   .setMaxSets(POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_SAMPLER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, POOL_SIZE)
+			   .addPoolSize(VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, POOL_SIZE)
+			   .build()),
+	GlobalSetLayout(DescriptorSetLayout::Builder(Device)
+					.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+					.build()) {
+
 	SetGLFWWindowIcon(Window.GetWindowHandle(), FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
 	_LoadModels();
 	_RecreateSwapChain();
 	_CreateCommandBuffers();
-	_CreateDescriptorPool();
-	for (int i = 0; i < UBOBuffers.size(); i++) {
-		UBOBuffers[i] = std::make_unique<Buffer>(Device,
-												 sizeof(GlobalUBO),
-												 SwapChain::MAX_FRAMES_IN_FLIGHT,
-												 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-												 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-												 Device.properties.limits.minUniformBufferOffsetAlignment);
-		UBOBuffers[i]->map();
+
+	for (auto& uboBuffer : UBOBuffers) {
+		uboBuffer = std::make_unique<Buffer>(Device,
+											 sizeof(GlobalUBO),
+											 SwapChain::MAX_FRAMES_IN_FLIGHT,
+											 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+											 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+											 Device.properties.limits.minUniformBufferOffsetAlignment);
+		uboBuffer->map();
+	}
+
+	for (int i = 0; i < GlobalDescriptorSets.size(); i++) {
+		auto bufferInfo = UBOBuffers[i]->descriptorInfo();
+		DescriptorWriter(*GlobalSetLayout, *GlobalPool)
+			.writeBuffer(0, &bufferInfo)
+			.build(GlobalDescriptorSets[i]);
 	}
 }
 
 Renderer::~Renderer() {
 	vkDeviceWaitIdle(Device.device());
-
-	vkDestroyDescriptorPool(Device.device(), DescriptorPool, nullptr);
 }
 
 bool Renderer::ShouldClose() {
@@ -196,32 +219,6 @@ void Renderer::_RecordCommandBuffer() {
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to record commandBuffer!");
 }
 
-void Renderer::_CreateDescriptorPool() {
-	VkDescriptorPoolSize pool_sizes[11] =
-	{
-		{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
-		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
-	};
-	VkDescriptorPoolCreateInfo pool_info = {};
-	pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-	pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-	pool_info.maxSets = 1000 * 11/*pool_size.size()*/;
-	pool_info.poolSizeCount = 11/*pool_size.size()*/;
-	pool_info.pPoolSizes = pool_sizes;
-	if (vkCreateDescriptorPool(Device.device(), &pool_info, nullptr, &DescriptorPool) != VK_SUCCESS)
-		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create descriptorPool!");
-}
-
-
 void Renderer::_LoadModels() {	
-	m_TestMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/sponza.obj");
+	m_TestMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/smooth_vase.obj");
 }

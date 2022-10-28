@@ -17,6 +17,7 @@ void ProfilerPanel::OnDestroy() {
 }
 
 static void DrawStatGroups() {
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 	ImGuiTreeNodeFlags header_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
 	
 	if (ImGui::TreeNodeEx("ProfileStats:", header_flags, "ProfileStats:")) {
@@ -39,6 +40,7 @@ static void DrawStatGroups() {
 		
 		ImGui::TreePop();
 	}
+#endif
 }
 
 void ProfilerPanel::OnGui() {

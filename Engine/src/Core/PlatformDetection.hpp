@@ -32,4 +32,6 @@
 	#ifndef PIT_LINUX
 		#define PIT_LINUX
 	#endif
+#else
+	#error "Platform isn't supported!"
 #endif
