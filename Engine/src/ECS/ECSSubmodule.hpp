@@ -13,30 +13,11 @@ namespace Pit {
 
 	class ECSSubmodule : public Submodule {
 	public:
-		virtual void Init() {
-			if (!m_ECSWorld.Init())
-				PIT_ENGINE_FATAL(Log::ECS, "Error while initializing ECSWorld");
+		virtual void Init();
 
-			m_ECSGameloop.Initialize(m_ECSWorld);
+		virtual void Shutdown();
 
-			PIT_ENGINE_INFO(Log::ECS, "ECSSubmodule has initialized!");
-
-			for (int i = 0; i < 1; i++) {
-				auto e = m_ECSWorld.CreateEntity();
-				e.AddComponent<ECS::MeshRendererComponent>();
-			}
-		}
-
-		virtual void Shutdown() {
-			m_ECSGameloop.Shutdown(m_ECSWorld);
-
-			m_ECSWorld.Clear();
-			
-			PIT_ENGINE_INFO(Log::ECS, "ECSSubmodule has shut down!");
-		}
-
-		virtual void Update() {
-		}
+		virtual void Update();
 
 		void ResetECSWorld() {
 			m_ECSGameloop.Shutdown(m_ECSWorld);

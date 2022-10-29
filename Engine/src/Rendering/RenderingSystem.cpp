@@ -9,6 +9,20 @@ using namespace Pit::Rendering;
 
 Camera* RenderEntitiesSystem::CameraToUse = nullptr;
 
+struct RenderEntityEntry {
+	Pit::ECS::TransformComponent* transform;
+};
+
+struct RenderInstancedEntry {
+	Pit::Rendering::Mesh* mesh;
+	std::vector<RenderEntityEntry> entries;
+
+	RenderInstancedEntry(Pit::Rendering::Mesh* mesh)
+		: mesh(mesh), entries(std::vector<RenderEntityEntry>()) {
+
+	}
+};
+
 void RenderEntitiesSystem::Update(ECS::World& world) {
 	if (!CameraToUse) {
 		PIT_ENGINE_ERR(Log::Rendering, "No Camera specified to render to (RenderEntitiesSystem::CameraToUse == nullptr)");
@@ -17,9 +31,8 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 
 	auto* renderer = Engine::Rendering()->Renderer;
 	auto commandBuffer = renderer->CommandBuffers[renderer->FrameIndex];
-	Engine::Rendering()->RenderingSystem->Pipeline->Bind(commandBuffer);
 
-	renderer->TestMesh()->Bind(commandBuffer);
+	Engine::Rendering()->RenderingSystem->Pipeline->Bind(commandBuffer);
 
 	vkCmdBindDescriptorSets(commandBuffer,
 							VK_PIPELINE_BIND_POINT_GRAPHICS,
@@ -30,22 +43,32 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 							0,
 							nullptr);
 
+	std::vector<RenderInstancedEntry> renderEntries {
+		{Engine::Rendering()->Renderer->VaseMesh().get()},
+		{Engine::Rendering()->Renderer->QuadMesh().get()}
+	};
+
 	auto group = world.Group<ECS::TransformComponent, ECS::MeshRendererComponent>();
 	for (auto e : group) {
 		auto& transform = group.get<ECS::TransformComponent>(e);
 		auto& mesh = group.get<ECS::MeshRendererComponent>(e);
-		/*
-		transform.rotation.y = glm::mod(transform.rotation.y + 1.f * Time::DeltaTime(), glm::two_pi<float>());
-		transform.rotation.x = glm::mod(transform.rotation.x + 0.5f * Time::DeltaTime(), glm::two_pi<float>());
-		transform.rotation.z = glm::mod(transform.rotation.z + 0.2f * Time::DeltaTime(), glm::two_pi<float>());*/
-		transform.position = { 0, 0, 2.5f };
-		transform.scale = { .5f, .5f, .5f };
+		
+		//transform.position = { .5f, .5f, 0.f };
+		//transform.scale = { 3.f, 1.5f, 3.f };
+		for (int i = 0; i < renderEntries.size(); i++)
+			if (renderEntries[i].mesh == mesh.Mesh)
+				renderEntries[i].entries.emplace_back(&transform);
+	}
 
-		SimplePushConstantData push{};
-		push.modelMatrix = transform.mat4();
-		push.normalMatrix = transform.normalMatrix();
-		vkCmdPushConstants(commandBuffer, Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
-		renderer->TestMesh()->Draw(commandBuffer);
+	for (auto& renderEntry : renderEntries) {
+		renderEntry.mesh->Bind(commandBuffer);
+		for (auto& renderEntityEntry : renderEntry.entries) {
+			SimplePushConstantData push{};
+			push.modelMatrix = renderEntityEntry.transform->mat4();
+			push.normalMatrix = renderEntityEntry.transform->normalMatrix();
+			vkCmdPushConstants(commandBuffer, Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
+			renderEntry.mesh->Draw(commandBuffer);
+		}
 	}
 }
 

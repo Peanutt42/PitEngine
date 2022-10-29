@@ -14,6 +14,8 @@ void RenderingSubmodule::Init() {
 	Renderer = new Rendering::Renderer();
 	RenderingSystem = new Rendering::RenderingSystem();
 	CameraEntity = Engine::ECS()->GetEcsWorld().CreateEntity();
+	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
+	camEntityTransform.position.z = -2.5f;
 	CurrentCamera = new Rendering::Camera();
 	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
 	CurrentCamera->FOV = 70;

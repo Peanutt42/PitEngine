@@ -1,4 +1,5 @@
 ﻿  pch.cpp
+  AssetManagmentSubmodule.cpp
   AudioSubmodule.cpp
   Engine.cpp
   Input.cpp

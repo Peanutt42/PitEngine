@@ -176,6 +176,7 @@
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\RenderingDescriptors.hpp" />
     <ClInclude Include="src\Core\Assert.hpp" />
+    <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Engine.cpp">
@@ -253,5 +254,6 @@
     <ClCompile Include="src\Rendering\RenderingDescriptors.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
+    <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp" />
   </ItemGroup>
 </Project>

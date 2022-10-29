@@ -29,7 +29,7 @@ Renderer::Renderer()
 			   .addPoolSize(VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, POOL_SIZE)
 			   .build()),
 	GlobalSetLayout(DescriptorSetLayout::Builder(Device)
-					.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+					.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
 					.build()) {
 
 	SetGLFWWindowIcon(Window.GetWindowHandle(), FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
@@ -219,6 +219,7 @@ void Renderer::_RecordCommandBuffer() {
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to record commandBuffer!");
 }
 
-void Renderer::_LoadModels() {	
-	m_TestMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/smooth_vase.obj");
+void Renderer::_LoadModels() {
+	m_VaseMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/smooth_vase.obj");
+	m_QuadMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/quad.obj");
 }

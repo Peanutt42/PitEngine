@@ -44,10 +44,10 @@ namespace Pit::Rendering {
 		std::vector<VkDescriptorSet> GlobalDescriptorSets = std::vector<VkDescriptorSet>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 		uint32_t MinImageCount;
 
-		ScopeRef<Mesh>& TestMesh() { return m_TestMesh; }
-
 		std::vector<std::unique_ptr<Buffer>> UBOBuffers = std::vector<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
+		ScopeRef<Mesh>& VaseMesh() { return m_VaseMesh; }
+		ScopeRef<Mesh>& QuadMesh() { return m_QuadMesh; }
 
 	private:
 		void _CreateCommandBuffers();
@@ -59,8 +59,8 @@ namespace Pit::Rendering {
 		void _RecreateSwapChain();
 		void _RecordCommandBuffer();
 
-		ScopeRef<Mesh> m_TestMesh;
 		void _LoadModels();
-		void _Sierpinski(std::vector<Vertex>& vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top);
+		ScopeRef<Mesh> m_VaseMesh;
+		ScopeRef<Mesh> m_QuadMesh;
 	};
 }
