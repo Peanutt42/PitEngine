@@ -137,42 +137,43 @@ void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const std::
 
 	auto bindingDescriptions = Vertex::GetBindingDescription();
 	auto attributeDescriptions = Vertex::GetAttributeDescription();
-	VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-	vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-	vertexInputInfo.vertexBindingDescriptionCount = Cast<uint32_t>(bindingDescriptions.size());
-	vertexInputInfo.vertexAttributeDescriptionCount = Cast<uint32_t>(attributeDescriptions.size());
-	vertexInputInfo.pVertexBindingDescriptions = bindingDescriptions.data();
-	vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
+	VkPipelineVertexInputStateCreateInfo vertexInputInfo {
+		.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+		.vertexBindingDescriptionCount = Cast<uint32_t>(bindingDescriptions.size()),
+		.pVertexBindingDescriptions = bindingDescriptions.data(),
+		.vertexAttributeDescriptionCount = Cast<uint32_t>(attributeDescriptions.size()),
+		.pVertexAttributeDescriptions = attributeDescriptions.data()
+	};
 
-	VkGraphicsPipelineCreateInfo pipelineInfo{};
-	pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-	pipelineInfo.stageCount = 2;
-	pipelineInfo.pStages = shaderStages;
-	pipelineInfo.pVertexInputState = &vertexInputInfo;
-	pipelineInfo.pInputAssemblyState = &configInfo.inputAssemblyInfo;
-	pipelineInfo.pViewportState = &configInfo.viewportInfo;
-	pipelineInfo.pRasterizationState = &configInfo.rasterizationInfo;
-	pipelineInfo.pMultisampleState = &configInfo.multisampleInfo;
-	pipelineInfo.pColorBlendState = &configInfo.colorBlendInfo;
-	pipelineInfo.pDepthStencilState = &configInfo.depthStencilInfo;
-	pipelineInfo.pDynamicState = &configInfo.dynamicStateInfo;
-
-	pipelineInfo.layout = configInfo.pipelineLayout;
-	pipelineInfo.renderPass = configInfo.renderPass;
-	pipelineInfo.subpass = configInfo.subpass;
-
-	pipelineInfo.basePipelineIndex = -1;
-	pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+	VkGraphicsPipelineCreateInfo pipelineInfo {
+		.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO,
+		.stageCount = 2,
+		.pStages = shaderStages,
+		.pVertexInputState = &vertexInputInfo,
+		.pInputAssemblyState = &configInfo.inputAssemblyInfo,
+		.pViewportState = &configInfo.viewportInfo,
+		.pRasterizationState = &configInfo.rasterizationInfo,
+		.pMultisampleState = &configInfo.multisampleInfo,
+		.pDepthStencilState = &configInfo.depthStencilInfo,
+		.pColorBlendState = &configInfo.colorBlendInfo,
+		.pDynamicState = &configInfo.dynamicStateInfo,
+		.layout = configInfo.pipelineLayout,
+		.renderPass = configInfo.renderPass,
+		.subpass = configInfo.subpass,
+		.basePipelineHandle = VK_NULL_HANDLE,
+		.basePipelineIndex = -1
+	};
 
 	if (vkCreateGraphicsPipelines(m_Device.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_Pipeline) != VK_SUCCESS)
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to create pipeline!");
 }
 
 void Pipeline::_CreateShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule) {
-	VkShaderModuleCreateInfo createInfo{};
-	createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-	createInfo.codeSize = code.size();
-	createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+	VkShaderModuleCreateInfo createInfo {
+		.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
+		.codeSize = code.size(),
+		.pCode = reinterpret_cast<const uint32_t*>(code.data())
+	};
 
 	if (vkCreateShaderModule(m_Device.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to create ShaderModule!");

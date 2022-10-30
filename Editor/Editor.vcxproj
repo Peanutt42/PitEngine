@@ -200,9 +200,6 @@
     <ProjectReference Include="..\vendor\tinyobjloader\tinyobjloader.vcxproj">
       <Project>{DBBB7385-477C-EFBB-10B7-38397C363498}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\vendor\PitVulkano\PitVulkano.vcxproj">
-      <Project>{92B1B442-7E69-F68F-E770-CFEBD3479180}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</Project>
     </ProjectReference>

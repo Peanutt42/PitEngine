@@ -162,11 +162,13 @@ void Renderer::_RecreateSwapChain() {
 void Renderer::_CreateCommandBuffers() {
 	CommandBuffers.resize(Rendering::SwapChain::MAX_FRAMES_IN_FLIGHT);
 
-	VkCommandBufferAllocateInfo allocInfo{};
-	allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-	allocInfo.commandPool = Device.getCommandPool();
-	allocInfo.commandBufferCount = static_cast<uint32_t>(CommandBuffers.size());
+	VkCommandBufferAllocateInfo allocInfo {
+		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+		.pNext = nullptr,
+		.commandPool = Device.getCommandPool(),
+		.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+		.commandBufferCount = static_cast<uint32_t>(CommandBuffers.size())
+	};
 
 	if (vkAllocateCommandBuffers(Device.device(), &allocInfo, CommandBuffers.data()) != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create commandBuffers!");
@@ -178,33 +180,36 @@ void Renderer::_FreeCommandBuffers() {
 }
 
 void Renderer::_RecordCommandBuffer() {
-	VkCommandBufferBeginInfo beginInfo{};
-	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+	VkCommandBufferBeginInfo beginInfo {
+		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
+	};
 
 	if (vkBeginCommandBuffer(CommandBuffers[FrameIndex], &beginInfo) != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to Begin commandBuffer!");
 
-	VkRenderPassBeginInfo renderPassInfo{};
-	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-	renderPassInfo.renderPass = SwapChain->getRenderPass();
-	renderPassInfo.framebuffer = SwapChain->getFrameBuffer(ImageIndex);
-	renderPassInfo.renderArea.offset = { 0, 0 };
-	renderPassInfo.renderArea.extent = SwapChain->getSwapChainExtent();
-
 	VkClearValue clearValues[2];
 	clearValues[0].color = { .1f, .1f, .1f, 1.f };
 	clearValues[1].depthStencil = { 1.f, 0 };
-	renderPassInfo.clearValueCount = 2;
-	renderPassInfo.pClearValues = clearValues;
+	VkRenderPassBeginInfo renderPassInfo{
+		.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+		.pNext = nullptr,
+		.renderPass = SwapChain->getRenderPass(),
+		.framebuffer = SwapChain->getFrameBuffer(ImageIndex),
+		.renderArea = {{0, 0}, SwapChain->getSwapChainExtent()},
+		.clearValueCount = 2,
+		.pClearValues = clearValues
+	};
 
 	vkCmdBeginRenderPass(CommandBuffers[FrameIndex], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-	VkViewport viewport{};
-	viewport.x = viewport.y = 0;
-	viewport.width = Cast<float>(SwapChain->getSwapChainExtent().width);
-	viewport.height = Cast<float>(SwapChain->getSwapChainExtent().height);
-	viewport.minDepth = 0.f;
-	viewport.maxDepth = 1.f;
+	VkViewport viewport{
+		.x = 0,
+		.y = 0,
+		.width = Cast<float>(SwapChain->getSwapChainExtent().width),
+		.height = Cast<float>(SwapChain->getSwapChainExtent().height),
+		.minDepth = 0.f,
+		.maxDepth = 1.f
+	};
 	VkRect2D scissors{ {0, 0}, SwapChain->getSwapChainExtent() };
 	vkCmdSetViewport(CommandBuffers[FrameIndex], 0, 1, &viewport);
 	vkCmdSetScissor(CommandBuffers[FrameIndex], 0, 1, &scissors);

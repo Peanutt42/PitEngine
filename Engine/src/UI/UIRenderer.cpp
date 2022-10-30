@@ -39,20 +39,21 @@ Renderer::Renderer(Rendering::Renderer* renderer)
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForVulkan(renderer->Window.GetWindowHandle(), true);
-    ImGui_ImplVulkan_InitInfo init_info = {};
-    init_info.Instance = renderer->Device.getInstance();
-    init_info.PhysicalDevice = renderer->Device.getPhysicalDevice();
-    init_info.Device = renderer->Device.device();
-    init_info.QueueFamily = renderer->Device.queueFamily();
-    init_info.Queue = renderer->Device.queue();
-    init_info.PipelineCache = VK_NULL_HANDLE;
-    init_info.DescriptorPool = renderer->GlobalPool->GetPool();
-    init_info.Subpass = 0;
-    init_info.MinImageCount = renderer->MinImageCount;
-    init_info.ImageCount = Cast<uint32_t>(renderer->SwapChain->getImageCount());
-    init_info.MSAASamples = renderer->Device.sampleCount();
-    init_info.Allocator = nullptr;
-    init_info.CheckVkResultFn = check_vk_result;
+    ImGui_ImplVulkan_InitInfo init_info {
+        .Instance = renderer->Device.getInstance(),
+        .PhysicalDevice = renderer->Device.getPhysicalDevice(),
+        .Device = renderer->Device.device(),
+        .QueueFamily = renderer->Device.queueFamily(),
+        .Queue = renderer->Device.queue(),
+        .PipelineCache = VK_NULL_HANDLE,
+        .DescriptorPool = renderer->GlobalPool->GetPool(),
+        .Subpass = 0,
+        .MinImageCount = renderer->MinImageCount,
+        .ImageCount = Cast<uint32_t>(renderer->SwapChain->getImageCount()),
+        .MSAASamples = renderer->Device.sampleCount(),
+        .Allocator = nullptr,
+        .CheckVkResultFn = check_vk_result
+    };
     ImGui_ImplVulkan_Init(&init_info, renderer->SwapChain->getRenderPass());
 
     // See UIFonts.hpp->FontType for ordering of loading!!!
@@ -62,18 +63,20 @@ Renderer::Renderer(Rendering::Renderer* renderer)
     
     VkCommandBuffer command_buffer = renderer->CommandBuffers[renderer->FrameIndex];
 
-    VkCommandBufferBeginInfo begin_info = {};
-    begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-    begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+    VkCommandBufferBeginInfo begin_info {
+        .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+        .flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT
+    };
     VkResult err = vkBeginCommandBuffer(command_buffer, &begin_info);
     check_vk_result(err);
 
     ImGui_ImplVulkan_CreateFontsTexture(command_buffer);
 
-    VkSubmitInfo end_info = {};
-    end_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-    end_info.commandBufferCount = 1;
-    end_info.pCommandBuffers = &command_buffer;
+    VkSubmitInfo end_info {
+        .sType = VK_STRUCTURE_TYPE_SUBMIT_INFO,
+        .commandBufferCount = 1,
+        .pCommandBuffers = &command_buffer
+    };
     err = vkEndCommandBuffer(command_buffer);
     check_vk_result(err);
     err = vkQueueSubmit(renderer->Device.queue(), 1, &end_info, VK_NULL_HANDLE);

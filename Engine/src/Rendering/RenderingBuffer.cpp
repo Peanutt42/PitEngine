@@ -102,11 +102,12 @@ void Buffer::writeToBuffer(void* data, VkDeviceSize size, VkDeviceSize offset) {
 * @return VkResult of the flush call
 */
 VkResult Buffer::flush(VkDeviceSize size, VkDeviceSize offset) {
-    VkMappedMemoryRange mappedRange = {};
-    mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-    mappedRange.memory = memory;
-    mappedRange.offset = offset;
-    mappedRange.size = size;
+    VkMappedMemoryRange mappedRange {
+        .sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE,
+        .memory = memory,
+        .offset = offset,
+        .size = size
+    };
     return vkFlushMappedMemoryRanges(device.device(), 1, &mappedRange);
 }
 
@@ -122,11 +123,12 @@ VkResult Buffer::flush(VkDeviceSize size, VkDeviceSize offset) {
 * @return VkResult of the invalidate call
 */
 VkResult Buffer::invalidate(VkDeviceSize size, VkDeviceSize offset) {
-    VkMappedMemoryRange mappedRange = {};
-    mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-    mappedRange.memory = memory;
-    mappedRange.offset = offset;
-    mappedRange.size = size;
+    VkMappedMemoryRange mappedRange{
+        .sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE,
+        .memory = memory,
+        .offset = offset,
+        .size = size
+    };
     return vkInvalidateMappedMemoryRanges(device.device(), 1, &mappedRange);
 }
 

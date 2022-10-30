@@ -7,4 +7,4 @@
   ProfilerPanel.cpp
   SceneViewportPanel.cpp
   main.cpp
-LINK : fatal error LNK1181: Eingabedatei "C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\PitVulkano\PitVulkano.lib" kann nicht geöffnet werden.
+  Editor.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Editor\Editor.exe

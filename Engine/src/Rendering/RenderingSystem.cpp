@@ -13,11 +13,11 @@ struct RenderEntityEntry {
 	Pit::ECS::TransformComponent* transform;
 };
 
-struct RenderInstancedEntry {
+struct InstancedRenderEntry {
 	Pit::Rendering::Mesh* mesh;
 	std::vector<RenderEntityEntry> entries;
 
-	RenderInstancedEntry(Pit::Rendering::Mesh* mesh)
+	InstancedRenderEntry(Pit::Rendering::Mesh* mesh)
 		: mesh(mesh), entries(std::vector<RenderEntityEntry>()) {
 
 	}
@@ -43,7 +43,7 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 							0,
 							nullptr);
 
-	std::vector<RenderInstancedEntry> renderEntries {
+	std::vector<InstancedRenderEntry> renderEntries {
 		{Engine::Rendering()->Renderer->VaseMesh().get()},
 		{Engine::Rendering()->Renderer->QuadMesh().get()}
 	};
@@ -53,8 +53,6 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 		auto& transform = group.get<ECS::TransformComponent>(e);
 		auto& mesh = group.get<ECS::MeshRendererComponent>(e);
 		
-		//transform.position = { .5f, .5f, 0.f };
-		//transform.scale = { 3.f, 1.5f, 3.f };
 		for (int i = 0; i < renderEntries.size(); i++)
 			if (renderEntries[i].mesh == mesh.Mesh)
 				renderEntries[i].entries.emplace_back(&transform);
@@ -63,9 +61,10 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 	for (auto& renderEntry : renderEntries) {
 		renderEntry.mesh->Bind(commandBuffer);
 		for (auto& renderEntityEntry : renderEntry.entries) {
-			SimplePushConstantData push{};
-			push.modelMatrix = renderEntityEntry.transform->mat4();
-			push.normalMatrix = renderEntityEntry.transform->normalMatrix();
+			SimplePushConstantData push {
+				.modelMatrix = renderEntityEntry.transform->mat4(),
+				.normalMatrix = renderEntityEntry.transform->normalMatrix()
+			};
 			vkCmdPushConstants(commandBuffer, Engine::Rendering()->RenderingSystem->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(SimplePushConstantData), &push);
 			renderEntry.mesh->Draw(commandBuffer);
 		}
@@ -88,21 +87,23 @@ RenderingSystem::~RenderingSystem() {
 }
 
 void RenderingSystem::CreatePipelineLayout() {
-	VkPushConstantRange pushConstantRange{};
-	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-	pushConstantRange.offset = 0;
-	pushConstantRange.size = sizeof(SimplePushConstantData);
+	VkPushConstantRange pushConstantRange {
+		.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
+		.offset = 0,
+		.size = sizeof(SimplePushConstantData)
+	};
 
 	std::vector<VkDescriptorSetLayout> discriptorSetLayouts {
 		Engine::Rendering()->Renderer->GlobalSetLayout->getDescriptorSetLayout()
 	};
 
-	VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-	pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-	pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(discriptorSetLayouts.size());
-	pipelineLayoutInfo.pSetLayouts = discriptorSetLayouts.data();
-	pipelineLayoutInfo.pushConstantRangeCount = 1;
-	pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+	VkPipelineLayoutCreateInfo pipelineLayoutInfo {
+		.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
+		.setLayoutCount = static_cast<uint32_t>(discriptorSetLayouts.size()),
+		.pSetLayouts = discriptorSetLayouts.data(),
+		.pushConstantRangeCount = 1,
+		.pPushConstantRanges = &pushConstantRange
+	};
 	if (vkCreatePipelineLayout(Engine::Rendering()->Renderer->Device.device(), &pipelineLayoutInfo, nullptr, &PipelineLayout) != VK_SUCCESS)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create pipelineLayout!");
 }
