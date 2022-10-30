@@ -43,6 +43,7 @@ project "Engine"
 		"spdlog",
 		"stb_image",
 		"tinyobjloader",
+		"PitVulkano",
 		"vulkan-1.lib",
 		"glfw3_mt.lib"
 	}

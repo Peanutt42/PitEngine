@@ -21,6 +21,7 @@ group "Dependencies"
 	include "vendor/spdlog"
 	include "vendor/stb_image"
 	include "vendor/tinyobjloader"
+	include "vendor/PitVulkano"
 group ""
 
 include "Editor"
