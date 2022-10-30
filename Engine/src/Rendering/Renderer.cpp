@@ -137,9 +137,9 @@ static int _GetMinImageCountFromPresentMode(VkPresentModeKHR present_mode) {
 }
 
 void Renderer::_RecreateSwapChain() {
-	VkExtent2D extent{ Cast<uint32_t>(Window.GetWidth()), Cast<uint32_t>(Window.GetHeight()) };
+	VkExtent2D extent{ Cast<uint32>(Window.GetWidth()), Cast<uint32>(Window.GetHeight()) };
 	while (extent.width == 0 || extent.height == 0) {
-		extent = { Cast<uint32_t>(Window.GetWidth()), Cast<uint32_t>(Window.GetHeight()) };
+		extent = { Cast<uint32>(Window.GetWidth()), Cast<uint32>(Window.GetHeight()) };
 		glfwWaitEvents();
 	}
 
@@ -167,7 +167,7 @@ void Renderer::_CreateCommandBuffers() {
 		.pNext = nullptr,
 		.commandPool = Device.getCommandPool(),
 		.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-		.commandBufferCount = static_cast<uint32_t>(CommandBuffers.size())
+		.commandBufferCount = static_cast<uint32>(CommandBuffers.size())
 	};
 
 	if (vkAllocateCommandBuffers(Device.device(), &allocInfo, CommandBuffers.data()) != VK_SUCCESS)
@@ -175,7 +175,7 @@ void Renderer::_CreateCommandBuffers() {
 }
 
 void Renderer::_FreeCommandBuffers() {
-	vkFreeCommandBuffers(Device.device(), Device.getCommandPool(), Cast<uint32_t>(CommandBuffers.size()), CommandBuffers.data());
+	vkFreeCommandBuffers(Device.device(), Device.getCommandPool(), Cast<uint32>(CommandBuffers.size()), CommandBuffers.data());
 	CommandBuffers.clear();
 }
 

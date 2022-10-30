@@ -16,8 +16,8 @@ namespace Pit::Rendering {
 		glm::vec3 normal;
 		glm::vec2 uv;
 
-		static std::vector<VkVertexInputBindingDescription> GetBindingDescription();
-		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescription();
+		static Array<VkVertexInputBindingDescription> GetBindingDescription();
+		static Array<VkVertexInputAttributeDescription> GetAttributeDescription();
 
 		bool operator==(const Vertex& other) const {
 			return position == other.position && color == other.color && normal == other.normal &&
@@ -25,17 +25,17 @@ namespace Pit::Rendering {
 		}
 
 		struct Builder {
-			std::vector<Vertex> vertices;
-			std::vector<uint32_t> indices;
+			Array<Vertex> vertices;
+			Array<uint32> indices;
 
-			static Builder FromFile(const std::string& filepath);
+			static Builder FromFile(const String& filepath);
 		};
 	};
 }
 
 // from: https://stackoverflow.com/a/57595105
 template <typename T, typename... Rest>
-void hashCombine(std::size_t& seed, const T& v, const Rest&... rest) {
+void hashCombine(Pit::size& seed, const T& v, const Rest&... rest) {
 	seed ^= std::hash<T>{}(v)+0x9e3779b9 + (seed << 6) + (seed >> 2);
 	(hashCombine(seed, rest), ...);
 };
@@ -43,8 +43,8 @@ void hashCombine(std::size_t& seed, const T& v, const Rest&... rest) {
 namespace std {
 	template <>
 	struct hash<Pit::Rendering::Vertex> {
-		size_t operator()(const Pit::Rendering::Vertex& vertex) const {
-			size_t seed = 0;
+		Pit::size operator()(const Pit::Rendering::Vertex& vertex) const {
+			Pit::size seed = 0;
 			hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
 			return seed;
 		}
@@ -57,7 +57,7 @@ namespace Pit::Rendering {
 		Mesh(Device& device, const Vertex::Builder& builder);
 		~Mesh();
 
-		static std::unique_ptr<Mesh> CreateMeshFromFile(Device& device, const std::string& path);
+		static std::unique_ptr<Mesh> CreateMeshFromFile(Device& device, const String& path);
 
 		void Bind(VkCommandBuffer commandBuffer);
 		void Draw(VkCommandBuffer commandBuffer);
@@ -66,16 +66,16 @@ namespace Pit::Rendering {
 		Mesh& operator=(const Mesh&) = delete;
 
 	private:
-		void _CreateVertexBuffers(const std::vector<Vertex>& vertices);
-		void _CreateIndexBuffers(const std::vector<uint32_t>& indices);
+		void _CreateVertexBuffers(const Array<Vertex>& vertices);
+		void _CreateIndexBuffers(const Array<uint32>& indices);
 
 		Device& m_Device;
 
 		std::unique_ptr<Buffer> m_VertexBuffer;
-		uint32_t m_VertexCount;
+		uint32 m_VertexCount;
 
 		bool m_HasIndexBuffer = false;
 		std::unique_ptr<Buffer> m_IndexBuffer;
-		uint32_t m_IndexCount;
+		uint32 m_IndexCount;
 	};
 }

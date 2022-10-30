@@ -49,7 +49,7 @@ Renderer::Renderer(Rendering::Renderer* renderer)
         .DescriptorPool = renderer->GlobalPool->GetPool(),
         .Subpass = 0,
         .MinImageCount = renderer->MinImageCount,
-        .ImageCount = Cast<uint32_t>(renderer->SwapChain->getImageCount()),
+        .ImageCount = Cast<uint32>(renderer->SwapChain->getImageCount()),
         .MSAASamples = renderer->Device.sampleCount(),
         .Allocator = nullptr,
         .CheckVkResultFn = check_vk_result

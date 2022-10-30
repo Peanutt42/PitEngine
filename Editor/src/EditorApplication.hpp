@@ -28,8 +28,8 @@ namespace Pit::Editor {
 	private:
 		Engine& m_Engine;
 		EditorAssetManager m_AssetManager;
-		std::vector<EditorWindowPanel*> m_WindowPanels;
-		std::vector<bool> m_PanelKeyShortcutsPressed;
+		Array<EditorWindowPanel*> m_WindowPanels;
+		Array<bool> m_PanelKeyShortcutsPressed;
 	};
 
 

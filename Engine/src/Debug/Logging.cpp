@@ -21,7 +21,7 @@ void Logging::Init() {
 	spdlog::set_pattern(pattern);
 
 	// Destroy the 10th saved log file if over 10
-	size_t filecount = std::distance(std::filesystem::directory_iterator("Logs"), std::filesystem::directory_iterator{});
+	size filecount = std::distance(std::filesystem::directory_iterator("Logs"), std::filesystem::directory_iterator{});
 	if (filecount >= 10) {
 		for (auto& directoryEntry : std::filesystem::directory_iterator("Logs")) {
 			if (filecount > 10) {
@@ -30,7 +30,7 @@ void Logging::Init() {
 			}
 		}
 	}
-	std::string filepath = std::string("Logs/") + CurrentTimeToString() + std::string("_Log.log");
+	Pit::String filepath = Pit::String("Logs/") + CurrentTimeToString() + Pit::String("_Log.log");
 
 	s_FileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(filepath);
 	s_FileSink->set_pattern(pattern);
@@ -47,7 +47,7 @@ void Logging::Init() {
 
 	LoggerInitialized = true;
 
-	PerformanceReportFile = std::ofstream(std::string("Logs/") + CurrentTimeToString() + std::string("_ProfilingReport.log"));
+	PerformanceReportFile = std::ofstream(Pit::String("Logs/") + CurrentTimeToString() + Pit::String("_ProfilingReport.log"));
 #endif
 }
 

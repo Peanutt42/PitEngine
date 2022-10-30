@@ -16,27 +16,27 @@ namespace Pit::Debug {
 	static constexpr const ProfileStatType GetProfileType() {
 		if (std::is_same_v<T, float>) return Float;
 		if (std::is_same_v<T, int>) return Int;
-		if (std::is_same_v<T, std::string>) return String;
-		if (std::is_same_v<T, size_t>) return Memory;
+		if (std::is_same_v<T, Pit::String>) return String;
+		if (std::is_same_v<T, Pit::size>) return Memory;
 	}
 
 	template<typename T>
 	struct ProfileStatEntry {
-		std::string name;
+		Pit::String name;
 		T* pValue;
 		std::function<T()> avarageFunc;
 	};
 
 	struct ProfileStatGroupEntry {
-		std::string name;
-		std::vector<ProfileStatEntry<float>>* pFloatStats;
-		std::vector<ProfileStatEntry<int>>* pIntStats;
-		std::vector<ProfileStatEntry<std::string>>* pStringStats;
-		std::vector<ProfileStatEntry<size_t>>* pMemoryStats;
+		Pit::String name;
+		Array<ProfileStatEntry<float>>* pFloatStats;
+		Array<ProfileStatEntry<int>>* pIntStats;
+		Array<ProfileStatEntry<Pit::String>>* pStringStats;
+		Array<ProfileStatEntry<size>>* pMemoryStats;
 	};
 
 	struct ProfileStatGroups {
-		static std::vector<ProfileStatGroupEntry> s_ProfileStatGroups;
+		static Array<ProfileStatGroupEntry> s_ProfileStatGroups;
 		
 		template<typename T>
 		static bool Register() {
@@ -48,7 +48,7 @@ namespace Pit::Debug {
 			return true;
 		}
 
-		static std::string InfoToString() {
+		static Pit::String InfoToString() {
 			std::stringstream result;
 
 			result << "ProfileStatGroups:\n";
@@ -74,14 +74,14 @@ namespace Pit::Debug {
 	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
 #define DECLARE_PROFILE_STAT_GROUP(name, statName)																		\
 	struct STAT_GROUP_##name {																							\
-		static std::string GetName() {																					\
+		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
 		static bool Registered;																							\
-		static std::vector<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
-		static std::vector<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
-		static std::vector<Pit::Debug::ProfileStatEntry<std::string>> s_StringProfileStats;								\
-		static std::vector<Pit::Debug::ProfileStatEntry<size_t>> s_MemoryProfileStats;									\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> s_StringProfileStats;								\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> s_MemoryProfileStats;									\
 		template<typename T>																							\
 		static bool Register() {																						\
 			if constexpr (T::Type == Pit::Debug::Float) {																\
@@ -111,22 +111,22 @@ namespace Pit::Debug {
 		}																												\
 	};																													\
 	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>();					\
-	std::vector<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
-	std::vector<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
-	std::vector<Pit::Debug::ProfileStatEntry<std::string>> STAT_GROUP_##name::s_StringProfileStats;						\
-	std::vector<Pit::Debug::ProfileStatEntry<size_t>> STAT_GROUP_##name::s_MemoryProfileStats
+	Pit::Array<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
+	Pit::Array<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
+	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> STAT_GROUP_##name::s_StringProfileStats;						\
+	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> STAT_GROUP_##name::s_MemoryProfileStats
 
 
 #define DECLARE_EXTERN_PROFILE_STAT_GROUP(name, statName)																\
 	struct STAT_GROUP_##name {																							\
-		static std::string GetName() {																					\
+		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
 		static bool Registered;																							\
-		static std::vector<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
-		static std::vector<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
-		static std::vector<Pit::Debug::ProfileStatEntry<std::string>> s_StringProfileStats;								\
-		static std::vector<Pit::Debug::ProfileStatEntry<size_t>> s_MemoryProfileStats;									\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> s_StringProfileStats;								\
+		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> s_MemoryProfileStats;									\
 		template<typename T>																							\
 		static bool Register() {																						\
 			if constexpr (T::Type == Pit::Debug::Float) {																\
@@ -158,16 +158,16 @@ namespace Pit::Debug {
 
 #define DEFINE_EXTERN_PROFILE_STAT_GROUP(name)																			\
 	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>();					\
-	std::vector<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
-	std::vector<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
-	std::vector<Pit::Debug::ProfileStatEntry<std::string>> STAT_GROUP_##name::s_StringProfileStats;						\
-	std::vector<Pit::Debug::ProfileStatEntry<size_t>> STAT_GROUP_##name::s_MemoryProfileStats
+	Pit::Array<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
+	Pit::Array<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
+	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> STAT_GROUP_##name::s_StringProfileStats;						\
+	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> STAT_GROUP_##name::s_MemoryProfileStats
 
 
 	// usage: DECLARE_PROFILE_STAT(ExampleGroup, "Example");
 #define DECLARE_PROFILE_STAT(type, name, statGroup, statName, default_val)												\
 	struct STAT_##name {																								\
-		static std::string GetName() {																					\
+		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
 		template<typename T>																							\
@@ -177,7 +177,7 @@ namespace Pit::Debug {
 		static constexpr Pit::Debug::ProfileStatType Type = Pit::Debug::GetProfileType<type>();							\
 		static void SetValue(type value) {																				\
 			Value = value;																								\
-			static size_t ValueRecordIndex = 0, shouldRecordTime = 0;													\
+			static Pit::size ValueRecordIndex = 0, shouldRecordTime = 0;													\
 			if (shouldRecordTime < 150) {																				\
 				shouldRecordTime++;																						\
 				return;																									\
@@ -190,7 +190,7 @@ namespace Pit::Debug {
 			return Value;																								\
 		}																												\
 		static type GetAvarageValue() {																				\
-			if constexpr(std::is_same_v<type, std::string>) return Value;												\
+			if constexpr(std::is_same_v<type, Pit::String>) return Value;												\
 			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
 				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
 			return sum / 10;																							\
@@ -206,7 +206,7 @@ namespace Pit::Debug {
 
 #define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)													\
 	struct STAT_##name {																								\
-		static std::string GetName() {																					\
+		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
 		template<typename T>																							\
@@ -215,7 +215,7 @@ namespace Pit::Debug {
 		}																												\
 		static void SetValue(type value) {																				\
 			Value = value;																								\
-			static size_t ValueRecordIndex = 0, shouldRecordTime = 0;													\
+			static Pit::size ValueRecordIndex = 0, shouldRecordTime = 0;													\
 			if (shouldRecordTime < 150) {																				\
 				shouldRecordTime++;																						\
 				return;																									\
@@ -228,7 +228,7 @@ namespace Pit::Debug {
 			return Value;																								\
 		}																												\
 		static type GetAvarageValue() {																					\
-			if constexpr(std::is_same_v<type, std::string>) return Value;												\
+			if constexpr(std::is_same_v<type, Pit::String>) return Value;												\
 			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
 				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
 			return sum / 10;																							\
@@ -272,19 +272,19 @@ namespace Pit::Debug {
 
 
 #define DECLARE_PROFILE_STAT_STRING(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT(std::string, name, statGroup, statName, "")
+	DECLARE_PROFILE_STAT(Pit::String, name, statGroup, statName, "")
 #define DECLARE_EXTERN_PROFILE_STAT_STRING(name, statGroup, statName)													\
-	DECLARE_EXTERN_PROFILE_STAT(std::string, name, statGroup, statName)															
+	DECLARE_EXTERN_PROFILE_STAT(Pit::String, name, statGroup, statName)															
 #define DEFINE_EXTERN_PROFILE_STAT_STRING(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT(std::string, name, statGroup, "")
+	DEFINE_EXTERN_PROFILE_STAT(Pit::String, name, statGroup, "")
 
 
 #define DECLARE_PROFILE_STAT_MEMORY(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT(size_t, name, statGroup, statName, 0)
+	DECLARE_PROFILE_STAT(size, name, statGroup, statName, 0)
 #define DECLARE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup, statName)													\
-	DECLARE_EXTERN_PROFILE_STAT(size_t, name, statGroup, statName)															
+	DECLARE_EXTERN_PROFILE_STAT(size, name, statGroup, statName)															
 #define DEFINE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT(size_t, name, statGroup, 0)
+	DEFINE_EXTERN_PROFILE_STAT(size, name, statGroup, 0)
 
 
 

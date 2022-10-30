@@ -8,19 +8,19 @@ namespace Pit {
 	class Random {
 	public:
 		static int Int() {
-			return Cast<int>(UInt() - (std::numeric_limits<uint32_t>::max() / 2));
+			return Cast<int>(UInt() - (MAX_UINT32 / 2));
 		}
 
-		static uint32_t UInt() {
+		static uint32 UInt() {
 			return s_Distribution(s_RandomEngine);
 		}
 
-		static uint32_t UInt(uint32_t min, uint32_t max) {
+		static uint32 UInt(uint32 min, uint32 max) {
 			return min + (s_Distribution(s_RandomEngine) % (max - min + 1));
 		}
 
 		static float Float() {
-			return (float)s_Distribution(s_RandomEngine) / (float)std::numeric_limits<uint32_t>::max();
+			return (float)s_Distribution(s_RandomEngine) / (float)MAX_UINT32;
 		}
 
 		static glm::vec3 Vec3() {

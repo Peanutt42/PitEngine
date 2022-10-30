@@ -5,7 +5,7 @@
 namespace Pit {
 	class FileDialogs {
 	public:
-		static std::string OpenFile(const char* filter);
-		static std::string SaveFile(const char* filter);
+		static String OpenFile(const char* filter);
+		static String SaveFile(const char* filter);
 	};
 }

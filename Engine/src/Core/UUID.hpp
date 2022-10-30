@@ -4,7 +4,7 @@
 #include <xhash>
 
 namespace Pit {
-	typedef uint64_t uuid_type;
+	using uuid_type = uint64_t;
 
 	class UUID {
 	public:
@@ -22,7 +22,7 @@ namespace Pit {
 namespace std {
 	template<>
 	struct hash<Pit::UUID> {
-		std::size_t operator()(const Pit::UUID& uuid) const {
+		size_t operator()(const Pit::UUID& uuid) const {
 			return hash<Pit::uuid_type>()((Pit::uuid_type)uuid);
 		}
 	};

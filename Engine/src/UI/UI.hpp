@@ -14,7 +14,7 @@ namespace Pit::UI {
 #define IMGUI_LEFT_LABEL(func, label, ...)
 #endif
 
-	inline static void Vec2(const std::string& label, glm::vec2& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec2(const String& label, glm::vec2& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
 		ImFont* extraBoldFont = Pit::UI::GetFont(Pit::UI::ExtraBold);
 
 		ImGui::PushID(label.c_str());
@@ -64,7 +64,7 @@ namespace Pit::UI {
 		ImGui::PopID();
 	}
 	
-	inline static void Vec3(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec3(const String& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
 		ImFont* extraBoldFont = Pit::UI::GetFont(Pit::UI::ExtraBold);
 
 		ImGui::PushID(label.c_str());
@@ -128,7 +128,7 @@ namespace Pit::UI {
 		ImGui::PopID();
 	}
 
-	inline static void Vec4(const std::string& label, glm::vec4& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec4(const String& label, glm::vec4& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
 		ImFont* extraBoldFont = Pit::UI::GetFont(Pit::UI::ExtraBold);
 
 		ImGui::PushID(label.c_str());

@@ -6,7 +6,7 @@ using namespace Pit::Rendering;
 
 static bool glfwInitialized = false;
 
-Window::Window(const std::string& title, int width, int height, bool fullscreen)
+Window::Window(const String& title, int width, int height, bool fullscreen)
 	: m_Title(title), m_Width(width), m_Height(height) {
 
 	if (!glfwInitialized) {

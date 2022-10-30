@@ -31,7 +31,7 @@ namespace Pit::Editor {
 			else
 				Input::SetCursorMode(Normal);
 
-			if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon())
+			if (glm::dot(rotate, rotate) > EPSILON)
 				rotation += LookSpeed * rotate;
 
 			// limit pitch values between about +/- 85ish degrees
@@ -55,7 +55,7 @@ namespace Pit::Editor {
 			if (Input::IsKeyDown(LeftShift)) speed *= 2;
 			if (Input::IsKeyDown(LeftControl)) speed /= 2;
 
-			if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon())
+			if (glm::dot(moveDir, moveDir) > EPSILON)
 				position += speed * Time::DeltaTime() * glm::normalize(moveDir);
 		}
 	};

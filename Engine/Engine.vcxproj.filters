@@ -193,6 +193,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Rendering\Shader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">

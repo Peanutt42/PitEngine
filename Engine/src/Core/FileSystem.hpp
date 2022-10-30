@@ -4,7 +4,7 @@
 #include <filesystem>
 
 namespace Pit::FileSystem {
-	inline std::string& GetRootDir() {
+	inline std::string GetRootDir() {
 		static std::string rootDir = std::filesystem::current_path().string();
 		return rootDir;
 	}

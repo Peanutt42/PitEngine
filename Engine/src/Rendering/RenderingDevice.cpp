@@ -79,13 +79,13 @@ namespace Pit::Rendering {
         VkInstanceCreateInfo createInfo {
             .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
             .pApplicationInfo = &appInfo,
-            .enabledExtensionCount = Cast<uint32_t>(extensions.size()),
+            .enabledExtensionCount = Cast<uint32>(extensions.size()),
             .ppEnabledExtensionNames = extensions.data()
         };
 
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
         if (enableValidationLayers) {
-            createInfo.enabledLayerCount = Cast<uint32_t>(validationLayers.size());
+            createInfo.enabledLayerCount = Cast<uint32>(validationLayers.size());
             createInfo.ppEnabledLayerNames = validationLayers.data();
 
             populateDebugMessengerCreateInfo(debugCreateInfo);
@@ -103,12 +103,12 @@ namespace Pit::Rendering {
     }
 
     void Device::pickPhysicalDevice() {
-        uint32_t deviceCount = 0;
+        uint32 deviceCount = 0;
         vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
         if (deviceCount == 0)
             PIT_ENGINE_FATAL(Log::Rendering, "Failed to find GPUs with Vulkan support!");
         PIT_ENGINE_INFO(Log::Rendering, "Device count: {}", deviceCount);
-        std::vector<VkPhysicalDevice> devices(deviceCount);
+        Array<VkPhysicalDevice> devices(deviceCount);
         vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
         for (const auto& device : devices) {
@@ -144,7 +144,7 @@ namespace Pit::Rendering {
     void Device::createLogicalDevice() {
         findQueueFamily();
 
-        std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+        Array<VkDeviceQueueCreateInfo> queueCreateInfos;
 
         float queuePriorities[1] = { 1.0f };
         VkDeviceQueueCreateInfo queueCreateInfo {
@@ -162,10 +162,10 @@ namespace Pit::Rendering {
 
         VkDeviceCreateInfo createInfo {
             .sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            .queueCreateInfoCount = Cast<uint32_t>(queueCreateInfos.size()),
+            .queueCreateInfoCount = Cast<uint32>(queueCreateInfos.size()),
             .pQueueCreateInfos = queueCreateInfos.data(),
 
-            .enabledExtensionCount = Cast<uint32_t>(deviceExtensions.size()),
+            .enabledExtensionCount = Cast<uint32>(deviceExtensions.size()),
             .ppEnabledExtensionNames = deviceExtensions.data(),
             .pEnabledFeatures = &deviceFeatures
         };
@@ -173,7 +173,7 @@ namespace Pit::Rendering {
         // might not really be necessary anymore because device specific validation layers
         // have been deprecated
         if (enableValidationLayers) {
-            createInfo.enabledLayerCount = Cast<uint32_t>(validationLayers.size());
+            createInfo.enabledLayerCount = Cast<uint32>(validationLayers.size());
             createInfo.ppEnabledLayerNames = validationLayers.data();
         }
         else
@@ -235,10 +235,10 @@ namespace Pit::Rendering {
     }
 
     bool Device::checkValidationLayerSupport() {
-        uint32_t layerCount;
+        uint32 layerCount;
         vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
-        std::vector<VkLayerProperties> availableLayers(layerCount);
+        Array<VkLayerProperties> availableLayers(layerCount);
         vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
         for (const char* layerName : validationLayers) {
@@ -259,12 +259,12 @@ namespace Pit::Rendering {
         return true;
     }
 
-    std::vector<const char*> Device::getRequiredExtensions() {
-        uint32_t glfwExtensionCount = 0;
+    Array<const char*> Device::getRequiredExtensions() {
+        uint32 glfwExtensionCount = 0;
         const char** glfwExtensions;
         glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-        std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+        Array<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 
         if (enableValidationLayers) {
             extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
@@ -274,13 +274,13 @@ namespace Pit::Rendering {
     }
 
     void Device::hasGflwRequiredInstanceExtensions() {
-        uint32_t extensionCount = 0;
+        uint32 extensionCount = 0;
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-        std::vector<VkExtensionProperties> extensions(extensionCount);
+        Array<VkExtensionProperties> extensions(extensionCount);
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
         PIT_ENGINE_INFO(Log::Rendering, "Available extensions: ");
-        std::unordered_set<std::string> available;
+        std::unordered_set<String> available;
         for (const auto& extension : extensions) {
             PIT_ENGINE_INFO(Log::Rendering, "\t{}", extension.extensionName);
             available.insert(extension.extensionName);
@@ -296,17 +296,17 @@ namespace Pit::Rendering {
     }
 
     bool Device::checkDeviceExtensionSupport(VkPhysicalDevice device) {
-        uint32_t extensionCount;
+        uint32 extensionCount;
         vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
-        std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+        Array<VkExtensionProperties> availableExtensions(extensionCount);
         vkEnumerateDeviceExtensionProperties(
             device,
             nullptr,
             &extensionCount,
             availableExtensions.data());
 
-        std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+        std::set<String> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
 
         for (const auto& extension : availableExtensions) {
             requiredExtensions.erase(extension.extensionName);
@@ -316,11 +316,11 @@ namespace Pit::Rendering {
     }
 
     void Device::findQueueFamily() {
-        uint32_t count;
+        uint32 count;
         vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &count, NULL);
         VkQueueFamilyProperties* queues = (VkQueueFamilyProperties*)malloc(sizeof(VkQueueFamilyProperties) * count);
         vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &count, queues);
-        for (uint32_t i = 0; i < count; i++)
+        for (uint32 i = 0; i < count; i++)
             if (queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
                 queueFamily_ = i;
                 break;
@@ -334,7 +334,7 @@ namespace Pit::Rendering {
         SwapChainSupportDetails details;
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface_, &details.capabilities);
 
-        uint32_t formatCount;
+        uint32 formatCount;
         vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface_, &formatCount, nullptr);
 
         if (formatCount != 0) {
@@ -342,7 +342,7 @@ namespace Pit::Rendering {
             vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface_, &formatCount, details.formats.data());
         }
 
-        uint32_t presentModeCount;
+        uint32 presentModeCount;
         vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface_, &presentModeCount, nullptr);
 
         if (presentModeCount != 0) {
@@ -357,7 +357,7 @@ namespace Pit::Rendering {
     }
 
     VkFormat Device::findSupportedFormat(
-        const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
+        const Array<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
         for (VkFormat format : candidates) {
             VkFormatProperties props;
             vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &props);
@@ -374,10 +374,10 @@ namespace Pit::Rendering {
         return VK_FORMAT_UNDEFINED;
     }
 
-    uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+    uint32 Device::findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties) {
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
-        for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+        for (uint32 i = 0; i < memProperties.memoryTypeCount; i++) {
             if ((typeFilter & (1 << i)) &&
                 (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
                 return i;
@@ -463,7 +463,7 @@ namespace Pit::Rendering {
     }
 
     void Device::copyBufferToImage(
-        VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount) {
+        VkBuffer buffer, VkImage image, uint32 width, uint32 height, uint32 layerCount) {
         VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
         VkBufferImageCopy region {

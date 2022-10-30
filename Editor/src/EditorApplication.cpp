@@ -60,7 +60,7 @@ void EditorApplication::Update() {
 }
 
 void EditorApplication::MenubarCallback() {
-	std::vector<bool> openWindows(EditorApplication::Instance->m_WindowPanels.size());
+	Array<bool> openWindows(EditorApplication::Instance->m_WindowPanels.size());
 	if (ImGui::BeginMenu("Windows")) {
 		for (int i = 0; i < EditorApplication::Instance->m_WindowPanels.size(); i++) {
 			if (ImGui::MenuItem(EditorApplication::Instance->m_WindowPanels[i]->Name.c_str(), "wip", nullptr, EditorApplication::Instance->m_WindowPanels[i]->Enabled))

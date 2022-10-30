@@ -3,7 +3,8 @@
 #include "Texture.hpp"
 #include <stb_image.h>
 
-using namespace Pit::Rendering;
+using namespace Pit;
+using namespace Rendering;
 
 static void check_vk_result(VkResult err) {
 	if (err == 0) return;
@@ -13,10 +14,10 @@ static void check_vk_result(VkResult err) {
 	if (err < 0) abort();
 }
 
-static uint32_t GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32_t type_bits) {
+static uint32 GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32 type_bits) {
 	VkPhysicalDeviceMemoryProperties prop;
 	vkGetPhysicalDeviceMemoryProperties(Pit::Engine::Rendering()->Renderer->Device.getPhysicalDevice(), &prop);
-	for (uint32_t i = 0; i < prop.memoryTypeCount; i++) {
+	for (uint32 i = 0; i < prop.memoryTypeCount; i++) {
 		if ((prop.memoryTypes[i].propertyFlags & properties) == properties && type_bits & (1 << i))
 			return i;
 	}
@@ -24,7 +25,7 @@ static uint32_t GetVulkanMemoryType(VkMemoryPropertyFlags properties, uint32_t t
 	return 0xffffffff;
 }
 
-static uint32_t BytesPerPixel(TextureFormat format) {
+static uint32 BytesPerPixel(TextureFormat format) {
 	switch (format) {
 	case TextureFormat::RGBA:    return 4;
 	case TextureFormat::RGBA32F: return 16;
@@ -41,7 +42,7 @@ static VkFormat WalnutFormatToVulkanFormat(TextureFormat format) {
 }
 
 
-Texture::Texture(const std::string& path) : m_Filepath(path) {
+Texture::Texture(const String& path) : m_Filepath(path) {
 	int width, height, channels;
 	uint8_t* data = nullptr;
 	
@@ -69,7 +70,7 @@ void Texture::SetData(void* data) {
 	auto* renderer = Pit::Engine::Rendering()->Renderer;
 	VkDevice device = renderer->Device.device();
 
-	size_t upload_size = m_Width * m_Height * BytesPerPixel(m_Format);
+	size upload_size = m_Width * m_Height * BytesPerPixel(m_Format);
 
 	VkResult err;
 
@@ -189,7 +190,7 @@ void Texture::SetData(void* data) {
 	}
 }
 
-void Texture::Resize(uint32_t width, uint32_t height) {
+void Texture::Resize(uint32 width, uint32 height) {
 	if (m_Image && m_Width == width && m_Height == height)
 		return;
 
@@ -202,7 +203,7 @@ void Texture::Resize(uint32_t width, uint32_t height) {
 	AllocateMemory(m_Width * m_Height * BytesPerPixel(m_Format));
 }
 
-void Texture::AllocateMemory(uint64_t size) {
+void Texture::AllocateMemory(uint64 size) {
 	VkDevice device = Pit::Engine::Rendering()->Renderer->Device.device();
 
 	VkResult err;

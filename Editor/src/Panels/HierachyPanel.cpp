@@ -10,12 +10,12 @@ entt::entity HierachyPanel::s_SelectedEntity = entt::null;
 
 void HierachyPanel::OnCreate() {
 	Name = "Hierachy";
-	Shortcut = std::vector<KeyCode>{ LeftControl + H };
+	Shortcut = Array<KeyCode>{ LeftControl + H };
 
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	for (int i = 0; i < 15; i++) {
 		auto e = ecsworld.CreateEntity();
-		e.GetComponent<ECS::NameComponent>().Name = "Entity" + std::to_string((uint32_t)e.GetID());
+		e.GetComponent<ECS::NameComponent>().Name = "Entity" + std::to_string((uint32)e.GetID());
 	}
 }
 
@@ -48,7 +48,7 @@ void HierachyPanel::_DrawEntityNode(entt::entity entity) {
 	ImGuiTreeNodeFlags flags = ((s_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 	flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
-	bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, name.c_str());
+	bool opened = ImGui::TreeNodeEx((void*)(uint64)(uint32)entity, flags, name.c_str());
 
 	if (ImGui::IsItemClicked())
 		s_SelectedEntity = entity;

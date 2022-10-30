@@ -14,7 +14,7 @@ namespace Pit::Rendering {
 	class RenderEntitiesSystem {
 	public:
 		static ECS::SystemTopic GetTopic() { return ECS::SystemTopic::Render; }
-		static int32_t GetExecuteOrder() { return 0; }
+		static int32 GetExecuteOrder() { return 0; }
 		static void Update(ECS::World& world);
 
 		static Camera* CameraToUse;

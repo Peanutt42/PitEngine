@@ -7,8 +7,8 @@
 namespace Pit::Rendering {
     struct SwapChainSupportDetails {
         VkSurfaceCapabilitiesKHR capabilities;
-        std::vector<VkSurfaceFormatKHR> formats;
-        std::vector<VkPresentModeKHR> presentModes;
+        Array<VkSurfaceFormatKHR> formats;
+        Array<VkPresentModeKHR> presentModes;
     };
 
     class Device {
@@ -29,13 +29,12 @@ namespace Pit::Rendering {
         VkDevice device() { return device_; }
         VkPhysicalDevice getPhysicalDevice() { return physicalDevice; }
         VkSurfaceKHR surface() { return surface_; }
-        uint32_t queueFamily() { return queueFamily_; }
+        uint32 queueFamily() { return queueFamily_; }
         VkQueue queue() { return queue_; }
 
         SwapChainSupportDetails getSwapChainSupport() { return querySwapChainSupport(physicalDevice); }
-        uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
-        VkFormat findSupportedFormat(
-            const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+        uint32 findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties);
+        VkFormat findSupportedFormat(const Array<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 
         // Buffer Helper Functions
         void createBuffer(
@@ -47,7 +46,7 @@ namespace Pit::Rendering {
         VkCommandBuffer beginSingleTimeCommands();
         void endSingleTimeCommands(VkCommandBuffer commandBuffer);
         void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
-        void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
+        void copyBufferToImage(VkBuffer buffer, VkImage image, uint32 width, uint32 height, uint32 layerCount);
 
         void createImageWithInfo(
             const VkImageCreateInfo& imageInfo,
@@ -69,7 +68,7 @@ namespace Pit::Rendering {
 
         // helper functions
         bool isDeviceSuitable(VkPhysicalDevice device);
-        std::vector<const char*> getRequiredExtensions();
+        Array<const char*> getRequiredExtensions();
         bool checkValidationLayerSupport();
         void findQueueFamily();
         void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
@@ -86,10 +85,10 @@ namespace Pit::Rendering {
 
         VkDevice device_;
         VkSurfaceKHR surface_;
-        uint32_t queueFamily_;
+        uint32 queueFamily_;
         VkQueue queue_;
 
-        const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };
-        const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+        const Array<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };
+        const Array<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
     };
 }

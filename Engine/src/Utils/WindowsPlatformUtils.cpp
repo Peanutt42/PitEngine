@@ -10,7 +10,7 @@
 
 using namespace Pit;
 
-std::string FileDialogs::OpenFile(const char* filter) {
+String FileDialogs::OpenFile(const char* filter) {
 	OPENFILENAMEA ofn;
 	CHAR szFile[260] = { 0 };
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -23,10 +23,10 @@ std::string FileDialogs::OpenFile(const char* filter) {
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 	if (GetOpenFileNameA(&ofn) == TRUE)
 		return ofn.lpstrFile;
-	return std::string();
+	return String();
 }
 
-std::string FileDialogs::SaveFile(const char* filter) {
+String FileDialogs::SaveFile(const char* filter) {
 	OPENFILENAMEA ofn;
 	CHAR szFile[260] = { 0 };
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -39,7 +39,7 @@ std::string FileDialogs::SaveFile(const char* filter) {
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 	if (GetSaveFileNameA(&ofn) == TRUE)
 		return ofn.lpstrFile;
-	return std::string();
+	return String();
 }
 
 #endif

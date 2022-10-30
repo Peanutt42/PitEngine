@@ -12,7 +12,7 @@ namespace Pit::ECS {
 		Render
 	};
 
-	using SystemIndex = int32_t;
+	using SystemIndex = int32;
 
 	static SystemIndex SystemCounter = 0;
 	template<typename T>
@@ -23,9 +23,9 @@ namespace Pit::ECS {
 
 	template<typename BaseSystem>
 	struct SystemExecuteOrderBuilder {
-		int32_t Build() {
+		int32 Build() {
 
-			int32_t result = 99999;
+			int32 result = 99999;
 			for (auto beforeIndex : beforeSystems)
 				if (beforeIndex <= result)
 					result = beforeIndex - 1;
@@ -55,7 +55,7 @@ namespace Pit::ECS {
 		}
 
 	private:
-		std::vector<int32_t> beforeSystems;
-		std::vector<int32_t> afterSystems;
+		Array<int32> beforeSystems;
+		Array<int32> afterSystems;
 	};
 }

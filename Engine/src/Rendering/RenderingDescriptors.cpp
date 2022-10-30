@@ -3,7 +3,7 @@
 
 using namespace Pit::Rendering;
 
-DescriptorSetLayout::Builder& DescriptorSetLayout::Builder::addBinding(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32_t count) {
+DescriptorSetLayout::Builder& DescriptorSetLayout::Builder::addBinding(uint32 binding, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, uint32 count) {
     assert(bindings.count(binding) == 0 && "Binding already in use");
     VkDescriptorSetLayoutBinding layoutBinding {
         .binding = binding,
@@ -23,15 +23,15 @@ std::unique_ptr<DescriptorSetLayout> DescriptorSetLayout::Builder::build() const
 
 
 DescriptorSetLayout::DescriptorSetLayout(
-    Device& device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
+    Device& device, std::unordered_map<uint32, VkDescriptorSetLayoutBinding> bindings)
     : device{ device }, bindings{ bindings } {
-    std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings{};
+    Array<VkDescriptorSetLayoutBinding> setLayoutBindings{};
     for (auto& kv : bindings)
         setLayoutBindings.push_back(kv.second);
 
     VkDescriptorSetLayoutCreateInfo descriptorSetLayoutInfo {
         .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-        .bindingCount = static_cast<uint32_t>(setLayoutBindings.size()),
+        .bindingCount = static_cast<uint32>(setLayoutBindings.size()),
         .pBindings = setLayoutBindings.data()
     };
 
@@ -52,7 +52,7 @@ DescriptorSetLayout::~DescriptorSetLayout() {
 
 
 DescriptorPool::Builder& DescriptorPool::Builder::addPoolSize(
-    VkDescriptorType descriptorType, uint32_t count) {
+    VkDescriptorType descriptorType, uint32 count) {
     poolSizes.push_back({ descriptorType, count });
     return *this;
 }
@@ -62,7 +62,7 @@ DescriptorPool::Builder& DescriptorPool::Builder::setPoolFlags(
     poolFlags = flags;
     return *this;
 }
-DescriptorPool::Builder& DescriptorPool::Builder::setMaxSets(uint32_t count) {
+DescriptorPool::Builder& DescriptorPool::Builder::setMaxSets(uint32 count) {
     maxSets = count;
     return *this;
 }
@@ -76,16 +76,16 @@ std::unique_ptr<DescriptorPool> DescriptorPool::Builder::build() const {
 
 DescriptorPool::DescriptorPool(
     Device& device,
-    uint32_t maxSets,
+    uint32 maxSets,
     VkDescriptorPoolCreateFlags poolFlags,
-    const std::vector<VkDescriptorPoolSize>& poolSizes)
+    const Array<VkDescriptorPoolSize>& poolSizes)
     : device{ device } {
     VkDescriptorPoolCreateInfo descriptorPoolInfo{
         .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
         .pNext = nullptr,
         .flags = poolFlags,
         .maxSets = maxSets,
-        .poolSizeCount = static_cast<uint32_t>(poolSizes.size()),
+        .poolSizeCount = static_cast<uint32>(poolSizes.size()),
         .pPoolSizes = poolSizes.data()
     };
 
@@ -110,10 +110,10 @@ bool DescriptorPool::allocateDescriptor(
     return vkAllocateDescriptorSets(device.device(), &allocInfo, &descriptor) == VK_SUCCESS;
 }
 
-void DescriptorPool::freeDescriptors(std::vector<VkDescriptorSet>& descriptors) const {
+void DescriptorPool::freeDescriptors(Array<VkDescriptorSet>& descriptors) const {
     vkFreeDescriptorSets(device.device(),
                          descriptorPool,
-                         static_cast<uint32_t>(descriptors.size()),
+                         static_cast<uint32>(descriptors.size()),
                          descriptors.data());
 }
 
@@ -128,7 +128,7 @@ DescriptorWriter::DescriptorWriter(DescriptorSetLayout& setLayout, DescriptorPoo
     : setLayout{ setLayout }, pool{ pool } {}
 
 DescriptorWriter& DescriptorWriter::writeBuffer(
-    uint32_t binding, VkDescriptorBufferInfo* bufferInfo) {
+    uint32 binding, VkDescriptorBufferInfo* bufferInfo) {
     assert(setLayout.bindings.count(binding) == 1 && "Layout does not contain specified binding");
 
     auto& bindingDescription = setLayout.bindings[binding];
@@ -151,7 +151,7 @@ DescriptorWriter& DescriptorWriter::writeBuffer(
 }
 
 DescriptorWriter& DescriptorWriter::writeImage(
-    uint32_t binding, VkDescriptorImageInfo* imageInfo) {
+    uint32 binding, VkDescriptorImageInfo* imageInfo) {
     assert(setLayout.bindings.count(binding) == 1 && "Layout does not contain specified binding");
 
     auto& bindingDescription = setLayout.bindings[binding];
@@ -186,5 +186,5 @@ void DescriptorWriter::overwrite(VkDescriptorSet& set) {
     for (auto& write : writes)
         write.dstSet = set;
     
-    vkUpdateDescriptorSets(pool.device.device(), Cast<uint32_t>(writes.size()), writes.data(), 0, nullptr);
+    vkUpdateDescriptorSets(pool.device.device(), Cast<uint32>(writes.size()), writes.data(), 0, nullptr);
 }

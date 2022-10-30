@@ -7,7 +7,7 @@
 
 namespace Pit::ECS {
     struct NameComponent : public Component {
-        std::string Name;
+        String Name;
     };
 
     struct UUIDComponent : public Component {

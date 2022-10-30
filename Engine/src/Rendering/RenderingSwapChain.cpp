@@ -57,25 +57,25 @@ namespace Pit::Rendering {
         vkDestroyRenderPass(device.device(), renderPass, nullptr);
 
         // cleanup synchronization objects
-        for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        for (size i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             vkDestroySemaphore(device.device(), renderFinishedSemaphores[i], nullptr);
             vkDestroySemaphore(device.device(), imageAvailableSemaphores[i], nullptr);
             vkDestroyFence(device.device(), inFlightFences[i], nullptr);
         }
     }
 
-    VkResult SwapChain::acquireNextImage(uint32_t& imageIndex) {
+    VkResult SwapChain::acquireNextImage(uint32& imageIndex) {
         vkWaitForFences(
             device.device(),
             1,
             &inFlightFences[currentFrame],
             VK_TRUE,
-            std::numeric_limits<uint64_t>::max());
+            MAX_UINT64);
 
         VkResult result = vkAcquireNextImageKHR(
             device.device(),
             swapChain,
-            std::numeric_limits<uint64_t>::max(),
+            MAX_UINT64,
             imageAvailableSemaphores[currentFrame],  // must be a not signaled semaphore
             VK_NULL_HANDLE,
             &imageIndex);
@@ -84,7 +84,7 @@ namespace Pit::Rendering {
     }
 
     VkResult SwapChain::submitCommandBuffers(
-        const VkCommandBuffer* buffers, uint32_t* imageIndex) {
+        const VkCommandBuffer* buffers, uint32* imageIndex) {
         if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
             vkWaitForFences(device.device(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
         }
@@ -133,13 +133,13 @@ namespace Pit::Rendering {
         presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
         VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
 
-        uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+        uint32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
         if (swapChainSupport.capabilities.maxImageCount > 0 &&
             imageCount > swapChainSupport.capabilities.maxImageCount) {
             imageCount = swapChainSupport.capabilities.maxImageCount;
         }
 
-        uint32_t queueFamilyIndices[] = { device.queueFamily()};
+        uint32 queueFamilyIndices[] = { device.queueFamily()};
         VkSwapchainCreateInfoKHR createInfo {
             .sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
             .surface = device.surface(),
@@ -176,7 +176,7 @@ namespace Pit::Rendering {
 
     void SwapChain::createImageViews() {
         swapChainImageViews.resize(swapChainImages.size());
-        for (size_t i = 0; i < swapChainImages.size(); i++) {
+        for (size i = 0; i < swapChainImages.size(); i++) {
             VkImageViewCreateInfo viewInfo {
                 .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
                 .image = swapChainImages[i],
@@ -193,7 +193,7 @@ namespace Pit::Rendering {
     void SwapChain::createColorResources() {
         VkFormat colorFormat = swapChainImageFormat;
 
-        size_t imageCount = getImageCount();
+        size imageCount = getImageCount();
         colorImages.resize(imageCount);
         colorImageMemorys.resize(imageCount);
         colorImageViews.resize(imageCount);
@@ -273,7 +273,7 @@ namespace Pit::Rendering {
         std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
         VkRenderPassCreateInfo renderPassInfo {
             .sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-            .attachmentCount = Cast<uint32_t>(attachments.size()),
+            .attachmentCount = Cast<uint32>(attachments.size()),
             .pAttachments = attachments.data(),
             .subpassCount = 1,
             .pSubpasses = &subpass,
@@ -287,7 +287,7 @@ namespace Pit::Rendering {
 
     void SwapChain::createFramebuffers() {
         swapChainFramebuffers.resize(getImageCount());
-        for (size_t i = 0; i < getImageCount(); i++) {
+        for (size i = 0; i < getImageCount(); i++) {
             std::array<VkImageView, 3> attachments = {
                 colorImageViews[i],
                 depthImageViews[i],
@@ -298,7 +298,7 @@ namespace Pit::Rendering {
             VkFramebufferCreateInfo framebufferInfo {
                 .sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
                 .renderPass = renderPass,
-                .attachmentCount = Cast<uint32_t>(attachments.size()),
+                .attachmentCount = Cast<uint32>(attachments.size()),
                 .pAttachments = attachments.data(),
                 .width = swapChainExtent.width,
                 .height = swapChainExtent.height,
@@ -314,7 +314,7 @@ namespace Pit::Rendering {
         VkFormat depthFormat = findDepthFormat();
         swapChainDepthFormat = depthFormat;
 
-        size_t imageCount = getImageCount();
+        size imageCount = getImageCount();
         depthImages.resize(imageCount);
         depthImageMemorys.resize(imageCount);
         depthImageViews.resize(imageCount);
@@ -339,7 +339,7 @@ namespace Pit::Rendering {
             .flags = VK_FENCE_CREATE_SIGNALED_BIT
         };
 
-        for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        for (size i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             if (vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != VK_SUCCESS ||
                 vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != VK_SUCCESS ||
                 vkCreateFence(device.device(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
@@ -350,7 +350,7 @@ namespace Pit::Rendering {
     }
 
     VkSurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(
-        const std::vector<VkSurfaceFormatKHR>& availableFormats) {
+        const Array<VkSurfaceFormatKHR>& availableFormats) {
         for (const auto& availableFormat : availableFormats) {
             if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
                 return availableFormat;
@@ -359,7 +359,7 @@ namespace Pit::Rendering {
         return availableFormats[0];
     }
 
-    VkPresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
+    VkPresentModeKHR SwapChain::chooseSwapPresentMode(const Array<VkPresentModeKHR>& availablePresentModes) {
         static bool debugMessageSent = false;
         if (!UseVsync) {
             for (const auto& availablePresentMode : availablePresentModes) {
@@ -388,7 +388,7 @@ namespace Pit::Rendering {
     }
 
     VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
-        if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+        if (capabilities.currentExtent.width != MAX_UINT32) {
             return capabilities.currentExtent;
         }
         else {
@@ -404,7 +404,7 @@ namespace Pit::Rendering {
         }
     }
 
-    VkImageView SwapChain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels) {
+    VkImageView SwapChain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32 mipLevels) {
         VkImageViewCreateInfo viewInfo {
             .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
             .image = image,
@@ -420,7 +420,7 @@ namespace Pit::Rendering {
         return imageView;
     }
 
-    void SwapChain::createImage(uint32_t width, uint32_t height, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory) {
+    void SwapChain::createImage(uint32 width, uint32 height, uint32 mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory) {
         VkImageCreateInfo imageInfo {
             .sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
             .imageType = VK_IMAGE_TYPE_2D,
@@ -454,11 +454,11 @@ namespace Pit::Rendering {
         vkBindImageMemory(device.device(), image, imageMemory, 0);
     }
 
-    uint32_t SwapChain::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+    uint32 SwapChain::findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties) {
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(device.getPhysicalDevice(), &memProperties);
 
-        for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+        for (uint32 i = 0; i < memProperties.memoryTypeCount; i++) {
             if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
                 return i;
             }

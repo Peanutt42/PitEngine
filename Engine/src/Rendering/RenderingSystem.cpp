@@ -5,7 +5,8 @@
 #include <vulkan/vulkan.h>
 #include <glm/glm.hpp>
 
-using namespace Pit::Rendering;
+using namespace Pit;
+using namespace Rendering;
 
 Camera* RenderEntitiesSystem::CameraToUse = nullptr;
 
@@ -15,10 +16,10 @@ struct RenderEntityEntry {
 
 struct InstancedRenderEntry {
 	Pit::Rendering::Mesh* mesh;
-	std::vector<RenderEntityEntry> entries;
+	Array<RenderEntityEntry> entries;
 
 	InstancedRenderEntry(Pit::Rendering::Mesh* mesh)
-		: mesh(mesh), entries(std::vector<RenderEntityEntry>()) {
+		: mesh(mesh), entries(Array<RenderEntityEntry>()) {
 
 	}
 };
@@ -43,7 +44,7 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 							0,
 							nullptr);
 
-	std::vector<InstancedRenderEntry> renderEntries {
+	Array<InstancedRenderEntry> renderEntries {
 		{Engine::Rendering()->Renderer->VaseMesh().get()},
 		{Engine::Rendering()->Renderer->QuadMesh().get()}
 	};
@@ -93,13 +94,13 @@ void RenderingSystem::CreatePipelineLayout() {
 		.size = sizeof(SimplePushConstantData)
 	};
 
-	std::vector<VkDescriptorSetLayout> discriptorSetLayouts {
+	Array<VkDescriptorSetLayout> discriptorSetLayouts {
 		Engine::Rendering()->Renderer->GlobalSetLayout->getDescriptorSetLayout()
 	};
 
 	VkPipelineLayoutCreateInfo pipelineLayoutInfo {
 		.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
-		.setLayoutCount = static_cast<uint32_t>(discriptorSetLayouts.size()),
+		.setLayoutCount = static_cast<uint32>(discriptorSetLayouts.size()),
 		.pSetLayouts = discriptorSetLayouts.data(),
 		.pushConstantRangeCount = 1,
 		.pPushConstantRanges = &pushConstantRange

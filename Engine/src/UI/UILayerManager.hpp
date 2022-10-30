@@ -35,8 +35,9 @@ namespace Pit::UI {
 		}
 
 	private:
-		std::vector<Layer*> m_LayerStack;
+		Array<Layer*> m_LayerStack;
 		std::function<void()> m_OnBeginCallback;
 		std::function<void()> m_OnEndCallback;
 	};
+
 }

@@ -10,7 +10,7 @@ namespace Pit::Rendering {
         Buffer(
             Device& device,
             VkDeviceSize instanceSize,
-            uint32_t instanceCount,
+            uint32 instanceCount,
             VkBufferUsageFlags usageFlags,
             VkMemoryPropertyFlags memoryPropertyFlags,
             VkDeviceSize minOffsetAlignment = 1);
@@ -34,7 +34,7 @@ namespace Pit::Rendering {
 
         VkBuffer getBuffer() const { return buffer; }
         void* getMappedMemory() const { return mapped; }
-        uint32_t getInstanceCount() const { return instanceCount; }
+        uint32 getInstanceCount() const { return instanceCount; }
         VkDeviceSize getInstanceSize() const { return instanceSize; }
         VkDeviceSize getAlignmentSize() const { return instanceSize; }
         VkBufferUsageFlags getUsageFlags() const { return usageFlags; }
@@ -50,7 +50,7 @@ namespace Pit::Rendering {
         VkDeviceMemory memory = VK_NULL_HANDLE;
 
         VkDeviceSize bufferSize;
-        uint32_t instanceCount;
+        uint32 instanceCount;
         VkDeviceSize instanceSize;
         VkDeviceSize alignmentSize;
         VkBufferUsageFlags usageFlags;

@@ -15,16 +15,16 @@ namespace Pit::Rendering {
 		VkPipelineColorBlendAttachmentState colorBlendAttachment;
 		VkPipelineColorBlendStateCreateInfo colorBlendInfo;
 		VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
-		std::vector<VkDynamicState> dynamicStateEnables;
+		Array<VkDynamicState> dynamicStateEnables;
 		VkPipelineDynamicStateCreateInfo dynamicStateInfo;
 		VkPipelineLayout pipelineLayout = nullptr;
 		VkRenderPass renderPass = nullptr;
-		uint32_t subpass = 0;
+		uint32 subpass = 0;
 	};
 
 	class Pipeline {
 	public:
-		Pipeline(Device& deviceRef, const PipelineConfigInfo& configInfo, const std::string& vertFilepath, const std::string& fragFilepath);
+		Pipeline(Device& deviceRef, const PipelineConfigInfo& configInfo, const String& vertFilepath, const String& fragFilepath);
 		~Pipeline();
 
 		Pipeline(const Pipeline&) = delete;
@@ -40,7 +40,7 @@ namespace Pit::Rendering {
 		VkShaderModule m_VertShaderModule;
 		VkShaderModule m_FragShaderModule;
 
-		void _CreatePipeline(const PipelineConfigInfo& configInfo, const std::string& vertFilepath, const std::string& fragFilepath);
-		void _CreateShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
+		void _CreatePipeline(const PipelineConfigInfo& configInfo, const String& vertFilepath, const String& fragFilepath);
+		void _CreateShaderModule(const Array<char>& code, VkShaderModule* shaderModule);
 	};
 }

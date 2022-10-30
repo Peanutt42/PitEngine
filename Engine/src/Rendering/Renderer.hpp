@@ -29,22 +29,22 @@ namespace Pit::Rendering {
 		void Update();
 
 
-		const uint32_t GetWidth() { return Window.GetWidth(); }
-		const uint32_t GetHeight() { return Window.GetHeight(); }
+		const uint32 GetWidth() { return Window.GetWidth(); }
+		const uint32 GetHeight() { return Window.GetHeight(); }
 
 		Window Window;
 
 		Device Device;
 		std::unique_ptr<Rendering::SwapChain> SwapChain;
-		uint32_t ImageIndex = 0;
+		uint32 ImageIndex = 0;
 		int FrameIndex = 0;
-		std::vector<VkCommandBuffer> CommandBuffers;
+		Array<VkCommandBuffer> CommandBuffers;
 		std::unique_ptr<DescriptorPool> GlobalPool;
 		std::unique_ptr<DescriptorSetLayout> GlobalSetLayout;
-		std::vector<VkDescriptorSet> GlobalDescriptorSets = std::vector<VkDescriptorSet>(SwapChain::MAX_FRAMES_IN_FLIGHT);
-		uint32_t MinImageCount;
+		Array<VkDescriptorSet> GlobalDescriptorSets = Array<VkDescriptorSet>(SwapChain::MAX_FRAMES_IN_FLIGHT);
+		uint32 MinImageCount;
 
-		std::vector<std::unique_ptr<Buffer>> UBOBuffers = std::vector<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
+		Array<std::unique_ptr<Buffer>> UBOBuffers = Array<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		ScopeRef<Mesh>& VaseMesh() { return m_VaseMesh; }
 		ScopeRef<Mesh>& QuadMesh() { return m_QuadMesh; }

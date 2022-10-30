@@ -45,6 +45,6 @@ namespace Pit {
 		}
 
 	private:
-		std::vector<ListenFunc> m_Listeners;
+		Array<ListenFunc> m_Listeners;
 	};
 }

@@ -8,7 +8,7 @@
 namespace Pit::Rendering {
 	class Window {
 	public:
-		Window(const std::string& title, int width, int height, bool fullscreen = true);
+		Window(const String& title, int width, int height, bool fullscreen = true);
 		~Window();
 
 		static void UpdateAllWindows();
@@ -29,7 +29,7 @@ namespace Pit::Rendering {
 
 	private:
 		GLFWwindow* m_Window = nullptr;
-		std::string m_Title;
+		String m_Title;
 		int m_Width, m_Height;
 		bool m_FramebufferResized = false;
 
@@ -38,7 +38,7 @@ namespace Pit::Rendering {
 		static void _WindowResizedCallback(GLFWwindow* window, int width, int height);
 	};
 
-	static void SetGLFWWindowIcon(GLFWwindow* window, const std::string& path) {
+	static void SetGLFWWindowIcon(GLFWwindow* window, const String& path) {
 		int w, h, channels;
 		unsigned char* pixels = stbi_load(path.c_str(), &w, &h, &channels, 4);
 		GLFWimage images[1];

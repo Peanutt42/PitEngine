@@ -10,7 +10,7 @@ static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem
 
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
-	Shortcut = std::vector<KeyCode>{ LeftControl + K };
+	Shortcut = Array<KeyCode>{ LeftControl + K };
 
 	m_CurrentDirectory = s_AssetPath;
 }
@@ -113,14 +113,14 @@ void ContentBrowserPanel::_DrawListBrowserStage(const std::filesystem::path& sta
 bool ContentBrowserPanel::_DrawListBrowserItem(const std::filesystem::directory_entry& entry) {
 	const auto& path = entry.path();
 	auto relativePath = std::filesystem::relative(entry.path(), s_AssetPath);
-	std::string filenameString = relativePath.filename().string();
+	String filenameString = relativePath.filename().string();
 
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 	bool opened = ImGui::TreeNodeEx(filenameString.c_str(), flags, filenameString.c_str());
 
 	if (ImGui::BeginDragDropSource()) {
-		std::string itemPath_str = relativePath.string();
+		String itemPath_str = relativePath.string();
 		const char* itemPath = itemPath_str.c_str();
 		ImGui::SetDragDropPayload(CONTENT_BROWSER_DRAG_DROP, itemPath, sizeof(itemPath_str));
 
@@ -156,7 +156,7 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 	for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory)) {
 		const auto& path = directoryEntry.path();
 		auto relativePath = std::filesystem::relative(directoryEntry.path(), s_AssetPath);
-		std::string filenameString = relativePath.filename().string();
+		String filenameString = relativePath.filename().string();
 
 		ImGui::PushID(filenameString.c_str());
 
@@ -183,7 +183,7 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 		UI::ImageButton(icon, { thumbnailSize, thumbnailSize });
 
 		if (ImGui::BeginDragDropSource()) {
-			std::string itemPath_str = relativePath.string();
+			String itemPath_str = relativePath.string();
 			const char* itemPath = itemPath_str.c_str();
 			ImGui::SetDragDropPayload(CONTENT_BROWSER_DRAG_DROP, itemPath, sizeof(itemPath_str));
 

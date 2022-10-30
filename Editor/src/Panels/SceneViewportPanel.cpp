@@ -9,7 +9,7 @@ using namespace Pit::Editor;
 
 void SceneViewportPanel::OnCreate() {
 	Name = "Viewport";
-	Shortcut = std::vector<KeyCode>{ LeftControl, T };
+	Shortcut = Array<KeyCode>{ LeftControl, T };
 	m_SceneTexture = new Pit::Rendering::Texture("C:/Users/Peter/Pictures/Wallpaper/texture.jpeg");
 }
 

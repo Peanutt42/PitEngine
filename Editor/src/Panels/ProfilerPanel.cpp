@@ -9,7 +9,7 @@ using namespace Editor;
 
 void ProfilerPanel::OnCreate() {
 	Name = "Profiler";
-	Shortcut = std::vector<KeyCode>{ LeftControl, P };
+	Shortcut = Array<KeyCode>{ LeftControl, P };
 }
 
 void ProfilerPanel::OnDestroy() {

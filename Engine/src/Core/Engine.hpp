@@ -11,7 +11,7 @@ namespace Pit {
 	class Engine {
 	public:
 		struct CreateInfo {
-			std::string WindowName;
+			String WindowName;
 			bool WindowToolbar;
 		};
 

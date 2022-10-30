@@ -28,8 +28,8 @@ namespace Pit::Editor {
 		}
 
 		bool Opened = true;
-		std::string Name = "Window";
-		std::vector<KeyCode> Shortcut;
+		String Name = "Window";
+		Array<KeyCode> Shortcut;
 		bool Enabled = true;
 	};
 }

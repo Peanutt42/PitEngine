@@ -5,17 +5,18 @@
 #include "Mesh.hpp"
 #include <fstream>
 
-using namespace Pit::Rendering;
+using namespace Pit;
+using namespace Rendering;
 
 
-static std::vector<char> read_file(const std::string& filepath) {
+static Array<char> read_file(const String& filepath) {
 	std::ifstream file{ filepath, std::ios::ate | std::ios::binary };
 
 	if (!file.is_open())
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to open shader code file: '{}'", filepath);
 
-	size_t fileSize = Cast<size_t>(file.tellg());
-	std::vector<char> buffer(fileSize);
+	size fileSize = Cast<size>(file.tellg());
+	Array<char> buffer(fileSize);
 
 	file.seekg(0);
 	file.read(buffer.data(), fileSize);
@@ -25,7 +26,7 @@ static std::vector<char> read_file(const std::string& filepath) {
 }
 
 
-Pipeline::Pipeline(Device& deviceRef, const PipelineConfigInfo& configInfo, const std::string& vertFilepath, const std::string& fragFilepath)
+Pipeline::Pipeline(Device& deviceRef, const PipelineConfigInfo& configInfo, const String& vertFilepath, const String& fragFilepath)
 	: m_Device(deviceRef) {
 
 	_CreatePipeline(configInfo, vertFilepath, fragFilepath);
@@ -103,12 +104,12 @@ void Pipeline::DefaultConfigInfo(PipelineConfigInfo& configInfo) {
 	configInfo.dynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	configInfo.dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 	configInfo.dynamicStateInfo.pDynamicStates = configInfo.dynamicStateEnables.data();
-	configInfo.dynamicStateInfo.dynamicStateCount = Cast<uint32_t>(configInfo.dynamicStateEnables.size());
+	configInfo.dynamicStateInfo.dynamicStateCount = Cast<uint32>(configInfo.dynamicStateEnables.size());
 	configInfo.dynamicStateInfo.flags = 0;
 }
 
 
-void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const std::string& vertFilepath, const std::string& fragFilepath) {
+void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const String& vertFilepath, const String& fragFilepath) {
 	assert(configInfo.pipelineLayout != VK_NULL_HANDLE && "Can't create pipeline, no pipelineLayout provided in configInfo!");
 	assert(configInfo.renderPass != VK_NULL_HANDLE && "Can't create pipeline, no renderpass provided in configInfo!");
 
@@ -139,9 +140,9 @@ void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const std::
 	auto attributeDescriptions = Vertex::GetAttributeDescription();
 	VkPipelineVertexInputStateCreateInfo vertexInputInfo {
 		.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
-		.vertexBindingDescriptionCount = Cast<uint32_t>(bindingDescriptions.size()),
+		.vertexBindingDescriptionCount = Cast<uint32>(bindingDescriptions.size()),
 		.pVertexBindingDescriptions = bindingDescriptions.data(),
-		.vertexAttributeDescriptionCount = Cast<uint32_t>(attributeDescriptions.size()),
+		.vertexAttributeDescriptionCount = Cast<uint32>(attributeDescriptions.size()),
 		.pVertexAttributeDescriptions = attributeDescriptions.data()
 	};
 
@@ -168,11 +169,11 @@ void Pipeline::_CreatePipeline(const PipelineConfigInfo& configInfo, const std::
 		PIT_ENGINE_ERR(Log::Rendering, "Failed to create pipeline!");
 }
 
-void Pipeline::_CreateShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule) {
+void Pipeline::_CreateShaderModule(const Array<char>& code, VkShaderModule* shaderModule) {
 	VkShaderModuleCreateInfo createInfo {
 		.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
 		.codeSize = code.size(),
-		.pCode = reinterpret_cast<const uint32_t*>(code.data())
+		.pCode = reinterpret_cast<const uint32*>(code.data())
 	};
 
 	if (vkCreateShaderModule(m_Device.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS)

@@ -12,14 +12,14 @@ namespace Pit::ECS {
 	struct SystemHandle {
 		SystemIndex SystemIndex;
 		SystemTopic Topic = SystemTopic::None;
-		int32_t ExecuteOrder;
+		int32 ExecuteOrder;
 		std::function<void(World&)> Update;
 	};
 	
 	struct WorldSpecs {
-		std::string name = "ECS-World";
+		String name = "ECS-World";
 
-		WorldSpecs(std::string name) :
+		WorldSpecs(const String& name) :
 			name(name) { }
 	};
 
@@ -176,12 +176,12 @@ namespace Pit::ECS {
 	private:
 		WorldSpecs m_Specs;
 		entt::registry m_Registry;
-		std::vector<SystemHandle> m_Systems;
+		Array<SystemHandle> m_Systems;
 
 #if ECS_PROFILE
-		size_t m_ComponentMemSize = 0;
-		size_t m_ComponentCount = 0;
-		size_t m_SystemCount = 0;
+		size m_ComponentMemSize = 0;
+		size m_ComponentCount = 0;
+		size m_SystemCount = 0;
 #endif
 
 		friend EntityHandle;
