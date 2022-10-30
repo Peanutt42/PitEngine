@@ -344,11 +344,11 @@ namespace Pit::Debug {
 #define DECLARE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup, statName)
 #define DEFINE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup)
 
-#define SCOPE_STAT(name)
-#define SCOPE_STAT_ADD(name)
-#define STAT_RESET(name)
-#define GET_STAT_VALUE(name)
-#define SET_STAT_VALUE(name, value)
+#define SCOPE_STAT(name)	{}
+#define SCOPE_STAT_ADD(name)	{}
+#define STAT_RESET(name)	{}
+#define GET_STAT_VALUE(name)	{}
+#define SET_STAT_VALUE(name, value)	{}
 #endif
 }
 

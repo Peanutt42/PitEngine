@@ -14,15 +14,15 @@
   NetworkingSubmodule.cpp
   PhysicsSubmodule.cpp
   Camera.cpp
-  Renderer.cpp
-  RenderingDescriptors.cpp
-  RenderingSubmodule.cpp
-  RenderingSystem.cpp
-  RenderingBuffer.cpp
-  RenderingDevice.cpp
   Mesh.cpp
+  Renderer.cpp
+  RenderingBuffer.cpp
+  RenderingDescriptors.cpp
+  RenderingDevice.cpp
   RenderingPipeline.cpp
+  RenderingSubmodule.cpp
   RenderingSwapChain.cpp
+  RenderingSystem.cpp
   Texture.cpp
   Window.cpp
   UILayerManager.cpp

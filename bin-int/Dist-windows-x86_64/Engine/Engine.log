@@ -1,29 +1,13 @@
-﻿  pch.cpp
-  AssetManagmentSubmodule.cpp
-  AudioSubmodule.cpp
+﻿  AssetManagmentSubmodule.cpp
   Engine.cpp
   Input.cpp
-  Random.cpp
-  Time.cpp
-  UUID.cpp
-  Logging.cpp
-  ProfileStats.cpp
   ECSSubmodule.cpp
   ECSWorld.cpp
   ECSBasicGameloop.cpp
-  NetworkingSubmodule.cpp
-  PhysicsSubmodule.cpp
-  Camera.cpp
   Renderer.cpp
-  RenderingDescriptors.cpp
+  RenderingPipeline.cpp
   RenderingSubmodule.cpp
   RenderingSystem.cpp
-  RenderingBuffer.cpp
-  RenderingDevice.cpp
-  Mesh.cpp
-  RenderingPipeline.cpp
-  RenderingSwapChain.cpp
-C:\dev\cpp\PitEngine\Engine\src\ECS\ECSWorld.cpp(41,62): warning C4390: ";": Leere kontrollierte Anweisung aufgetreten; ist dies beabsichtigt?
   Texture.cpp
   Window.cpp
   UILayerManager.cpp
