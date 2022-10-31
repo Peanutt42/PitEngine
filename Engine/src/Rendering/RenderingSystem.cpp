@@ -45,8 +45,7 @@ void RenderEntitiesSystem::Update(ECS::World& world) {
 							nullptr);
 
 	Array<InstancedRenderEntry> renderEntries {
-		{Engine::Rendering()->Renderer->VaseMesh().get()},
-		{Engine::Rendering()->Renderer->QuadMesh().get()}
+		{Engine::Rendering()->Renderer->CubeMesh().get()}
 	};
 
 	auto group = world.Group<ECS::TransformComponent, ECS::MeshRendererComponent>();

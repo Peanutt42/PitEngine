@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
+#include <windows.h>
 
 using namespace Pit;
 
@@ -40,6 +41,15 @@ String FileDialogs::SaveFile(const char* filter) {
 	if (GetSaveFileNameA(&ofn) == TRUE)
 		return ofn.lpstrFile;
 	return String();
+}
+
+
+void MessagePrompts::InfoMessage(const String& message) {
+	MessageBox(NULL,	L"Message to display", L"PitEngine-Info", MB_USERICON | MB_OK);
+}
+
+void MessagePrompts::ErrorMessage() {
+	MessageBox(NULL, L"An error has occurred!", L"PitEngine-Error", MB_ICONERROR | MB_OK);
 }
 
 #endif

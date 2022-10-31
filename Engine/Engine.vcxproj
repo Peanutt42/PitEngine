@@ -232,6 +232,7 @@
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\RenderingSwapChain.cpp" />
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
+    <ClCompile Include="src\Rendering\Shader.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\UI\UILayerManager.cpp" />

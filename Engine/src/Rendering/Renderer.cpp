@@ -225,6 +225,5 @@ void Renderer::_RecordCommandBuffer() {
 }
 
 void Renderer::_LoadModels() {
-	m_VaseMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/smooth_vase.obj");
-	m_QuadMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/quad.obj");
+	m_CubeMesh = Rendering::Mesh::CreateMeshFromFile(Device, FileSystem::GetSandboxDir() + "assets/models/colored_cube.obj");
 }

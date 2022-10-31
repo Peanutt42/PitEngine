@@ -51,18 +51,11 @@ void Engine::Init() {
 
 		m_AssetManagmentSubmodule = new AssetManagmentSubmodule();
 		m_AssetManagmentSubmodule->Init();
-		auto vase = m_ECSSubmodule->GetEcsWorld().CreateEntity();
-		vase.AddComponent<ECS::MeshRendererComponent>(m_RenderingSubmodule->Renderer->VaseMesh().get());
-		auto& vase_transform = vase.GetComponent<ECS::TransformComponent>();
+		auto cube = m_ECSSubmodule->GetEcsWorld().CreateEntity();
+		cube.AddComponent<ECS::MeshRendererComponent>(m_RenderingSubmodule->Renderer->CubeMesh().get());
+		auto& vase_transform = cube.GetComponent<ECS::TransformComponent>();
 		vase_transform.position = { .5f, .5f, 0.f };
 		vase_transform.scale = { 3.f, 1.5f, 3.f };
-
-
-		auto floor = m_ECSSubmodule->GetEcsWorld().CreateEntity();
-		floor.AddComponent<ECS::MeshRendererComponent>(m_RenderingSubmodule->Renderer->QuadMesh().get());
-		auto& floor_transform = floor.GetComponent<ECS::TransformComponent>();
-		floor_transform.position = { 0.f, .5f, 0.f };
-		floor_transform.scale = { 3.f, 1.f, 3.f };
 
 		Engine::InitEvent.Invoke();
 	}

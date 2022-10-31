@@ -284,5 +284,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Rendering\Shader.cpp" />
   </ItemGroup>
 </Project>

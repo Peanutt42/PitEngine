@@ -46,8 +46,7 @@ namespace Pit::Rendering {
 
 		Array<std::unique_ptr<Buffer>> UBOBuffers = Array<std::unique_ptr<Buffer>>(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
-		ScopeRef<Mesh>& VaseMesh() { return m_VaseMesh; }
-		ScopeRef<Mesh>& QuadMesh() { return m_QuadMesh; }
+		ScopeRef<Mesh>& CubeMesh() { return m_CubeMesh; }
 
 	private:
 		void _CreateCommandBuffers();
@@ -60,7 +59,6 @@ namespace Pit::Rendering {
 		void _RecordCommandBuffer();
 
 		void _LoadModels();
-		ScopeRef<Mesh> m_VaseMesh;
-		ScopeRef<Mesh> m_QuadMesh;
+		ScopeRef<Mesh> m_CubeMesh;
 	};
 }
