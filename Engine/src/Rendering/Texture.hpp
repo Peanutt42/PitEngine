@@ -1,54 +1,35 @@
 #pragma once
 
+// Help from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLTexture.h
+
 #include "Core/CoreInclude.hpp"
-#include <vulkan/vulkan.h>
+#include <glad/glad.h>
 
 namespace Pit::Rendering {
-	enum TextureFormat {
-		None = 0,
-		RGBA,
-		RGBA32F
-	};
-
 	class Texture {
 	public:
-		Texture(const String& path);
-		~Texture();
+		Texture(uint32_t width, uint32_t height);
+		Texture(const std::string& path);
+		virtual ~Texture();
 
-		void SetData(void* data);
+		uint32_t GetWidth() const { return m_Width; }
+		uint32_t GetHeight() const { return m_Height; }
+		uint32_t GetRendererID() const { return m_RendererID; }
 
-		VkDescriptorSet GetDescriptorSet() const { return m_DescriptorSet; }
+		const std::string& GetPath() const { return m_Path; }
+		void SetData(void* data, uint32_t size);
 
-		void Resize(uint32 width, uint32 height);
+		void Bind(int slot = 0) const;
+		bool IsLoaded() const { return m_IsLoaded; }
 
-		uint32 GetWidth() const { return m_Width; }
-		uint32 GetHeight() const { return m_Height; }
-
-		const String& GetFilepath() {
-			return m_Filepath;
+		bool operator==(const Texture& other) const {
+			return m_RendererID == other.GetRendererID();
 		}
-
 	private:
-		void AllocateMemory(uint64 size);
-		void Release();
-	private:
-		uint32 m_Width = 0, m_Height = 0;
-
-		VkImage m_Image = nullptr;
-		VkImageView m_ImageView = nullptr;
-		VkDeviceMemory m_Memory = nullptr;
-		VkSampler m_Sampler = nullptr;
-
-		TextureFormat m_Format = TextureFormat::None;
-
-		VkBuffer m_StagingBuffer = nullptr;
-		VkDeviceMemory m_StagingBufferMemory = nullptr;
-
-		size m_AlignedSize = 0;
-
-		VkDescriptorSet m_DescriptorSet = nullptr;
-
-		String m_Filepath;
-		bool m_Png = true;
+		std::string m_Path;
+		bool m_IsLoaded = false;
+		uint32_t m_Width, m_Height;
+		uint32_t m_RendererID;
+		GLenum m_InternalFormat, m_DataFormat;
 	};
 }

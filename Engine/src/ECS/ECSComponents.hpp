@@ -3,7 +3,6 @@
 #include "Core/CoreInclude.hpp"
 #include "ECS/ECSComponent.hpp"
 #include <glm/gtc/matrix_transform.hpp>
-#include "Rendering/Mesh.hpp"
 
 namespace Pit::ECS {
     struct NameComponent : public Component {
@@ -82,15 +81,6 @@ namespace Pit::ECS {
                     invScale.z * (-s2),
                     invScale.z * (c1 * c2),
                 } };
-        }
-    };
-
-    struct MeshRendererComponent : public Component {
-        Rendering::Mesh* Mesh;
-
-        MeshRendererComponent(Rendering::Mesh* mesh) :
-            Mesh(mesh) {
-
         }
     };
 }

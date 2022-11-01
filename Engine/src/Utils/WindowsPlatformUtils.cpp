@@ -11,45 +11,12 @@
 
 using namespace Pit;
 
-String FileDialogs::OpenFile(const char* filter) {
-	OPENFILENAMEA ofn;
-	CHAR szFile[260] = { 0 };
-	ZeroMemory(&ofn, sizeof(OPENFILENAME));
-	ofn.lStructSize = sizeof(OPENFILENAME);
-	ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Renderer->Window.GetWindowHandle());
-	ofn.lpstrFile = szFile;
-	ofn.nMaxFile = sizeof(szFile);
-	ofn.lpstrFilter = filter;
-	ofn.nFilterIndex = 1;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-	if (GetOpenFileNameA(&ofn) == TRUE)
-		return ofn.lpstrFile;
-	return String();
+void MessagePrompts::InfoMessage(LPCWSTR msg) {
+	MessageBoxW(NULL, msg, L"PitEngine-Info", MB_USERICON | MB_OK);
 }
 
-String FileDialogs::SaveFile(const char* filter) {
-	OPENFILENAMEA ofn;
-	CHAR szFile[260] = { 0 };
-	ZeroMemory(&ofn, sizeof(OPENFILENAME));
-	ofn.lStructSize = sizeof(OPENFILENAME);
-	ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Renderer->Window.GetWindowHandle());
-	ofn.lpstrFile = szFile;
-	ofn.nMaxFile = sizeof(szFile);
-	ofn.lpstrFilter = filter;
-	ofn.nFilterIndex = 1;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-	if (GetSaveFileNameA(&ofn) == TRUE)
-		return ofn.lpstrFile;
-	return String();
-}
-
-
-void MessagePrompts::InfoMessage(const String& message) {
-	MessageBox(NULL,	L"Message to display", L"PitEngine-Info", MB_USERICON | MB_OK);
-}
-
-void MessagePrompts::ErrorMessage() {
-	MessageBox(NULL, L"An error has occurred!", L"PitEngine-Error", MB_ICONERROR | MB_OK);
+void MessagePrompts::ErrorMessage(LPCWSTR msg) {
+	MessageBox(NULL, msg, L"PitEngine-Error", MB_ICONERROR | MB_OK);
 }
 
 #endif

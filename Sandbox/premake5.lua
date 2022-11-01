@@ -21,6 +21,7 @@ project "Sandbox"
 
 	includedirs {
 		"src",
+		"%{wks.location}/vendor/glad/include",
 		"%{wks.location}/vendor/EnTT/include",
 		"%{wks.location}/vendor/glm/include",
 		"%{wks.location}/vendor/spdlog/include",
@@ -43,12 +44,12 @@ project "Sandbox"
 
 	links {
 		"glm",
+		"glad",
 		"imgui",
 		"spdlog",
 		"stb_image",
 		"tinyobjloader",
-		"PitVulkano",
-		"vulkan-1.lib",
+		"opengl32.lib",
 		"glfw3_mt.lib",
 		"Engine"
 	}

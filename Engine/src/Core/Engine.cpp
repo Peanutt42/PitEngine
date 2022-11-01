@@ -49,14 +49,6 @@ void Engine::Init() {
 		m_PhysicsSubmodule = new PhysicsSubmodule();
 		m_PhysicsSubmodule->Init();
 
-		m_AssetManagmentSubmodule = new AssetManagmentSubmodule();
-		m_AssetManagmentSubmodule->Init();
-		auto cube = m_ECSSubmodule->GetEcsWorld().CreateEntity();
-		cube.AddComponent<ECS::MeshRendererComponent>(m_RenderingSubmodule->Renderer->CubeMesh().get());
-		auto& vase_transform = cube.GetComponent<ECS::TransformComponent>();
-		vase_transform.position = { .5f, .5f, 0.f };
-		vase_transform.scale = { 3.f, 1.5f, 3.f };
-
 		Engine::InitEvent.Invoke();
 	}
 	catch (const std::exception& e) {
@@ -73,8 +65,6 @@ void Engine::Shutdown() {
 	try {
 		Engine::ShutdownEvent.Invoke();
 
-		m_AssetManagmentSubmodule->Shutdown();
-		delete m_AssetManagmentSubmodule;
 		m_RenderingSubmodule->Shutdown();
 		delete m_RenderingSubmodule;
 		m_PhysicsSubmodule->Shutdown();
@@ -112,8 +102,6 @@ void Engine::Update() {
 		lastUpdate = now;
 
 		Input::Update();
-		
-		m_AssetManagmentSubmodule->Update();
 
 		m_NetworkingSubmodule->Update();
 		Engine::NetworkingUpdateEvent.Invoke();
@@ -144,5 +132,5 @@ bool Engine::ShouldClose() {
 	if (m_Quit.load())
 		return true;
 	else
-		return m_RenderingSubmodule->Renderer->ShouldClose();
+		return m_RenderingSubmodule->Window->ShouldClose();
 }

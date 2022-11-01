@@ -1,17 +1,16 @@
 #pragma once
 
 #include <string>
+#ifdef PIT_WINDOWS
+#include <windows.h>
+#endif
 
 namespace Pit {
-	class FileDialogs {
-	public:
-		static String OpenFile(const char* filter);
-		static String SaveFile(const char* filter);
-	};
-
 	class MessagePrompts {
 	public:
-		static void InfoMessage(const String& message);
-		static void ErrorMessage();
+#ifdef PIT_WINDOWS
+		static void InfoMessage(LPCWSTR msg);
+		static void ErrorMessage(LPCWSTR msg);
+#endif
 	};
 }

@@ -16,12 +16,12 @@ workspace "PitEngine"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"
+	include "vendor/glad"
 	include "vendor/glm"
 	include "vendor/imgui"
 	include "vendor/spdlog"
 	include "vendor/stb_image"
 	include "vendor/tinyobjloader"
-	include "vendor/PitVulkano"
 group ""
 
 include "Editor"

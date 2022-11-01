@@ -4,23 +4,24 @@
 #include <string>
 #include <limits>
 
-#define DECLARE_LIMITS(name, type) \
-	constexpr type MAX_##name	= std::numeric_limits<type>::max();	\
-	constexpr type MIN_##name	= std::numeric_limits<type>::min()
-
 namespace Pit {
 	using uint32 = uint32_t;
 	using uint64 = uint64_t;
 	using uint = unsigned int;
-	DECLARE_LIMITS(UINT32, uint32);
-	DECLARE_LIMITS(UINT64, uint64);
-	DECLARE_LIMITS(UINT, uint);
+
+#define MAX_UINT32 UINT_MAX
+#define MAX_UINT64 ULLONG_MAX
+#define MAX_UINT UINT_MAX
 
 	using int32 = int32_t;
 	using int64 = int64_t;
-	DECLARE_LIMITS(INT32, int32);
-	DECLARE_LIMITS(INT64, int64);
-	DECLARE_LIMITS(INT, int);
+
+#define MAX_INT32 INT_MAX
+#define MIN_INT32 INT_MIN
+#define MAX_INT64 LLONG_MAX
+#define MIN_INT64 LLONG_MIN
+#define MAX_INT INT_MAX
+#define MIN_INT INT_MIN
 
 	constexpr float EPSILON = std::numeric_limits<float>::epsilon();
 

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="AssetManagment">
-      <UniqueIdentifier>{BD9CC5BA-A96A-B9C0-92FE-29E77E6B9525}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
@@ -34,17 +31,11 @@
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{83755900-6F01-880B-D8AF-880BC45A880B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp">
-      <Filter>AssetManagment</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
@@ -132,56 +123,17 @@
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Camera.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\Mesh.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingBuffer.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingDescriptors.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingDevice.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingPipeline.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingSwapChain.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingSystem.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\Texture.hpp">
+    <ClInclude Include="src\Rendering\Shader.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\UI.hpp">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\UIFonts.hpp">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\UILayer.hpp">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\UILayerManager.hpp">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UI\UIRenderer.hpp">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\DateUtils.hpp">
       <Filter>Utils</Filter>
@@ -193,12 +145,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Rendering\Shader.hpp" />
+    <ClInclude Include="src\Rendering\Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
-      <Filter>AssetManagment</Filter>
-    </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
@@ -238,52 +187,22 @@
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Camera.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Mesh.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingBuffer.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingDescriptors.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingDevice.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingPipeline.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingSwapChain.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingSystem.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Texture.cpp">
+    <ClCompile Include="src\Rendering\Shader.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\UILayerManager.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\UIRenderer.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Rendering\Shader.cpp" />
+    <ClCompile Include="src\Rendering\Texture.cpp" />
   </ItemGroup>
 </Project>

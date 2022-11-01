@@ -6,8 +6,8 @@
 
 
 namespace Pit::ECS {
-	struct EntityHandle;
-	struct World;
+	class EntityHandle;
+	class World;
 
 	struct SystemHandle {
 		SystemIndex SystemIndex;
@@ -23,7 +23,7 @@ namespace Pit::ECS {
 			name(name) { }
 	};
 
-	struct World {
+	class World {
 	public:
 		World(const WorldSpecs& specs) :
 			m_Specs(specs) { }

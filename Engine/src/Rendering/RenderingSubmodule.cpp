@@ -1,50 +1,41 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "RenderingSystem.hpp"
 #include "RenderingSubmodule.hpp"
-#include "C:\dev\cpp\PitEngine\Editor\src\EditorCameraController.hpp"
-#include "ECS/ECSWorld.hpp"
-#include "ECS/ECSEntityHandle.hpp"
 
 using namespace Pit;
 
-static ECS::EntityHandle CameraEntity = {nullptr, entt::null};
+static void GLFWErrorCallback(int errorCode, const char* description) {
+	PIT_ENGINE_ERR(Log::Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
+}
 
 void RenderingSubmodule::Init() {
+	glfwInit();
+	glfwSetErrorCallback(GLFWErrorCallback);
+
+	Window = new Rendering::Window("PitEngine", 800, 600, true);
+	glfwMakeContextCurrent(Window->GetWindowHandle());
+
+	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
+		PIT_ENGINE_FATAL(Log::Rendering, "Failed to initialize GLAD");
+
+	Window->SetViewport(Window->GetWidth(), Window->GetHeight());
 	Renderer = new Rendering::Renderer();
-	RenderingSystem = new Rendering::RenderingSystem();
-	CameraEntity = Engine::ECS()->GetEcsWorld().CreateEntity();
-	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
-	camEntityTransform.position.z = -2.5f;
-	CurrentCamera = new Rendering::Camera();
-	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
-	CurrentCamera->FOV = 70;
-	CurrentCamera->AspectRatio = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
-	CurrentCamera->NearClip = 0.01f;
-	CurrentCamera->FarClip = 5000;
-	CurrentCamera->SetProjection();
-	CurrentCamera->SetViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
-	Rendering::RenderEntitiesSystem::CameraToUse = CurrentCamera;
-	UIRenderer = new UI::Renderer(Renderer);
-	Engine::ECS()->GetEcsWorld().AddSystem<Rendering::RenderEntitiesSystem>();
+
+
+	PIT_ENGINE_INFO(Log::Rendering, "OpenGL Info:");
+	PIT_ENGINE_INFO(Log::Rendering, "  Vendor: {0:s}", (const char*)glGetString(GL_VENDOR));
+	PIT_ENGINE_INFO(Log::Rendering, "  Renderer: {0:s}", (const char*)glGetString(GL_RENDERER));
+	PIT_ENGINE_INFO(Log::Rendering, "  Version: {0:s}", (const char*)glGetString(GL_VERSION));
 }
 
 void RenderingSubmodule::Shutdown() {
-	delete UIRenderer;
-	delete RenderingSystem;
 	delete Renderer;
+	delete Window;
+
+	glfwTerminate();
 }
 
 void RenderingSubmodule::Update() {
-	float aspect = Engine::Rendering()->Renderer->SwapChain->extentAspectRatio();
-	CurrentCamera->ProjectionMode = Rendering::Camera::Projection::Perspective;
-	CurrentCamera->FOV = 70;
-	CurrentCamera->AspectRatio = aspect;
-	CurrentCamera->NearClip = 0.01f;
-	CurrentCamera->FarClip = 5000;
-	auto& camEntityTransform = CameraEntity.GetComponent<ECS::TransformComponent>();
-	Editor::EditorCameraController::MoveInPlaneXZ(camEntityTransform.position, camEntityTransform.rotation);
-	CurrentCamera->SetViewYXZ(camEntityTransform.position, camEntityTransform.rotation);
-	CurrentCamera->SetProjection();
 	Renderer->Update();
+	Window->Update();
 }

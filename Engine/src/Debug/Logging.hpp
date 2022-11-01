@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Assert.hpp"
+#include "Utils/PlatformUtils.hpp"
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -56,7 +57,7 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, "[CoreInfo]: ", category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, "[CoreWarn]: ", category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, "[CoreErr]: ", category, msg,  ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) PIT_DEBUGBREAK(); }
+#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}

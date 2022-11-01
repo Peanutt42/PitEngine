@@ -1,29 +1,21 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "RenderingPipeline.hpp"
 
 namespace Pit::Rendering {
-	class Shader {
-	public:
-		Shader(size pushConstantDataSize, const String& vertexShaderFile, const String& fragmentShaderFile);
-		~Shader();
+    class Shader {
+    public:
+        Shader(const String& vertexPath, const String& fragmentPath);
 
-	private:
-		ScopeRef<Rendering::Pipeline> m_Pipeline;
-		VkPipelineLayout m_PipelineLayout;
+        unsigned int GetID() { return m_ID; }
 
-		void _CreatePipelineLayout(size pushConstantDataSize);
-		void _CreatePipeline(VkRenderPass renderPass, const String& vertexShaderFile, const String& fragmentShaderFile);
-	};
-	
-	struct ShaderBuilder {
-		ShaderBuilder(const String& vertexShaderFile, const String& fragmentShaderFile, size PushConstantDataSize) {
+        void Use();
+        void SetBool(const std::string& name, bool value) const;
+        void SetInt(const std::string& name, int value) const;
+        void SetFloat(const std::string& name, float value) const;
+    private:
+        unsigned int m_ID;
 
-		}
-
-		Shader Build() {
-
-		}
-	};
+        void _CheckCompileErrors(unsigned int shader, std::string type);
+    };
 }

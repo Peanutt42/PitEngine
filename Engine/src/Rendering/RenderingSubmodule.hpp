@@ -2,10 +2,8 @@
 
 #include "Core/CoreInclude.hpp"
 #include "Core/Submodule.hpp"
-#include "Renderer.hpp"
-#include "RenderingSystem.hpp"
-#include "Camera.hpp"
-#include "UI/UIRenderer.hpp"
+#include "Rendering/Window.hpp"
+#include "Rendering/Renderer.hpp"
 
 namespace Pit {
 	class RenderingSubmodule : public Submodule {
@@ -16,9 +14,7 @@ namespace Pit {
 		
 		virtual void Update();
 
+		Rendering::Window* Window = nullptr;
 		Rendering::Renderer* Renderer = nullptr;
-		Rendering::RenderingSystem* RenderingSystem = nullptr;
-		Rendering::Camera* CurrentCamera = nullptr;
-		Pit::UI::Renderer* UIRenderer = nullptr;
 	};
 }

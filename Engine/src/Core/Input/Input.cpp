@@ -14,7 +14,7 @@ bool Input::s_MouseButtonStates[MOUSEBUTTON_COUNT];
 bool Input::s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
 
 static GLFWwindow* GetWindow() {
-	return Engine::Rendering()->Renderer->Window.GetWindowHandle();
+	return Engine::Rendering()->Window->GetWindowHandle();
 }
 
 void Input::Update() {

@@ -35,7 +35,8 @@ namespace Pit::Debug {
 		Array<ProfileStatEntry<size>>* pMemoryStats;
 	};
 
-	struct ProfileStatGroups {
+	class ProfileStatGroups {
+	public:
 		static Array<ProfileStatGroupEntry> s_ProfileStatGroups;
 		
 		template<typename T>
@@ -73,7 +74,8 @@ namespace Pit::Debug {
 
 	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
 #define DECLARE_PROFILE_STAT_GROUP(name, statName)																		\
-	struct STAT_GROUP_##name {																							\
+	class STAT_GROUP_##name {																							\
+	public:																												\
 		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
@@ -118,7 +120,8 @@ namespace Pit::Debug {
 
 
 #define DECLARE_EXTERN_PROFILE_STAT_GROUP(name, statName)																\
-	struct STAT_GROUP_##name {																							\
+	class STAT_GROUP_##name {																							\
+	public:																												\
 		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
@@ -166,7 +169,8 @@ namespace Pit::Debug {
 
 	// usage: DECLARE_PROFILE_STAT(ExampleGroup, "Example");
 #define DECLARE_PROFILE_STAT(type, name, statGroup, statName, default_val)												\
-	struct STAT_##name {																								\
+	class STAT_##name {																								\
+	public:																												\
 		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\
@@ -205,7 +209,8 @@ namespace Pit::Debug {
 	type STAT_##name::ValueRecord[10]
 
 #define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)													\
-	struct STAT_##name {																								\
+	class STAT_##name {																								\
+	public:																												\
 		static Pit::String GetName() {																					\
 			return #statName;																							\
 		}																												\

@@ -6,7 +6,8 @@
 namespace Pit::ECS {
 #define ECS_NULL_CHECKS (PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE)
 
-	struct EntityHandle {
+	class EntityHandle {
+	public:
 		EntityHandle(World* world, entt::entity id) : m_World(world), m_ID(id) {}
 
 		inline void Destroy() {
