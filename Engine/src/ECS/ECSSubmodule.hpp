@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "ECSInclude.hpp"
 #include "ECSWorld.hpp"
 #include "Examples/ECSBasicGameloop.hpp"
 #include "ECSComponents.hpp"

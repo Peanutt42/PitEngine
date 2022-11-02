@@ -22,7 +22,8 @@ namespace Pit {
 			Engine::Init(info);
 		}
 
-		static void Init(const CreateInfo& info), Shutdown();
+		static void Init(const CreateInfo& info);
+		static void Shutdown();
 		static void ForceShutdown() { s_Quit.store(true); }
 		static bool ShouldClose();
 		static void Update();

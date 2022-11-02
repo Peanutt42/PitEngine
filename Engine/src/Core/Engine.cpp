@@ -26,6 +26,16 @@ RenderingSubmodule*		Engine::s_RenderingSubmodule = nullptr;
 
 std::atomic<bool>		Engine::s_Quit = false;
 
+#define CATCH_EXCEPTIONS() \
+	catch (const std::exception& e) {											\
+		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;	\
+		return;																	\
+	}																			\
+	catch (...) {																\
+		std::cerr << "[Engine] Exception catched!" << std::endl;				\
+		return;																	\
+	}
+
 void Engine::Init(const CreateInfo& info) {
 	try {
 		Debug::Logging::Init();
@@ -51,14 +61,7 @@ void Engine::Init(const CreateInfo& info) {
 
 		Engine::InitEvent.Invoke();
 	}
-	catch (const std::exception& e) {
-		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
-		return;
-	}
-	catch (...) {
-		std::cerr << "[Engine] Exception catched!" << std::endl;
-		return ;
-	}
+	CATCH_EXCEPTIONS();
 }
 
 void Engine::Shutdown() {
@@ -80,14 +83,7 @@ void Engine::Shutdown() {
 
 		Debug::Logging::Shutdown();
 	}
-	catch (const std::exception& e) {
-		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
-		return;
-	}
-	catch (...) {
-		std::cerr << "[Engine] Exception catched!" << std::endl;
-		return;
-	}
+	CATCH_EXCEPTIONS();
 }
 
 void Engine::Update() {
@@ -96,7 +92,7 @@ void Engine::Update() {
 
 		static time_point<high_resolution_clock> lastUpdate;
 		time_point<high_resolution_clock> now = high_resolution_clock::now();
-		Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.001f * 0.001f * 0.001f);
+		Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.000000001f);
 		lastUpdate = now;
 
 		Input::Update();
@@ -116,14 +112,7 @@ void Engine::Update() {
 
 		s_AudioSubmodule->Update();
 	}
-	catch (const std::exception& e) {
-		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
-		return;
-	}
-	catch (...) {
-		std::cerr << "[Engine] Exception catched!" << std::endl;
-		return;
-	}
+	CATCH_EXCEPTIONS();
 }
 
 bool Engine::ShouldClose() {

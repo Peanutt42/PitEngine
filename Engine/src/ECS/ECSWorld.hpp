@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "ECSInclude.hpp"
+#include <entt.hpp>
 #include "ECSSystem.hpp"
 
 
@@ -46,7 +46,7 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& AddComponent(entt::entity entity, Args&&... args) {
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 			m_ComponentMemSize += sizeof(T);
 			m_ComponentCount++;
 #endif
@@ -66,7 +66,7 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void RemoveComponent(entt::entity entity) {
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 			m_ComponentMemSize -= sizeof(T);
 			m_ComponentCount--;
 #endif
@@ -76,7 +76,7 @@ namespace Pit::ECS {
 		template<typename T>
 		bool TryRemoveComponent(entt::entity entity) {
 			if (HasComponent<T>(entity)) {
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 				m_ComponentMemSize -= sizeof(T);
 				m_ComponentCount--;
 #endif
@@ -95,7 +95,7 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& AddOrReplaceComponent(entt::entity entity, Args&&... args) {
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 			if (!HasComponent<T>(entity)) {
 				m_ComponentMemSize += sizeof(T);
 				m_ComponentCount++;
@@ -106,7 +106,7 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& GetOrAddComponent(entt::entity entity, Args&&... args) {
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 			if (!HasComponent<T>(entity)) m_ComponentMemSize += sizeof(T);
 #endif
 			return m_Registry.get_or_emplace<T>(entity, std::forward<Args>(args)...);
@@ -178,7 +178,7 @@ namespace Pit::ECS {
 		entt::registry m_Registry;
 		Array<SystemHandle> m_Systems;
 
-#if ECS_PROFILE
+#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
 		size m_ComponentMemSize = 0;
 		size m_ComponentCount = 0;
 		size m_SystemCount = 0;

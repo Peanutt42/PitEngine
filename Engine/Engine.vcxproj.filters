@@ -102,9 +102,6 @@
     <ClInclude Include="src\ECS\ECSGameloop.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSInclude.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>ECS</Filter>
     </ClInclude>

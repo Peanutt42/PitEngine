@@ -85,7 +85,7 @@ using Log = Pit::Debug::Category;
 #define PIT_INFO(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_INFO, "[GameInfo]", msg, ##__VA_ARGS__)
 #define PIT_WARN(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_WARN, "[GameWarn]", msg, ##__VA_ARGS__)
 #define PIT_ERR(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_ERROR, "[GameErr]", msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); PIT_DEBUGBREAK(); }
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
 #else
 #define PIT_TRACE(msg, ...)	{}
 #define PIT_INFO(msg, ...)	{}
