@@ -51,6 +51,7 @@ project "Editor"
 		"tinyobjloader",
 		"opengl32.lib",
 		"glfw3_mt.lib",
+		"Dbghelp.lib",
 		"Engine"
 	}
 

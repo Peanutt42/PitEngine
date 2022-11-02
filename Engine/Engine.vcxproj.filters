@@ -87,6 +87,9 @@
     <ClInclude Include="src\Debug\ProfileStats.hpp">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="src\Debug\vcrash.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\ECS\ECSComponent.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -132,6 +135,9 @@
     <ClInclude Include="src\Rendering\Shader.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rendering\Texture.hpp">
+      <Filter>Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -145,7 +151,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Rendering\Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -196,6 +201,9 @@
     <ClCompile Include="src\Rendering\Shader.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Texture.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
@@ -203,6 +211,5 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Rendering\Texture.cpp" />
   </ItemGroup>
 </Project>

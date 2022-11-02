@@ -10,26 +10,27 @@ namespace Pit {
 	class Engine {
 	public:
 		struct CreateInfo {
+			Array<String> ConsoleArgs;
 			String WindowName;
 			bool WindowToolbar;
 		};
 
-		Engine(const CreateInfo& createInfo);
-		~Engine();
-		
-		void Init(), Shutdown();
-		static void ForceShutdown() { m_Instance->m_Quit.store(true); }
-		bool ShouldClose();
-		void Update();
+		template<typename... Args>
+		static void CreateEngine(Args&&... args) {
+			CreateInfo info(std::forward<Args>(args)...);
+			Engine::Init(info);
+		}
 
-		static const CreateInfo& GetInfo() { return m_Instance->m_CreateInfo; }
+		static void Init(const CreateInfo& info), Shutdown();
+		static void ForceShutdown() { s_Quit.store(true); }
+		static bool ShouldClose();
+		static void Update();
 
-		static AudioSubmodule* Audio() { return m_Instance->m_AudioSubmodule; }
-		static RenderingSubmodule* Rendering() { return m_Instance->m_RenderingSubmodule; }
-		static ECSSubmodule* ECS() { return m_Instance->m_ECSSubmodule; }
+		static const CreateInfo& GetInfo() { return s_CreateInfo; }
 
-
-		static bool Exists() { return m_Instance; }
+		static AudioSubmodule* Audio() { return s_AudioSubmodule; }
+		static RenderingSubmodule* Rendering() { return s_RenderingSubmodule; }
+		static ECSSubmodule* ECS() { return s_ECSSubmodule; }
 
 		static Event<> InitEvent;
 		static Event<> NetworkingUpdateEvent;
@@ -43,16 +44,14 @@ namespace Pit {
 		static Event<> ShutdownEvent;
 
 	private:
-		static Engine* m_Instance;
+		static CreateInfo s_CreateInfo;
 
-		CreateInfo m_CreateInfo;
-
-		AudioSubmodule* m_AudioSubmodule = nullptr;
-		ECSSubmodule* m_ECSSubmodule = nullptr;
-		NetworkingSubmodule* m_NetworkingSubmodule = nullptr;
-		PhysicsSubmodule* m_PhysicsSubmodule = nullptr;
-		RenderingSubmodule* m_RenderingSubmodule = nullptr;
+		static AudioSubmodule* s_AudioSubmodule;
+		static ECSSubmodule* s_ECSSubmodule;
+		static NetworkingSubmodule* s_NetworkingSubmodule;
+		static PhysicsSubmodule* s_PhysicsSubmodule;
+		static RenderingSubmodule* s_RenderingSubmodule;
 		
-		std::atomic<bool> m_Quit = false;
+		static std::atomic<bool> s_Quit;
 	};
 }

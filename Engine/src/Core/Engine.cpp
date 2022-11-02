@@ -5,7 +5,6 @@
 using namespace Pit;
 using namespace std::chrono;
 
-Engine* Engine::m_Instance = nullptr;
 Event<> Engine::InitEvent;
 Event<> Engine::NetworkingUpdateEvent;
 Event<> Engine::PhysicUpdateEvent;
@@ -17,37 +16,39 @@ Event<> Engine::UIRenderEvent;
 Event<> Engine::OnWindowResizeEvent;
 Event<> Engine::ShutdownEvent;
 
-Engine::Engine(const CreateInfo& createInfo) 
-	: m_CreateInfo(createInfo) {
+Engine::CreateInfo		Engine::s_CreateInfo;
 
-	Debug::Logging::Init();
-}
+AudioSubmodule*			Engine::s_AudioSubmodule = nullptr;
+ECSSubmodule*			Engine::s_ECSSubmodule = nullptr;
+NetworkingSubmodule*	Engine::s_NetworkingSubmodule = nullptr;
+PhysicsSubmodule*		Engine::s_PhysicsSubmodule = nullptr;
+RenderingSubmodule*		Engine::s_RenderingSubmodule = nullptr;
 
-Engine::~Engine() {
-	Debug::Logging::Shutdown();
-}
+std::atomic<bool>		Engine::s_Quit = false;
 
-void Engine::Init() {
+void Engine::Init(const CreateInfo& info) {
 	try {
-		m_Instance = this;
+		Debug::Logging::Init();
 
 		PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
 
-		m_AudioSubmodule = new AudioSubmodule();
-		m_AudioSubmodule->Init();
+		s_CreateInfo = info;
 
-		m_ECSSubmodule = new ECSSubmodule();
-		m_ECSSubmodule->Init();
+		s_AudioSubmodule = new AudioSubmodule();
+		s_AudioSubmodule->Init();
 
-		m_RenderingSubmodule = new RenderingSubmodule();
-		m_RenderingSubmodule->Init();
+		s_ECSSubmodule = new ECSSubmodule();
+		s_ECSSubmodule->Init();
+
+		s_RenderingSubmodule = new RenderingSubmodule();
+		s_RenderingSubmodule->Init();
 
 	
-		m_NetworkingSubmodule = new NetworkingSubmodule();
-		m_NetworkingSubmodule->Init();
+		s_NetworkingSubmodule = new NetworkingSubmodule();
+		s_NetworkingSubmodule->Init();
 
-		m_PhysicsSubmodule = new PhysicsSubmodule();
-		m_PhysicsSubmodule->Init();
+		s_PhysicsSubmodule = new PhysicsSubmodule();
+		s_PhysicsSubmodule->Init();
 
 		Engine::InitEvent.Invoke();
 	}
@@ -65,22 +66,20 @@ void Engine::Shutdown() {
 	try {
 		Engine::ShutdownEvent.Invoke();
 
-		m_RenderingSubmodule->Shutdown();
-		delete m_RenderingSubmodule;
-		m_PhysicsSubmodule->Shutdown();
-		delete m_PhysicsSubmodule;
-		m_NetworkingSubmodule->Shutdown();
-		delete m_NetworkingSubmodule;
-		m_ECSSubmodule->Shutdown();
-		delete m_ECSSubmodule;
-		m_AudioSubmodule->Shutdown();
-		delete m_AudioSubmodule;
+		s_RenderingSubmodule->Shutdown();
+		delete s_RenderingSubmodule;
+		s_PhysicsSubmodule->Shutdown();
+		delete s_PhysicsSubmodule;
+		s_NetworkingSubmodule->Shutdown();
+		delete s_NetworkingSubmodule;
+		s_ECSSubmodule->Shutdown();
+		delete s_ECSSubmodule;
+		s_AudioSubmodule->Shutdown();
+		delete s_AudioSubmodule;
 
 		PIT_ENGINE_INFO(Log::General, "=== PIT::ENGINE Shutdown ===");
 
 		Debug::Logging::Shutdown();
-
-		m_Instance = nullptr;
 	}
 	catch (const std::exception& e) {
 		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
@@ -103,20 +102,20 @@ void Engine::Update() {
 
 		Input::Update();
 
-		m_NetworkingSubmodule->Update();
+		s_NetworkingSubmodule->Update();
 		Engine::NetworkingUpdateEvent.Invoke();
 		
-		m_PhysicsSubmodule->Update();
+		s_PhysicsSubmodule->Update();
 		Engine::PhysicUpdateEvent.Invoke();
 
 		Engine::PreUpdateEvent.Invoke();
 		Engine::UpdateEvent.Invoke();
-		m_ECSSubmodule->Update();
+		s_ECSSubmodule->Update();
 
-		m_RenderingSubmodule->Update();
+		s_RenderingSubmodule->Update();
 		Engine::PostUpdateEvent.Invoke();
 
-		m_AudioSubmodule->Update();
+		s_AudioSubmodule->Update();
 	}
 	catch (const std::exception& e) {
 		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;
@@ -129,8 +128,8 @@ void Engine::Update() {
 }
 
 bool Engine::ShouldClose() {
-	if (m_Quit.load())
+	if (s_Quit.load())
 		return true;
 	else
-		return m_RenderingSubmodule->Window->ShouldClose();
+		return s_RenderingSubmodule->Window->ShouldClose();
 }

@@ -78,7 +78,7 @@ void Shader::_CheckCompileErrors(unsigned int shader, std::string type) {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            PIT_ENGINE_ERR(Log::Rendering, "Error while linking the shader program:\n{}\n-- --------------------------------------------------- -- ", infoLog);
+            PIT_ENGINE_ERR(Log::Rendering, "Error while linking the shader program:\n{}\n -- --------------------------------------------------- -- ", infoLog);
         }
     }
     else {
