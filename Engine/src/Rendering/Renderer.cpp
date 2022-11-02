@@ -57,31 +57,6 @@ Renderer::Renderer() {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	// load and create a texture 
-	// -------------------------
-	/*glGenTextures(1, &m_Texture);
-	glBindTexture(GL_TEXTURE_2D, m_Texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// load image, create texture and generate mipmaps
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load((FileSystem::GetSandboxDir() + "assets/textures/wall.jpg").c_str(), &width, &height, &nrChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-		PIT_ENGINE_ERR(Log::Rendering, "Failed to load texture");
-	
-	stbi_image_free(data);*/
-
 	glPolygonMode(GL_FRONT, GL_FILL);
 	
 	m_Shader.Use();

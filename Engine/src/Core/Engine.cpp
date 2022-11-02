@@ -42,7 +42,6 @@ void Engine::Init(const CreateInfo& info) {
 
 		s_RenderingSubmodule = new RenderingSubmodule();
 		s_RenderingSubmodule->Init();
-
 	
 		s_NetworkingSubmodule = new NetworkingSubmodule();
 		s_NetworkingSubmodule->Init();

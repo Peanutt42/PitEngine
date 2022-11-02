@@ -14,13 +14,14 @@ void RenderingSubmodule::Init() {
 
 	Window = new Rendering::Window("PitEngine", 800, 600, true);
 	glfwMakeContextCurrent(Window->GetWindowHandle());
+	glfwSwapInterval(Engine::GetInfo().VSync);
 
 	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
 		PIT_ENGINE_FATAL(Log::Rendering, "Failed to initialize GLAD");
 
 	Window->SetViewport(Window->GetWidth(), Window->GetHeight());
 	Renderer = new Rendering::Renderer();
-
+	UIRenderer = new UI::UIRenderer();
 
 	PIT_ENGINE_INFO(Log::Rendering, "OpenGL Info:");
 	PIT_ENGINE_INFO(Log::Rendering, "  Vendor: {0:s}", (const char*)glGetString(GL_VENDOR));
@@ -29,6 +30,7 @@ void RenderingSubmodule::Init() {
 }
 
 void RenderingSubmodule::Shutdown() {
+	delete UIRenderer;
 	delete Renderer;
 	delete Window;
 
@@ -37,5 +39,6 @@ void RenderingSubmodule::Shutdown() {
 
 void RenderingSubmodule::Update() {
 	Renderer->Update();
+	UIRenderer->Update();
 	Window->Update();
 }

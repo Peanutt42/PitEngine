@@ -189,6 +189,7 @@
     <ClInclude Include="src\Rendering\Shader.hpp" />
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
     <ClInclude Include="src\Utils\PlatformUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="src\Rendering\Shader.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
+    <ClCompile Include="src\UI\UIRenderer.cpp" />
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -13,6 +13,7 @@ namespace Pit {
 			Array<String> ConsoleArgs;
 			String WindowName;
 			bool WindowToolbar;
+			bool VSync;
 		};
 
 		template<typename... Args>

@@ -10,7 +10,7 @@ int main(const int argc, const char* argv[]) {
 
 	setup_crash_handler();
 
-	Engine::CreateEngine(consoleArgs, "PitEngine - Sandbox", true);
+	Engine::CreateEngine(consoleArgs, "PitEngine - Sandbox", true, false);
 	
 	while (!Engine::ShouldClose()) {
 		Engine::Update();

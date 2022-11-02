@@ -4,6 +4,7 @@
 #include "Core/Submodule.hpp"
 #include "Rendering/Window.hpp"
 #include "Rendering/Renderer.hpp"
+#include "UI/UIRenderer.hpp"
 
 namespace Pit {
 	class RenderingSubmodule : public Submodule {
@@ -16,5 +17,6 @@ namespace Pit {
 
 		Rendering::Window* Window = nullptr;
 		Rendering::Renderer* Renderer = nullptr;
+		UI::UIRenderer* UIRenderer = nullptr;
 	};
 }
