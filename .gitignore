@@ -8,6 +8,8 @@
 *.obj
 *.pdb
 *.bin
+*.suo
+*.db
 
 # Precompiled Headers
 *.gch
@@ -40,8 +42,8 @@
 *.ini
 
 # Excluded Folders
-x64/
-.vs/
-Logs/
-bin/
-bin-int/
+x64
+.vs
+Logs
+bin
+bin-int
