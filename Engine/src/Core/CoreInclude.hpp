@@ -32,6 +32,7 @@ using namespace std::chrono_literals; // for ex: 200ms
 #include "Event/Event.hpp"
 #include "Input/Input.hpp"
 #include "Input/KeyCode.hpp"
+#include "Math/CoreMath.hpp"
 #include "Utils/StringUtils.hpp"
 #include "Utils/DateUtils.hpp"
 

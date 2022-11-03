@@ -181,8 +181,10 @@
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
+    <ClInclude Include="src\Math\CoreMath.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
+    <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\Shader.hpp" />
@@ -210,6 +212,7 @@
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
+    <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />

@@ -151,6 +151,8 @@
     <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UI.hpp" />
+    <ClInclude Include="src\Rendering\Camera.hpp" />
+    <ClInclude Include="src\Math\CoreMath.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -212,5 +214,6 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
+    <ClCompile Include="src\Rendering\Camera.cpp" />
   </ItemGroup>
 </Project>
