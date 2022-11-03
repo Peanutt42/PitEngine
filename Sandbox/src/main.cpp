@@ -5,12 +5,11 @@
 using namespace Pit;
 
 int main(const int argc, const char* argv[]) {
-	Array<String> consoleArgs;
-	for (int i = 0; i < argc; i++) consoleArgs.push_back(argv[i]);
-
 	setup_crash_handler();
 
-	Engine::CreateEngine(consoleArgs, "PitEngine - Sandbox", true, false, false);
+	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Sandbox", true, false, false);
+
+	Engine::Init(engineInfo);
 	
 	while (!Engine::ShouldClose()) {
 		Engine::Update();

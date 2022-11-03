@@ -16,7 +16,7 @@ Event<> Engine::UIRenderEvent;
 Event<> Engine::OnWindowResizeEvent;
 Event<> Engine::ShutdownEvent;
 
-Engine::CreateInfo		Engine::s_CreateInfo;
+Engine::CreateInfo		Engine::s_CreateInfo = Engine::CreateInfo(0, nullptr, "PitEngine-NullInfo", true, false, false);
 
 AudioSubmodule*			Engine::s_AudioSubmodule = nullptr;
 ECSSubmodule*			Engine::s_ECSSubmodule = nullptr;

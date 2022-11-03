@@ -15,13 +15,13 @@ namespace Pit {
 			bool WindowToolbar;
 			bool VSync;
 			bool UIDocking;
-		};
 
-		template<typename... Args>
-		static void CreateEngine(Args&&... args) {
-			CreateInfo info(std::forward<Args>(args)...);
-			Engine::Init(info);
-		}
+			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking) 
+				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking) {
+
+				for (int i = 0; i < argc; i++) ConsoleArgs.push_back(argv[i]);
+			}
+		};
 
 		static void Init(const CreateInfo& info);
 		static void Shutdown();

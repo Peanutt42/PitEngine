@@ -147,7 +147,7 @@ static void stack_trace(bool crashMode, bool cutSetup) {
 	SymCleanup(process);
 }
 
-void on_process_crash(int sig) {
+static void on_process_crash(int sig) {
 	fprintf(stderr, "A crash occured.\n");
 	fflush(stderr);
 
@@ -155,7 +155,10 @@ void on_process_crash(int sig) {
 	fflush(stderr);
 	exit(sig);
 }
-void setup_crash_handler() {
+
+static void setup_crash_handler() {
+	signal(SIGINT, on_process_crash); // catch segfaults
+	signal(SIGILL, on_process_crash); // catch segfaults
 	signal(SIGSEGV, on_process_crash); // catch segfaults
 	signal(SIGABRT, on_process_crash); // catch exceptions
 }

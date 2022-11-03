@@ -3,32 +3,29 @@
 #include "Core/Engine.hpp"
 #include "EditorAssetManager.hpp"
 #include "EditorWindowPanel.hpp"
+#include <Debug/vcrash.h>
 
 namespace Pit::Editor {
 	class EditorApplication {
 	public:
-		EditorApplication();
-		~EditorApplication();
+		static void Init();
+		static void Shutdown();
 
-		void Init(), Shutdown();
-
-		void Update();
+		static void Update();
 
 		static void MenubarCallback();
 
-		static EditorApplication* Instance;
+		static EditorAssetManager& AssetManager() { return s_AssetManager; }
 
-		static EditorAssetManager& AssetManager() { return Instance->m_AssetManager; }
-
-		void test1() { test2(); }
-		void test2() { test3(); }
-		void test3() { test4(); }
-		void test4() {  }
+		static void test1() { test2(); }
+		static void test2() { test3(); }
+		static void test3() { test4(); }
+		static void test4() { stack_trace(false, false); }
 
 	private:
-		EditorAssetManager m_AssetManager;
-		Array<EditorWindowPanel*> m_WindowPanels;
-		Array<bool> m_PanelKeyShortcutsPressed;
+		static EditorAssetManager s_AssetManager;
+		static Array<EditorWindowPanel*> s_WindowPanels;
+		static Array<bool> s_PanelKeyShortcutsPressed;
 	};
 
 

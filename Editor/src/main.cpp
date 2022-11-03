@@ -5,21 +5,20 @@ using namespace Pit;
 using namespace Editor;
 
 int main(const int argc, const char* argv[]) {
-	Array<String> consoleArgs;
-	for (int i = 0; i < argc; i++) consoleArgs.push_back(argv[i]);
+	setup_crash_handler();
 
-	Engine::CreateEngine(consoleArgs, "PitEngine - Editor", true, false, true);
+	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Editor", true, false, true);
+	Engine::Init(engineInfo);
 	
-	EditorApplication editor;
-	editor.Init();
+	EditorApplication::Init();
 
 	while (!Engine::ShouldClose()) {
 		std::chrono::time_point<std::chrono::high_resolution_clock> now = std::chrono::high_resolution_clock::now();
-		editor.Update();
+		EditorApplication::Update();
 		Engine::Update();
 	}
 
-	editor.Shutdown();
+	EditorApplication::Shutdown();
 	Engine::Shutdown();
 
 	return 0;
