@@ -188,6 +188,8 @@
     <ClInclude Include="src\Rendering\Shader.hpp" />
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\UI\UI.hpp" />
+    <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
     <ClInclude Include="src\Utils\PlatformUtils.hpp" />

@@ -10,7 +10,7 @@ entt::entity HierachyPanel::s_SelectedEntity = entt::null;
 
 void HierachyPanel::OnCreate() {
 	Name = "Hierachy";
-	Shortcut = Array<KeyCode>{ LeftControl + H };
+	Shortcut = Array<KeyCode>{ LeftControl + Key_H };
 
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	for (int i = 0; i < 15; i++) {

@@ -7,7 +7,7 @@
 namespace Pit::Editor {
 	class EditorApplication {
 	public:
-		EditorApplication(Engine& engine);
+		EditorApplication();
 		~EditorApplication();
 
 		void Init(), Shutdown();
@@ -26,7 +26,6 @@ namespace Pit::Editor {
 		void test4() {  }
 
 	private:
-		Engine& m_Engine;
 		EditorAssetManager m_AssetManager;
 		Array<EditorWindowPanel*> m_WindowPanels;
 		Array<bool> m_PanelKeyShortcutsPressed;

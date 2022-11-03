@@ -4,25 +4,23 @@
 using namespace Pit;
 using namespace Editor;
 
-int main() {
-	Engine::CreateInfo engineInfo{ "PitEngine - Editor", true };
-	Engine engine(engineInfo);
-	engine.Init();
+int main(const int argc, const char* argv[]) {
+	Array<String> consoleArgs;
+	for (int i = 0; i < argc; i++) consoleArgs.push_back(argv[i]);
 
-	EditorApplication editor(engine);
+	Engine::CreateEngine(consoleArgs, "PitEngine - Editor", true, false, true);
+	
+	EditorApplication editor;
 	editor.Init();
 
-	while (!engine.ShouldClose()) {
+	while (!Engine::ShouldClose()) {
 		std::chrono::time_point<std::chrono::high_resolution_clock> now = std::chrono::high_resolution_clock::now();
 		editor.Update();
-		engine.Update();
-
-		// editor sleeps when not in use
-		
+		Engine::Update();
 	}
 
 	editor.Shutdown();
-	engine.Shutdown();
+	Engine::Shutdown();
 
 	return 0;
 }

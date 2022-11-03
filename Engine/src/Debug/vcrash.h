@@ -151,7 +151,7 @@ void on_process_crash(int sig) {
 	fprintf(stderr, "A crash occured.\n");
 	fflush(stderr);
 
-	stack_trace(true, true); // on crash mode, only print stack trace before  crash occurs
+	stack_trace(true, true);
 	fflush(stderr);
 	exit(sig);
 }

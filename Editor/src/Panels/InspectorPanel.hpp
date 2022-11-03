@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "UI/UILayer.hpp"
 #include "EditorWindowPanel.hpp"
 #include "ECS/ECSWorld.hpp"
 

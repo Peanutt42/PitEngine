@@ -149,6 +149,8 @@
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\UI\UIRenderer.hpp" />
+    <ClInclude Include="src\UI\UIFonts.hpp" />
+    <ClInclude Include="src\UI\UI.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">

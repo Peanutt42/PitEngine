@@ -14,6 +14,7 @@ namespace Pit {
 			String WindowName;
 			bool WindowToolbar;
 			bool VSync;
+			bool UIDocking;
 		};
 
 		template<typename... Args>

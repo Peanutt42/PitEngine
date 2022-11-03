@@ -1,8 +1,8 @@
 #include "pch.hpp"
-#include <imgui/imgui.h>
-#include "ContentBrowserPanel.hpp"
-#include <EditorApplication.hpp>
 #include "UI/UI.hpp"
+#include "ContentBrowserPanel.hpp"
+#include <imgui/imgui.h>
+#include <EditorApplication.hpp>
 
 using namespace Pit::Editor;
 
@@ -10,7 +10,7 @@ static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem
 
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
-	Shortcut = Array<KeyCode>{ LeftControl + K };
+	Shortcut = Array<KeyCode>{ LeftControl + Key_K };
 
 	m_CurrentDirectory = s_AssetPath;
 }
@@ -47,7 +47,7 @@ void ContentBrowserPanel::OnGui() {
 
 void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
-	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), { 20, 20 }, false, false, -1, { 0,0,0,0 }, tintColor) ||
+	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), {20, 20}, false, false, -1, {0,0,0,0}, tintColor) ||
 		/*Maybe concider hovering: prob: child blocks windowhovered*/
 		Input::IsMouseButtonDown(Button3)) {
 		if (m_CurrentDirectory != s_AssetPath) {
@@ -68,7 +68,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 
 	ImGui::SameLine();
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(RefreshIcon), { 20, 20 }, false, false) ||
-		(Input::IsKeyDown(LeftControl) && Input::IsKeyDown(R))) {
+		(Input::IsKeyDown(LeftControl) && Input::IsKeyDown(Key_R))) {
 
 		// Todo: research all elements in relative path
 	}

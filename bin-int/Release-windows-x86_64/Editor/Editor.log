@@ -1,2 +1,2 @@
-﻿  pch.cpp
-C:\dev\cpp\PitEngine\Engine\src\Utils\PlatformUtils.hpp(4,17): fatal  error C1017: Ungültiger Ausdruck für Ganzzahlkonstante
+﻿  main.cpp
+  Editor.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Editor\Editor.exe

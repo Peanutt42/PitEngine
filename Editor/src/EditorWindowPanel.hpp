@@ -1,23 +1,16 @@
 #pragma once
 
 #include "pch.hpp"
-#include "UI/UILayer.hpp"
+#include <imgui/imgui.h>
 
 namespace Pit::Editor {
-	class EditorWindowPanel : public UI::Layer {
+	class EditorWindowPanel {
 	public:
-		virtual void OnCreate() = 0;
-		virtual void OnDestroy() = 0;
-		virtual void OnGui() = 0;
+		virtual void OnCreate() {}
+		virtual void OnDestroy() {}
+		virtual void OnGui() {}
 
-		// UILayer
-		virtual void OnAttach() override {
-			OnCreate();
-		}
-		virtual void OnDetach() override {
-			OnDestroy();
-		}
-		virtual void OnGUI() override {
+		void OnGUI() {
 			if (!Opened) return;
 
 			ImGui::Begin(Name.c_str(), &Opened);

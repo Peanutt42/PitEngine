@@ -2,20 +2,20 @@
 #include "InspectorPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "Core/Engine.hpp"
+#include "UI/UIFonts.hpp"
 #include "ECS/ECSWorld.hpp"
 #include "ECS/ECSComponents.hpp"
-#include "UI/UI.hpp"
-#include "UI/UIFonts.hpp"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui_internal.h>
 
 using namespace Pit;
+using namespace UI;
 using namespace Editor;
 
 void InspectorPanel::OnCreate() {
 	Name = "Inspector";
-	Shortcut = Array<KeyCode>{ LeftControl, I };
+	Shortcut = Array<KeyCode>{ LeftControl, Key_I };
 }
 
 void InspectorPanel::OnDestroy() {
@@ -45,7 +45,7 @@ static void DrawComponent(const String& name, Pit::ECS::World* world, entt::enti
 	ImGui::PopStyleVar(
 	);
 	ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-	ImGui::PushFont(Pit::UI::GetFont(Pit::UI::ExtraBold));
+	ImGui::PushFont(Fonts::Get(Fonts::ExtraBold));
 	if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight })) {
 		ImGui::OpenPopup("ComponentSettings");
 	}

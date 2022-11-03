@@ -6,14 +6,12 @@
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
 #include "EditorDockspace.hpp"
-#include <vulkan/vulkan.h>
 
 using namespace Pit::Editor;
 
 EditorApplication* EditorApplication::Instance = nullptr;
 
-EditorApplication::EditorApplication(Engine& engine)
-	: m_Engine(engine) {
+EditorApplication::EditorApplication() {
 
 	Instance = this;
 }
@@ -32,13 +30,29 @@ void EditorApplication::Init() {
 	m_WindowPanels.push_back(new ProfilerPanel());
 	m_WindowPanels.push_back(new ContentBrowserPanel());
 
-	Engine::LayerManager()->SetCallbacks([&]() {EditorDockspace::OnBegin(MenubarCallback); }, [&]() {EditorDockspace::OnEnd(); });
-	for (auto layer : m_WindowPanels)
-		Engine::LayerManager()->PushLayer(layer);
+	Engine::UIRenderEvent += []() {
+		if (ImGui::BeginMenuBar()) {
+			if (ImGui::BeginMenu("File")) {
+				if (ImGui::MenuItem("Exit"))
+					Pit::Engine::ForceShutdown();
+
+				ImGui::EndMenu();
+			}
+			MenubarCallback();
+			ImGui::EndMenuBar();
+		}
+	};
+
+	for (auto* layer : m_WindowPanels) {
+		layer->OnCreate();
+		Engine::UIRenderEvent += [=]() { layer->OnGUI(); };
+	}
 }
 
 void EditorApplication::Shutdown() {
-	vkDeviceWaitIdle(Engine::Rendering()->Renderer->Device.device());
+	for (auto* layer : m_WindowPanels)
+		delete layer;
+	m_WindowPanels.clear();
 
 	m_AssetManager.Shutdown();
 }
