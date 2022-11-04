@@ -39,7 +39,7 @@ namespace Pit::Debug {
 using Log = Pit::Debug::Category;
 
 // Engine logging
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 #define _GetEngineLogger() \
 	Pit::Debug::Logging::GetEngineLogger()
 
@@ -67,7 +67,7 @@ using Log = Pit::Debug::Category;
 #endif
 
 // Game logging
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 #define _GetGameLogger() \
 	Pit::Debug::Logging::GetGameLogger();
 

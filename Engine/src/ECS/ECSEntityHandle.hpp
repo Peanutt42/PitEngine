@@ -4,7 +4,7 @@
 #include "ECSWorld.hpp"
 
 namespace Pit::ECS {
-#define ECS_NULL_CHECKS (PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE)
+#define ECS_NULL_CHECKS (DEBUG || RELEASE)
 
 	class EntityHandle {
 	public:

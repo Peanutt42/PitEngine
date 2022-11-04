@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "Logging.hpp"
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 #include "ProfileStats.hpp"
 #endif
 
@@ -16,7 +16,7 @@ bool Logging::LoggerInitialized = false;
 static std::ofstream PerformanceReportFile;
 
 void Logging::Init() {
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 	constexpr const char* pattern = "%^%v%$";
 	spdlog::set_pattern(pattern);
 
@@ -52,7 +52,7 @@ void Logging::Init() {
 }
 
 void Logging::Shutdown() {
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 	spdlog::shutdown();
 
 	s_FileSink.reset();

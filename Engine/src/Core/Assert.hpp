@@ -4,7 +4,7 @@
 #include "PlatformDetection.hpp"
 
 namespace Pit {
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 	#if defined(PIT_WINDOWS)
 		#define PIT_DEBUGBREAK() __debugbreak()
 	#elif defined(PIT_LINUX)

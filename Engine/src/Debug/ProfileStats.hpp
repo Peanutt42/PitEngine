@@ -5,7 +5,7 @@
 #include <string>
 
 namespace Pit::Debug {
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 	enum ProfileStatType {
 		Float,
 		Int,

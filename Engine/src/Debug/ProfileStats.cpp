@@ -2,7 +2,7 @@
 #include "ProfileStats.hpp"
 
 
-#if PIT_ENGINE_DEBUG || PIT_ENGINE_RELEASE
+#if DEBUG || RELEASE
 Pit::Array<Pit::Debug::ProfileStatGroupEntry> Pit::Debug::ProfileStatGroups::s_ProfileStatGroups;
 #endif
 
