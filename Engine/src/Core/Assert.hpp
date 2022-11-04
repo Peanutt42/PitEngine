@@ -1,6 +1,5 @@
 #pragma once
 
-#include "EngineConfig.hpp"
 #include "PlatformDetection.hpp"
 
 namespace Pit {

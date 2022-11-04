@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
+#include "Rendering/RenderingSubmodule.hpp"
 #include "UIRenderer.hpp"
 #include "UIFonts.hpp"
 

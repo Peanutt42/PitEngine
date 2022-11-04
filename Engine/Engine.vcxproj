@@ -158,7 +158,6 @@
     <ClInclude Include="src\Core\Assert.hpp" />
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
-    <ClInclude Include="src\Core\EngineConfig.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
     <ClInclude Include="src\Core\Input\Input.hpp" />
     <ClInclude Include="src\Core\Input\KeyCode.hpp" />

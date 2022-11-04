@@ -1,5 +1,10 @@
 #include "pch.hpp"
 #include "Engine.hpp"
+#include "Audio/AudioSubmodule.hpp"
+#include "ECS/ECSSubmodule.hpp"
+#include "Networking/NetworkingSubmodule.hpp"
+#include "Physics/PhysicsSubmodule.hpp"
+#include "Rendering/RenderingSubmodule.hpp"
 
 
 using namespace Pit;

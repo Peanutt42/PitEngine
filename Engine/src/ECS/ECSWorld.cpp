@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
+#include "ECSSubmodule.hpp"
 #include "ECSWorld.hpp"
 #include "ECSSystem.hpp"
 #include "ECSComponents.hpp"

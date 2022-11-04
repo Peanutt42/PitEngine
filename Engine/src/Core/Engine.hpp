@@ -1,23 +1,31 @@
 #pragma once
 
-#include "Audio/AudioSubmodule.hpp"
-#include "ECS/ECSSubmodule.hpp"
-#include "Networking/NetworkingSubmodule.hpp"
-#include "Physics/PhysicsSubmodule.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
+#include "CoreInclude.hpp"
 
 namespace Pit {
+	class AudioSubmodule;
+	class ECSSubmodule;
+	class NetworkingSubmodule;
+	class PhysicsSubmodule;
+	class RenderingSubmodule;
+
 	class Engine {
 	public:
+		enum RenderingAPI {
+			OpenGL_Api
+		};
+
 		struct CreateInfo {
 			Array<String> ConsoleArgs;
 			String WindowName;
 			bool WindowToolbar;
 			bool VSync;
 			bool UIDocking;
+			RenderingAPI RenderingApi;
+			int AntiAliasing;
 
-			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking) 
-				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking) {
+			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 2)
+				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing) {
 
 				for (int i = 0; i < argc; i++) ConsoleArgs.push_back(argv[i]);
 			}

@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
+#include "Rendering/RenderingSubmodule.hpp"
 #include "Window.hpp"
 
 using namespace Pit::Rendering;
