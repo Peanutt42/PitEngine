@@ -68,20 +68,35 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-static void APIENTRY OpenGLMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* msg, const void* data) {
+static void APIENTRY GlMessageCallback(GLenum source, GLenum type, unsigned int id, GLenum severity,
+										   GLsizei length, const char* message, const void* userParam) {
+
+	// Ignore non-significant error/warning codes
+	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+
 	switch (severity) {
-	case GL_DEBUG_SEVERITY_HIGH:         PIT_ENGINE_FATAL(Log::Rendering, "[OpenGL]: {}", msg); return;
-	case GL_DEBUG_SEVERITY_MEDIUM:       PIT_ENGINE_ERR(Log::Rendering, "[OpenGL]: {}", msg); return;
-	case GL_DEBUG_SEVERITY_LOW:          PIT_ENGINE_WARN(Log::Rendering, "[OpenGL]: {}", msg); return;
-	case GL_DEBUG_SEVERITY_NOTIFICATION: PIT_ENGINE_TRACE(Log::Rendering, "[OpenGL]: {}", msg); return;
+	case GL_DEBUG_SEVERITY_HIGH:         PIT_ENGINE_FATAL(Log::Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_MEDIUM:       PIT_ENGINE_ERR(Log::Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_LOW:          PIT_ENGINE_WARN(Log::Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: PIT_ENGINE_TRACE(Log::Rendering, "[Glad]: {}", message); return;
 	}
 
 	PIT_ENGINE_TRACE(Log::Rendering, "[OpenGL]: Unknown severity level!");
 }
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
 Renderer::Renderer() {
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
+
+	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+		//glEnable(GL_DEBUG_OUTPUT);
+		//glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		//glDebugMessageCallback(GlMessageCallback, nullptr);
+		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 
 	glfwSetCursorPosCallback(Engine::Rendering()->Window->GetWindowHandle(), mouse_callback);
 	glfwSetScrollCallback(Engine::Rendering()->Window->GetWindowHandle(), scroll_callback);

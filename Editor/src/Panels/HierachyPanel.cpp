@@ -1,8 +1,9 @@
 #include "pch.hpp"
-#include "HierachyPanel.hpp"
-#include <imgui/imgui.h>
 #include "Core/Engine.hpp"
+#include "HierachyPanel.hpp"
+#include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSComponents.hpp"
+#include <imgui/imgui.h>
 
 using namespace Pit::Editor;
 

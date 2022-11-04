@@ -24,7 +24,7 @@ namespace Pit {
 			RenderingAPI RenderingApi;
 			int AntiAliasing;
 
-			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 2)
+			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 0)
 				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing) {
 
 				for (int i = 0; i < argc; i++) ConsoleArgs.push_back(argv[i]);

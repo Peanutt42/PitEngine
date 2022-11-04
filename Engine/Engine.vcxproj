@@ -159,8 +159,8 @@
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
-    <ClInclude Include="src\Core\Input\Input.hpp" />
-    <ClInclude Include="src\Core\Input\KeyCode.hpp" />
+    <ClInclude Include="src\Input\Input.hpp" />
+    <ClInclude Include="src\Input\KeyCode.hpp" />
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
     <ClInclude Include="src\Core\Result.hpp" />
@@ -200,7 +200,7 @@
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
-    <ClCompile Include="src\Core\Input\Input.cpp" />
+    <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />

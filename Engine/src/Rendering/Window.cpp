@@ -18,10 +18,14 @@ Window::Window(const String& title, int width, int height, bool fullscreen)
 
 	glfwWindowHint(GLFW_MAXIMIZED, fullscreen ? GLFW_TRUE : GLFW_FALSE);
 
+	glfwWindowHint(GLFW_SAMPLES, Engine::GetInfo().AntiAliasing);
+
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
 	GLFWmonitor* primaryMonitor = nullptr;
 	if (!Engine::GetInfo().WindowToolbar) {
-		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE); // force window on primary screen
-		primaryMonitor = glfwGetPrimaryMonitor();
+		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
+		primaryMonitor = glfwGetPrimaryMonitor(); // Force window on primary screen
 	}
 
 	if (fullscreen) {
@@ -39,6 +43,7 @@ Window::Window(const String& title, int width, int height, bool fullscreen)
 	glfwSetWindowUserPointer(m_Window, this);
 	glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizedCallback);
 	glfwSetWindowSizeCallback(m_Window, _WindowResizedCallback);
+	glfwSetWindowPosCallback(m_Window, _WindowPositionCallback);
 	glfwSetWindowSizeLimits(m_Window, 200, 200, 9999999, 9999999);
 }
 
@@ -66,6 +71,7 @@ void Window::SetIcon(const String& iconFilePath) {
 	int w, h, channels;
 	unsigned char* pixels = stbi_load(iconFilePath.c_str(), &w, &h, &channels, 4);
 	GLFWimage images[1]{ {w, h, pixels} };
+	stbi_image_free(pixels);
 	glfwSetWindowIcon(m_Window, 1, images);
 }
 
@@ -82,7 +88,7 @@ void Window::_FramebufferResizedCallback(GLFWwindow* window, int width, int heig
 		_window->m_Width = width;
 		_window->m_Height = height;
 	}
-	Engine::Rendering()->Renderer->Update();
+	Engine::Update();
 }
 
 void Window::_WindowResizedCallback(GLFWwindow* window, int width, int height) {
@@ -93,5 +99,9 @@ void Window::_WindowResizedCallback(GLFWwindow* window, int width, int height) {
 		_window->m_Width = width;
 		_window->m_Height = height;
 	}
-	Engine::Rendering()->Renderer->Update();
+	Engine::Update();
+}
+
+void Window::_WindowPositionCallback(GLFWwindow* window, int xpos, int ypos) {
+	Engine::Update();
 }

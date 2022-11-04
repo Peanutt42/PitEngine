@@ -51,10 +51,10 @@
     <ClInclude Include="src\Core\FileSystem.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Input\Input.hpp">
+    <ClInclude Include="src\Input\Input.hpp">
       <Filter>Core\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Input\KeyCode.hpp">
+    <ClInclude Include="src\Input\KeyCode.hpp">
       <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\PlatformDetection.hpp">
@@ -158,7 +158,7 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Input\Input.cpp">
+    <ClCompile Include="src\Input\Input.cpp">
       <Filter>Core\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Random.cpp">
