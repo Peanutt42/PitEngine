@@ -21,8 +21,11 @@ Window::Window(const String& title, int width, int height, bool fullscreen)
 	if (!Engine::GetInfo().WindowToolbar) {
 		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE); // force window on primary screen
 		primaryMonitor = glfwGetPrimaryMonitor();
-		m_Width = glfwGetVideoMode(primaryMonitor)->width;
-		m_Height = glfwGetVideoMode(primaryMonitor)->height;
+	}
+
+	if (fullscreen) {
+		m_Width = glfwGetVideoMode(glfwGetPrimaryMonitor())->width;
+		m_Height = glfwGetVideoMode(glfwGetPrimaryMonitor())->height;
 	}
 
 	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);

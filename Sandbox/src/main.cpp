@@ -7,7 +7,7 @@ using namespace Pit;
 int main(const int argc, const char* argv[]) {
 	setup_crash_handler();
 
-	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Sandbox", true, false, false);
+	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Sandbox", false, false, false);
 
 	Engine::Init(engineInfo);
 	
