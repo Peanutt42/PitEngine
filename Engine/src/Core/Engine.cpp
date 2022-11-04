@@ -42,6 +42,8 @@ std::atomic<bool>		Engine::s_Quit = false;
 	}
 
 void Engine::Init(const CreateInfo& info) {
+	PIT_PROFILE_BEGIN_SESSION("EngineInit", "EngineProfile-Init.json");
+
 	try {
 		Debug::Logging::Init();
 
@@ -67,9 +69,17 @@ void Engine::Init(const CreateInfo& info) {
 		Engine::InitEvent.Invoke();
 	}
 	CATCH_EXCEPTIONS();
+
+	PIT_PROFILE_END_SESSION();
+	
+	PIT_PROFILE_BEGIN_SESSION("EngineRuntime", "EngineProfile-Runtime.json"); // Start Update-ProfileSession
 }
 
 void Engine::Shutdown() {
+	PIT_PROFILE_END_SESSION(); // End Update-ProfileSession
+
+	PIT_PROFILE_BEGIN_SESSION("EngineShutdown", "EngineProfile-Shutdown.json");
+
 	try {
 		Engine::ShutdownEvent.Invoke();
 
@@ -89,6 +99,8 @@ void Engine::Shutdown() {
 		Debug::Logging::Shutdown();
 	}
 	CATCH_EXCEPTIONS();
+
+	PIT_PROFILE_END_SESSION();
 }
 
 void Engine::Update() {
@@ -118,6 +130,7 @@ void Engine::Update() {
 		s_AudioSubmodule->Update();
 	}
 	CATCH_EXCEPTIONS();
+
 }
 
 bool Engine::ShouldClose() {

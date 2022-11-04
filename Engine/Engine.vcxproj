@@ -205,7 +205,6 @@
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
-    <ClCompile Include="src\Debug\ProfileStats.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />

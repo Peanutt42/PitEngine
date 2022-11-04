@@ -24,7 +24,7 @@ void Logging::Init() {
 	size filecount = std::distance(std::filesystem::directory_iterator("Logs"), std::filesystem::directory_iterator{});
 	if (filecount >= 10) {
 		for (auto& directoryEntry : std::filesystem::directory_iterator("Logs")) {
-			if (filecount > 10) {
+			if (filecount > 10 && !directoryEntry.is_directory()) {
 				std::filesystem::remove(directoryEntry.path());
 				filecount--;
 			}
@@ -61,8 +61,5 @@ void Logging::Shutdown() {
 	s_GameLogger.reset();
 	
 	LoggerInitialized = false;
-
-	PerformanceReportFile << ProfileStatGroups::InfoToString();
-	PerformanceReportFile.close();
 #endif
 }

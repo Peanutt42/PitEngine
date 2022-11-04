@@ -38,6 +38,8 @@ void RenderingSubmodule::Shutdown() {
 }
 
 void RenderingSubmodule::Update() {
+	PIT_PROFILE_FUNCTION();
+
 	Renderer->Update();
 	UIRenderer->Update();
 	Window->Update();

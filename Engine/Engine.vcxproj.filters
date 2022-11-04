@@ -173,9 +173,6 @@
     <ClCompile Include="src\Debug\Logging.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\ProfileStats.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>ECS</Filter>
     </ClCompile>

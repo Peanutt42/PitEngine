@@ -4,8 +4,6 @@
 
 using namespace Pit;
 
-DEFINE_EXTERN_PROFILE_STAT_FLOAT(ECSUpdate, ECS);
-
 void ECSSubmodule::Init() {
 	if (!m_ECSWorld.Init())
 		PIT_ENGINE_FATAL(Log::ECS, "Error while initializing ECSWorld");

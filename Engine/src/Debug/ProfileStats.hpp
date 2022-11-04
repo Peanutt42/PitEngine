@@ -3,367 +3,203 @@
 #include "Core/Time.hpp"
 #include <functional>
 #include <string>
+#include <fstream>
 
 namespace Pit::Debug {
 #if DEBUG || RELEASE
-	enum ProfileStatType {
-		Float,
-		Int,
-		String,
-		Memory
-	};
-	template<typename T>
-	static constexpr const ProfileStatType GetProfileType() {
-		if (std::is_same_v<T, float>) return Float;
-		if (std::is_same_v<T, int>) return Int;
-		if (std::is_same_v<T, Pit::String>) return String;
-		if (std::is_same_v<T, Pit::size>) return Memory;
-	}
+	using FloatingPointMicroseconds = std::chrono::duration<double, std::micro>;
 
-	template<typename T>
-	struct ProfileStatEntry {
-		Pit::String name;
-		T* pValue;
-		std::function<T()> avarageFunc;
+	struct ProfileResult {
+		std::string Name;
+
+		FloatingPointMicroseconds Start;
+		std::chrono::microseconds ElapsedTime;
+		std::thread::id ThreadID;
 	};
 
-	struct ProfileStatGroupEntry {
-		Pit::String name;
-		Array<ProfileStatEntry<float>>* pFloatStats;
-		Array<ProfileStatEntry<int>>* pIntStats;
-		Array<ProfileStatEntry<Pit::String>>* pStringStats;
-		Array<ProfileStatEntry<size>>* pMemoryStats;
+	struct InstrumentationSession {
+		std::string Name;
 	};
 
-	class ProfileStatGroups {
+	class Instrumentor {
 	public:
-		static Array<ProfileStatGroupEntry> s_ProfileStatGroups;
-		
-		template<typename T>
-		static bool Register() {
-			s_ProfileStatGroups.push_back(Pit::Debug::ProfileStatGroupEntry{ T::GetName(),
-																			&T::s_FloatProfileStats,
-																			&T::s_IntProfileStats,
-																			&T::s_StringProfileStats,
-																			&T::s_MemoryProfileStats });
-			return true;
-		}
+		Instrumentor(const Instrumentor&) = delete;
+		Instrumentor(Instrumentor&&) = delete;
 
-		static Pit::String InfoToString() {
-			std::stringstream result;
-
-			result << "ProfileStatGroups:\n";
-			for (auto& profileStatGroup : s_ProfileStatGroups) {
-				result << "\t" << profileStatGroup.name << ":\n";
-				for (auto& floatStat : *profileStatGroup.pFloatStats)
-					result << "\t\t" << floatStat.name << ": " << floatStat.avarageFunc() << '\n';
-
-				for (auto& intStat : *profileStatGroup.pIntStats)
-					result << "\t\t" << intStat.name << ": " << intStat.avarageFunc() << '\n';
-
-				for (auto& stringStat : *profileStatGroup.pStringStats)
-					result << "\t\t" << stringStat.name << ": " << stringStat.avarageFunc() << '\n';
-
-				for (auto& memoryStat : *profileStatGroup.pMemoryStats)
-					result << "\t\t" << memoryStat.name << ": " << memoryStat.avarageFunc() << '\n';
+		void BeginSession(const std::string& name, const std::string& filepath = "results.json") {
+			std::lock_guard lock(m_Mutex);
+			if (m_CurrentSession) {
+				// If there is already a current session, then close it before beginning new one.
+				// Subsequent profiling output meant for the original session will end up in the
+				// newly opened session instead.  That's better than having badly formatted
+				// profiling output.
+				PIT_ENGINE_FATAL(Log::General, "Instrumentor::BeginSession('{0}') when session '{1}' already open.", name, m_CurrentSession->Name);
+				
+				InternalEndSession();
 			}
+			std::filesystem::create_directory({ "Logs/ProfileReports" });
+			m_OutputStream.open("Logs/ProfileReports/" + filepath);
 
-			return result.str();
-		}
-	};
-
-	// usage: DECLARE_PROFILE_STAT_GROUP(Example, "Example");
-#define DECLARE_PROFILE_STAT_GROUP(name, statName)																		\
-	class STAT_GROUP_##name {																							\
-	public:																												\
-		static Pit::String GetName() {																					\
-			return #statName;																							\
-		}																												\
-		static bool Registered;																							\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> s_StringProfileStats;								\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> s_MemoryProfileStats;									\
-		template<typename T>																							\
-		static bool Register() {																						\
-			if constexpr (T::Type == Pit::Debug::Float) {																\
-				s_FloatProfileStats.emplace_back(T::GetName(),															\
-												 &T::GetValue(),														\
-												 [](){return T::GetAvarageValue();});							\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::Int) {																	\
-				s_IntProfileStats.emplace_back(T::GetName(),															\
-											   &T::GetValue(),															\
-											   [](){return T::GetAvarageValue();});								\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::String) {																\
-				s_StringProfileStats.emplace_back(T::GetName(),															\
-												  &T::GetValue(),														\
-												  [](){return T::GetAvarageValue();});						\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::Memory) {																\
-				s_MemoryProfileStats.emplace_back(T::GetName(),															\
-												  &T::GetValue(),														\
-												  [](){return T::GetAvarageValue();});							\
-				return true;																							\
-			}																											\
-		}																												\
-	};																													\
-	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>();					\
-	Pit::Array<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
-	Pit::Array<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
-	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> STAT_GROUP_##name::s_StringProfileStats;						\
-	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> STAT_GROUP_##name::s_MemoryProfileStats
-
-
-#define DECLARE_EXTERN_PROFILE_STAT_GROUP(name, statName)																\
-	class STAT_GROUP_##name {																							\
-	public:																												\
-		static Pit::String GetName() {																					\
-			return #statName;																							\
-		}																												\
-		static bool Registered;																							\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<float>> s_FloatProfileStats;									\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<int>> s_IntProfileStats;										\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> s_StringProfileStats;								\
-		static Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> s_MemoryProfileStats;									\
-		template<typename T>																							\
-		static bool Register() {																						\
-			if constexpr (T::Type == Pit::Debug::Float) {																\
-				s_FloatProfileStats.emplace_back(T::GetName(),															\
-												 &T::GetValue(),														\
-												 [](){return T::GetAvarageValue();});							\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::Int) {																	\
-				s_IntProfileStats.emplace_back(T::GetName(),															\
-											   &T::GetValue(),															\
-											   [](){return T::GetAvarageValue();});								\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::String) {																\
-				s_StringProfileStats.emplace_back(T::GetName(),															\
-												  &T::GetValue(),														\
-												  [](){return T::GetAvarageValue();});						\
-				return true;																							\
-			}																											\
-			if constexpr (T::Type == Pit::Debug::Memory) {																\
-				s_MemoryProfileStats.emplace_back(T::GetName(),															\
-												  &T::GetValue(),														\
-												  [](){return T::GetAvarageValue();});							\
-				return true;																							\
-			}																											\
-		}																												\
-	}	
-
-#define DEFINE_EXTERN_PROFILE_STAT_GROUP(name)																			\
-	bool STAT_GROUP_##name::Registered = Pit::Debug::ProfileStatGroups::Register<STAT_GROUP_##name>();					\
-	Pit::Array<Pit::Debug::ProfileStatEntry<float>> STAT_GROUP_##name::s_FloatProfileStats;							\
-	Pit::Array<Pit::Debug::ProfileStatEntry<int>> STAT_GROUP_##name::s_IntProfileStats;								\
-	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::String>> STAT_GROUP_##name::s_StringProfileStats;						\
-	Pit::Array<Pit::Debug::ProfileStatEntry<Pit::size>> STAT_GROUP_##name::s_MemoryProfileStats
-
-
-	// usage: DECLARE_PROFILE_STAT(ExampleGroup, "Example");
-#define DECLARE_PROFILE_STAT(type, name, statGroup, statName, default_val)												\
-	class STAT_##name {																								\
-	public:																												\
-		static Pit::String GetName() {																					\
-			return #statName;																							\
-		}																												\
-		template<typename T>																							\
-		static constexpr bool IsInGroup() {																				\
-			return std::is_same_v<T, STAT_GROUP_##statGroup>;															\
-		}																												\
-		static constexpr Pit::Debug::ProfileStatType Type = Pit::Debug::GetProfileType<type>();							\
-		static void SetValue(type value) {																				\
-			Value = value;																								\
-			static Pit::size ValueRecordIndex = 0, shouldRecordTime = 0;													\
-			if (shouldRecordTime < 150) {																				\
-				shouldRecordTime++;																						\
-				return;																									\
-			}																											\
-			shouldRecordTime = 0;																						\
-			ValueRecord[ValueRecordIndex % 10] = value;																	\
-			ValueRecordIndex++;																							\
-		}																												\
-		static type& GetValue() {																						\
-			return Value;																								\
-		}																												\
-		static type GetAvarageValue() {																				\
-			if constexpr(std::is_same_v<type, Pit::String>) return Value;												\
-			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
-				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
-			return sum / 10;																							\
-		}																												\
-	private:																											\
-		static bool Registered;																							\
-		static type Value;																								\
-		static type ValueRecord[10];																					\
-	};																													\
-	type STAT_##name::Value = default_val;																				\
-	bool Registered = STAT_GROUP_##statGroup::Register<STAT_##name>();													\
-	type STAT_##name::ValueRecord[10]
-
-#define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)													\
-	class STAT_##name {																								\
-	public:																												\
-		static Pit::String GetName() {																					\
-			return #statName;																							\
-		}																												\
-		template<typename T>																							\
-		static constexpr bool IsInGroup() {																				\
-			return std::is_same_v<T, STAT_GROUP_##statGroup>;															\
-		}																												\
-		static void SetValue(type value) {																				\
-			Value = value;																								\
-			static Pit::size ValueRecordIndex = 0, shouldRecordTime = 0;													\
-			if (shouldRecordTime < 150) {																				\
-				shouldRecordTime++;																						\
-				return;																									\
-			}																											\
-			shouldRecordTime = 0;																						\
-			ValueRecord[ValueRecordIndex % 10] = value;																	\
-			ValueRecordIndex++;																							\
-		}																												\
-		static type& GetValue() {																						\
-			return Value;																								\
-		}																												\
-		static type GetAvarageValue() {																					\
-			if constexpr(std::is_same_v<type, Pit::String>) return Value;												\
-			type sum = ValueRecord[0] + ValueRecord[1] + ValueRecord[2] + ValueRecord[3] + ValueRecord[4] +				\
-				       ValueRecord[5] + ValueRecord[6] + ValueRecord[7] + ValueRecord[8] + ValueRecord[9];				\
-			return sum / 10;																							\
-		}																												\
-		static constexpr Pit::Debug::ProfileStatType Type = Pit::Debug::GetProfileType<type>();							\
-	private:																											\
-		static type Value;																								\
-		static bool Registered;																							\
-		static type ValueRecord[10];																					\
-	}
-
-#define DEFINE_EXTERN_PROFILE_STAT(type, name, statGroup, default_val)													\
-	bool STAT_##name::Registered = STAT_GROUP_##statGroup::Register<STAT_##name>();										\
-	type STAT_##name::Value = default_val;																				\
-	type STAT_##name::ValueRecord[10]
-
-
-
-	// Default ProfileStat types
-#define DECLARE_PROFILE_STAT_FUNC(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT_FLOAT(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_FUNC(name, statGroup, statName)														\
-	DECLARE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup, statName)															
-#define DEFINE_EXTERN_PROFILE_STAT_FUNC(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup)
-
-#define DECLARE_PROFILE_STAT_FLOAT(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT(float, name, statGroup, statName, 0.f)
-#define DECLARE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup, statName)													\
-	DECLARE_EXTERN_PROFILE_STAT(float, name, statGroup, statName)															
-#define DEFINE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT(float, name, statGroup, 0.f)
-
-
-#define DECLARE_PROFILE_STAT_INT(name, statGroup, statName)																\
-	DECLARE_PROFILE_STAT(int, name, statGroup, statName, 0)
-#define DECLARE_EXTERN_PROFILE_STAT_INT(name, statGroup, statName)														\
-	DECLARE_EXTERN_PROFILE_STAT(int, name, statGroup, statName)															
-#define DEFINE_EXTERN_PROFILE_STAT_INT(name, statGroup)																	\
-	DEFINE_EXTERN_PROFILE_STAT(int, name, statGroup, 0)
-
-
-#define DECLARE_PROFILE_STAT_STRING(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT(Pit::String, name, statGroup, statName, "")
-#define DECLARE_EXTERN_PROFILE_STAT_STRING(name, statGroup, statName)													\
-	DECLARE_EXTERN_PROFILE_STAT(Pit::String, name, statGroup, statName)															
-#define DEFINE_EXTERN_PROFILE_STAT_STRING(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT(Pit::String, name, statGroup, "")
-
-
-#define DECLARE_PROFILE_STAT_MEMORY(name, statGroup, statName)															\
-	DECLARE_PROFILE_STAT(size, name, statGroup, statName, 0)
-#define DECLARE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup, statName)													\
-	DECLARE_EXTERN_PROFILE_STAT(size, name, statGroup, statName)															
-#define DEFINE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup)																\
-	DEFINE_EXTERN_PROFILE_STAT(size, name, statGroup, 0)
-
-
-
-
-	class ProfileStatTimer : public Timer {
-	public:
-		ProfileStatTimer(std::function<void(float)> finishCallback)
-			: m_FinishedCallback(finishCallback) {
-
-
+			if (m_OutputStream.is_open()) {
+				m_CurrentSession = new InstrumentationSession({ name });
+				WriteHeader();
+			}
+			else 
+				PIT_ENGINE_FATAL(Log::General, "Instrumentor could not open results file '{0}'.", filepath);
 		}
 
-		~ProfileStatTimer() {
-			m_FinishedCallback(m_Timer.ElapsedMillis());
+		void EndSession() {
+			std::lock_guard lock(m_Mutex);
+			InternalEndSession();
 		}
 
+		void WriteProfile(const ProfileResult& result) {
+			std::stringstream json;
+
+			json << std::setprecision(3) << std::fixed;
+			json << ",{";
+			json << "\"cat\":\"function\",";
+			json << "\"dur\":" << (result.ElapsedTime.count()) << ',';
+			json << "\"name\":\"" << result.Name << "\",";
+			json << "\"ph\":\"X\",";
+			json << "\"pid\":0,";
+			json << "\"tid\":" << result.ThreadID << ",";
+			json << "\"ts\":" << result.Start.count();
+			json << "}";
+
+			std::lock_guard lock(m_Mutex);
+			if (m_CurrentSession) {
+				m_OutputStream << json.str();
+				m_OutputStream.flush();
+			}
+		}
+
+		static Instrumentor& Get() {
+			static Instrumentor instance;
+			return instance;
+		}
 	private:
-		Timer m_Timer;
-		std::function<void(float)> m_FinishedCallback;
+		Instrumentor()
+			: m_CurrentSession(nullptr) {
+		}
+
+		~Instrumentor() {
+			EndSession();
+		}
+
+		void WriteHeader() {
+			m_OutputStream << "{\"otherData\": {},\"traceEvents\":[{}";
+			m_OutputStream.flush();
+		}
+
+		void WriteFooter() {
+			m_OutputStream << "]}";
+			m_OutputStream.flush();
+		}
+
+		// Note: you must already own lock on m_Mutex before
+		// calling InternalEndSession()
+		void InternalEndSession() {
+			if (m_CurrentSession) {
+				WriteFooter();
+				m_OutputStream.close();
+				delete m_CurrentSession;
+				m_CurrentSession = nullptr;
+			}
+		}
+	private:
+		std::mutex m_Mutex;
+		InstrumentationSession* m_CurrentSession;
+		std::ofstream m_OutputStream;
 	};
 
-#define SCOPE_STAT(name) \
-	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::SetValue(millis); });
-#define SCOPE_STAT_ADD(name) \
-	Debug::ProfileStatTimer __profileScopeStatTime([&](float millis){ STAT_##name::SetValue(STAT_##name::GetValue() + millis); });
+	class InstrumentationTimer {
+	public:
+		InstrumentationTimer(const char* name)
+			: m_Name(name), m_Stopped(false) {
+			m_StartTimepoint = std::chrono::steady_clock::now();
+		}
 
-#define STAT_RESET(name) \
-	STAT_##name::SetValue(NULL)
+		~InstrumentationTimer() {
+			if (!m_Stopped)
+				Stop();
+		}
 
+		void Stop() {
+			auto endTimepoint = std::chrono::steady_clock::now();
+			auto highResStart = FloatingPointMicroseconds{ m_StartTimepoint.time_since_epoch() };
+			auto elapsedTime = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch() - std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch();
 
-#define GET_STAT_VALUE(name) \
-	STAT_##name::Value
+			Instrumentor::Get().WriteProfile({ m_Name, highResStart, elapsedTime, std::this_thread::get_id() });
 
-#define SET_STAT_VALUE(name, value) \
-	STAT_##name::Value = value
+			m_Stopped = true;
+		}
+	private:
+		const char* m_Name;
+		std::chrono::time_point<std::chrono::steady_clock> m_StartTimepoint;
+		bool m_Stopped;
+	};
 
+	namespace InstrumentorUtils {
+
+		template <size_t N>
+		struct ChangeResult {
+			char Data[N];
+		};
+
+		template <size_t N, size_t K>
+		constexpr auto CleanupOutputString(const char(&expr)[N], const char(&remove)[K]) {
+			ChangeResult<N> result = {};
+
+			size_t srcIndex = 0;
+			size_t dstIndex = 0;
+			while (srcIndex < N) {
+				size_t matchIndex = 0;
+				while (matchIndex < K - 1 && srcIndex + matchIndex < N - 1 && expr[srcIndex + matchIndex] == remove[matchIndex])
+					matchIndex++;
+				if (matchIndex == K - 1)
+					srcIndex += matchIndex;
+				result.Data[dstIndex++] = expr[srcIndex] == '"' ? '\'' : expr[srcIndex];
+				srcIndex++;
+			}
+			return result;
+		}
+	}
+#endif
+
+#if DEBUG || RELEASE
+	// Resolve which function signature macro will be used. Note that this only
+	// is resolved when the (pre)compiler starts, so the syntax highlighting
+	// could mark the wrong one in your editor!
+#if defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__)
+#define HZ_FUNC_SIG __PRETTY_FUNCTION__
+#elif defined(__DMC__) && (__DMC__ >= 0x810)
+#define HZ_FUNC_SIG __PRETTY_FUNCTION__
+#elif (defined(__FUNCSIG__) || (_MSC_VER))
+#define HZ_FUNC_SIG __FUNCSIG__
+#elif (defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 600)) || (defined(__IBMCPP__) && (__IBMCPP__ >= 500))
+#define HZ_FUNC_SIG __FUNCTION__
+#elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x550)
+#define HZ_FUNC_SIG __FUNC__
+#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901)
+#define HZ_FUNC_SIG __func__
+#elif defined(__cplusplus) && (__cplusplus >= 201103)
+#define HZ_FUNC_SIG __func__
 #else
-#define DECLARE_PROFILE_STAT_GROUP(name, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_GROUP(name, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_GROUP(name)
-#define DECLARE_PROFILE_STAT(type, name, statGroup, statName, default_val)
-#define DECLARE_EXTERN_PROFILE_STAT(type, name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT(type, name, statGroup, default_val)
-#define DECLARE_PROFILE_STAT_FUNC(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_FUNC(name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_FUNC(name, statGroup)
-#define DECLARE_PROFILE_STAT_FLOAT(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_FLOAT(name, statGroup)
-#define DECLARE_PROFILE_STAT_INT(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_INT(name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_INT(name, statGroup)
-#define DECLARE_PROFILE_STAT_STRING(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_STRING(name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_STRING(name, statGroup)
-#define DECLARE_PROFILE_STAT_MEMORY(name, statGroup, statName)
-#define DECLARE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup, statName)
-#define DEFINE_EXTERN_PROFILE_STAT_MEMORY(name, statGroup)
+#define HZ_FUNC_SIG "HZ_FUNC_SIG unknown!"
+#endif
 
-#define SCOPE_STAT(name)	{}
-#define SCOPE_STAT_ADD(name)	{}
-#define STAT_RESET(name)	{}
-#define GET_STAT_VALUE(name)	{}
-#define SET_STAT_VALUE(name, value)	{}
+#define PIT_PROFILE_BEGIN_SESSION(name, filepath) ::Pit::Debug::Instrumentor::Get().BeginSession(name, filepath)
+#define PIT_PROFILE_END_SESSION() ::Pit::Debug::Instrumentor::Get().EndSession()
+#define PIT_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::Pit::Debug::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
+											   ::Pit::Debug::InstrumentationTimer timer##line(fixedName##line.Data)
+#define PIT_PROFILE_SCOPE_LINE(name, line) PIT_PROFILE_SCOPE_LINE2(name, line)
+#define PIT_PROFILE_SCOPE(name) PIT_PROFILE_SCOPE_LINE(name, __LINE__)
+#define PIT_PROFILE_FUNCTION() PIT_PROFILE_SCOPE(HZ_FUNC_SIG)
+#else
+#define PIT_PROFILE_BEGIN_SESSION(name, filepath)
+#define PIT_PROFILE_END_SESSION()
+#define PIT_PROFILE_SCOPE(name)
+#define PIT_PROFILE_FUNCTION()
 #endif
 }
-
-
-
-DECLARE_EXTERN_PROFILE_STAT_GROUP(General, "General");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(Game, "Game");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(Editor, "Editor");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(Rendering, "Rendering");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(UIRendering, "UIRendering");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(ECS, "ECS");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(Audio, "Audio");
-DECLARE_EXTERN_PROFILE_STAT_GROUP(Networking, "Networking");

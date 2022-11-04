@@ -39,10 +39,6 @@ bool World::Init() {
 void World::Update(const SystemTopic topic) {
 	if (Paused) return;
 
-	if (topic == 1/*First off new frame*/) STAT_RESET(ECSUpdate);
-
-	SCOPE_STAT_ADD(ECSUpdate);
-
 	for (auto& system : m_Systems) {
 		if (system.Topic == topic)
 			system.Update(*this);

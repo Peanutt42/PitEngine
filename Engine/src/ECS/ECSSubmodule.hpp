@@ -8,8 +8,6 @@
 #include "Core/Submodule.hpp"
 
 namespace Pit {
-	DECLARE_EXTERN_PROFILE_STAT_FLOAT(ECSUpdate, ECS, "ECS-Update");
-
 	class ECSSubmodule : public Submodule {
 	public:
 		virtual void Init();

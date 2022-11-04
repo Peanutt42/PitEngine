@@ -1,13 +1,2 @@
-﻿  pch.cpp
-  EditorApplication.cpp
-  EditorAssetManager.cpp
-  ContentBrowserPanel.cpp
-  HierachyPanel.cpp
-  InspectorPanel.cpp
-  ProfilerPanel.cpp
-  SceneViewportPanel.cpp
-  main.cpp
-C:\dev\cpp\PitEngine\Editor\src\EditorAssetManager.cpp(22,99): warning C4312: "Typumwandlung": Konvertierung von "uint32_t" in größeren Typ "ImTextureID"
-C:\dev\cpp\PitEngine\Editor\src\Panels\SceneViewportPanel.cpp(22,59): warning C4312: "Typumwandlung": Konvertierung von "uint32_t" in größeren Typ "ImTextureID"
-C:\dev\cpp\PitEngine\Engine\src\UI\UI.hpp(233,66): warning C4312: "Typumwandlung": Konvertierung von "uint32_t" in größeren Typ "ImTextureID" (Quelldatei wird kompiliert src\Panels\ContentBrowserPanel.cpp)
+﻿  ProfilerPanel.cpp
   Editor.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Editor\Editor.exe
