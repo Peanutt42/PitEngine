@@ -29,6 +29,7 @@ project "Sandbox"
 		"%{wks.location}/vendor/imgui/include",
 		"%{wks.location}/vendor/glfw/include",
 		"%{wks.location}/vendor/tinyobjloader/include",
+		"%{wks.location}/vendor/bullet/src",
 		"%{wks.location}/vendor/stb_image/include",
 		"%{wks.location}/vendor/optick/include",
 		"%{wks.location}/Engine/src"

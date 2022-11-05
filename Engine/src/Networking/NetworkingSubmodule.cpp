@@ -4,10 +4,12 @@
 using namespace Pit;
 
 void NetworkingSubmodule::Init() {
+	PIT_PROFILE_FUNCTION();
 
 }
 
 void NetworkingSubmodule::Shutdown() {
+	PIT_PROFILE_FUNCTION();
 
 }
 

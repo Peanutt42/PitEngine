@@ -7,5 +7,6 @@ namespace Pit::ECS {
     public:
         virtual void Initialize(World& world) = 0;
         virtual void Shutdown(World& world) = 0;
+        virtual void Update(World& world) = 0;
     };
 }

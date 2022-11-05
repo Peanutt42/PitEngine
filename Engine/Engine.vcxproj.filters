@@ -126,9 +126,6 @@
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rendering\Camera.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -166,6 +163,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -201,9 +199,6 @@
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Camera.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
@@ -229,5 +224,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
   </ItemGroup>
 </Project>

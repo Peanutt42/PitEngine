@@ -11,5 +11,8 @@ namespace Pit {
 		virtual void Shutdown();
 
 		virtual void Update();
+
+	private:
+		float m_FixedTimestep = 1.f / 60.f;
 	};
 }

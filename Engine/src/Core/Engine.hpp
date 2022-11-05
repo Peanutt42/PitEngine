@@ -9,6 +9,16 @@ namespace Pit {
 	class PhysicsSubmodule;
 	class RenderingSubmodule;
 
+	DEFINE_SIMPLE_EVENT(InitEvent);
+	DEFINE_SIMPLE_EVENT(NetworkingUpdateEvent);
+	DEFINE_SIMPLE_EVENT(PhysicUpdateEvent);
+	DEFINE_SIMPLE_EVENT(PreUpdateEvent);
+	DEFINE_SIMPLE_EVENT(UpdateEvent);
+	DEFINE_SIMPLE_EVENT(PostUpdateEvent);
+	DEFINE_SIMPLE_EVENT(RenderEvent);
+	DEFINE_SIMPLE_EVENT(UIRenderEvent);
+	DEFINE_SIMPLE_EVENT(OnWindowResizeEvent);
+	DEFINE_SIMPLE_EVENT(ShutdownEvent);
 	class Engine {
 	public:
 		enum RenderingAPI {
@@ -43,16 +53,16 @@ namespace Pit {
 		static RenderingSubmodule* Rendering() { return s_RenderingSubmodule; }
 		static ECSSubmodule* ECS() { return s_ECSSubmodule; }
 
-		static Event<> InitEvent;
-		static Event<> NetworkingUpdateEvent;
-		static Event<> PhysicUpdateEvent;
-		static Event<> PreUpdateEvent;
-		static Event<> UpdateEvent;
-		static Event<> PostUpdateEvent;
-		static Event<> RenderEvent;
-		static Event<> UIRenderEvent;
-		static Event<> OnWindowResizeEvent;
-		static Event<> ShutdownEvent;
+		static InitEvent InitEvent;
+		static NetworkingUpdateEvent NetworkingUpdateEvent;
+		static PhysicUpdateEvent PhysicUpdateEvent;
+		static PreUpdateEvent PreUpdateEvent;
+		static UpdateEvent UpdateEvent;
+		static PostUpdateEvent PostUpdateEvent;
+		static RenderEvent RenderEvent;
+		static UIRenderEvent UIRenderEvent;
+		static OnWindowResizeEvent OnWindowResizeEvent;
+		static ShutdownEvent ShutdownEvent;
 
 	private:
 		static CreateInfo s_CreateInfo;

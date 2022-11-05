@@ -230,7 +230,7 @@ namespace Pit::UI {
 			uv1 = { 0, 0 };
 			uv2 = { 1, 1 };
 		}
-		return ImGui::ImageButton((ImTextureID)texture->GetRendererID(), size, uv1, uv2, framePadding, bgColor, tintColor);
+		return ImGui::ImageButton((ImTextureID)Cast<uint64>(texture->GetRendererID()), size, uv1, uv2, framePadding, bgColor, tintColor);
 	}
 }
 /*

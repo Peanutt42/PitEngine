@@ -8,5 +8,6 @@ namespace Pit::ECS::Example {
 	public:
         virtual void Initialize(World& world) override;
         virtual void Shutdown(World& world) override;
+        virtual void Update(World& world) override;
     };
 }

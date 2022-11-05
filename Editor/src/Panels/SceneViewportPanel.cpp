@@ -19,7 +19,7 @@ void SceneViewportPanel::OnDestroy() {
 
 void SceneViewportPanel::OnGui() {
 	auto region = ImGui::GetContentRegionAvail();
-	ImGui::Image((ImTextureID)m_SceneTexture->GetRendererID(),
+	ImGui::Image((ImTextureID)Cast<uint64>(m_SceneTexture->GetRendererID()),
 				 ImVec2(region.x, region.y));
 	if (ImGui::BeginDragDropTarget()) {
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(CONTENT_BROWSER_DRAG_DROP)) {

@@ -4,10 +4,12 @@
 using namespace Pit;
 
 void AudioSubmodule::Init() {
+	PIT_PROFILE_FUNCTION();
 
 }
 
 void AudioSubmodule::Shutdown() {
+	PIT_PROFILE_FUNCTION();
 
 }
 

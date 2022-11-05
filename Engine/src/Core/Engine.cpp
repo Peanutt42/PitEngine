@@ -11,16 +11,16 @@
 using namespace Pit;
 using namespace std::chrono;
 
-Event<> Engine::InitEvent;
-Event<> Engine::NetworkingUpdateEvent;
-Event<> Engine::PhysicUpdateEvent;
-Event<> Engine::PreUpdateEvent;
-Event<> Engine::UpdateEvent;
-Event<> Engine::PostUpdateEvent;
-Event<> Engine::RenderEvent;
-Event<> Engine::UIRenderEvent;
-Event<> Engine::OnWindowResizeEvent;
-Event<> Engine::ShutdownEvent;
+InitEvent Engine::InitEvent;
+NetworkingUpdateEvent Engine::NetworkingUpdateEvent;
+PhysicUpdateEvent Engine::PhysicUpdateEvent;
+PreUpdateEvent Engine::PreUpdateEvent;
+UpdateEvent Engine::UpdateEvent;
+PostUpdateEvent Engine::PostUpdateEvent;
+RenderEvent Engine::RenderEvent;
+UIRenderEvent Engine::UIRenderEvent;
+OnWindowResizeEvent Engine::OnWindowResizeEvent;
+ShutdownEvent Engine::ShutdownEvent;
 
 Engine::CreateInfo		Engine::s_CreateInfo = Engine::CreateInfo(0, nullptr, "PitEngine-NullInfo", true, false, false);
 
@@ -69,7 +69,7 @@ void Engine::Init(const CreateInfo& info) {
 		s_PhysicsSubmodule = new PhysicsSubmodule();
 		s_PhysicsSubmodule->Init();
 
-		Engine::InitEvent.Invoke();
+		InitEvent.Invoke();
 	}
 	CATCH_EXCEPTIONS();
 }
@@ -114,17 +114,17 @@ void Engine::Update() {
 		Input::Update();
 
 		s_NetworkingSubmodule->Update();
-		Engine::NetworkingUpdateEvent.Invoke();
+		NetworkingUpdateEvent.Invoke();
 		
 		s_PhysicsSubmodule->Update();
-		Engine::PhysicUpdateEvent.Invoke();
+		PhysicUpdateEvent.Invoke();
 
-		Engine::PreUpdateEvent.Invoke();
-		Engine::UpdateEvent.Invoke();
+		PreUpdateEvent.Invoke();
+		UpdateEvent.Invoke();
 		s_ECSSubmodule->Update();
 
 		s_RenderingSubmodule->Update();
-		Engine::PostUpdateEvent.Invoke();
+		PostUpdateEvent.Invoke();
 
 		s_AudioSubmodule->Update();
 	}

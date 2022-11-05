@@ -2,7 +2,8 @@
 #include "EditorAssetManager.hpp"
 #include "EditorApplication.hpp"
 
-using namespace Pit::Editor;
+using namespace Pit;
+using namespace Editor;
 
 void EditorAssetManager::Init() {
 	// see Icon enum for indexing
@@ -19,7 +20,7 @@ void EditorAssetManager::Init() {
 }
 
 ImTextureID EditorAssetManager::GetIcon(Icon icon) {
-	return (ImTextureID)Pit::Editor::EditorApplication::AssetManager().m_Icons[icon]->GetRendererID();
+	return (ImTextureID)Cast<uint64>(EditorApplication::AssetManager().m_Icons[icon]->GetRendererID());
 }
 
 const Pit::Rendering::Texture* EditorAssetManager::GetIconTexture(Icon icon) {

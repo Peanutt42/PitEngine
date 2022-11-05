@@ -31,7 +31,9 @@ namespace Pit {
 			}
 		}
 
-		inline void Invoke(Args&&... args) {
+		inline virtual void Invoke(Args&&... args) {
+			PIT_PROFILE_FUNCTION("Pit::Event<Args...>::Invoke");
+
 			for (auto& callack : m_Listeners)
 				callack(std::forward<Args>(args)...);
 		}
@@ -44,7 +46,26 @@ namespace Pit {
 			return !m_Listeners.empty();
 		}
 
-	private:
+	protected:
 		Array<ListenFunc> m_Listeners;
 	};
+
+	template<>
+	inline void Event<>::Invoke() {
+		PIT_PROFILE_FUNCTION("Pit::Event::Invoke");
+
+		for (auto& callack : m_Listeners)
+			callack();
+	}
+
+#define DEFINE_SIMPLE_EVENT(name) \
+	class name : public Event<> {									\
+	public:															\
+		inline virtual void Invoke() override {						\
+			PIT_PROFILE_FUNCTION("Pit::" #name "::Invoke");			\
+																	\
+			for (auto& callack : m_Listeners)						\
+				callack();											\
+		}															\
+	}
 }

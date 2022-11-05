@@ -52,6 +52,8 @@ Window::~Window() {
 }
 
 void Window::Update() {
+	PIT_PROFILE_FUNCTION();
+
 	glfwSwapBuffers(m_Window);
 	glfwPollEvents();
 }
@@ -69,10 +71,11 @@ void Window::SetViewport(int width, int height) {
 
 void Window::SetIcon(const String& iconFilePath) {
 	int w, h, channels;
+	stbi_set_flip_vertically_on_load(iconFilePath.ends_with(".jpg") ? 1 : 0);
 	unsigned char* pixels = stbi_load(iconFilePath.c_str(), &w, &h, &channels, 4);
 	GLFWimage images[1]{ {w, h, pixels} };
-	stbi_image_free(pixels);
 	glfwSetWindowIcon(m_Window, 1, images);
+	stbi_image_free(pixels);
 }
 
 
