@@ -12,5 +12,6 @@ void NetworkingSubmodule::Shutdown() {
 }
 
 void NetworkingSubmodule::Update() {
+	PIT_PROFILE_FUNCTION();
 
 }

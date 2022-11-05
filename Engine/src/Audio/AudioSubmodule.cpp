@@ -12,5 +12,6 @@ void AudioSubmodule::Shutdown() {
 }
 
 void AudioSubmodule::Update() {
+	PIT_PROFILE_FUNCTION();
 
 }

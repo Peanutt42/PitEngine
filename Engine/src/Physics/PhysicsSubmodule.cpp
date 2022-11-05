@@ -12,5 +12,6 @@ void PhysicsSubmodule::Shutdown() {
 }
 
 void PhysicsSubmodule::Update() {
+	PIT_PROFILE_FUNCTION();
 
 }

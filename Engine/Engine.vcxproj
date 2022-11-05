@@ -76,7 +76,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -91,8 +91,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -121,8 +121,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -131,7 +131,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -149,8 +149,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3_mt.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -159,8 +159,6 @@
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
-    <ClInclude Include="src\Input\Input.hpp" />
-    <ClInclude Include="src\Input\KeyCode.hpp" />
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
     <ClInclude Include="src\Core\Result.hpp" />
@@ -180,6 +178,8 @@
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
+    <ClInclude Include="src\Input\Input.hpp" />
+    <ClInclude Include="src\Input\KeyCode.hpp" />
     <ClInclude Include="src\Math\CoreMath.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
@@ -200,7 +200,6 @@
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
-    <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
@@ -208,6 +207,7 @@
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp" />
+    <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />

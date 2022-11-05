@@ -7,9 +7,6 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Input">
-      <UniqueIdentifier>{AD4E7BCD-9906-BD1A-020E-9676EEE4570B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{0C95060D-78A9-2EBE-412B-D21DADFE2AEF}</UniqueIdentifier>
     </Filter>
@@ -22,6 +19,12 @@
     <Filter Include="Event">
       <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{953A660D-014F-8EBE-CAD0-311E36A48AEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{6D615D47-5919-9F94-C220-78F0AEF73985}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,9 @@
     </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{83755900-6F01-880B-D8AF-880BC45A880B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
@@ -50,12 +56,6 @@
     </ClInclude>
     <ClInclude Include="src\Core\FileSystem.hpp">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input\Input.hpp">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input\KeyCode.hpp">
-      <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\PlatformDetection.hpp">
       <Filter>Core</Filter>
@@ -114,11 +114,23 @@
     <ClInclude Include="src\Event\Event.hpp">
       <Filter>Event</Filter>
     </ClInclude>
+    <ClInclude Include="src\Input\Input.hpp">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\KeyCode.hpp">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\CoreMath.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\Camera.hpp">
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
       <Filter>Rendering</Filter>
@@ -135,6 +147,15 @@
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\UI\UI.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIFonts.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIRenderer.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
     <ClInclude Include="src\Utils\DateUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -145,11 +166,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\UI\UIRenderer.hpp" />
-    <ClInclude Include="src\UI\UIFonts.hpp" />
-    <ClInclude Include="src\UI\UI.hpp" />
-    <ClInclude Include="src\Rendering\Camera.hpp" />
-    <ClInclude Include="src\Math\CoreMath.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -157,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Input\Input.cpp">
-      <Filter>Core\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Random.cpp">
       <Filter>Core</Filter>
@@ -182,11 +195,17 @@
     <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
       <Filter>ECS\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="src\Input\Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\Camera.cpp">
+      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>Rendering</Filter>
@@ -203,11 +222,12 @@
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\UI\UIRenderer.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\UI\UIRenderer.cpp" />
-    <ClCompile Include="src\Rendering\Camera.cpp" />
   </ItemGroup>
 </Project>

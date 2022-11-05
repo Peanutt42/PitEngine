@@ -1,12 +1,9 @@
 #include "pch.hpp"
-#include "Rendering/Window.hpp"
-#include "Debug/vcrash.h"
+#include "Core/Engine.hpp"
 
 using namespace Pit;
 
 int main(const int argc, const char* argv[]) {
-	setup_crash_handler();
-
 	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Sandbox", false, false, false);
 
 	Engine::Init(engineInfo);

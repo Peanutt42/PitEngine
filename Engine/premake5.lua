@@ -29,13 +29,15 @@ project "Engine"
 		"%{wks.location}/vendor/imgui/include",
 		"%{wks.location}/vendor/glfw/include",
 		"%{wks.location}/vendor/tinyobjloader/include",
-		"%{wks.location}/vendor/stb_image/include"
+		"%{wks.location}/vendor/stb_image/include",
+		"%{wks.location}/vendor/optick/include"
 	}
 
 	
 	libdirs {
 		"%{wks.location}/vendor/vulkan/Lib",
-		"%{wks.location}/vendor/glfw/lib-vc2022"
+		"%{wks.location}/vendor/glfw/lib-vc2022",
+		"%{wks.location}/vendor/optick/lib/x64/release"
 	}
 
 	links {
@@ -47,6 +49,7 @@ project "Engine"
 		"tinyobjloader",
 		"opengl32.lib",
 		"glfw3_mt.lib",
+		"OptickCore.lib",
 		"Dbghelp.lib"
 	}
 

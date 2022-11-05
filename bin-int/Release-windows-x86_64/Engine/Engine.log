@@ -1,3 +1,29 @@
-﻿  Engine.cpp
+﻿  pch.cpp
+  AudioSubmodule.cpp
+  Engine.cpp
+  Random.cpp
+  Time.cpp
+  UUID.cpp
+  Logging.cpp
+  ECSSubmodule.cpp
+  ECSWorld.cpp
+  ECSBasicGameloop.cpp
+  Input.cpp
+  NetworkingSubmodule.cpp
+  PhysicsSubmodule.cpp
+  Camera.cpp
+  Renderer.cpp
+  RenderingSubmodule.cpp
+  Shader.cpp
+  Texture.cpp
+  Window.cpp
+  UIRenderer.cpp
+  WindowsPlatformUtils.cpp
+OptickCore.lib(OptickCore.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR ist bereits in "opengl32.lib(OPENGL32.dll)" definiert; zweite Definition wird ignoriert.
 Dbghelp.lib(dbghelp.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR ist bereits in "opengl32.lib(OPENGL32.dll)" definiert; zweite Definition wird ignoriert.
+UIRenderer.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
+RenderingSubmodule.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
+Renderer.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
+ECSWorld.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
+Engine.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
   Engine.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\Engine\Engine.lib

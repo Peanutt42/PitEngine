@@ -37,6 +37,8 @@ bool World::Init() {
 }
 
 void World::Update(const SystemTopic topic) {
+	PIT_PROFILE_FUNCTION();
+
 	if (Paused) return;
 
 	for (auto& system : m_Systems) {
@@ -51,6 +53,8 @@ void World::Clear() {
 
 #pragma region Entity
 entt::entity World::CreateEntityID() {
+	PIT_PROFILE_FUNCTION();
+
 	auto e = m_Registry.create();
 	m_Registry.emplace<UUIDComponent>(e);
 	m_Registry.emplace<NameComponent>(e);
@@ -64,6 +68,8 @@ EntityHandle World::CreateEntity() {
 }
 
 void World::DestroyEntity(entt::entity entity) {
+	PIT_PROFILE_FUNCTION();
+
 	m_Registry.destroy(entity);
 }
 #pragma endregion
