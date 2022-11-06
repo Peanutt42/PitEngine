@@ -12,8 +12,3 @@ Steps to build PitEngine:
     - precompiled headerfile to nothing ("")
     - Press ok
  - If running the application throws an error like "could not find OptickCore.dll" then copy OpetickCore.dll to bin/[YOUR CONFIG]/[Editor/Sandbox]
-    
-# Building - other platforms
-Steps to build PitEngine:
- - call in terminal (from .../PitEngine) vendor/premake/premake5.exe YOUR EDITOR OF CHOICE (look into premake doc.)
- - make shure that precompiled headers are setup right in your Editor of choice
