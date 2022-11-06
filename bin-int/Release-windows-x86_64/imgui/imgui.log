@@ -1,8 +1,16 @@
-﻿  imgui.cpp
+﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+  imgui.cpp
   imgui_demo.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_draw.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_impl_glfw.cpp
   imgui_impl_opengl3.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_tables.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_widgets.cpp
   imgui.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\imgui\imgui.lib

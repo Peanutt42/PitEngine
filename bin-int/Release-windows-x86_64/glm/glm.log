@@ -1,2 +1,3 @@
-﻿  glm.cpp
+﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+  glm.cpp
   glm.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\glm\glm.lib

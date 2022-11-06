@@ -1,7 +1,15 @@
-﻿  async.cpp
+﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+  async.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   cfg.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   color_sinks.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   file_sinks.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   fmt.cpp
   spdlog.cpp
   stdout_sinks.cpp

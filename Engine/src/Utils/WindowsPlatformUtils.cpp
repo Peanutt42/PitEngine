@@ -19,4 +19,18 @@ void MessagePrompts::ErrorMessage(LPCWSTR msg) {
 	MessageBox(NULL, msg, L"PitEngine-Error", MB_ICONERROR | MB_OK);
 }
 
+
+
+void Process::Run(LPCWSTR path) {
+	STARTUPINFO si;
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	PROCESS_INFORMATION pi;
+	ZeroMemory(&pi, sizeof(pi));
+
+	CreateProcess(path, nullptr, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+}
+
 #endif

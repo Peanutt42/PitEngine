@@ -233,6 +233,3 @@ namespace Pit::UI {
 		return ImGui::ImageButton((ImTextureID)Cast<uint64>(texture->GetRendererID()), size, uv1, uv2, framePadding, bgColor, tintColor);
 	}
 }
-/*
-* { 0,1 }, { 1, 0 } // png default
-*/

@@ -1,2 +1,3 @@
-﻿  tiny_obj_loader.cpp
+﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+  tiny_obj_loader.cpp
   tinyobjloader.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\tinyobjloader\tinyobjloader.lib

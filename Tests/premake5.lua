@@ -34,18 +34,18 @@ project "Tests"
 	}
 
 	filter { "configurations:Debug" }
-		buildoptions "/MTd"
+		buildoptions "/MDd"
 		runtime "Debug"
 		symbols "on"
 		
 	filter { "configurations:Release" }
-		buildoptions "/MT"
+		buildoptions "/MD"
 		runtime "Release"
 		optimize "on"
 		symbols "on"
 
 	filter { "configurations:Dist" }
-		buildoptions "/MT"
+		buildoptions "/MD"
 		runtime "Release"
 		optimize "on"
 

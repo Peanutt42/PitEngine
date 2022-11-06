@@ -13,4 +13,11 @@ namespace Pit {
 		static void ErrorMessage(LPCWSTR msg);
 #endif
 	};
+
+	class Process {
+	public:
+#ifdef PIT_WINDOWS
+		static void Run(LPCWSTR path);
+#endif
+	};
 }
