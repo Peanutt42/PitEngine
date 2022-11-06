@@ -23,6 +23,8 @@ static void UpdateMain() {
 }
 
 bool World::Init() {
+	PIT_PROFILE_FUNCTION();
+
 	// Set Specs
 	SetWorldSpecs(m_Specs);
 
@@ -48,13 +50,13 @@ void World::Update(const SystemTopic topic) {
 }
 
 void World::Clear() {
+	PIT_PROFILE_FUNCTION();
+
 	m_Registry.clear();
 }
 
 #pragma region Entity
 entt::entity World::CreateEntityID() {
-	PIT_PROFILE_FUNCTION();
-
 	auto e = m_Registry.create();
 	m_Registry.emplace<UUIDComponent>(e);
 	m_Registry.emplace<NameComponent>(e);
@@ -68,8 +70,6 @@ EntityHandle World::CreateEntity() {
 }
 
 void World::DestroyEntity(entt::entity entity) {
-	PIT_PROFILE_FUNCTION();
-
 	m_Registry.destroy(entity);
 }
 #pragma endregion

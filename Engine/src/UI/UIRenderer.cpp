@@ -12,6 +12,8 @@ using namespace Pit;
 using namespace UI;
 
 UIRenderer::UIRenderer() {
+	PIT_PROFILE_FUNCTION();
+
 	IMGUI_CHECKVERSION();
 
 	ImGui::CreateContext();
@@ -28,6 +30,8 @@ UIRenderer::UIRenderer() {
 }
 
 UIRenderer::~UIRenderer() {
+	PIT_PROFILE_FUNCTION();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
@@ -72,8 +76,7 @@ void UIRenderer::Update() {
         }
 	}
 
-	ImGui::Begin("test");
-	ImGui::End();
+
 	Engine::UIRenderEvent.Invoke();
 
 	if (Engine::GetInfo().UIDocking && ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)

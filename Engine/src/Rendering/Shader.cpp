@@ -6,6 +6,8 @@ using namespace Pit;
 using namespace Rendering;
 
 Shader::Shader(const String& vertexPath, const String& fragmentPath) {
+    PIT_PROFILE_FUNCTION();
+
     std::string vertexCode;
     std::string fragmentCode;
     std::ifstream vShaderFile;

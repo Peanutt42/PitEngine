@@ -8,6 +8,8 @@ using namespace Rendering;
 Texture::Texture(uint32_t width, uint32_t height)
 	: m_Width(width), m_Height(height) {
 
+	PIT_PROFILE_FUNCTION();
+
 	m_InternalFormat = GL_RGBA8;
 	m_DataFormat = GL_RGBA;
 
@@ -23,6 +25,8 @@ Texture::Texture(uint32_t width, uint32_t height)
 
 Texture::Texture(const std::string& path)
 	: m_Path(path) {
+
+	PIT_PROFILE_FUNCTION();
 
 	int width, height, channels;
 	

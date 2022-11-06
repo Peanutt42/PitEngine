@@ -8,6 +8,8 @@ using namespace Pit::Rendering;
 Window::Window(const String& title, int width, int height, bool fullscreen)
 	: m_Title(title), m_Width(width), m_Height(height) {
 
+	PIT_PROFILE_FUNCTION();
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -48,6 +50,8 @@ Window::Window(const String& title, int width, int height, bool fullscreen)
 }
 
 Window::~Window() {
+	PIT_PROFILE_FUNCTION();
+
 	glfwDestroyWindow(m_Window);
 }
 

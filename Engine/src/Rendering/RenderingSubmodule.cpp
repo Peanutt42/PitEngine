@@ -9,6 +9,8 @@ static void GLFWErrorCallback(int errorCode, const char* description) {
 }
 
 void RenderingSubmodule::Init() {
+	PIT_PROFILE_FUNCTION();
+
 	glfwInit();
 	glfwSetErrorCallback(GLFWErrorCallback);
 
@@ -30,6 +32,8 @@ void RenderingSubmodule::Init() {
 }
 
 void RenderingSubmodule::Shutdown() {
+	PIT_PROFILE_FUNCTION();
+
 	delete UIRenderer;
 	delete Renderer;
 	delete Window;

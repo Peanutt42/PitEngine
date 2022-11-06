@@ -87,6 +87,8 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 Renderer::Renderer() {
+	PIT_PROFILE_FUNCTION();
+
 	Engine::Rendering()->Window->SetIcon(FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
 
 	glEnable(GL_DEPTH_TEST);
@@ -131,6 +133,7 @@ Renderer::Renderer() {
 }
 
 Renderer::~Renderer() {
+	PIT_PROFILE_FUNCTION();
 
 }
 
