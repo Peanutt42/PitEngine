@@ -29,6 +29,7 @@ namespace Pit {
 		// Physx Scene
 		Physics::Scene* m_Scene = nullptr;
 		physx::PxMaterial* m_Material = nullptr;
+		physx::PxRigidDynamic* body;
 
 		// Physx Debugger
 		physx::PxPvd* m_Pvd = nullptr;

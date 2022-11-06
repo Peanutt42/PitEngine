@@ -11,6 +11,7 @@ static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
 	Shortcut = Array<KeyCode>{ LeftControl + Key_K };
+	Opened = false;
 
 	m_CurrentDirectory = s_AssetPath;
 }

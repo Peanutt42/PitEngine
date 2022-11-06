@@ -36,6 +36,8 @@ void PhysicsSubmodule::Update() {
 		PIT_PROFILE_FUNCTION("Pit::PhysicsSubmodule::Update::Step");
 
 		m_Scene->Simulate(m_FixedTimestep);
+		auto transform = body->getGlobalPose();
+		std::cout << transform.p.x << ", " << transform.p.y << ", " << transform.p.z << std::endl;
 
 		accumulator -= m_FixedTimestep;
 	}
@@ -73,12 +75,12 @@ void PhysicsSubmodule::_CreateScene() {
 
 	float halfExtent = .5f;
 	physx::PxShape* shape = m_Physics->createShape(physx::PxBoxGeometry(halfExtent, halfExtent, halfExtent), *m_Material);
-	physx::PxU32 size = 30;
+	physx::PxU32 size = 10;
 	physx::PxTransform t(physx::PxVec3(0));
 	for (physx::PxU32 i = 0; i < size; i++) {
 		for (physx::PxU32 j = 0; j < size - i; j++) {
 			physx::PxTransform localTm(physx::PxVec3(physx::PxReal(j * 2) - physx::PxReal(size - i), physx::PxReal(i * 2 + 1), 0) * halfExtent);
-			physx::PxRigidDynamic* body = m_Physics->createRigidDynamic(t.transform(localTm));
+			body = m_Physics->createRigidDynamic(t.transform(localTm));
 			body->attachShape(*shape);
 			physx::PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
 			m_Scene->AddActor(*body);

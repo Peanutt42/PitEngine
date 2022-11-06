@@ -43,6 +43,8 @@ std::atomic<bool>		Engine::s_Quit = false;
 	}
 
 void Engine::Init(const CreateInfo& info) {
+	OPTICK_FRAME("MainThread - Init");
+
 	PIT_PROFILE_FUNCTION();
 
 	setup_crash_handler();
@@ -75,6 +77,8 @@ void Engine::Init(const CreateInfo& info) {
 }
 
 void Engine::Shutdown() {
+	OPTICK_FRAME("MainThread - Shutdown");
+
 	PIT_PROFILE_FUNCTION();
 
 	try {

@@ -1,9 +1,5 @@
-﻿  Engine.cpp
-  PhysicScene.cpp
-  PhysicsSubmodule.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\ciso646(15,22): warning C4996: '_Header_ciso646': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning. (Quelldatei wird kompiliert src\Physics\PhysicScene.cpp)
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\ciso646(15,22): warning C4996: '_Header_ciso646': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning. (Quelldatei wird kompiliert src\Physics\PhysicsSubmodule.cpp)
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\ciso646(15,22): warning C4996: '_Header_ciso646': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning. (Quelldatei wird kompiliert src\Core\Engine.cpp)
+﻿  PhysicsSubmodule.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\ciso646(15,22): warning C4996: '_Header_ciso646': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning.
 OptickCore.lib(OptickCore.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR ist bereits in "opengl32.lib(OPENGL32.dll)" definiert; zweite Definition wird ignoriert.
 Dbghelp.lib(dbghelp.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR ist bereits in "opengl32.lib(OPENGL32.dll)" definiert; zweite Definition wird ignoriert.
 UIRenderer.obj : warning LNK4006: "public: __cdecl Optick::Event::~Event(void)" (??1Event@Optick@@QEAA@XZ) ist bereits in "OptickCore.lib(OptickCore.dll)" definiert; zweite Definition wird ignoriert.
