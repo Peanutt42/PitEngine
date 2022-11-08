@@ -167,6 +167,7 @@
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Physics\PhysicScene.hpp" />
+    <ClInclude Include="src\Threading\JobSystem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -231,5 +232,6 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Physics\PhysicScene.cpp" />
+    <ClCompile Include="src\Threading\JobSystem.cpp" />
   </ItemGroup>
 </Project>

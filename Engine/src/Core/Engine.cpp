@@ -5,6 +5,7 @@
 #include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
+#include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
 
 
@@ -56,6 +57,8 @@ void Engine::Init(const CreateInfo& info) {
 
 		s_CreateInfo = info;
 
+		JobSystem::Initialize();
+
 		s_AudioSubmodule = new AudioSubmodule();
 		s_AudioSubmodule->Init();
 
@@ -95,18 +98,22 @@ void Engine::Shutdown() {
 		s_AudioSubmodule->Shutdown();
 		delete s_AudioSubmodule;
 
+		JobSystem::Shutdown();
+
 		PIT_ENGINE_INFO(Log::General, "=== PIT::ENGINE Shutdown ===");
 
 		Debug::Logging::Shutdown();
 	}
 	CATCH_EXCEPTIONS();
+
+	OPTICK_SHUTDOWN();
 }
 
 void Engine::Update() {
 	OPTICK_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
-
+	JobSystem::Execute([]() { for (int i = 0; i < 9999; i++) { String(std::to_string(i)); } });
 	try {
 		Time::SetFrame((Time::Frame() + 1) % 1000);
 

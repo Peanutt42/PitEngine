@@ -1,16 +1,25 @@
 #include <PitTest.hpp>
+#include <thread>
+#include "C:\dev\cpp\PitEngine\vendor\optick\include\optick.h"
 
+static void Thread() {
+	OPTICK_THREAD("TestThread");
+
+	while (true) {
+		OPTICK_EVENT("TestThread::Update");
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+	}
+
+}
 
 PIT_TEST(SomeTestGroup,
-	PIT_TEST_TRY_LAMDA(SomeShortTest, Sleep(400););
-	PIT_TEST_TRY_LAMDA(SomeLongTest, Sleep(2000););
-	PIT_TEST_TRY_LAMDA(SomeSmallTest, Sleep(10););
-	PIT_TEST_TRUE(SomeEasyTest, 1 + 1 == 2);
-);
-
-PIT_TEST(SomeTestGroup2,
-	PIT_TEST_TRY_LAMDA(SomeShortTest, Sleep(400););
-	PIT_TEST_TRY_LAMDA(SomeLongTest, Sleep(2000););
-	PIT_TEST_TRY_LAMDA(SomeSmallTest, Sleep(10););
-	PIT_TEST_TRUE(SomeEasyTest, 1 + 1 == 2);
+	while (true) {
+		OPTICK_FRAME("Test");
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		for (int i = 0; i < 10; i++) {
+			std::thread tread(Thread);
+			tread.detach();
+		}
+	}
 );
