@@ -1,16 +1,16 @@
 ﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
-  async.cpp
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
+  async.cpp
   cfg.cpp
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   color_sinks.cpp
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
-cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   file_sinks.cpp
-cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   fmt.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   spdlog.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   stdout_sinks.cpp
   spdlog.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\spdlog\spdlog.lib

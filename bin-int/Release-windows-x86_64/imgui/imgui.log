@@ -6,8 +6,8 @@ cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_draw.cpp
-cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_impl_glfw.cpp
+cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_impl_opengl3.cpp
 cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
   imgui_tables.cpp
