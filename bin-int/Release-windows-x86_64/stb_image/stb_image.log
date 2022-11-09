@@ -1,3 +1,0 @@
-﻿cl : befehlszeile  warning D9025: "/MT" wird durch "/MD" überschrieben
-  stb_image.cpp
-  stb_image.vcxproj -> C:\dev\cpp\PitEngine\bin\Release-windows-x86_64\stb_image\stb_image.lib
