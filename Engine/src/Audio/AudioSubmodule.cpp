@@ -12,14 +12,14 @@ void AudioSubmodule::Init() {
 
 
 	// "C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav"
-	SoundDevice::Init();
+	SoundDevice device;
+	SoundBuffer buffer;
 
-	uint32_t /*ALuint*/ sound1 = SoundBuffer::AddSoundEffect("C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav");
+	uint32_t /*ALuint*/ sound1 = buffer.AddSoundEffect("C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav");
 
 	SoundSource mySpeaker;
 
 	mySpeaker.Play(sound1);
-
 }
 
 void AudioSubmodule::Shutdown() {

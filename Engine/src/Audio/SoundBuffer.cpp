@@ -7,12 +7,11 @@
 using namespace Pit;
 using namespace Audio;
 
-Array<ALuint> SoundBuffer::s_SoundEffectBuffers;
 
-void SoundBuffer::Shutdown() {
-	alDeleteBuffers(s_SoundEffectBuffers.size(), s_SoundEffectBuffers.data());
+SoundBuffer::~SoundBuffer() {
+	alDeleteBuffers(m_SoundEffectBuffers.size(), m_SoundEffectBuffers.data());
 
-	s_SoundEffectBuffers.clear();
+	m_SoundEffectBuffers.clear();
 }
 
 
@@ -85,17 +84,17 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 		return 0;
 	}
 
-	s_SoundEffectBuffers.push_back(buffer);
+	m_SoundEffectBuffers.push_back(buffer);
 
 	return buffer;
 }
 
 bool SoundBuffer::RemoveSoundEffect(const ALuint& buffer) {
-	auto it = s_SoundEffectBuffers.begin();
-	while (it != s_SoundEffectBuffers.end()) {
+	auto it = m_SoundEffectBuffers.begin();
+	while (it != m_SoundEffectBuffers.end()) {
 		if (*it == buffer) {
 			alDeleteBuffers(1, &*it);
-			it = s_SoundEffectBuffers.erase(it);
+			it = m_SoundEffectBuffers.erase(it);
 			return true;
 		}
 		else

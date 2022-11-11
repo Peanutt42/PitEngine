@@ -7,11 +7,11 @@ namespace Pit::Audio {
 	class SoundDevice
 	{
 	public:
-		static void Init(), Shutdown();
+		SoundDevice();
+		~SoundDevice();
 
 	private:
-		static ALCdevice* s_ALCDevice;
-		static ALCcontext* s_ALCContext;
-
+		ALCdevice* m_ALCDevice;
+		ALCcontext* m_ALCContext;
 	};
 }

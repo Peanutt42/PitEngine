@@ -6,12 +6,12 @@
 namespace Pit::Audio {
 	class SoundBuffer {
 	public:
-		static void Shutdown();
+		~SoundBuffer();
 
-		static ALuint AddSoundEffect(const String& filename);
-		static bool RemoveSoundEffect(const ALuint& buffer);
+		ALuint AddSoundEffect(const String& filename);
+		bool RemoveSoundEffect(const ALuint& buffer);
 
 	private:
-		static Array<ALuint> s_SoundEffectBuffers;
+		Array<ALuint> m_SoundEffectBuffers;
 	};
 }
