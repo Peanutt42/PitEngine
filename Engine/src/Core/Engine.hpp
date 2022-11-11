@@ -33,11 +33,12 @@ namespace Pit {
 			bool UIDocking;
 			RenderingAPI RenderingApi;
 			int AntiAliasing;
+			bool Headless;
 
-			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 0)
-				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing) {
+			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 0, bool headless = false)
+				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing), Headless(headless) {
 
-				for (int i = 0; i < argc; i++) ConsoleArgs.push_back(argv[i]);
+				ConsoleArgs.assign(argv, argv + argc);
 			}
 		};
 

@@ -19,6 +19,8 @@ static GLFWwindow* GetWindow() {
 }
 
 void Input::Update() {
+	if (Engine::GetInfo().Headless) return;
+
 	GLFWwindow* window = GetWindow();
 	for (int i = MIN_KEY; i < KEY_COUNT; i++) {
 		KeyState state = Cast<KeyState>(glfwGetKey(window, i));
@@ -32,7 +34,7 @@ void Input::Update() {
 	}
 	
 	double mouse_x, mouse_y;
-	glfwGetCursorPos(GetWindow(), &mouse_x, &mouse_y);
+	glfwGetCursorPos(window, &mouse_x, &mouse_y);
 	glm::vec2 currentMousePos = { Cast<float>((int)mouse_x), Cast<float>((int)mouse_y) };
 	m_LastMousePosDelta = currentMousePos - m_LastMousePos;
 	m_LastMousePos = currentMousePos;

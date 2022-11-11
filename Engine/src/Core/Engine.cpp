@@ -43,6 +43,7 @@ std::atomic<bool>		Engine::s_Quit = false;
 		return;																	\
 	}
 
+
 void Engine::Init(const CreateInfo& info) {
 	OPTICK_FRAME("MainThread - Init");
 
@@ -51,22 +52,32 @@ void Engine::Init(const CreateInfo& info) {
 	setup_crash_handler();
 
 	try {
+		s_CreateInfo = info;
+
 		Debug::Logging::Init();
 
-		PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
+		for (const auto& arg : s_CreateInfo.ConsoleArgs) {
+			if (arg == "-headless") s_CreateInfo.Headless = true;
+		}
 
-		s_CreateInfo = info;
+		PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
+		if (s_CreateInfo.Headless)
+			PIT_ENGINE_INFO(Log::General, " - Headless Mode");
 
 		JobSystem::Initialize();
 
-		s_AudioSubmodule = new AudioSubmodule();
-		s_AudioSubmodule->Init();
+		if (!s_CreateInfo.Headless) {
+			s_AudioSubmodule = new AudioSubmodule();
+			s_AudioSubmodule->Init();
+		}
 
 		s_ECSSubmodule = new ECSSubmodule();
 		s_ECSSubmodule->Init();
 
-		s_RenderingSubmodule = new RenderingSubmodule();
-		s_RenderingSubmodule->Init();
+		if (!s_CreateInfo.Headless) {
+			s_RenderingSubmodule = new RenderingSubmodule();
+			s_RenderingSubmodule->Init();
+		}
 	
 		s_NetworkingSubmodule = new NetworkingSubmodule();
 		s_NetworkingSubmodule->Init();
@@ -87,16 +98,20 @@ void Engine::Shutdown() {
 	try {
 		Engine::ShutdownEvent.Invoke();
 
-		s_RenderingSubmodule->Shutdown();
-		delete s_RenderingSubmodule;
+		if (!s_CreateInfo.Headless) {
+			s_RenderingSubmodule->Shutdown();
+			delete s_RenderingSubmodule;
+		}
 		s_PhysicsSubmodule->Shutdown();
 		delete s_PhysicsSubmodule;
 		s_NetworkingSubmodule->Shutdown();
 		delete s_NetworkingSubmodule;
 		s_ECSSubmodule->Shutdown();
 		delete s_ECSSubmodule;
-		s_AudioSubmodule->Shutdown();
-		delete s_AudioSubmodule;
+		if (!s_CreateInfo.Headless) {
+			s_AudioSubmodule->Shutdown();
+			delete s_AudioSubmodule;
+		}
 
 		JobSystem::Shutdown();
 
@@ -133,11 +148,14 @@ void Engine::Update() {
 		PreUpdateEvent.Invoke();
 		UpdateEvent.Invoke();
 		s_ECSSubmodule->Update();
-
-		s_RenderingSubmodule->Update();
 		PostUpdateEvent.Invoke();
 
-		s_AudioSubmodule->Update();
+		if (!s_CreateInfo.Headless) {
+			s_RenderingSubmodule->Update();
+			
+			s_AudioSubmodule->Update();
+		}
+
 	}
 	CATCH_EXCEPTIONS();
 
@@ -146,6 +164,8 @@ void Engine::Update() {
 bool Engine::ShouldClose() {
 	if (s_Quit.load())
 		return true;
-	else
+	else if (!s_CreateInfo.Headless)
 		return s_RenderingSubmodule->Window->ShouldClose();
+	else
+		return false;
 }
