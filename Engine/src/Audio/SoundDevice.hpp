@@ -1,17 +1,17 @@
 #pragma once
+
+#include "Core/CoreInclude.hpp"
 #include <AL\alc.h>
 
-class SoundDevice
-{
-public:
-	static SoundDevice* get();
+namespace Pit::Audio {
+	class SoundDevice
+	{
+	public:
+		static void Init(), Shutdown();
 
-private:
-	SoundDevice();
-	~SoundDevice();
+	private:
+		static ALCdevice* s_ALCDevice;
+		static ALCcontext* s_ALCContext;
 
-	ALCdevice* p_ALCDevice;
-	ALCcontext* p_ALCContext;
-
-};
-
+	};
+}

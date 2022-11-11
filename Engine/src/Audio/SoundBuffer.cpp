@@ -4,15 +4,19 @@
 #include <inttypes.h>
 #include <AL\alext.h>
 
-SoundBuffer* SoundBuffer::get()
-{
-	static SoundBuffer* sndbuf = new SoundBuffer();
-	return sndbuf;
+using namespace Pit;
+using namespace Audio;
+
+Array<ALuint> SoundBuffer::s_SoundEffectBuffers;
+
+void SoundBuffer::Shutdown() {
+	alDeleteBuffers(s_SoundEffectBuffers.size(), s_SoundEffectBuffers.data());
+
+	s_SoundEffectBuffers.clear();
 }
 
-ALuint SoundBuffer::addSoundEffect(const char* filename)
-{
 
+ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 	ALenum err, format;
 	ALuint buffer;
 	SNDFILE* sndfile;
@@ -21,16 +25,13 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 	sf_count_t num_frames;
 	ALsizei num_bytes;
 
-	/* Open the audio file and check that it's usable. */
-	sndfile = sf_open(filename, SFM_READ, &sfinfo);
-	if (!sndfile)
-	{
-		fprintf(stderr, "Could not open audio in %s: %s\n", filename, sf_strerror(sndfile));
+	sndfile = sf_open(filename.c_str(), SFM_READ, &sfinfo);
+	if (!sndfile) {
+		PIT_ENGINE_FATAL(Log::Audio, "Could not open audio in {0}: {1}", filename, sf_strerror(sndfile));
 		return 0;
 	}
-	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
-	{
-		fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
+	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels) {
+		PIT_ENGINE_FATAL(Log::Audio, "Bad sample count in {0:s} ({1:d})", filename, sfinfo.frames);
 		sf_close(sndfile);
 		return 0;
 	}
@@ -41,32 +42,27 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 		format = AL_FORMAT_MONO16;
 	else if (sfinfo.channels == 2)
 		format = AL_FORMAT_STEREO16;
-	else if (sfinfo.channels == 3)
-	{
+	else if (sfinfo.channels == 3) {
 		if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
 			format = AL_FORMAT_BFORMAT2D_16;
 	}
-	else if (sfinfo.channels == 4)
-	{
+	else if (sfinfo.channels == 4) {
 		if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
 			format = AL_FORMAT_BFORMAT3D_16;
 	}
-	if (!format)
-	{
-		fprintf(stderr, "Unsupported channel count: %d\n", sfinfo.channels);
+	if (!format) {
+		PIT_ENGINE_FATAL(Log::Audio, "Unsupported channel count: {}", sfinfo.channels);
 		sf_close(sndfile);
 		return 0;
 	}
 
-	/* Decode the whole audio file to a buffer. */
 	membuf = static_cast<short*>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
 
 	num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
-	if (num_frames < 1)
-	{
+	if (num_frames < 1) {
 		free(membuf);
 		sf_close(sndfile);
-		fprintf(stderr, "Failed to read samples in %s (%" PRId64 ")\n", filename, num_frames);
+		PIT_ENGINE_FATAL(Log::Audio, "Failed to read samples in {0:s} ({1:d})", filename, num_frames);
 		return 0;
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
@@ -81,51 +77,29 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 	free(membuf);
 	sf_close(sndfile);
 
-	/* Check if an error occured, and clean up if so. */
 	err = alGetError();
-	if (err != AL_NO_ERROR)
-	{
-		fprintf(stderr, "OpenAL Error: %s\n", alGetString(err));
+	if (err != AL_NO_ERROR) {
+		PIT_ENGINE_FATAL(Log::Audio, "OpenAL Error: {}", alGetString(err));
 		if (buffer && alIsBuffer(buffer))
 			alDeleteBuffers(1, &buffer);
 		return 0;
 	}
 
-	p_SoundEffectBuffers.push_back(buffer);  // add to the list of known buffers
+	s_SoundEffectBuffers.push_back(buffer);
 
 	return buffer;
 }
 
-bool SoundBuffer::removeSoundEffect(const ALuint& buffer)
-{
-	auto it = p_SoundEffectBuffers.begin();
-	while (it != p_SoundEffectBuffers.end())
-	{
-		if (*it == buffer)
-		{
+bool SoundBuffer::RemoveSoundEffect(const ALuint& buffer) {
+	auto it = s_SoundEffectBuffers.begin();
+	while (it != s_SoundEffectBuffers.end()) {
+		if (*it == buffer) {
 			alDeleteBuffers(1, &*it);
-
-			it = p_SoundEffectBuffers.erase(it);
-
+			it = s_SoundEffectBuffers.erase(it);
 			return true;
 		}
-		else {
+		else
 			++it;
-		}
 	}
-	return false;  // couldn't find to remove
-}
-
-
-SoundBuffer::SoundBuffer()
-{
-	p_SoundEffectBuffers.clear();
-
-}
-
-SoundBuffer::~SoundBuffer()
-{
-	alDeleteBuffers(p_SoundEffectBuffers.size(), p_SoundEffectBuffers.data());
-
-	p_SoundEffectBuffers.clear();
+	return false;
 }

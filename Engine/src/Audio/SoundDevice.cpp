@@ -3,42 +3,40 @@
 #include <AL\al.h>
 #include <stdio.h>
 
-SoundDevice* SoundDevice::get()
-{
-	static SoundDevice* snd_device = new SoundDevice();
-	return snd_device;
-}
+using namespace Pit;
+using namespace Audio;
 
-SoundDevice::SoundDevice()
-{
-	p_ALCDevice = alcOpenDevice(nullptr); // nullptr = get default device
-	if (!p_ALCDevice)
+ALCdevice* SoundDevice::s_ALCDevice;
+ALCcontext* SoundDevice::s_ALCContext;
+
+void SoundDevice::Init() {
+	s_ALCDevice = alcOpenDevice(nullptr); // nullptr = get default device
+	if (!s_ALCDevice)
 		throw("failed to get sound device");
 
-	p_ALCContext = alcCreateContext(p_ALCDevice, nullptr);  // create context
-	if(!p_ALCContext)
+	s_ALCContext = alcCreateContext(s_ALCDevice, nullptr);  // create context
+	if(!s_ALCContext)
 		throw("Failed to set sound context");
 
-	if (!alcMakeContextCurrent(p_ALCContext))   // make context current
+	if (!alcMakeContextCurrent(s_ALCContext))   // make context current
 		throw("failed to make context current");
 
 	const ALCchar* name = nullptr;
-	if (alcIsExtensionPresent(p_ALCDevice, "ALC_ENUMERATE_ALL_EXT"))
-		name = alcGetString(p_ALCDevice, ALC_ALL_DEVICES_SPECIFIER);
-	if (!name || alcGetError(p_ALCDevice) != AL_NO_ERROR)
-		name = alcGetString(p_ALCDevice, ALC_DEVICE_SPECIFIER);
+	if (alcIsExtensionPresent(s_ALCDevice, "ALC_ENUMERATE_ALL_EXT"))
+		name = alcGetString(s_ALCDevice, ALC_ALL_DEVICES_SPECIFIER);
+	if (!name || alcGetError(s_ALCDevice) != AL_NO_ERROR)
+		name = alcGetString(s_ALCDevice, ALC_DEVICE_SPECIFIER);
 	printf("Opened \"%s\"\n", name);
 }
 
-SoundDevice::~SoundDevice()
-{
+void SoundDevice::Shutdown() {
 	if (!alcMakeContextCurrent(nullptr))
 		throw("failed to set context to nullptr");
 
-	alcDestroyContext(p_ALCContext);
-	if (p_ALCContext)
+	alcDestroyContext(s_ALCContext);
+	if (s_ALCContext)
 		throw("failed to unset during close");
 
-	if (!alcCloseDevice(p_ALCDevice))
+	if (!alcCloseDevice(s_ALCDevice))
 		throw("failed to close sound device");
 }

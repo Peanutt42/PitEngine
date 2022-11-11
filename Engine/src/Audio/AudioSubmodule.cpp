@@ -5,15 +5,16 @@
 #include "SoundSource.hpp"
 
 using namespace Pit;
+using namespace Audio;
 
 void AudioSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
 
 
 	// "C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav"
-	SoundDevice* mysounddevice = SoundDevice::get();
+	SoundDevice::Init();
 
-	uint32_t /*ALuint*/ sound1 = SoundBuffer::get()->addSoundEffect("C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav");
+	uint32_t /*ALuint*/ sound1 = SoundBuffer::AddSoundEffect("C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav");
 
 	SoundSource mySpeaker;
 

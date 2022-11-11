@@ -1,18 +1,17 @@
 #pragma once
+
+#include "Core/CoreInclude.hpp"
 #include <AL\al.h>
-#include <vector>
-class SoundBuffer
-{
-public:
-	static SoundBuffer* get();
 
-	ALuint addSoundEffect(const char* filename);
-	bool removeSoundEffect(const ALuint& buffer);
+namespace Pit::Audio {
+	class SoundBuffer {
+	public:
+		static void Shutdown();
 
-private:
-	SoundBuffer();
-	~SoundBuffer();
+		static ALuint AddSoundEffect(const String& filename);
+		static bool RemoveSoundEffect(const ALuint& buffer);
 
-	std::vector<ALuint> p_SoundEffectBuffers;
-};
-
+	private:
+		static Array<ALuint> s_SoundEffectBuffers;
+	};
+}
