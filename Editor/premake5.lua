@@ -21,6 +21,7 @@ project "Editor"
 
 	includedirs {
 		"src",
+		"%{wks.location}/vendor/sndfile/include",
 		"%{wks.location}/vendor/glad/include",
 		"%{wks.location}/vendor/EnTT/include",
 		"%{wks.location}/vendor/glm/include",
@@ -36,8 +37,14 @@ project "Editor"
 
 	libdirs {
 		"%{wks.location}/vendor/vulkan/Lib",
+		"%{wks.location}/vendor/sndfile/lib",
 		"%{wks.location}/vendor/glfw/lib-vc2022",
 		"%{wks.location}/vendor/optick/lib/x64/release"
+	}
+
+	
+	postbuildcommands {
+		"%{wks.location}/Scripts/CopyDlls_" .. outputdir .. ".bat"
 	}
 
 	defines {
@@ -51,6 +58,7 @@ project "Editor"
 		"spdlog",
 		"stb_image",
 		"tinyobjloader",
+		"sndfile.lib",
 		"opengl32.lib",
 		"glfw3.lib",
 		"Dbghelp.lib",

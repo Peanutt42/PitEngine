@@ -34,6 +34,9 @@
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{DB1BCC5F-4786-80D6-90C4-317CFC6D5E2B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{83755900-6F01-880B-D8AF-880BC45A880B}</UniqueIdentifier>
     </Filter>
@@ -43,6 +46,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\SoundBuffer.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\SoundDevice.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\SoundSource.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Assert.hpp">
@@ -126,6 +138,9 @@
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="src\Physics\PhysicScene.hpp">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -147,6 +162,9 @@
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Threading\JobSystem.hpp">
+      <Filter>Threading</Filter>
+    </ClInclude>
     <ClInclude Include="src\UI\UI.hpp">
       <Filter>UI</Filter>
     </ClInclude>
@@ -166,11 +184,18 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Physics\PhysicScene.hpp" />
-    <ClInclude Include="src\Threading\JobSystem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\SoundBuffer.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\SoundDevice.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\SoundSource.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
@@ -203,6 +228,9 @@
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\PhysicScene.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -224,6 +252,9 @@
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Threading\JobSystem.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
     <ClCompile Include="src\UI\UIRenderer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -231,7 +262,5 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Physics\PhysicScene.cpp" />
-    <ClCompile Include="src\Threading\JobSystem.cpp" />
   </ItemGroup>
 </Project>
