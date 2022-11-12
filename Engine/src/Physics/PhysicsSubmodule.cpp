@@ -43,7 +43,7 @@ void PhysicsSubmodule::Update() {
 
 void PhysicsSubmodule::_InitPhysx() {
 	m_Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_DefaultAllocatorCallback, m_DefaultErrorCallback);
-	if (!m_Foundation) PIT_ENGINE_FATAL(Log::Phyisics, "PxCreateFoundation failed!");
+	if (!m_Foundation) PIT_ENGINE_FATAL(Phyisics, "PxCreateFoundation failed!");
 	m_Pvd = PxCreatePvd(*m_Foundation);
 	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
 	m_Pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);

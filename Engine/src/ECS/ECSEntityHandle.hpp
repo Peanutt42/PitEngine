@@ -18,7 +18,7 @@ namespace Pit::ECS {
 		inline T& AddComponent(Args&&... args) {
 #if ECS_NULL_CHECKS
 			if (m_World->HasComponent<T>(m_ID)) {
-				PIT_ENGINE_ERR(Log::ECS, "Entity already has this type of component!");
+				PIT_ENGINE_ERR(ECS, "Entity already has this type of component!");
 				return m_World->GetComponent<T>(m_ID);
 			}
 #endif
@@ -29,7 +29,7 @@ namespace Pit::ECS {
 		inline T& GetComponent() {
 #if ECS_NULL_CHECKS
 			if (!m_World->HasComponent<T>(m_ID))
-				PIT_ENGINE_FATAL(Log::ECS, "Entity doesn't have this type of component!");
+				PIT_ENGINE_FATAL(ECS, "Entity doesn't have this type of component!");
 #endif
 			return m_World->GetComponent<T>(m_ID);
 		}
@@ -68,7 +68,7 @@ namespace Pit::ECS {
 		inline void RemoveComponent() {
 #if ECS_NULL_CHECKS
 			if (!HasComponent<T>()) {
-				PIT_ENGINE_ERR(Log::ECS, "Can't remove a component of entity that doesn't has one of them!");
+				PIT_ENGINE_ERR(ECS, "Can't remove a component of entity that doesn't has one of them!");
 				return;
 			}
 #endif

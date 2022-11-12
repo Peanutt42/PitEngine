@@ -5,7 +5,7 @@
 using namespace Pit;
 
 static void GLFWErrorCallback(int errorCode, const char* description) {
-	PIT_ENGINE_ERR(Log::Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
+	PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
 }
 
 void RenderingSubmodule::Init() {
@@ -19,16 +19,11 @@ void RenderingSubmodule::Init() {
 	glfwSwapInterval(Engine::GetInfo().VSync);
 
 	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
-		PIT_ENGINE_FATAL(Log::Rendering, "Failed to initialize GLAD");
+		PIT_ENGINE_FATAL(Rendering, "Failed to initialize GLAD");
 
 	Window->SetViewport(Window->GetWidth(), Window->GetHeight());
 	Renderer = new Rendering::Renderer();
 	UIRenderer = new UI::UIRenderer();
-
-	PIT_ENGINE_INFO(Log::Rendering, "OpenGL Info:");
-	PIT_ENGINE_INFO(Log::Rendering, " - Vendor: {}", glGetString(GL_VENDOR));
-	PIT_ENGINE_INFO(Log::Rendering, " - Renderer: {}", glGetString(GL_RENDERER));
-	PIT_ENGINE_INFO(Log::Rendering, " - Version: {}", glGetString(GL_VERSION));
 }
 
 void RenderingSubmodule::Shutdown() {

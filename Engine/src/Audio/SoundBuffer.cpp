@@ -9,7 +9,7 @@ using namespace Audio;
 
 
 SoundBuffer::~SoundBuffer() {
-	alDeleteBuffers(m_SoundEffectBuffers.size(), m_SoundEffectBuffers.data());
+	alDeleteBuffers(Cast<ALsizei>(m_SoundEffectBuffers.size()), m_SoundEffectBuffers.data());
 
 	m_SoundEffectBuffers.clear();
 }
@@ -26,11 +26,11 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 
 	sndfile = sf_open(filename.c_str(), SFM_READ, &sfinfo);
 	if (!sndfile) {
-		PIT_ENGINE_FATAL(Log::Audio, "Could not open audio in {0}: {1}", filename, sf_strerror(sndfile));
+		PIT_ENGINE_FATAL(Audio, "Could not open audio in {0}: {1}", filename, sf_strerror(sndfile));
 		return 0;
 	}
 	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels) {
-		PIT_ENGINE_FATAL(Log::Audio, "Bad sample count in {0:s} ({1:d})", filename, sfinfo.frames);
+		PIT_ENGINE_FATAL(Audio, "Bad sample count in {0:s} ({1:d})", filename, sfinfo.frames);
 		sf_close(sndfile);
 		return 0;
 	}
@@ -50,7 +50,7 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 			format = AL_FORMAT_BFORMAT3D_16;
 	}
 	if (!format) {
-		PIT_ENGINE_FATAL(Log::Audio, "Unsupported channel count: {}", sfinfo.channels);
+		PIT_ENGINE_FATAL(Audio, "Unsupported channel count: {}", sfinfo.channels);
 		sf_close(sndfile);
 		return 0;
 	}
@@ -61,7 +61,7 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 	if (num_frames < 1) {
 		free(membuf);
 		sf_close(sndfile);
-		PIT_ENGINE_FATAL(Log::Audio, "Failed to read samples in {0:s} ({1:d})", filename, num_frames);
+		PIT_ENGINE_FATAL(Audio, "Failed to read samples in {0:s} ({1:d})", filename, num_frames);
 		return 0;
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
@@ -78,7 +78,7 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 
 	err = alGetError();
 	if (err != AL_NO_ERROR) {
-		PIT_ENGINE_FATAL(Log::Audio, "OpenAL Error: {}", alGetString(err));
+		PIT_ENGINE_FATAL(Audio, "OpenAL Error: {}", alGetString(err));
 		if (buffer && alIsBuffer(buffer))
 			alDeleteBuffers(1, &buffer);
 		return 0;

@@ -2,7 +2,7 @@ project "Tests"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++20"
-	staticruntime "on"
+	staticruntime "off"
 	
 	debugdir "$(SolutionDir)"
 

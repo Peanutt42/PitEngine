@@ -1,18 +1,15 @@
 #include "pch.hpp"
 #include "AudioSubmodule.hpp"
-#include "SoundDevice.hpp"
 #include "MusicBuffer.hpp"
-#include "SoundSource.hpp"
 
 using namespace Pit;
 using namespace Audio;
 
-static SoundDevice* device;
 static MusicBuffer* music;
 void AudioSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
 
-	device = new SoundDevice();
+	m_Device = new SoundDevice();
 	music = new MusicBuffer("C:/Users/Peter/Downloads/407640__drotzruhn__countdown-30-seconds.wav");
 	music->Play();
 }
@@ -20,7 +17,7 @@ void AudioSubmodule::Init() {
 void AudioSubmodule::Shutdown() {
 	PIT_PROFILE_FUNCTION();
 
-	delete device;
+	delete m_Device;
 	delete music;
 }
 

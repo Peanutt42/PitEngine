@@ -2,6 +2,7 @@
 
 #include "Core/CoreInclude.hpp"
 #include "Core/Submodule.hpp"
+#include "SoundDevice.hpp"
 
 namespace Pit {
 	class AudioSubmodule : public Submodule {
@@ -11,5 +12,6 @@ namespace Pit {
 		virtual void Update();
 
 	private:
+		Audio::SoundDevice* m_Device;
 	};
 }

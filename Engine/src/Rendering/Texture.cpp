@@ -53,7 +53,7 @@ Texture::Texture(const std::string& path)
 		m_DataFormat = dataFormat;
 
 		if (!(internalFormat & dataFormat))
-			PIT_ENGINE_ERR(Log::Rendering, "Format not supported!");
+			PIT_ENGINE_ERR(Rendering, "Format not supported!");
 
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
@@ -80,7 +80,7 @@ Texture::~Texture() {
 void Texture::SetData(void* data, uint32_t size) {
 	uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 	if (size != m_Width * m_Height * bpp)
-		PIT_ENGINE_FATAL(Log::Rendering, "Texture::SetData expects the size to be width * height * format");
+		PIT_ENGINE_FATAL(Rendering, "Texture::SetData expects the size to be width * height * format");
 	glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 }
 

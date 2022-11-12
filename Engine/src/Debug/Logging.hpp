@@ -27,11 +27,13 @@ namespace Pit::Debug {
 
 	enum Category {
 		General,
+		Editor,
 		Audio,
 		Networking,
 		ECS,
 		Phyisics,
-		Rendering
+		Rendering,
+		UI
 	};
 }
 
@@ -46,17 +48,19 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_BASE_LOG(logFunc, prefix, category, msg, ...)	\
 	if (Pit::Debug::Logging::LoggerInitialized) {																		\
 		if constexpr (category == Log::General)			logFunc(_GetEngineLogger(), prefix "[General]    " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Editor)		logFunc(_GetEngineLogger(), prefix "[Editor]     " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Audio)		logFunc(_GetEngineLogger(), prefix "[Audio]      " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Networking) logFunc(_GetEngineLogger(), prefix "[Networking] " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::ECS)		logFunc(_GetEngineLogger(), prefix "[ECS]        " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Phyisics)	logFunc(_GetEngineLogger(), prefix "[Phyisics]   " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Rendering)	logFunc(_GetEngineLogger(), prefix "[Rendering]  " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::UI)			logFunc(_GetEngineLogger(), prefix "[UI]         " msg, ##__VA_ARGS__);	\
 	}
 
-#define PIT_ENGINE_TRACE(category, msg, ...)	PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_TRACE, "[CoreTrace]: ", category, msg, ##__VA_ARGS__)
-#define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, "[CoreInfo]: ", category, msg, ##__VA_ARGS__)
-#define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, "[CoreWarn]: ", category, msg, ##__VA_ARGS__)
-#define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, "[CoreErr]: ", category, msg,  ##__VA_ARGS__)
+#define PIT_ENGINE_TRACE(category, msg, ...)	PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_TRACE, "[CoreTrace]: ", Log::category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, "[CoreInfo]: ", Log::category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, "[CoreWarn]: ", Log::category, msg, ##__VA_ARGS__)
+#define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, "[CoreErr]: ", Log::category, msg,  ##__VA_ARGS__)
 #define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}

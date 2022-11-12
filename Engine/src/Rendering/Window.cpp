@@ -37,7 +37,7 @@ Window::Window(const String& title, int width, int height, bool fullscreen)
 
 	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);
 	if (!m_Window)
-		PIT_ENGINE_FATAL(Log::Rendering, "Failed to create GLFW-Window");
+		PIT_ENGINE_FATAL(Rendering, "Failed to create GLFW-Window");
 
 	if (glfwRawMouseMotionSupported())
 		glfwSetInputMode(m_Window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
@@ -84,7 +84,7 @@ void Window::SetIcon(const String& iconFilePath) {
 
 
 void Window::_GLFWErrorCallback(int errorCode, const char* description) {
-	PIT_ENGINE_ERR(Log::Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
+	PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
 }
 
 void Window::_FramebufferResizedCallback(GLFWwindow* window, int width, int height) {

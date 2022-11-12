@@ -8,7 +8,8 @@ workspace "PitEngine"
 	}
 
 	flags {
-		"MultiProcessorCompile"
+		"MultiProcessorCompile",
+		"LinkTimeOptimization"
 	}
 
 	startproject "Editor"

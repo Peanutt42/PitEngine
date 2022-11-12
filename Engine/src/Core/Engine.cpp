@@ -60,9 +60,9 @@ void Engine::Init(const CreateInfo& info) {
 			if (arg == "-headless") s_CreateInfo.Headless = true;
 		}
 
-		PIT_ENGINE_INFO(Log::General, "=== Initializing PIT::ENGINE ===");
+		PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
 		if (s_CreateInfo.Headless)
-			PIT_ENGINE_INFO(Log::General, " - Headless Mode");
+			PIT_ENGINE_INFO(General, " - Headless Mode");
 
 		JobSystem::Initialize();
 
@@ -115,7 +115,7 @@ void Engine::Shutdown() {
 
 		JobSystem::Shutdown();
 
-		PIT_ENGINE_INFO(Log::General, "=== PIT::ENGINE Shutdown ===");
+		PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 
 		Debug::Logging::Shutdown();
 	}

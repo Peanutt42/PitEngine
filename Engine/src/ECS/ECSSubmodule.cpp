@@ -8,7 +8,7 @@ void ECSSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
 
 	if (!m_ECSWorld.Init())
-		PIT_ENGINE_FATAL(Log::ECS, "Error while initializing ECSWorld");
+		PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
 
 	m_ECSGameloop.Initialize(m_ECSWorld);
 }

@@ -39,7 +39,7 @@ void JobSystem::Initialize() {
 	if (numCores < 1) numCores = 1;
 	s_NumThreads = numCores;
 
-	PIT_ENGINE_INFO(Log::General, "JobSystem started with {} threads.", s_NumThreads);
+	PIT_ENGINE_INFO(General, "JobSystem started with {} threads.", s_NumThreads);
 
 	for (uint32 i = 0; i < s_NumThreads; i++) {
 		std::thread thread(&_WorkerThread, i);

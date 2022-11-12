@@ -75,13 +75,13 @@ static void APIENTRY GlMessageCallback(GLenum source, GLenum type, unsigned int 
 	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
 
 	switch (severity) {
-	case GL_DEBUG_SEVERITY_HIGH:         PIT_ENGINE_FATAL(Log::Rendering, "[Glad]: {}", message); return;
-	case GL_DEBUG_SEVERITY_MEDIUM:       PIT_ENGINE_ERR(Log::Rendering, "[Glad]: {}", message); return;
-	case GL_DEBUG_SEVERITY_LOW:          PIT_ENGINE_WARN(Log::Rendering, "[Glad]: {}", message); return;
-	case GL_DEBUG_SEVERITY_NOTIFICATION: PIT_ENGINE_TRACE(Log::Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_HIGH:         PIT_ENGINE_FATAL(Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_MEDIUM:       PIT_ENGINE_ERR(Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_LOW:          PIT_ENGINE_WARN(Rendering, "[Glad]: {}", message); return;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: PIT_ENGINE_TRACE(Rendering, "[Glad]: {}", message); return;
 	}
 
-	PIT_ENGINE_TRACE(Log::Rendering, "[OpenGL]: Unknown severity level!");
+	PIT_ENGINE_TRACE(Rendering, "[OpenGL]: Unknown severity level!");
 }
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -130,6 +130,11 @@ Renderer::Renderer() {
 
 	m_Shader.SetInt("texture1", 0);
 	m_Shader.SetInt("texture2", 1);
+
+	PIT_ENGINE_INFO(Rendering, "OpenGL Info:");
+	PIT_ENGINE_INFO(Rendering, " - Vendor: {}", (const char*)glGetString(GL_VENDOR));
+	PIT_ENGINE_INFO(Rendering, " - Renderer: {}", (const char*)glGetString(GL_RENDERER));
+	PIT_ENGINE_INFO(Rendering, " - Version: {}", (const char*)glGetString(GL_VERSION));
 }
 
 Renderer::~Renderer() {

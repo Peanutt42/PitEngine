@@ -27,6 +27,8 @@ UIRenderer::UIRenderer() {
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(Engine::Rendering()->Window->GetWindowHandle(), true);
 	ImGui_ImplOpenGL3_Init("#version 460");
+
+	PIT_ENGINE_INFO(UI, "ImGui_Version: {}", IMGUI_VERSION);
 }
 
 UIRenderer::~UIRenderer() {

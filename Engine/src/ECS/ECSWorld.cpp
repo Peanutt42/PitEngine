@@ -33,7 +33,7 @@ bool World::Init() {
 	Engine::UpdateEvent += &UpdateMain;
 	Engine::RenderEvent += &UpdateRendering;
 
-	PIT_ENGINE_INFO(Log::ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
+	PIT_ENGINE_INFO(ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
 
 	return true;
 }

@@ -48,6 +48,9 @@
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Audio\MusicBuffer.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Audio\SoundBuffer.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
@@ -184,10 +187,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\MusicBuffer.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\SoundBuffer.cpp">
@@ -263,6 +268,5 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
   </ItemGroup>
 </Project>

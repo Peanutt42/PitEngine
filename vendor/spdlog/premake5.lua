@@ -2,7 +2,7 @@ project "spdlog"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++14"
-	staticruntime "on"
+	staticruntime "off"
 
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
