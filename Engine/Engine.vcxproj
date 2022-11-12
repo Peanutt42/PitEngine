@@ -182,6 +182,7 @@
     <ClInclude Include="src\Core\Time.hpp" />
     <ClInclude Include="src\Core\Types.hpp" />
     <ClInclude Include="src\Core\UUID.hpp" />
+    <ClInclude Include="src\Core\Version.hpp" />
     <ClInclude Include="src\Debug\Logging.hpp" />
     <ClInclude Include="src\Debug\ProfileStats.hpp" />
     <ClInclude Include="src\Debug\vcrash.h" />
