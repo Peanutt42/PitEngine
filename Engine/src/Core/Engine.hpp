@@ -23,8 +23,9 @@ namespace Pit {
 	DEFINE_SIMPLE_EVENT(ShutdownEvent);
 	class Engine {
 	public:
-		enum RenderingAPI {
-			OpenGL_Api
+		enum class RenderingAPI {
+			None,
+			OpenGL
 		};
 
 		struct CreateInfo {
@@ -37,7 +38,7 @@ namespace Pit {
 			int AntiAliasing;
 			bool Headless;
 
-			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = OpenGL_Api, int antiAliasing = 0, bool headless = false)
+			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = RenderingAPI::OpenGL, int antiAliasing = 0, bool headless = false)
 				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing), Headless(headless) {
 
 				ConsoleArgs.assign(argv, argv + argc);

@@ -19,9 +19,14 @@ namespace Pit::Rendering {
 	private:
 
 		uint m_VBO, m_VAO, m_EBO;
+		uint m_ScreenQuadVAO, m_ScreenQuadVBO;
+		uint m_ScreenTexColorBuffer;
+		uint m_ScreenFramebuffer;
 		//uint m_Texture;
 		Shader m_Shader = Shader(FileSystem::GetSandboxDir() + "assets/shaders/Shader.vert",
 								 FileSystem::GetSandboxDir() + "assets/shaders/Shader.frag");
+		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.vert",
+								 FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.frag");
 		Texture m_Texture = Texture(FileSystem::GetSandboxDir() + "assets/textures/wall.jpg");
 	};
 }

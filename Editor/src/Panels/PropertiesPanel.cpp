@@ -1,8 +1,9 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "InspectorPanel.hpp"
+#include "PropertiesPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "UI/UIFonts.hpp"
+#include "UI/UI.hpp"
 #include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSWorld.hpp"
 #include "ECS/ECSComponents.hpp"
@@ -14,16 +15,16 @@ using namespace Pit;
 using namespace UI;
 using namespace Editor;
 
-void InspectorPanel::OnCreate() {
-	Name = "Inspector";
+void PropertiesPanel::OnCreate() {
+	Name = "Properties";
 	Shortcut = Array<KeyCode>{ LeftControl, Key_I };
 }
 
-void InspectorPanel::OnDestroy() {
+void PropertiesPanel::OnDestroy() {
 
 }
 
-void InspectorPanel::OnGui() {
+void PropertiesPanel::OnGui() {
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
 	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {
 		_DrawComponents(&ecsworld, HierachyPanel::s_SelectedEntity);
@@ -47,9 +48,9 @@ static void DrawComponent(const String& name, Pit::ECS::World* world, entt::enti
 	);
 	ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 	ImGui::PushFont(Fonts::Get(Fonts::ExtraBold));
-	if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight })) {
+	if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
 		ImGui::OpenPopup("ComponentSettings");
-	}
+	
 	ImGui::PopFont();
 
 	bool removeComponent = false;
@@ -80,7 +81,7 @@ static void DisplayAddComponentEntry(const String& entryName) {
 	}
 }
 
-void InspectorPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
+void PropertiesPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
 	if (world->HasComponent<ECS::NameComponent>(entity)) {
 		auto& entityComp = world->GetComponent<ECS::NameComponent>(entity);
 		auto& name = entityComp.Name;
@@ -92,13 +93,13 @@ void InspectorPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
 			name = String(buffer);
 	}
 
-	/*DrawComponent<ECS::TransformComponent>("Transform", world, entity, [](ECS::TransformComponent& component) {
+	DrawComponent<ECS::TransformComponent>("Transform", world, entity, [](ECS::TransformComponent& component) {
 		UI::Vec3("Translation", component.position);
 		glm::vec3 rotation = glm::degrees(component.rotation);
 		UI::Vec3("Rotation", rotation);
 		component.rotation = glm::radians(rotation);
 		UI::Vec3("Scale", component.scale, 1.0f);
-	});*/
+	});
 
 	ImGui::Spacing();
 	ImGui::Spacing();

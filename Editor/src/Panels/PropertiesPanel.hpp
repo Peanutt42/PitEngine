@@ -6,7 +6,7 @@
 #include "ECS/ECSWorld.hpp"
 
 namespace Pit::Editor {
-	class InspectorPanel : public EditorWindowPanel {
+	class PropertiesPanel : public EditorWindowPanel {
 	public:
 
 		virtual void OnCreate() override;

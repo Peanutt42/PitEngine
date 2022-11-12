@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "EditorApplication.hpp"
 #include "Panels/HierachyPanel.hpp"
-#include "Panels/InspectorPanel.hpp"
+#include "Panels/PropertiesPanel.hpp"
 #include "Panels/SceneViewportPanel.hpp"
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
@@ -20,7 +20,7 @@ void EditorApplication::Init() {
 
 	s_WindowPanels.reserve(5);
 	s_WindowPanels.push_back(new HierachyPanel());
-	s_WindowPanels.push_back(new InspectorPanel());
+	s_WindowPanels.push_back(new PropertiesPanel());
 	s_WindowPanels.push_back(new SceneViewportPanel());
 	s_WindowPanels.push_back(new ProfilerPanel());
 	s_WindowPanels.push_back(new ContentBrowserPanel());

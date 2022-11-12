@@ -17,7 +17,7 @@
     <ClInclude Include="src\Panels\HierachyPanel.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
-    <ClInclude Include="src\Panels\InspectorPanel.hpp">
+    <ClInclude Include="src\Panels\PropertiesPanel.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\ProfilerPanel.hpp">
@@ -37,7 +37,7 @@
     <ClCompile Include="src\Panels\HierachyPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
-    <ClCompile Include="src\Panels\InspectorPanel.cpp">
+    <ClCompile Include="src\Panels\PropertiesPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\ProfilerPanel.cpp">

@@ -1,5 +1,6 @@
 === ENGINE ===
-
+- AssetManagment
+- Flexibler PropertiesPanel
 - fix contentbrowser searching every tick for content again
 
 
