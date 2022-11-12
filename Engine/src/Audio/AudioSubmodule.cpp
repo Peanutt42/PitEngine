@@ -1,33 +1,34 @@
 #include "pch.hpp"
 #include "AudioSubmodule.hpp"
 #include "SoundDevice.hpp"
-#include "SoundBuffer.hpp"
+#include "MusicBuffer.hpp"
 #include "SoundSource.hpp"
 
 using namespace Pit;
 using namespace Audio;
 
+static SoundDevice* device;
+static MusicBuffer* music;
 void AudioSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
 
-
-	// "C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav"
-	SoundDevice device;
-	SoundBuffer buffer;
-
-	uint32_t /*ALuint*/ sound1 = buffer.AddSoundEffect("C:/Users/Peter/Downloads/iamtheprotectorofthissystem.wav");
-
-	SoundSource mySpeaker;
-
-	mySpeaker.Play(sound1);
+	device = new SoundDevice();
+	music = new MusicBuffer("C:/Users/Peter/Downloads/407640__drotzruhn__countdown-30-seconds.wav");
+	music->Play();
 }
 
 void AudioSubmodule::Shutdown() {
 	PIT_PROFILE_FUNCTION();
 
+	delete device;
+	delete music;
 }
 
 void AudioSubmodule::Update() {
 	PIT_PROFILE_FUNCTION();
 
+	ALint state = AL_PLAYING;
+	alGetSourcei(music->GetSource(), AL_SOURCE_STATE, &state);
+	if (state == AL_PLAYING && alGetError() == AL_NO_ERROR)
+		music->UpdateBufferStream();
 }

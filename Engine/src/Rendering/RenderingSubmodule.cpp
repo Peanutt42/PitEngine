@@ -26,9 +26,9 @@ void RenderingSubmodule::Init() {
 	UIRenderer = new UI::UIRenderer();
 
 	PIT_ENGINE_INFO(Log::Rendering, "OpenGL Info:");
-	PIT_ENGINE_INFO(Log::Rendering, "  Vendor: {0:s}", (const char*)glGetString(GL_VENDOR));
-	PIT_ENGINE_INFO(Log::Rendering, "  Renderer: {0:s}", (const char*)glGetString(GL_RENDERER));
-	PIT_ENGINE_INFO(Log::Rendering, "  Version: {0:s}", (const char*)glGetString(GL_VERSION));
+	PIT_ENGINE_INFO(Log::Rendering, " - Vendor: {}", glGetString(GL_VENDOR));
+	PIT_ENGINE_INFO(Log::Rendering, " - Renderer: {}", glGetString(GL_RENDERER));
+	PIT_ENGINE_INFO(Log::Rendering, " - Version: {}", glGetString(GL_VERSION));
 }
 
 void RenderingSubmodule::Shutdown() {
