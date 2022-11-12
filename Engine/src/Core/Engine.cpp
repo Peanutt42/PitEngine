@@ -63,6 +63,7 @@ void Engine::Init(const CreateInfo& info) {
 		PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
 		if (s_CreateInfo.Headless)
 			PIT_ENGINE_INFO(General, " - Headless Mode");
+		PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
 
 		JobSystem::Initialize();
 
@@ -128,7 +129,7 @@ void Engine::Update() {
 	OPTICK_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
-	JobSystem::Execute([]() { for (int i = 0; i < 9999; i++) { String(std::to_string(i)); } });
+	JobSystem::Execute([]() { std::this_thread::sleep_for(1ms); });
 	try {
 		Time::SetFrame((Time::Frame() + 1) % 1000);
 

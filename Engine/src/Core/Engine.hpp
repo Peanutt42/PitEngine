@@ -3,6 +3,8 @@
 #include "CoreInclude.hpp"
 
 namespace Pit {
+	const static Version EngineVersion(0, 0, 1);
+
 	class AudioSubmodule;
 	class ECSSubmodule;
 	class NetworkingSubmodule;
