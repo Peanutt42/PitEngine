@@ -12,48 +12,48 @@ using namespace Pit;
 using namespace Rendering;
 
 float cubeVertices[] = {
-	// positions          // texture Coords
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	// Back face
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right    
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right              
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left                
+	// Front face
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right        
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left        
+	// Left face
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left       
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+	// Right face
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right      
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right          
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+	 // Bottom face          
+	 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+	  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+	  0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left        
+	  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+	 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+	 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+	 // Top face
+	 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+	  0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
+	  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right                 
+	  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+	 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // bottom-left  
+	 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // top-left              
 };
 
 float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
@@ -206,6 +206,10 @@ void Renderer::Update() {
 		// bind to framebuffer and draw scene as we normally would to color texture 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenFramebuffer);
 	glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+	glEnable(GL_MULTISAMPLE);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+	glFrontFace(GL_CCW);
 
 	// make sure we clear the framebuffer's content
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -231,6 +235,8 @@ void Renderer::Update() {
 	// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+	//glDisable(GL_MULTISAMPLE);
+	glDisable(GL_CULL_FACE);
 	// clear all relevant buffers
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
 	glClear(GL_COLOR_BUFFER_BIT);
