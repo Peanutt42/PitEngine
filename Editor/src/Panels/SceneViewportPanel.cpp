@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "SceneViewportPanel.hpp"
 #include "Core/Engine.hpp"
+#include "Rendering/RenderingSubmodule.hpp"
 #include <imgui/imgui.h>
 #include <stb_image.h>
 
@@ -21,8 +22,8 @@ void SceneViewportPanel::OnDestroy() {
 
 void SceneViewportPanel::OnGui() {
 	auto region = ImGui::GetContentRegionAvail();
-	ImGui::Image((ImTextureID)Cast<uint64>(m_SceneTexture->GetRendererID()),
-				 ImVec2(region.x, region.y));
+	ImGui::Image((ImTextureID)Cast<uint64>(Engine::Rendering()->Renderer->GetScreenTexColorBuffer()),
+				 ImVec2(region.x, region.y), ImVec2(0, 1), ImVec2(1, 0));
 
 	if (ImGui::BeginDragDropTarget()) {
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(CONTENT_BROWSER_DRAG_DROP)) {

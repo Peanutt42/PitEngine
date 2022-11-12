@@ -16,6 +16,7 @@ namespace Pit::Rendering {
 		void Update();
 
 		Camera m_Camera = Camera({0.f, 0.f, 3.f});
+		uint GetScreenTexColorBuffer() { return m_ScreenTexColorBuffer; }
 	private:
 
 		uint m_VBO, m_VAO, m_EBO;
