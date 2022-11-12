@@ -17,15 +17,12 @@ void AudioSubmodule::Init() {
 void AudioSubmodule::Shutdown() {
 	PIT_PROFILE_FUNCTION();
 
-	delete m_Device;
 	delete music;
+	delete m_Device;
 }
 
 void AudioSubmodule::Update() {
 	PIT_PROFILE_FUNCTION();
 
-	ALint state = AL_PLAYING;
-	alGetSourcei(music->GetSource(), AL_SOURCE_STATE, &state);
-	if (state == AL_PLAYING && alGetError() == AL_NO_ERROR)
-		music->UpdateBufferStream();
+	music->UpdateBufferStream();
 }

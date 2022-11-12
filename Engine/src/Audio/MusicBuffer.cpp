@@ -7,9 +7,48 @@
 using namespace Pit;
 using namespace Audio;
 
+MusicBuffer::MusicBuffer(const char* filename) {
+	alGenSources(1, &m_Source);
+	alGenBuffers(NUM_BUFFERS, m_Buffers);
+
+	m_SndFile = sf_open(filename, SFM_READ, &m_Sfinfo);
+	if (!m_SndFile)
+		PIT_ENGINE_FATAL(Audio, "Could not open provided music file -- check path");
+
+	if (m_Sfinfo.channels == 1)
+		m_Format = AL_FORMAT_MONO16;
+	else if (m_Sfinfo.channels == 2)
+		m_Format = AL_FORMAT_STEREO16;
+	else if (m_Sfinfo.channels == 3) {
+		if (sf_command(m_SndFile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+			m_Format = AL_FORMAT_BFORMAT2D_16;
+	}
+	else if (m_Sfinfo.channels == 4) {
+		if (sf_command(m_SndFile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+			m_Format = AL_FORMAT_BFORMAT3D_16;
+	}
+	if (!m_Format) {
+		sf_close(m_SndFile);
+		m_SndFile = NULL;
+		PIT_ENGINE_FATAL(Audio, "Unsupported channel count from file");
+	}
+
+	size frameSize = ((size)BUFFER_SAMPLES * (size)m_Sfinfo.channels) * sizeof(short);
+	m_Membuf = static_cast<short*>(malloc(frameSize));
+}
+
+MusicBuffer::~MusicBuffer() {
+	alDeleteSources(1, &m_Source);
+
+	if (m_SndFile)
+		sf_close(m_SndFile);
+
+	m_SndFile = nullptr;
+	free(m_Membuf);
+	alDeleteBuffers(NUM_BUFFERS, m_Buffers);
+}
 
 void MusicBuffer::Play() {
-
 	alGetError();
 
 	alSourceRewind(m_Source);
@@ -41,89 +80,34 @@ void MusicBuffer::UpdateBufferStream() {
 	if (alGetError() != AL_NO_ERROR)
 		PIT_ENGINE_FATAL(Audio, "Error checking music source state");
 
-	/* Unqueue and handle each processed buffer */
-	while (processed > 0) {
+	for (; processed > 0; processed--) {
 		ALuint bufid;
-		sf_count_t slen;
-
 		alSourceUnqueueBuffers(m_Source, 1, &bufid);
-		processed--;
 
-		slen = sf_readf_short(m_SndFile, m_Membuf, BUFFER_SAMPLES);
+		sf_count_t slen = sf_readf_short(m_SndFile, m_Membuf, BUFFER_SAMPLES);
 		if (slen > 0) {
 			slen *= m_Sfinfo.channels * (sf_count_t)sizeof(short);
-			alBufferData(bufid, m_Format, m_Membuf, (ALsizei)slen,
-						 m_Sfinfo.samplerate);
+			alBufferData(bufid, m_Format, m_Membuf, (ALsizei)slen, m_Sfinfo.samplerate);
 			alSourceQueueBuffers(m_Source, 1, &bufid);
 		}
 		if (alGetError() != AL_NO_ERROR)
 			PIT_ENGINE_FATAL(Audio, "Error buffering music data");
+		
+		processed--;
 	}
 
-	/* Make sure the source hasn't underrun */
 	if (state != AL_PLAYING && state != AL_PAUSED) {
 		ALint queued;
 
-		/* If no buffers are queued, playback is finished */
 		alGetSourcei(m_Source, AL_BUFFERS_QUEUED, &queued);
-		if (queued == 0)
-			return;
+		if (queued <= 0) return;
 
 		alSourcePlay(m_Source);
 		if (alGetError() != AL_NO_ERROR)
 			PIT_ENGINE_FATAL(Audio, "Error restarting music playback");
 	}
-
 }
 
 ALint MusicBuffer::GetSource() {
 	return m_Source;
-}
-
-MusicBuffer::MusicBuffer(const char* filename) {
-	alGenSources(1, &m_Source);
-	alGenBuffers(NUM_BUFFERS, m_Buffers);
-
-	std::size_t frame_size;
-
-	m_SndFile = sf_open(filename, SFM_READ, &m_Sfinfo);
-	if (!m_SndFile)
-		PIT_ENGINE_FATAL(Audio, "Could not open provided music file -- check path");
-
-	/* Get the sound format, and figure out the OpenAL format */
-	if (m_Sfinfo.channels == 1)
-		m_Format = AL_FORMAT_MONO16;
-	else if (m_Sfinfo.channels == 2)
-		m_Format = AL_FORMAT_STEREO16;
-	else if (m_Sfinfo.channels == 3) {
-		if (sf_command(m_SndFile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
-			m_Format = AL_FORMAT_BFORMAT2D_16;
-	}
-	else if (m_Sfinfo.channels == 4) {
-		if (sf_command(m_SndFile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
-			m_Format = AL_FORMAT_BFORMAT3D_16;
-	}
-	if (!m_Format) {
-		sf_close(m_SndFile);
-		m_SndFile = NULL;
-		PIT_ENGINE_FATAL(Audio, "Unsupported channel count from file");
-	}
-
-	frame_size = ((size_t)BUFFER_SAMPLES * (size_t)m_Sfinfo.channels) * sizeof(short);
-	m_Membuf = static_cast<short*>(malloc(frame_size));
-
-}
-
-MusicBuffer::~MusicBuffer() {
-	alDeleteSources(1, &m_Source);
-
-	if (m_SndFile)
-		sf_close(m_SndFile);
-
-	m_SndFile = nullptr;
-
-	free(m_Membuf);
-
-	alDeleteBuffers(NUM_BUFFERS, m_Buffers);
-
 }

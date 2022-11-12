@@ -129,7 +129,7 @@ void Engine::Update() {
 	OPTICK_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
-	JobSystem::Execute([]() { std::this_thread::sleep_for(1ms); });
+	JobSystem::Execute([]() {  });
 	try {
 		Time::SetFrame((Time::Frame() + 1) % 1000);
 
