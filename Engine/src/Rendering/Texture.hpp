@@ -4,12 +4,14 @@
 
 #include "Core/CoreInclude.hpp"
 #include <glad/glad.h>
+#include <stb_image.h>
 
 namespace Pit::Rendering {
 	class Texture {
 	public:
 		Texture(uint32_t width, uint32_t height);
-		Texture(const std::string& path);
+		Texture(const std::string& path, bool asyncLoading = false);
+		void FinishAsyncLoadingMainThread();
 		virtual ~Texture();
 
 		uint32_t GetWidth() const { return m_Width; }
@@ -28,6 +30,7 @@ namespace Pit::Rendering {
 	private:
 		std::string m_Path;
 		bool m_IsLoaded = false;
+		stbi_uc* m_TextureFileData;
 		uint32_t m_Width, m_Height;
 		uint32_t m_RendererID;
 		GLenum m_InternalFormat, m_DataFormat;

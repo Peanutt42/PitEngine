@@ -45,8 +45,8 @@ namespace Pit {
 
 		static void Execute(const std::function<void()>& job);
 		static void Dispatch(uint32 jobCount, uint32 groupSize, const std::function<void(uint32, uint32)>& job);
-		bool IsBusy();
-		void Wait();
+		static bool IsBusy();
+		static void Wait();
 
 	private:
 		static uint32 s_NumThreads;

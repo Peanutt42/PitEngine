@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "Engine.hpp"
 #include "Audio/AudioSubmodule.hpp"
+#include "AssetManagment/AssetManagmentSubmodule.hpp"
 #include "ECS/ECSSubmodule.hpp"
 #include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
@@ -23,13 +24,14 @@ UIRenderEvent Engine::UIRenderEvent;
 OnWindowResizeEvent Engine::OnWindowResizeEvent;
 ShutdownEvent Engine::ShutdownEvent;
 
-Engine::CreateInfo		Engine::s_CreateInfo = Engine::CreateInfo(0, nullptr, "PitEngine-NullInfo", true, false, false);
+Engine::CreateInfo			Engine::s_CreateInfo = Engine::CreateInfo(0, nullptr, "PitEngine-NullInfo", true, false, false);
 
-AudioSubmodule*			Engine::s_AudioSubmodule = nullptr;
-ECSSubmodule*			Engine::s_ECSSubmodule = nullptr;
-NetworkingSubmodule*	Engine::s_NetworkingSubmodule = nullptr;
-PhysicsSubmodule*		Engine::s_PhysicsSubmodule = nullptr;
-RenderingSubmodule*		Engine::s_RenderingSubmodule = nullptr;
+AudioSubmodule*				Engine::s_AudioSubmodule = nullptr;
+AssetManagmentSubmodule*	Engine::s_AssetManagmentSubmodule = nullptr;
+ECSSubmodule*				Engine::s_ECSSubmodule = nullptr;
+NetworkingSubmodule*		Engine::s_NetworkingSubmodule = nullptr;
+PhysicsSubmodule*			Engine::s_PhysicsSubmodule = nullptr;
+RenderingSubmodule*			Engine::s_RenderingSubmodule = nullptr;
 
 std::atomic<bool>		Engine::s_Quit = false;
 
@@ -45,7 +47,7 @@ std::atomic<bool>		Engine::s_Quit = false;
 
 
 void Engine::Init(const CreateInfo& info) {
-	OPTICK_FRAME("MainThread - Init");
+	OPTICK_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
 
@@ -64,7 +66,7 @@ void Engine::Init(const CreateInfo& info) {
 		if (s_CreateInfo.Headless)
 			PIT_ENGINE_INFO(General, " - Headless Mode");
 		PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
-
+		
 		JobSystem::Initialize();
 
 		if (!s_CreateInfo.Headless) {
@@ -86,13 +88,16 @@ void Engine::Init(const CreateInfo& info) {
 		s_PhysicsSubmodule = new PhysicsSubmodule();
 		s_PhysicsSubmodule->Init();
 
+		s_AssetManagmentSubmodule = new AssetManagmentSubmodule();
+		s_AssetManagmentSubmodule->Init();
+
 		InitEvent.Invoke();
 	}
 	CATCH_EXCEPTIONS();
 }
 
 void Engine::Shutdown() {
-	OPTICK_FRAME("MainThread - Shutdown");
+	OPTICK_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
 
@@ -113,6 +118,9 @@ void Engine::Shutdown() {
 			s_AudioSubmodule->Shutdown();
 			delete s_AudioSubmodule;
 		}
+
+		s_AssetManagmentSubmodule->Shutdown();
+		delete s_AssetManagmentSubmodule;
 
 		JobSystem::Shutdown();
 

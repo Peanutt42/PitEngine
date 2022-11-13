@@ -188,6 +188,10 @@
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Core\Version.hpp" />
+    <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp" />
+    <ClInclude Include="src\AssetManagment\Asset.hpp" />
+    <ClInclude Include="src\Rendering\TextureAsset.hpp" />
+    <ClInclude Include="src\Utils\graphics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
@@ -269,5 +273,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp" />
   </ItemGroup>
 </Project>

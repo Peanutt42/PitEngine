@@ -23,7 +23,7 @@ Texture::Texture(uint32_t width, uint32_t height)
 	glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
-Texture::Texture(const std::string& path)
+Texture::Texture(const std::string& path, bool asyncLoading)
 	: m_Path(path) {
 
 	PIT_PROFILE_FUNCTION();
@@ -31,46 +31,52 @@ Texture::Texture(const std::string& path)
 	int width, height, channels;
 	
 	stbi_set_flip_vertically_on_load(path.ends_with(".jpg"));
-	stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+	m_TextureFileData = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
-	if (data) {
-		m_IsLoaded = true;
+	if (!m_TextureFileData) PIT_ENGINE_FATAL(Rendering, "Failed to properly load texture");
 
-		m_Width = width;
-		m_Height = height;
 
-		GLenum internalFormat = 0, dataFormat = 0;
-		if (channels == 4) {
-			internalFormat = GL_RGBA8;
-			dataFormat = GL_RGBA;
-		}
-		else if (channels == 3) {
-			internalFormat = GL_RGB8;
-			dataFormat = GL_RGB;
-		}
+	m_IsLoaded = true;
 
-		m_InternalFormat = internalFormat;
-		m_DataFormat = dataFormat;
+	m_Width = width;
+	m_Height = height;
 
-		if (!(internalFormat & dataFormat))
-			PIT_ENGINE_ERR(Rendering, "Format not supported!");
-
-		glGenTextures(1, &m_RendererID);
-		glBindTexture(GL_TEXTURE_2D, m_RendererID);
-
-		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, dataFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		
-		stbi_image_free(data);
+	GLenum internalFormat = 0, dataFormat = 0;
+	if (channels == 4) {
+		internalFormat = GL_RGBA8;
+		dataFormat = GL_RGBA;
 	}
+	else if (channels == 3) {
+		internalFormat = GL_RGB8;
+		dataFormat = GL_RGB;
+	}
+
+	m_InternalFormat = internalFormat;
+	m_DataFormat = dataFormat;
+
+	if (!(internalFormat & dataFormat))
+		PIT_ENGINE_ERR(Rendering, "Format not supported!");
+
+	if (!asyncLoading)
+		FinishAsyncLoadingMainThread();
+}
+
+void Texture::FinishAsyncLoadingMainThread() {
+	glGenTextures(1, &m_RendererID);
+	glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, m_DataFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, m_TextureFileData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(m_TextureFileData);
 }
 
 Texture::~Texture() {

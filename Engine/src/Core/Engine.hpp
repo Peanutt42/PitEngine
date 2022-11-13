@@ -6,6 +6,7 @@ namespace Pit {
 	const static Version EngineVersion(0, 0, 1);
 
 	class AudioSubmodule;
+	class AssetManagmentSubmodule;
 	class ECSSubmodule;
 	class NetworkingSubmodule;
 	class PhysicsSubmodule;
@@ -54,6 +55,7 @@ namespace Pit {
 		static const CreateInfo& GetInfo() { return s_CreateInfo; }
 
 		static AudioSubmodule* Audio() { return s_AudioSubmodule; }
+		static AssetManagmentSubmodule* AssetManagment() { return s_AssetManagmentSubmodule; }
 		static RenderingSubmodule* Rendering() { return s_RenderingSubmodule; }
 		static ECSSubmodule* ECS() { return s_ECSSubmodule; }
 
@@ -72,6 +74,7 @@ namespace Pit {
 		static CreateInfo s_CreateInfo;
 
 		static AudioSubmodule* s_AudioSubmodule;
+		static AssetManagmentSubmodule* s_AssetManagmentSubmodule;
 		static ECSSubmodule* s_ECSSubmodule;
 		static NetworkingSubmodule* s_NetworkingSubmodule;
 		static PhysicsSubmodule* s_PhysicsSubmodule;

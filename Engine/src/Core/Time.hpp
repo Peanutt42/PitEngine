@@ -55,7 +55,7 @@ namespace Pit {
 			: m_Name(name) {}
 		~ScopedTimer() {
 			float time = m_Timer.ElapsedMillis();
-			PIT_ENGINE_INFO(General, "[TIMER] {0:s} - {1:f}ms, {2:f}fps", m_Name, time, 1 / time * 1000);
+			PIT_ENGINE_INFO(General, "[TIMER] {0:3s} - {1:f}s, {2:f}ms, {3:f}fps", m_Name, time / 1000.f, time, 1 / time * 1000);
 		}
 	private:
 		std::string m_Name;

@@ -29,6 +29,7 @@ namespace Pit::Debug {
 		General,
 		Editor,
 		Audio,
+		AssetManagment,
 		Networking,
 		ECS,
 		Phyisics,
@@ -47,14 +48,15 @@ using Log = Pit::Debug::Category;
 
 #define PIT_ENGINE_BASE_LOG(logFunc, category, msg, ...)	\
 	if (Pit::Debug::Logging::LoggerInitialized) {																		\
-		if constexpr (category == Log::General)			logFunc(_GetEngineLogger(), "[Engine::General]    " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::Editor)		logFunc(_GetEngineLogger(), "[Engine::Editor]     " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::Audio)		logFunc(_GetEngineLogger(), "[Engine::Audio]      " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::Networking) logFunc(_GetEngineLogger(), "[Engine::Networking] " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::ECS)		logFunc(_GetEngineLogger(), "[Engine::ECS]        " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::Phyisics)	logFunc(_GetEngineLogger(), "[Engine::Phyisics]   " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::Rendering)	logFunc(_GetEngineLogger(), "[Engine::Rendering]  " msg, ##__VA_ARGS__);	\
-		else if constexpr (category == Log::UI)			logFunc(_GetEngineLogger(), "[Engine::UI]         " msg, ##__VA_ARGS__);	\
+		if constexpr (category == Log::General)				logFunc(_GetEngineLogger(), "[Engine::General]    " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Editor)			logFunc(_GetEngineLogger(), "[Engine::Editor]     " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Audio)			logFunc(_GetEngineLogger(), "[Engine::Audio]      " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::AssetManagment)	logFunc(_GetEngineLogger(), "[Engine::Assets]     " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Networking)		logFunc(_GetEngineLogger(), "[Engine::Networking] " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::ECS)			logFunc(_GetEngineLogger(), "[Engine::ECS]        " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Phyisics)		logFunc(_GetEngineLogger(), "[Engine::Phyisics]   " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Rendering)		logFunc(_GetEngineLogger(), "[Engine::Rendering]  " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::UI)				logFunc(_GetEngineLogger(), "[Engine::UI]         " msg, ##__VA_ARGS__);	\
 	}
 
 #define PIT_ENGINE_TRACE(category, msg, ...)	PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_TRACE, Log::category, msg, ##__VA_ARGS__)
