@@ -28,6 +28,8 @@ namespace Pit {
 		// Get State of MouseButton
 		static bool IsMouseButtonReleased(MouseButton button);
 
+		// Set position of mouse
+		static void SetMousePos(const glm::vec2& newPos);
 		// Get current position of mouse
 		static const glm::vec2& GetMousePos() { return m_LastMousePos; }
 		// Get current change in position of mouse

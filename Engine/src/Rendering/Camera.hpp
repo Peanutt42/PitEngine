@@ -19,7 +19,7 @@ namespace Pit::Rendering {
 
         float MovementSpeed;
         float MouseSensitivity;
-        float Zoom;
+        float Fov;
 
         Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = -90.0f, float pitch = 0.f);
 

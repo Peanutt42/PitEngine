@@ -82,7 +82,6 @@ static void APIENTRY GlMessageCallback(GLenum source, GLenum type, unsigned int 
 
 	PIT_ENGINE_TRACE(Rendering, "[OpenGL]: Unknown severity level!");
 }
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 Renderer::Renderer() {
@@ -101,7 +100,6 @@ Renderer::Renderer() {
 		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
-	glfwSetCursorPosCallback(Engine::Rendering()->Window->GetWindowHandle(), mouse_callback);
 	glfwSetScrollCallback(Engine::Rendering()->Window->GetWindowHandle(), scroll_callback);
 
 	// cube VAO
@@ -192,15 +190,6 @@ Renderer::~Renderer() {
 void Renderer::Update() {
 	PIT_PROFILE_FUNCTION();
 
-	if (Input::IsKeyDown(Key_W))
-		m_Camera.ProcessKeyboard({0, 1, 0});
-	if (Input::IsKeyDown(Key_S))
-		m_Camera.ProcessKeyboard({ 0, -1, 0 });
-	if (Input::IsKeyDown(Key_A))
-		m_Camera.ProcessKeyboard({ 1, 0, 0 });
-	if (Input::IsKeyDown(Key_D))
-		m_Camera.ProcessKeyboard({ -1, 0, 0 });
-
 	// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
@@ -216,14 +205,14 @@ void Renderer::Update() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_Shader.Use();
-	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = m_Camera.GetViewMatrix();
-	glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Zoom), (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight(), 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Fov), (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight(), 0.1f, 100.0f);
 	m_Shader.SetMat4("view", view);
 	m_Shader.SetMat4("projection", projection);
 	// cubes
 	glBindVertexArray(m_VAO);
 	m_Texture.Bind();
+	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
 	m_Shader.SetMat4("model", model);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -245,21 +234,6 @@ void Renderer::Update() {
 	glBindVertexArray(m_ScreenQuadVAO);
 	glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);	// use the color attachment texture as the texture of the quad plane
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
-	static float lastX = Engine::Rendering()->Window->GetWidth() / 2.0f;
-	static float lastY = Engine::Rendering()->Window->GetHeight() / 2.0f;
-	float xpos = static_cast<float>(xposIn);
-	float ypos = static_cast<float>(yposIn);
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-	lastX = xpos;
-	lastY = ypos;
-
-	Engine::Rendering()->Renderer->m_Camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {

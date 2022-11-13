@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
+#include <glm/glm.hpp>
 
 namespace Pit::Rendering {
 	class Window {
@@ -24,6 +25,8 @@ namespace Pit::Rendering {
 		bool IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
 		bool IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
 		bool IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
+
+		glm::vec2 GetPosition() { int x, y; glfwGetWindowPos(m_Window, &x, &y); return {x,y}; }
 
 		void SetIcon(const String& iconFilePath);
 

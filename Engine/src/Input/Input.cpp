@@ -7,7 +7,7 @@
 
 using namespace Pit;
 
-glm::vec2 Input::m_LastMousePos;
+glm::vec2 Input::m_LastMousePos = {2560 / 2, 1440 / 2};
 glm::vec2 Input::m_LastMousePosDelta;
 KeyState Input::s_KeyStates[KEY_COUNT];
 bool Input::s_KeyStateChanged[KEY_COUNT];
@@ -74,6 +74,11 @@ bool Input::IsMouseButtonPressed(MouseButton button) {
 
 bool Input::IsMouseButtonReleased(MouseButton button) {
 	return s_MosueButtonStateChanged[button] && !s_MouseButtonStates[button];
+}
+
+void Input::SetMousePos(const glm::vec2& newPos) {
+	glfwSetCursorPos(GetWindow(), newPos.x, newPos.y);
+	m_LastMousePos = newPos;
 }
 
 void Input::SetCursorMode(CursorMode mode) {

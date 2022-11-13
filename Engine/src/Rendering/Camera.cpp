@@ -5,7 +5,7 @@ using namespace Pit;
 using namespace Rendering;
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(2.5f), MouseSensitivity(.1f), Zoom(70.f) {
+    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(2.5f), MouseSensitivity(.1f), Fov(90.f) {
 
     Position = position;
     WorldUp = up;
@@ -45,11 +45,11 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
 }
 
 void Camera::ProcessMouseScroll(float yoffset) {
-    Zoom -= (float)yoffset;
-    if (Zoom < 1.0f)
-        Zoom = 1.0f;
-    if (Zoom > 45.0f)
-        Zoom = 45.0f;
+    Fov -= (float)yoffset;
+    if (Fov < 1.0f)
+        Fov = 1.0f;
+    if (Fov > 180.0f)
+        Fov = 180.0f;
 }
 
 void Camera::_UpdateCameraVectors() {
