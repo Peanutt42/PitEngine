@@ -1,5 +1,10 @@
 # PitEngine
  
+> **Warning**
+> Very Experimental!
+> PitEngine is in super rought development right now so many systems
+  aren't ready for any project as mostly everything is in early development
+ 
 # Building - Windows
 PitEngine uses premake as its build system.
 Steps to build PitEngine:
