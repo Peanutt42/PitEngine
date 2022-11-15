@@ -12,7 +12,8 @@ void SceneViewportPanel::OnCreate() {
 	Name = "Viewport";
 	Shortcut = Array<KeyCode>{ LeftControl, Key_T };
 
-	m_SceneTexture = new Pit::Rendering::Texture("C:/Users/Peter/Pictures/Wallpaper/texture.jpeg");
+	if (!Engine::GetInfo().Headless)
+		m_SceneTexture = new Pit::Rendering::Texture("C:/Users/Peter/Pictures/Wallpaper/texture.jpeg");
 }
 
 

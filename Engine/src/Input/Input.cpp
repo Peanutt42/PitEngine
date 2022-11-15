@@ -4,6 +4,7 @@
 #include "Core/Engine.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
 #include <GLFW/glfw3.h>
+#include <conio.h>
 
 using namespace Pit;
 
@@ -19,8 +20,8 @@ static GLFWwindow* GetWindow() {
 }
 
 void Input::Update() {
-	if (Engine::GetInfo().Headless) return;
-
+	if (Engine::GetInfo().Headless) return; // TODO: Read console input as commands, not that straight forward though
+	
 	GLFWwindow* window = GetWindow();
 	for (int i = MIN_KEY; i < KEY_COUNT; i++) {
 		KeyState state = Cast<KeyState>(glfwGetKey(window, i));

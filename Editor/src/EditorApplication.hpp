@@ -20,7 +20,7 @@ namespace Pit::Editor {
 		static void test1() { test2(); }
 		static void test2() { test3(); }
 		static void test3() { test4(); }
-		static void test4() { stack_trace(false, false); }
+		static void test4() { CrashHandler::StackTrace(false, false); }
 
 	private:
 		static EditorAssetManager s_AssetManager;
