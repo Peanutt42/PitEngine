@@ -25,8 +25,8 @@ void ContentBrowserPanel::OnGui() {
 	_DrawBrowserToolbar();
 	
 	// Splitview
-	static float w = 200.0f;
-	float h = ImGui::GetContentRegionAvail().y;//400.0f;
+	static float w = 200;
+	float h = ImGui::GetContentRegionAvail().y;//400;
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
 	ImGui::BeginChild("ListBrowser", ImVec2(w, h), true);
 
@@ -34,7 +34,7 @@ void ContentBrowserPanel::OnGui() {
 
 	ImGui::EndChild();
 	ImGui::SameLine();
-	ImGui::InvisibleButton("vsplitter", ImVec2(8.0f, h));
+	ImGui::InvisibleButton("vsplitter", ImVec2(8, h));
 	if (ImGui::IsItemActive())
 		w += ImGui::GetIO().MouseDelta.x;
 	ImGui::SameLine();
@@ -47,7 +47,7 @@ void ContentBrowserPanel::OnGui() {
 }
 
 void ContentBrowserPanel::_DrawBrowserToolbar() {
-	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
+	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1, 1, 1, .5f) : ImVec4(1, 1, 1, 1);
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), {20, 20}, false, false, -1, {0,0,0,0}, tintColor) ||
 		/*Maybe concider hovering: prob: child blocks windowhovered*/
 		Input::IsMouseButtonDown(Button3)) {
@@ -59,7 +59,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImGui::SameLine();
 
 	ImVec4 tintColor2 = (m_LastDirectory == m_CurrentDirectory ||
-						 m_LastDirectory == std::filesystem::path()) ? ImVec4(1.f, 1.f, 1.f, 0.5f) : ImVec4(1, 1, 1, 1);
+						 m_LastDirectory == std::filesystem::path()) ? ImVec4(1, 1, 1, .5f) : ImVec4(1, 1, 1, 1);
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), { 20, 20 }, true, false, -1, { 0,0,0,0 }, tintColor2) ||
 		(ImGui::IsWindowHovered() && Input::IsMouseButtonDown(Button4))) {
 		if (m_LastDirectory != m_CurrentDirectory) {
@@ -99,7 +99,7 @@ void ContentBrowserPanel::_DrawListBrowser() {
 
 void ContentBrowserPanel::_DrawListBrowserStage(const std::filesystem::path& stage, int& indentation) {
 	for (auto& directoryEntry : std::filesystem::directory_iterator(stage)) {
-		ImGui::Dummy({ 10.f * indentation, 0.f });
+		ImGui::Dummy({ 10.f * indentation, 0 });
 		ImGui::SameLine();
 		if (_DrawListBrowserItem(directoryEntry)) {
 			if (directoryEntry.is_directory()) {

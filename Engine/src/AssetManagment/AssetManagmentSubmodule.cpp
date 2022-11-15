@@ -11,7 +11,7 @@ using namespace Pit;
 void AssetManagmentSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
 
-	ScopedTimer t("AssetManagment load test textures");
+	ScopedTimer t("AssetManagment load textures");
 
 	for (auto& directoryEntry : std::filesystem::recursive_directory_iterator(std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "assets"))) {
 		auto path = directoryEntry.path();
@@ -37,7 +37,7 @@ void AssetManagmentSubmodule::Init() {
 #endif
 	}
 	JobSystem::Wait();
-
+	
 #if LOAD_TEXTURE_ASYNC
 	for (auto asset : m_Assets) {
 		Rendering::TextureAsset* textureAsset = Cast<Rendering::TextureAsset*>(asset);

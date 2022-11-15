@@ -5,7 +5,7 @@ using namespace Pit;
 using namespace Rendering;
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(2.5f), MouseSensitivity(.1f), Fov(90.f) {
+    : Front(glm::vec3(0, 0, -1)), MovementSpeed(2.5f), MouseSensitivity(.1f), Fov(90) {
 
     Position = position;
     WorldUp = up;
@@ -39,17 +39,17 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     Pitch += yoffset;
 
     if (constrainPitch)
-        Pitch = Math::Clamp(Pitch, -90.f, 90.f);
+        Pitch = Math::Clamp(Pitch, -90, 90);
 
     _UpdateCameraVectors();
 }
 
 void Camera::ProcessMouseScroll(float yoffset) {
     Fov -= (float)yoffset;
-    if (Fov < 1.0f)
-        Fov = 1.0f;
-    if (Fov > 180.0f)
-        Fov = 180.0f;
+    if (Fov < 1)
+        Fov = 1;
+    if (Fov > 180)
+        Fov = 180;
 }
 
 void Camera::_UpdateCameraVectors() {

@@ -49,7 +49,8 @@ void JobSystem::Initialize() {
 
 void JobSystem::Shutdown() {
 	PIT_PROFILE_FUNCTION();
-
+	
+	Wait();
 	s_ShutdownThreads.store(true);
 }
 

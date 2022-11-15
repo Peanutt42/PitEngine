@@ -201,23 +201,23 @@ void Renderer::Update() {
 	glFrontFace(GL_CCW);
 
 	// make sure we clear the framebuffer's content
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(.1f, .1f, .1f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_Shader.Use();
 	glm::mat4 view = m_Camera.GetViewMatrix();
-	glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Fov), (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight(), 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Fov), (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight(), .1f, 100.f);
 	m_Shader.SetMat4("view", view);
 	m_Shader.SetMat4("projection", projection);
 	// cubes
 	glBindVertexArray(m_VAO);
 	m_Texture.Bind();
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+	model = glm::translate(model, glm::vec3(-1, 0, -1));
 	m_Shader.SetMat4("model", model);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+	model = glm::translate(model, glm::vec3(2, 0, 0));
 	m_Shader.SetMat4("model", model);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 

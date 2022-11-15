@@ -26,11 +26,11 @@ void PhysicsSubmodule::Update() {
 	static float accumulator = 0;
 
 	timepoint newTime = clock::now();
-	auto frameTime = duration_cast<nanoseconds>(newTime - currentTime).count() * 0.000000001f;
+	auto frameTime = duration_cast<nanoseconds>(newTime - currentTime).count() * .000000001f;
 	currentTime = newTime;
 
 	accumulator += frameTime;
-	accumulator = Math::Clamp(accumulator, 0.f, .25f);
+	accumulator = Math::Clamp(accumulator, 0, .25f);
 
 	while (accumulator >= m_FixedTimestep) {
 		PIT_PROFILE_FUNCTION("Pit::PhysicsSubmodule::Update::Step");
@@ -67,7 +67,7 @@ void PhysicsSubmodule::_InitPhysx() {
 }
 
 void PhysicsSubmodule::_CreateScene() {
-	m_Material = m_Physics->createMaterial(0.5f, 0.5f, 0.6f);
+	m_Material = m_Physics->createMaterial(.5f, .5f, .6f);
 	physx::PxRigidStatic* groundPlane = PxCreatePlane(*m_Physics, physx::PxPlane(0, 1, 0, 50), *m_Material);
 	m_Scene->AddActor(*groundPlane);
 
@@ -80,7 +80,7 @@ void PhysicsSubmodule::_CreateScene() {
 			physx::PxTransform localTm(physx::PxVec3(physx::PxReal(j * 2) - physx::PxReal(size - i), physx::PxReal(i * 2 + 1), 0) * halfExtent);
 			physx::PxRigidBody* body = m_Physics->createRigidDynamic(t.transform(localTm));
 			body->attachShape(*shape);
-			physx::PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
+			physx::PxRigidBodyExt::updateMassAndInertia(*body, 10);
 			m_Scene->AddActor(*body);
 		}
 	}

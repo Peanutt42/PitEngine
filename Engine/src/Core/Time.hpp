@@ -34,15 +34,15 @@ namespace Pit {
 		}
 
 		inline float Elapsed() {
-			return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - m_Start).count() * 0.001f * 0.001f * 0.001f;
+			return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - m_Start).count() * .001f * .001f * .001f;
 		}
 
 		inline float ElapsedMillis() {
-			return Elapsed() * 1000.0f;
+			return Elapsed() * 1000;
 		}
 
 		inline float ElapsedSeconds() {
-			return ElapsedMillis() / 1000.f;
+			return ElapsedMillis() / 1000;
 		}
 
 	private:
@@ -55,7 +55,7 @@ namespace Pit {
 			: m_Name(name) {}
 		~ScopedTimer() {
 			float time = m_Timer.ElapsedMillis();
-			PIT_ENGINE_INFO(General, "[TIMER] {0:3s} - {1:f}s, {2:f}ms, {3:f}fps", m_Name, time / 1000.f, time, 1 / time * 1000);
+			PIT_ENGINE_INFO(General, "[TIMER] {0:3s} - {1:f}s, {2:f}ms, {3:f}fps", m_Name, time / 1000, time, 1 / time * 1000);
 		}
 	private:
 		std::string m_Name;

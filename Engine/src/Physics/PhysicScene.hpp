@@ -5,7 +5,7 @@
 
 namespace Pit::Physics {
 	struct SceneDescription {
-		physx::PxVec3 Gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
+		physx::PxVec3 Gravity = physx::PxVec3(0, -9.81f, 0);
 	};
 
 	class Scene {

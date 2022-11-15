@@ -14,7 +14,7 @@ namespace Pit::UI {
 #define IMGUI_LEFT_LABEL(func, label, ...)
 #endif
 
-	inline static void Vec2(const String& label, glm::vec2& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec2(const String& label, glm::vec2& values, float resetValue = 0, float columnWidth = 100) {
 		ImFont* extraBoldFont = Fonts::Get(Fonts::ExtraBold);
 
 		ImGui::PushID(label.c_str());
@@ -28,11 +28,11 @@ namespace Pit::UI {
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
 		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+		ImVec2 buttonSize = { lineHeight + 3, lineHeight };
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .8f, .1f, .15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .9f, .2f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .8f, .1f, .15f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
@@ -40,13 +40,13 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##X", &values.x, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .2f, .7f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .3f, .8f, .3f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .2f, .7f, .2f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
@@ -54,7 +54,7 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##Y", &values.y, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 
 		ImGui::PopStyleVar();
@@ -64,7 +64,7 @@ namespace Pit::UI {
 		ImGui::PopID();
 	}
 
-	inline static void Vec3(const String& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec3(const String& label, glm::vec3& values, float resetValue = 0, float columnWidth = 100) {
 		ImFont* extraBoldFont = Fonts::Get(Fonts::ExtraBold);
 
 		ImGui::PushID(label.c_str());
@@ -77,12 +77,12 @@ namespace Pit::UI {
 		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
-		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2;
 		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .8f, .1f, .15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .9f, .2f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .8f, .1f, .15f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
@@ -90,13 +90,13 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##X", &values.x, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .2f, .7f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .3f, .8f, .3f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .2f, .7f, .2f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
@@ -104,13 +104,13 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##Y", &values.y, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .1f, .25f, .8f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .2f, .35f, .9f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .1f, .25f, .8f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("Z", buttonSize))
 			values.z = resetValue;
@@ -118,7 +118,7 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##Z", &values.z, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 
 		ImGui::PopStyleVar();
@@ -128,7 +128,7 @@ namespace Pit::UI {
 		ImGui::PopID();
 	}
 
-	inline static void Vec4(const String& label, glm::vec4& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
+	inline static void Vec4(const String& label, glm::vec4& values, float resetValue = 0, float columnWidth = 100) {
 		ImFont* extraBoldFont = Fonts::Get(Fonts::ExtraBold);
 
 		ImGui::PushID(label.c_str());
@@ -141,12 +141,12 @@ namespace Pit::UI {
 		ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
-		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2;
+		ImVec2 buttonSize = { lineHeight + 3, lineHeight };
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .8f, .1f, .15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .9f, .2f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .8f, .1f, .15f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
@@ -154,13 +154,13 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##X", &values.x, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .2f, .7f, .2f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .3f, .8f, .3f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .2f, .7f, .2f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
@@ -168,7 +168,7 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##Y", &values.y, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
@@ -182,13 +182,13 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##Z", &values.z, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .1f, .25f, .8f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .2f, .35f, .9f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .1f, .25f, .8f, 1 });
 		ImGui::PushFont(extraBoldFont);
 		if (ImGui::Button("W", buttonSize))
 			values.z = resetValue;
@@ -196,7 +196,7 @@ namespace Pit::UI {
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
-		ImGui::DragFloat("##W", &values.w, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat("##W", &values.w, .1f, 0, 0, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
@@ -207,7 +207,7 @@ namespace Pit::UI {
 		ImGui::PopID();
 	}
 
-	inline static bool DragFloat(const char* label, float* v, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) {
+	inline static bool DragFloat(const char* label, float* v, float v_speed = 1, float v_min = 0, float v_max = 0, const char* format = "%.3f", ImGuiSliderFlags flags = 0) {
 		return IMGUI_LEFT_LABEL(ImGui::DragFloat, label, v, v_speed, v_min, v_max, format, flags);
 	}
 

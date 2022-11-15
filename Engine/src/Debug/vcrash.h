@@ -1,3 +1,5 @@
+// From https://github.com/vanyle/vcrash/blob/master/src/vcrash.h with simple modifications to fit into PitEngine
+
 /*
 LICENSE:
 MIT License
@@ -49,117 +51,119 @@ SOFTWARE.
 #include <signal.h>
 
 
-// on crash mode, don't print calls made after the crash occured
-// on cut setup, don't print calls made before main is called.
-static void stack_trace(bool crashMode, bool cutSetup) {
-	HANDLE process = GetCurrentProcess();
-	HANDLE thread = GetCurrentThread();
+namespace CrashHandler {
+	// on crash mode, don't print calls made after the crash occured
+	// on cut setup, don't print calls made before main is called.
+	static void StackTrace(bool crashMode, bool cutSetup) {
+		HANDLE process = GetCurrentProcess();
+		HANDLE thread = GetCurrentThread();
 
-	CONTEXT context;
-	memset(&context, 0, sizeof(CONTEXT));
-	context.ContextFlags = CONTEXT_FULL;
-	RtlCaptureContext(&context);
+		CONTEXT context;
+		memset(&context, 0, sizeof(CONTEXT));
+		context.ContextFlags = CONTEXT_FULL;
+		RtlCaptureContext(&context);
 
-	SymInitialize(process, NULL, TRUE);
+		SymInitialize(process, NULL, TRUE);
 
-	DWORD image;
-	STACKFRAME64 stackframe;
-	ZeroMemory(&stackframe, sizeof(STACKFRAME64));
+		DWORD image;
+		STACKFRAME64 stackframe;
+		ZeroMemory(&stackframe, sizeof(STACKFRAME64));
 
-#ifdef _M_IX86
-	image = IMAGE_FILE_MACHINE_I386;
-	stackframe.AddrPC.Offset = context.Eip;
-	stackframe.AddrPC.Mode = AddrModeFlat;
-	stackframe.AddrFrame.Offset = context.Ebp;
-	stackframe.AddrFrame.Mode = AddrModeFlat;
-	stackframe.AddrStack.Offset = context.Esp;
-	stackframe.AddrStack.Mode = AddrModeFlat;
-#elif _M_X64
-	image = IMAGE_FILE_MACHINE_AMD64;
-	stackframe.AddrPC.Offset = context.Rip;
-	stackframe.AddrPC.Mode = AddrModeFlat;
-	stackframe.AddrFrame.Offset = context.Rsp;
-	stackframe.AddrFrame.Mode = AddrModeFlat;
-	stackframe.AddrStack.Offset = context.Rsp;
-	stackframe.AddrStack.Mode = AddrModeFlat;
-#elif _M_IA64
-	image = IMAGE_FILE_MACHINE_IA64;
-	stackframe.AddrPC.Offset = context.StIIP;
-	stackframe.AddrPC.Mode = AddrModeFlat;
-	stackframe.AddrFrame.Offset = context.IntSp;
-	stackframe.AddrFrame.Mode = AddrModeFlat;
-	stackframe.AddrBStore.Offset = context.RsBSP;
-	stackframe.AddrBStore.Mode = AddrModeFlat;
-	stackframe.AddrStack.Offset = context.IntSp;
-	stackframe.AddrStack.Mode = AddrModeFlat;
-#endif
+	#ifdef _M_IX86
+		image = IMAGE_FILE_MACHINE_I386;
+		stackframe.AddrPC.Offset = context.Eip;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.Ebp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.Esp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+	#elif _M_X64
+		image = IMAGE_FILE_MACHINE_AMD64;
+		stackframe.AddrPC.Offset = context.Rip;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.Rsp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.Rsp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+	#elif _M_IA64
+		image = IMAGE_FILE_MACHINE_IA64;
+		stackframe.AddrPC.Offset = context.StIIP;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.IntSp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrBStore.Offset = context.RsBSP;
+		stackframe.AddrBStore.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.IntSp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+	#endif
 
-	bool printEnable = !crashMode;
+		bool printEnable = !crashMode;
 
-	for (size_t i = 0; i < 25; i++) {
-		BOOL result = StackWalk64(
-			image, process, thread,
-			&stackframe, &context, NULL,
-			SymFunctionTableAccess64, SymGetModuleBase64, NULL);
+		for (size_t i = 0; i < 25; i++) {
+			BOOL result = StackWalk64(
+				image, process, thread,
+				&stackframe, &context, NULL,
+				SymFunctionTableAccess64, SymGetModuleBase64, NULL);
 
-		if (!result) { break; }
+			if (!result) { break; }
 
-		char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
-		PSYMBOL_INFO symbol = (PSYMBOL_INFO)buffer;
-		symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
-		symbol->MaxNameLen = MAX_SYM_NAME;
+			char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
+			PSYMBOL_INFO symbol = (PSYMBOL_INFO)buffer;
+			symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+			symbol->MaxNameLen = MAX_SYM_NAME;
 
-		char buffer2[sizeof(PIMAGEHLP_LINE64)];
-		PIMAGEHLP_LINE64 lineCounter = (PIMAGEHLP_LINE64)buffer2; // contains data about a location in a file (filename, line, col, ...)
-		lineCounter->SizeOfStruct = sizeof(PIMAGEHLP_LINE64);
+			char buffer2[sizeof(PIMAGEHLP_LINE64)];
+			PIMAGEHLP_LINE64 lineCounter = (PIMAGEHLP_LINE64)buffer2; // contains data about a location in a file (filename, line, col, ...)
+			lineCounter->SizeOfStruct = sizeof(PIMAGEHLP_LINE64);
 
-		DWORD64 displacement = 0;
-		DWORD displacement32 = 0;
+			DWORD64 displacement = 0;
+			DWORD displacement32 = 0;
 
-		if (SymFromAddr(process, stackframe.AddrPC.Offset, &displacement, symbol)) {
+			if (SymFromAddr(process, stackframe.AddrPC.Offset, &displacement, symbol)) {
 
-			if (printEnable) {
-				fprintf(stderr, "At %s(...)", symbol->Name);
+				if (printEnable) {
+					fprintf(stderr, "At %s(...)", symbol->Name);
 
-				// get line of symbol.
-				if (SymGetLineFromAddr64(process, stackframe.AddrPC.Offset, &displacement32, lineCounter)) {
-					fprintf(stderr, " (%s:%li)", lineCounter->FileName, lineCounter->LineNumber);
+					// get line of symbol.
+					if (SymGetLineFromAddr64(process, stackframe.AddrPC.Offset, &displacement32, lineCounter)) {
+						fprintf(stderr, " (%s:%li)", lineCounter->FileName, lineCounter->LineNumber);
+					}
+					else {
+						fprintf(stderr, " ???");
+					}
+					fprintf(stderr, "\n");
 				}
-				else {
-					fprintf(stderr, " ???");
-				}
-				fprintf(stderr, "\n");
-			}
 
-			if (cutSetup && strcmp(symbol->Name, "main") == 0) {
-				break;
+				if (cutSetup && strcmp(symbol->Name, "main") == 0) {
+					break;
+				}
+				if (!printEnable && (strcmp(symbol->Name, "abort") == 0 || strcmp(symbol->Name, "KiUserExceptionDispatcher") == 0)) {
+					printEnable = true;
+				}
+
 			}
-			if (!printEnable && (strcmp(symbol->Name, "abort") == 0 || strcmp(symbol->Name, "KiUserExceptionDispatcher") == 0)) {
-				printEnable = true;
+			else {
+				fprintf(stderr, "[%lli] ???\n", i);
 			}
 
 		}
-		else {
-			fprintf(stderr, "[%lli] ???\n", i);
-		}
-
+		SymCleanup(process);
 	}
-	SymCleanup(process);
-}
 
-static void on_process_crash(int sig) {
-	fprintf(stderr, "A crash occured.\n");
-	fflush(stderr);
+	static void OnProcessCrashed(int sig) {
+		fprintf(stderr, "A crash occured.\n");
+		fflush(stderr);
 
-	stack_trace(true, true);
-	fflush(stderr);
-	exit(sig);
-}
+		StackTrace(true, true);
+		fflush(stderr);
+		exit(sig);
+	}
 
-static void setup_crash_handler() {
-	signal(SIGINT, on_process_crash); // catch segfaults
-	signal(SIGILL, on_process_crash); // catch segfaults
-	signal(SIGSEGV, on_process_crash); // catch segfaults
-	signal(SIGABRT, on_process_crash); // catch exceptions
+	static void Init() {
+		signal(SIGINT, OnProcessCrashed); // catch segfaults
+		signal(SIGILL, OnProcessCrashed); // catch segfaults
+		signal(SIGSEGV, OnProcessCrashed); // catch segfaults
+		signal(SIGABRT, OnProcessCrashed); // catch exceptions
+	}
 }
 #endif

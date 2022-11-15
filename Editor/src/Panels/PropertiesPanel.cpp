@@ -46,7 +46,7 @@ static void DrawComponent(const String& name, Pit::ECS::World* world, entt::enti
 	bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
 	ImGui::PopStyleVar(
 	);
-	ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+	ImGui::SameLine(contentRegionAvailable.x - lineHeight / 2);
 	ImGui::PushFont(Fonts::Get(Fonts::ExtraBold));
 	if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
 		ImGui::OpenPopup("ComponentSettings");

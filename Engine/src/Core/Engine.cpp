@@ -37,11 +37,11 @@ std::atomic<bool>		Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
 	catch (const std::exception& e) {											\
-		std::cerr << "[Engine] Exception catched: " << e.what() << std::endl;	\
+		PIT_ENGINE_FATAL(General, "[Engine] Exception catched: {}", e.what());	\
 		return;																	\
 	}																			\
 	catch (...) {																\
-		std::cerr << "[Engine] Exception catched!" << std::endl;				\
+		PIT_ENGINE_FATAL(General, "[Engine] Exception catched!");				\
 		return;																	\
 	}
 
@@ -51,7 +51,7 @@ void Engine::Init(const CreateInfo& info) {
 
 	PIT_PROFILE_FUNCTION();
 
-	setup_crash_handler();
+	CrashHandler::Init();
 
 	try {
 		s_CreateInfo = info;
@@ -143,7 +143,7 @@ void Engine::Update() {
 
 		static time_point<high_resolution_clock> lastUpdate;
 		time_point<high_resolution_clock> now = high_resolution_clock::now();
-		Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * 0.000000001f);
+		Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * .000000001f);
 		lastUpdate = now;
 
 		Input::Update();

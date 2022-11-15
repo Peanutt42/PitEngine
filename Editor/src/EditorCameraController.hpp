@@ -26,7 +26,7 @@ namespace Pit::Editor {
 			glm::vec3 rotate;
 			if (Input::IsMouseButtonDown(Button1)) {
 				Input::SetCursorMode(Locked);
-				rotate = glm::vec3{ -Input::GetMouseDelta().y, Input::GetMouseDelta().x, 0.f };
+				rotate = glm::vec3{ -Input::GetMouseDelta().y, Input::GetMouseDelta().x, 0 };
 			}
 			else
 				Input::SetCursorMode(Normal);
@@ -39,11 +39,11 @@ namespace Pit::Editor {
 			rotation.y = glm::mod(rotation.y, glm::two_pi<float>());
 
 			float yaw = rotation.y;
-			const glm::vec3 forwardDir{ sin(yaw), 0.f, cos(yaw) };
-			const glm::vec3 rightDir{ forwardDir.z, 0.f, -forwardDir.x };
-			const glm::vec3 upDir{ 0.f, -1.f, 0.f };
+			const glm::vec3 forwardDir{ sin(yaw), 0, cos(yaw) };
+			const glm::vec3 rightDir{ forwardDir.z, 0, -forwardDir.x };
+			const glm::vec3 upDir{ 0, -1, 0 };
 
-			glm::vec3 moveDir{ 0.f };
+			glm::vec3 moveDir{ 0 };
 			if (Input::IsKeyDown(MoveForward)) moveDir += forwardDir;
 			if (Input::IsKeyDown(MoveBackward)) moveDir -= forwardDir;
 			if (Input::IsKeyDown(MoveRight)) moveDir += rightDir;
