@@ -1,34 +1,34 @@
 #include "pch.hpp"
 #include "PhysicScene.hpp"
 
-using namespace Pit;
-using namespace Physics;
+namespace Pit::Physics {
 
-Scene::Scene(physx::PxPhysics* physics, physx::PxDefaultCpuDispatcher* dispatcher) {
-	PIT_PROFILE_FUNCTION();
+	Scene::Scene(physx::PxPhysics* physics, physx::PxDefaultCpuDispatcher* dispatcher) {
+		PIT_PROFILE_FUNCTION();
 
-	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
-	sceneDesc.gravity = m_Description.Gravity;
-	sceneDesc.cpuDispatcher = dispatcher;
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-	m_Scene = physics->createScene(sceneDesc);
-}
+		physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
+		sceneDesc.gravity = m_Description.Gravity;
+		sceneDesc.cpuDispatcher = dispatcher;
+		sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+		m_Scene = physics->createScene(sceneDesc);
+	}
 
-void Scene::AddActor(physx::PxActor& actor, const physx::PxBVHStructure* bvhStructure) {
-	m_Scene->addActor(actor, bvhStructure);
-}
+	void Scene::AddActor(physx::PxActor& actor, const physx::PxBVHStructure* bvhStructure) {
+		m_Scene->addActor(actor, bvhStructure);
+	}
 
-void Scene::Simulate(float delta) {
-	PIT_PROFILE_FUNCTION();
+	void Scene::Simulate(float delta) {
+		PIT_PROFILE_FUNCTION();
 
-	m_Scene->simulate(delta);
-	m_Scene->fetchResults(true);
-}
+		m_Scene->simulate(delta);
+		m_Scene->fetchResults(true);
+	}
 
-void Scene::UpdateDescription(const SceneDescription& newDescription) {
-	PIT_PROFILE_FUNCTION();
+	void Scene::UpdateDescription(const SceneDescription& newDescription) {
+		PIT_PROFILE_FUNCTION();
 
-	m_Description = newDescription;
+		m_Description = newDescription;
 
-	m_Scene->setGravity(m_Description.Gravity);
+		m_Scene->setGravity(m_Description.Gravity);
+	}
 }

@@ -2,44 +2,45 @@
 #include "Core/Engine.hpp"
 #include "RenderingSubmodule.hpp"
 
-using namespace Pit;
+namespace Pit {
 
-static void GLFWErrorCallback(int errorCode, const char* description) {
-	PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
-}
+	static void GLFWErrorCallback(int errorCode, const char* description) {
+		PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
+	}
 
-void RenderingSubmodule::Init() {
-	PIT_PROFILE_FUNCTION();
+	void RenderingSubmodule::Init() {
+		PIT_PROFILE_FUNCTION();
 
-	glfwInit();
-	glfwSetErrorCallback(GLFWErrorCallback);
+		glfwInit();
+		glfwSetErrorCallback(GLFWErrorCallback);
 
-	Window = new Rendering::Window("PitEngine", 800, 600, true);
-	glfwMakeContextCurrent(Window->GetWindowHandle());
-	glfwSwapInterval(Engine::GetInfo().VSync);
+		Window = new Rendering::Window("PitEngine", 800, 600, true);
+		glfwMakeContextCurrent(Window->GetWindowHandle());
+		glfwSwapInterval(Engine::GetInfo().VSync);
 
-	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
-		PIT_ENGINE_FATAL(Rendering, "Failed to initialize GLAD");
+		if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
+			PIT_ENGINE_FATAL(Rendering, "Failed to initialize GLAD");
 
-	Window->SetViewport(Window->GetWidth(), Window->GetHeight());
-	Renderer = new Rendering::Renderer();
-	UIRenderer = new UI::UIRenderer();
-}
+		Window->SetViewport(Window->GetWidth(), Window->GetHeight());
+		Renderer = new Rendering::Renderer();
+		UIRenderer = new UI::UIRenderer();
+	}
 
-void RenderingSubmodule::Shutdown() {
-	PIT_PROFILE_FUNCTION();
+	void RenderingSubmodule::Shutdown() {
+		PIT_PROFILE_FUNCTION();
 
-	delete UIRenderer;
-	delete Renderer;
-	delete Window;
+		delete UIRenderer;
+		delete Renderer;
+		delete Window;
 
-	glfwTerminate();
-}
+		glfwTerminate();
+	}
 
-void RenderingSubmodule::Update() {
-	PIT_PROFILE_FUNCTION();
+	void RenderingSubmodule::Update() {
+		PIT_PROFILE_FUNCTION();
 
-	Renderer->Update();
-	UIRenderer->Update();
-	Window->Update();
+		Renderer->Update();
+		UIRenderer->Update();
+		Window->Update();
+	}
 }
