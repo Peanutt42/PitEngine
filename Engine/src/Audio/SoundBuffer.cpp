@@ -35,7 +35,7 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 		return 0;
 	}
 
-	/* Get the sound format, and figure out the OpenAL format */
+	// Get the sound format, and figure out the OpenAL format
 	format = AL_NONE;
 	if (sfinfo.channels == 1)
 		format = AL_FORMAT_MONO16;
@@ -66,9 +66,8 @@ ALuint SoundBuffer::AddSoundEffect(const String& filename) {
 	}
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
 
-	/* Buffer the audio data into a new buffer object, then free the data and
-	 * close the file.
-	 */
+	// Buffer the audio data into a new buffer object, then free the data and
+	// close the file.
 	buffer = 0;
 	alGenBuffers(1, &buffer);
 	alBufferData(buffer, format, membuf, num_bytes, sfinfo.samplerate);

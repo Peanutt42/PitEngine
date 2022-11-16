@@ -5,10 +5,13 @@
 #include "AssetManagment/Asset.hpp"
 
 namespace Pit::Rendering {
+#define TEXTURE_ASSET_TYPE 2
+
 	class TextureAsset : public AssetManagment::Asset {
 	public:
 		TextureAsset(const String& path, bool asyncLoading = false) : m_AsyncLoading(asyncLoading) {
 			m_Filepath = std::filesystem::path(path);
+			m_TypeId = TEXTURE_ASSET_TYPE;
 		}
 
 		~TextureAsset() {

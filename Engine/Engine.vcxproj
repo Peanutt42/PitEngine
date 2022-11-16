@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="src\AssetManagment\Asset.hpp" />
     <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp" />
+    <ClInclude Include="src\Audio\AudioAsset.hpp" />
     <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
     <ClInclude Include="src\Audio\MusicBuffer.hpp" />
     <ClInclude Include="src\Audio\SoundBuffer.hpp" />

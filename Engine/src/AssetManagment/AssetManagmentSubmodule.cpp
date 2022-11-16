@@ -2,12 +2,14 @@
 #include <Core/Engine.hpp>
 #include "AssetManagmentSubmodule.hpp"
 #include "Rendering/TextureAsset.hpp"
+#include "Audio/AudioAsset.hpp"
 #include "Threading/JobSystem.hpp"
 #include <stb_image.h>
 
 using namespace Pit;
 
 #define LOAD_TEXTURE_ASYNC true
+#define LOAD_AUDIO_ASYNC true
 
 void AssetManagmentSubmodule::Init() {
 	PIT_PROFILE_FUNCTION();
@@ -24,33 +26,37 @@ void AssetManagmentSubmodule::Init() {
 
 		if (headless) continue;
 
-		if (fileExtention == ".png" || fileExtention == ".jpg") {
-			Rendering::TextureAsset* texture = new Rendering::TextureAsset(path.string(), LOAD_TEXTURE_ASYNC);
-			m_Assets.push_back(texture);
-		}
+		// Audio
+		if (fileExtention == ".wav" ||
+			fileExtention == ".ogg" ||
+			fileExtention == ".mp3")
+			m_Assets.push_back(new Audio::AudioAsset(path.string(), LOAD_AUDIO_ASYNC));
+
+		// Textures
+		else if (fileExtention == ".png" ||
+				 fileExtention == ".jpg")
+			m_Assets.push_back(new Rendering::TextureAsset(path.string(), LOAD_TEXTURE_ASYNC));
 	}
 
 	for (auto asset : m_Assets) {
-#if LOAD_TEXTURE_ASYNC	//! DONT CHANGE TO [&] !
-		JobSystem::Execute([asset, headless]() {
-#endif
-			if (headless) return;
+		
+		if (headless) continue;
 
-			Rendering::TextureAsset* textureAsset = Cast<Rendering::TextureAsset*>(asset);
-			if (textureAsset)
-				textureAsset->Load();
-#if LOAD_TEXTURE_ASYNC
-		});
-#endif
+		switch (asset->GetType()) {
+			case NULL_ASSET_TYPE: PIT_ENGINE_ERR(AssetManagment, "Asset has invalid type."); break;
+			case TEXTURE_ASSET_TYPE: Cast<Rendering::TextureAsset*>(asset)->Load(); break;
+			case AUDIO_ASSET_TYPE: Cast<Audio::AudioAsset*>(asset)->Load(); break;
+		};
 	}
 	JobSystem::Wait();
 	
-#if LOAD_TEXTURE_ASYNC
+	
+#if LOAD_TEXTURE_ASYNC // Finish async loading with synchronization on the main thread
 	for (auto asset : m_Assets) {
 		if (headless) continue;
 
-		Rendering::TextureAsset* textureAsset = Cast<Rendering::TextureAsset*>(asset);
-		if (textureAsset) textureAsset->Get()->FinishAsyncLoadingMainThread();
+		if (asset->GetType() == TEXTURE_ASSET_TYPE)
+			Cast<Rendering::TextureAsset*>(asset)->Get()->FinishAsyncLoadingMainThread();
 	}
 #endif
 }

@@ -49,7 +49,7 @@ void ContentBrowserPanel::OnGui() {
 void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1, 1, 1, .5f) : ImVec4(1, 1, 1, 1);
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), {20, 20}, false, false, -1, {0,0,0,0}, tintColor) ||
-		/*Maybe concider hovering: prob: child blocks windowhovered*/
+		// Maybe concider hovering: prob: child blocks windowhovered
 		Input::IsMouseButtonDown(Button3)) {
 		if (m_CurrentDirectory != s_AssetPath) {
 			m_LastDirectory = m_CurrentDirectory;
