@@ -47,7 +47,7 @@ std::atomic<bool>		Engine::s_Quit = false;
 
 
 void Engine::Init(const CreateInfo& info) {
-	OPTICK_FRAME("MainThread");
+	PIT_PROFILE_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
 
@@ -97,7 +97,7 @@ void Engine::Init(const CreateInfo& info) {
 }
 
 void Engine::Shutdown() {
-	OPTICK_FRAME("MainThread");
+	PIT_PROFILE_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
 
@@ -129,15 +129,13 @@ void Engine::Shutdown() {
 		Debug::Logging::Shutdown();
 	}
 	CATCH_EXCEPTIONS();
-
-	OPTICK_SHUTDOWN();
 }
 
 void Engine::Update() {
-	OPTICK_FRAME("MainThread");
+	PIT_PROFILE_FRAME("MainThread");
 
 	PIT_PROFILE_FUNCTION();
-	JobSystem::Execute([]() {  });
+
 	try {
 		Time::SetFrame((Time::Frame() + 1) % 1000);
 

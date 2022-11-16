@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="AssetManagment">
+      <UniqueIdentifier>{BD9CC5BA-A96A-B9C0-92FE-29E77E6B9525}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
@@ -45,6 +48,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AssetManagment\Asset.hpp">
+      <Filter>AssetManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp">
+      <Filter>AssetManagment</Filter>
+    </ClInclude>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
@@ -91,6 +100,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\UUID.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Version.hpp">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Debug\Logging.hpp">
@@ -162,6 +174,9 @@
     <ClInclude Include="src\Rendering\Texture.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rendering\TextureAsset.hpp">
+      <Filter>Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -187,13 +202,11 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Core\Version.hpp" />
-    <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp" />
-    <ClInclude Include="src\AssetManagment\Asset.hpp" />
-    <ClInclude Include="src\Rendering\TextureAsset.hpp" />
-    <ClInclude Include="src\Utils\graphics.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
+      <Filter>AssetManagment</Filter>
+    </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
@@ -273,6 +286,5 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp" />
   </ItemGroup>
 </Project>

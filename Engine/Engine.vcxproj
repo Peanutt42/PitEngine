@@ -215,7 +215,6 @@
     <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
-    <ClInclude Include="src\Utils\graphics.h" />
     <ClInclude Include="src\Utils\PlatformUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
     <ClInclude Include="src\pch.hpp" />
