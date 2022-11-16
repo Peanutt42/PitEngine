@@ -12,6 +12,8 @@ workspace "PitEngine"
 		"LinkTimeOptimization"
 	}
 
+	warnings "Extra" -- /W4
+
 	startproject "Editor"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"

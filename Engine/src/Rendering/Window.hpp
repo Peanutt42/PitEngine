@@ -4,7 +4,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
+#pragma warning(push)
+#pragma warning(disable: 4201)
 #include <glm/glm.hpp>
+#pragma warning(pop)
 
 namespace Pit::Rendering {
 	class Window {
@@ -26,7 +29,7 @@ namespace Pit::Rendering {
 		bool IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
 		bool IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
 
-		glm::vec2 GetPosition() { int x, y; glfwGetWindowPos(m_Window, &x, &y); return {x,y}; }
+		void GetPosition(float& x, float& y) { int _x, _y; glfwGetWindowPos(m_Window, &_x, &_y); x = Cast<float>(_x); y = Cast<float>(_y); }
 
 		void SetIcon(const String& iconFilePath);
 

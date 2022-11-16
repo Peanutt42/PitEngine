@@ -664,16 +664,16 @@ struct OPTICK_API Event
 	static void Pop(EventStorage* storage, int64_t timestampStart);
 
 
-	Event(const EventDescription& description)
-	{
-		data = Start(description);
-	}
+	Event(const EventDescription& description);
+	//{
+	//	data = Start(description);
+	//}
 
-	~Event()
-	{
-		if (data)
-			Stop(*data);
-	}
+	~Event();
+	//{
+	//	if (data)
+	//		Stop(*data);
+	//}
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 OPTICK_INLINE Optick::EventDescription* CreateDescription(const char* functionName, const char* fileName, int fileLine, const char* eventName = nullptr, const ::Optick::Category::Type category = ::Optick::Category::None, uint8_t flags = 0)

@@ -37,7 +37,8 @@ void SceneViewportPanel::OnGui() {
 		if (Input::IsKeyDown(Key_A)) cam->ProcessKeyboard({ 1, 0, 0 });
 		if (Input::IsKeyDown(Key_D)) cam->ProcessKeyboard({ -1, 0, 0 });
 	
-		auto windowPos = Engine::Rendering()->Window->GetPosition();
+		glm::vec2 windowPos;
+		Engine::Rendering()->Window->GetPosition(windowPos.x, windowPos.y);
 
 		// Left Border
 		if (Input::GetMousePos().x + windowPos.x <= panelPos.x) Input::SetMousePos({ panelSize.x + panelPos.x - windowPos.x, Input::GetMousePos().y});
@@ -53,6 +54,7 @@ void SceneViewportPanel::OnGui() {
 	if (ImGui::BeginDragDropTarget()) {
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(CONTENT_BROWSER_DRAG_DROP)) {
 			const char* path = Cast<const char*>(payload->Data);
+			PIT_ENGINE_INFO(Editor, "Scene Viewport DragDrop Accepted: path: {}", path);
 		}
 		ImGui::EndDragDropTarget();
 	}

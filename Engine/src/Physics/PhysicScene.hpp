@@ -1,7 +1,11 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #include <PxPhysicsAPI.h>
+#pragma warning(pop)
 
 namespace Pit::Physics {
 	struct SceneDescription {

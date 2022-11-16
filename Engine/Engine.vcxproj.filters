@@ -16,9 +16,6 @@
     <Filter Include="ECS">
       <UniqueIdentifier>{60E1870B-CCEA-877C-5566-9E7CC16E937C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ECS\Examples">
-      <UniqueIdentifier>{EE1E07D1-DA81-9675-8307-CF2B6F4962F8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Event">
       <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
     </Filter>
@@ -53,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp">
       <Filter>AssetManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\AudioAsset.hpp">
+      <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
@@ -123,9 +123,6 @@
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSGameloop.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -134,9 +131,6 @@
     </ClInclude>
     <ClInclude Include="src\ECS\ECSWorld.hpp">
       <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\Examples\ECSBasicGameloop.hpp">
-      <Filter>ECS\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\Event\Event.hpp">
       <Filter>Event</Filter>
@@ -202,7 +196,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Audio\AudioAsset.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
@@ -243,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="src\ECS\ECSWorld.cpp">
       <Filter>ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ECS\Examples\ECSBasicGameloop.cpp">
-      <Filter>ECS\Examples</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">
       <Filter>Input</Filter>

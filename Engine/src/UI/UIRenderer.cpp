@@ -3,10 +3,12 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "UIRenderer.hpp"
 #include "UIFonts.hpp"
-
+#pragma warning(push)
+#pragma warning(disable: 4201)
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+#pragma warning(pop)
 
 namespace Pit::UI {
 

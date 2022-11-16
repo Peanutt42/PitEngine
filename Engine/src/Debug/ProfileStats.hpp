@@ -1,5 +1,7 @@
 #pragma once
 
+#define USE_OPTICK true
+#define OPTICK_ENABLE_TRACING
 #include <optick.h>
 
 #if DEBUG | RELEASE

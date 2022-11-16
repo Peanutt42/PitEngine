@@ -8,7 +8,10 @@
 #include "ECS/ECSWorld.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
+#pragma warning(push)
+#pragma warning(disable: 4201)
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
 #include <imgui/imgui_internal.h>
 
 using namespace Pit;

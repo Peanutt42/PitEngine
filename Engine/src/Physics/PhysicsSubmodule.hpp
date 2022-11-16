@@ -3,8 +3,6 @@
 #include "Core/CoreInclude.hpp"
 #include "Core/Submodule.hpp"
 #include "PhysicScene.hpp"
-#include <PxPhysicsAPI.h>
-
 
 namespace Pit {
 	class PhysicsSubmodule : public Submodule {

@@ -109,7 +109,7 @@ namespace Pit::Rendering {
 		Engine::Update();
 	}
 
-	void Window::_WindowPositionCallback(GLFWwindow* window, int xpos, int ypos) {
+	void Window::_WindowPositionCallback(GLFWwindow* /*window*/, int /*xpos*/, int /*ypos*/) {
 		Engine::Update();
 	}
 }

@@ -9,14 +9,10 @@ namespace Pit {
 
 		if (!m_ECSWorld.Init())
 			PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
-
-		m_ECSGameloop.Initialize(m_ECSWorld);
 	}
 
 	void ECSSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
-
-		m_ECSGameloop.Shutdown(m_ECSWorld);
 
 		m_ECSWorld.Clear();
 	}
@@ -24,6 +20,12 @@ namespace Pit {
 	void ECSSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		m_ECSGameloop.Update(m_ECSWorld);
+	}
+
+	void ECSSubmodule::ResetECSWorld() {
+		m_ECSWorld.Clear();
+		m_ECSWorld = ECS::World(m_ECSWorldSpecs);
+		if (!m_ECSWorld.Init())
+			PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
 	}
 }

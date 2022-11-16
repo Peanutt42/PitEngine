@@ -2,7 +2,6 @@
 
 #include "Core/CoreInclude.hpp"
 #include "ECSWorld.hpp"
-#include "Examples/ECSBasicGameloop.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
 #include "Core/Submodule.hpp"
@@ -16,16 +15,7 @@ namespace Pit {
 
 		virtual void Update();
 
-		void ResetECSWorld() {
-			m_ECSGameloop.Shutdown(m_ECSWorld);
-
-			m_ECSWorld.Clear();
-			m_ECSWorld = ECS::World(m_ECSWorldSpecs);
-			if (!m_ECSWorld.Init())
-				PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
-
-			m_ECSGameloop.Initialize(m_ECSWorld);
-		}
+		void ResetECSWorld();
 
 		ECS::World& GetEcsWorld() { return m_ECSWorld; }
 
@@ -34,6 +24,5 @@ namespace Pit {
 			"MainECSWorld"
 		};
 		ECS::World m_ECSWorld = ECS::World(m_ECSWorldSpecs);
-		ECS::Example::BasicGameloop m_ECSGameloop;
 	};
 }

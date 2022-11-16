@@ -4,9 +4,12 @@
 #include "Renderer.hpp"
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
+#pragma warning(push)
+#pragma warning(disable: 4201)
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
 
 namespace Pit::Rendering {
 
@@ -55,33 +58,7 @@ namespace Pit::Rendering {
 		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // top-left              
 	};
 
-	float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
-		// positions   // texCoords
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		-1.0f, -1.0f,  0.0f, 0.0f,
-		 1.0f, -1.0f,  1.0f, 0.0f,
-
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		 1.0f, -1.0f,  1.0f, 0.0f,
-		 1.0f,  1.0f,  1.0f, 1.0f
-	};
-
-	static void APIENTRY GlMessageCallback(GLenum source, GLenum type, unsigned int id, GLenum severity,
-										   GLsizei length, const char* message, const void* userParam) {
-
-		// Ignore non-significant error/warning codes
-		if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
-
-		switch (severity) {
-		case GL_DEBUG_SEVERITY_HIGH:         PIT_ENGINE_FATAL(Rendering, "[Glad]: {}", message); return;
-		case GL_DEBUG_SEVERITY_MEDIUM:       PIT_ENGINE_ERR(Rendering, "[Glad]: {}", message); return;
-		case GL_DEBUG_SEVERITY_LOW:          PIT_ENGINE_WARN(Rendering, "[Glad]: {}", message); return;
-		case GL_DEBUG_SEVERITY_NOTIFICATION: PIT_ENGINE_TRACE(Rendering, "[Glad]: {}", message); return;
-		}
-
-		PIT_ENGINE_TRACE(Rendering, "[OpenGL]: Unknown severity level!");
-	}
-	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 	Renderer::Renderer() {
 		PIT_PROFILE_FUNCTION();
@@ -90,14 +67,6 @@ namespace Pit::Rendering {
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_MULTISAMPLE);
-
-		int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
-			//glEnable(GL_DEBUG_OUTPUT);
-			//glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-			//glDebugMessageCallback(GlMessageCallback, nullptr);
-			//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-		}
 
 		glfwSetScrollCallback(Engine::Rendering()->Window->GetWindowHandle(), scroll_callback);
 
@@ -235,7 +204,7 @@ namespace Pit::Rendering {
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
-	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+	static void scroll_callback(GLFWwindow* /*window*/, double /*xoffset*/, double yoffset) {
 		Engine::Rendering()->Renderer->m_Camera.ProcessMouseScroll(static_cast<float>(yoffset));
 	}
 }

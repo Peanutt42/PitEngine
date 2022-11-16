@@ -51,7 +51,8 @@ SOFTWARE.
 #include <signal.h>
 
 
-namespace CrashHandler {
+class CrashHandler {
+public:
 	// on crash mode, don't print calls made after the crash occured
 	// on cut setup, don't print calls made before main is called.
 	static void StackTrace(bool crashMode, bool cutSetup) {
@@ -165,5 +166,5 @@ namespace CrashHandler {
 		signal(SIGSEGV, OnProcessCrashed); // catch segfaults
 		signal(SIGABRT, OnProcessCrashed); // catch exceptions
 	}
-}
+};
 #endif

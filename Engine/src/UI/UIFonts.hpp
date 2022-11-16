@@ -17,8 +17,8 @@ namespace Pit::UI {
 			constexpr float defaultSize = 18.f;
 
 			auto regular =		io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Regular.ttf").c_str(), defaultSize);
-			auto bold =			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), defaultSize);
-			auto extraBold =	io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), defaultSize);
+			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), defaultSize);
+			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), defaultSize);
 
 			io.FontDefault = regular;
 		}

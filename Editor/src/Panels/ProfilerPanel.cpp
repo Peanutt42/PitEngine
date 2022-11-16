@@ -16,13 +16,6 @@ void ProfilerPanel::OnDestroy() {
 
 }
 
-static std::atomic<bool> optick_opened;
-static void OpenOptick() {
-	optick_opened.store(true);
-	system((FileSystem::GetRootDir() + "vendor/optick/Optick.exe").c_str());
-	optick_opened.store(false);
-}
-
 void ProfilerPanel::OnGui() {
 	ImGui::Text("DeltaTime: %.3fms", Time::DeltaTime() * 1000);
 	ImGui::Text("FPS: %.3f", 1 / Time::DeltaTime());
