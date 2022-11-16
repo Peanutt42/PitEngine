@@ -31,8 +31,8 @@ void AssetManagmentSubmodule::Init() {
 	}
 
 	for (auto asset : m_Assets) {
-#if LOAD_TEXTURE_ASYNC
-		JobSystem::Execute([&]() {
+#if LOAD_TEXTURE_ASYNC	//! DONT CHANGE TO [&] !
+		JobSystem::Execute([asset, headless]() {
 #endif
 			if (headless) return;
 
