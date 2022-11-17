@@ -21,7 +21,7 @@ namespace Pit {
 		}
 
 		inline void Add(const ListenFunc& func) {
-			m_Listeners.push_back(func);
+			m_Listeners.emplace_back(func);
 		}
 
 		inline void Remove(const ListenFunc& func) {
