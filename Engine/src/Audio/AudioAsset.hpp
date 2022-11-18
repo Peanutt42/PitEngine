@@ -10,7 +10,7 @@ namespace Pit::Audio {
 
 	class AudioAsset : public AssetManagment::Asset {
 	public:
-		AudioAsset(const String& path, bool asyncLoading = false) : m_AsyncLoading(asyncLoading) {
+		AudioAsset(const String& path) {
 			m_Filepath = path;
 			m_TypeId = AUDIO_ASSET_TYPE;
 		}
@@ -20,28 +20,18 @@ namespace Pit::Audio {
 		}
 
 		virtual void Load() {
-			if (m_AsyncLoading)
-				JobSystem::Execute([this]() { _Load(); });
-			else
-				_Load();
-		}
-		void _Load() {
 			if (m_MusicBuffer) delete m_MusicBuffer;
 			m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str());
-
 		}
 
 		virtual void Unload() {
-			if (m_AsyncLoading)
-				JobSystem::Execute([this]() { if (m_MusicBuffer) delete m_MusicBuffer; });
-			else if (m_MusicBuffer)
+			if (m_MusicBuffer)
 				delete m_MusicBuffer;
 		}
 
 		MusicBuffer* Get() { return m_MusicBuffer; }
 
 	private:
-		bool m_AsyncLoading;
-		MusicBuffer* m_MusicBuffer;
+		MusicBuffer* m_MusicBuffer = nullptr;
 	};
 }

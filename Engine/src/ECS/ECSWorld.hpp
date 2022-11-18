@@ -140,14 +140,18 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void AddSystem() {
+#if DEBUG || RELEASE
 			m_SystemCount++;
-			m_Systems.push_back({ GetSystemIndex<T>(), T::GetTopic(), T::GetExecuteOrder(), &T::Update});
+#endif
+			m_Systems.emplace_back(GetSystemIndex<T>(), T::GetTopic(), T::GetExecuteOrder(), &T::Update);
 			SortSystemsOnExecuteOrder();
 		}
 
 		template<typename T>
 		void RemoveSystem() {
+#if DEBUG || RELEASE
 			m_SystemCount--;
+#endif
 			SystemIndex systemIndex = GetSystemIndex<T>();
 			for (int i = 0; i < m_Systems.size(); i++)
 				if (m_Systems[i].SystemIndex == systemIndex) {

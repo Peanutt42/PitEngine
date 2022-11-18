@@ -57,7 +57,11 @@ namespace Pit {
 }
 
 #ifdef DEBUG
+#ifndef _DEBUG
 #define _DEBUG
+#endif
 #else
+#ifndef NDEBUG
 #define NDEBUG
+#endif
 #endif

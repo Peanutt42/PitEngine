@@ -83,7 +83,7 @@ namespace Pit::Rendering {
 	}
 
 
-	void Window::_GLFWErrorCallback(int errorCode, const char* description) {
+	void Window::_GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description) {
 		PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
 	}
 

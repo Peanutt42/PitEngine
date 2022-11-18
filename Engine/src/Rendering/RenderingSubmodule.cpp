@@ -4,7 +4,7 @@
 
 namespace Pit {
 
-	static void GLFWErrorCallback(int errorCode, const char* description) {
+	static void GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description) {
 		PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
 	}
 

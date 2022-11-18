@@ -8,7 +8,6 @@
 
 namespace Pit {
 #define LOAD_TEXTURE_ASYNC true
-#define LOAD_AUDIO_ASYNC true
 
 	void AssetManagmentSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
@@ -29,7 +28,7 @@ namespace Pit {
 			if (fileExtention == ".wav" ||
 				fileExtention == ".ogg" ||
 				fileExtention == ".mp3")
-				m_Assets.push_back(new Audio::AudioAsset(path.string(), LOAD_AUDIO_ASYNC));
+				m_Assets.push_back(new Audio::AudioAsset(path.string()));
 
 			// Textures
 			else if (fileExtention == ".png" ||

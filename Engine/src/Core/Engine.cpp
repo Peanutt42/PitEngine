@@ -36,7 +36,7 @@ namespace Pit {
 	std::atomic<bool>			Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
-		catch (const std::exception& e) {											\
+		catch ([[maybe_unused]] const std::exception& e) {											\
 			PIT_ENGINE_FATAL(General, "[Engine] Exception catched: {}", e.what());	\
 			return;																	\
 		}																			\
@@ -106,6 +106,9 @@ namespace Pit {
 		try {
 			Engine::ShutdownEvent.Invoke();
 
+			s_AssetManagmentSubmodule->Shutdown();
+			delete s_AssetManagmentSubmodule;
+
 			if (!s_Settings.Headless) {
 				s_RenderingSubmodule->Shutdown();
 				delete s_RenderingSubmodule;
@@ -120,9 +123,6 @@ namespace Pit {
 				s_AudioSubmodule->Shutdown();
 				delete s_AudioSubmodule;
 			}
-
-			s_AssetManagmentSubmodule->Shutdown();
-			delete s_AssetManagmentSubmodule;
 
 			JobSystem::Shutdown();
 

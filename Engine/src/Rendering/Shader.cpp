@@ -24,7 +24,7 @@ namespace Pit::Rendering {
             vertexCode = vShaderStream.str();
             fragmentCode = fShaderStream.str();
         }
-        catch (std::ifstream::failure& e) {
+        catch ([[maybe_unused]] std::ifstream::failure& e) {
             PIT_ENGINE_ERR(Rendering, "Error some shaderfile couldn't be read: Exeption:{}", e.what());
         }
         const char* vShaderCode = vertexCode.c_str();

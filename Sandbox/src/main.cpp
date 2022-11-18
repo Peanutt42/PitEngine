@@ -5,9 +5,9 @@
 int main(const int argc, const char* argv[]) {
 	using namespace Pit;
 	
-	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Sandbox", false, false, false);
+	EngineSettings engineSettings(argc, argv, "PitEngine-Sandbox", false, false, false);
 
-	Engine::Init(engineInfo);
+	Engine::Init(engineSettings);
 	
 	while (!Engine::ShouldClose()) {
 		Engine::Update();
