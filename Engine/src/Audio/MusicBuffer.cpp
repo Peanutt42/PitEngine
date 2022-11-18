@@ -6,10 +6,7 @@
 
 namespace Pit::Audio {
 
-	MusicBuffer::MusicBuffer(const char* filename) {
-		alGenSources(1, &m_Source);
-		alGenBuffers(NUM_BUFFERS, m_Buffers);
-
+	MusicBuffer::MusicBuffer(const char* filename, bool asyncLoading) {
 		m_SndFile = sf_open(filename, SFM_READ, &m_Sfinfo);
 		if (!m_SndFile)
 			PIT_ENGINE_FATAL(Audio, "Could not open provided music file -- check path");
@@ -34,6 +31,8 @@ namespace Pit::Audio {
 
 		size frameSize = ((size)BUFFER_SAMPLES * (size)m_Sfinfo.channels) * sizeof(short);
 		m_Membuf = static_cast<short*>(malloc(frameSize));
+
+		if (!asyncLoading) FinishAsyncLoadingOnMainThread();
 	}
 
 	MusicBuffer::~MusicBuffer() {
@@ -45,6 +44,11 @@ namespace Pit::Audio {
 		m_SndFile = nullptr;
 		free(m_Membuf);
 		alDeleteBuffers(NUM_BUFFERS, m_Buffers);
+	}
+
+	void MusicBuffer::FinishAsyncLoadingOnMainThread() {
+		alGenSources(1, &m_Source);
+		alGenBuffers(NUM_BUFFERS, m_Buffers);
 	}
 
 	void MusicBuffer::Play() {

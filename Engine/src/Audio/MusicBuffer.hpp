@@ -11,8 +11,10 @@ namespace Pit::Audio {
 
 	class MusicBuffer {
 	public:
-		MusicBuffer(const char* filename);
+		MusicBuffer(const char* filename, bool asyncLoading = false);
 		~MusicBuffer();
+
+		void FinishAsyncLoadingOnMainThread();
 
 		void Play();
 

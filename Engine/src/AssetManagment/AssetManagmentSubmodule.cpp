@@ -8,6 +8,7 @@
 
 namespace Pit {
 #define LOAD_TEXTURE_ASYNC true
+#define LOAD_AUDIO_ASYNC true
 
 	void AssetManagmentSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
@@ -28,7 +29,7 @@ namespace Pit {
 			if (fileExtention == ".wav" ||
 				fileExtention == ".ogg" ||
 				fileExtention == ".mp3")
-				m_Assets.push_back(new Audio::AudioAsset(path.string()));
+				m_Assets.push_back(new Audio::AudioAsset(path.string(), LOAD_AUDIO_ASYNC));
 
 			// Textures
 			else if (fileExtention == ".png" ||
@@ -48,15 +49,20 @@ namespace Pit {
 		}
 		JobSystem::Wait();
 
-
-#if LOAD_TEXTURE_ASYNC // Finish async loading with synchronization on the main thread
+		// Finish async loading with synchronization on the main thread
 		for (auto asset : m_Assets) {
 			if (headless) continue;
 
+#if LOAD_AUDIO_ASYNC
+			if (asset->GetType() == AUDIO_ASSET_TYPE)
+				Cast<Audio::AudioAsset*>(asset)->Get()->FinishAsyncLoadingOnMainThread();
+#endif
+
+#if LOAD_TEXTURE_ASYNC 
 			if (asset->GetType() == TEXTURE_ASSET_TYPE)
 				Cast<Rendering::TextureAsset*>(asset)->Get()->FinishAsyncLoadingMainThread();
-		}
 #endif
+		}
 	}
 
 	void AssetManagmentSubmodule::Shutdown() {
