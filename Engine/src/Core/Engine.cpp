@@ -8,7 +8,6 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
-#include "Serialization/EngineSettingsSerializer.hpp"
 
 
 namespace Pit {
@@ -24,7 +23,7 @@ namespace Pit {
 	OnWindowResizeEvent			Engine::OnWindowResizeEvent;
 	ShutdownEvent				Engine::ShutdownEvent;
 
-	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "PitEngine-NullInfo", true, false, false);
+	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NullConfig.ini", "PitEngine-NullInfo", true, false);
 
 	AudioSubmodule*				Engine::s_AudioSubmodule = nullptr;
 	AssetManagmentSubmodule*	Engine::s_AssetManagmentSubmodule = nullptr;
@@ -57,12 +56,6 @@ namespace Pit {
 			s_Settings = settings;
 
 			Debug::Logging::Init();
-
-			Serialization::EngineSerializer::Deserialize("test.txt", s_Settings);
-
-			for (const auto& arg : s_Settings.ConsoleArgs) {
-				if (arg == "-headless") s_Settings.Headless = true;
-			}
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
 			if (s_Settings.Headless)

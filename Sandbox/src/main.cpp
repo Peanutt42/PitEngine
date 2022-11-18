@@ -5,7 +5,7 @@
 int main(const int argc, const char* argv[]) {
 	using namespace Pit;
 	
-	EngineSettings engineSettings(argc, argv, "PitEngine-Sandbox", false, false, false);
+	EngineSettings engineSettings(argc, argv, "Config/SandboxEngineConfig.ini", "PitEngine-Sandbox", true, false, false);
 
 	Engine::Init(engineSettings);
 	
