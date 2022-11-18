@@ -79,7 +79,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -107,7 +107,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -140,7 +140,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -177,6 +177,7 @@
     <ClInclude Include="src\Core\Assert.hpp" />
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
+    <ClInclude Include="src\Core\EngineSettings.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\TextureAsset.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\Serialization\EngineSettingsSerializer.hpp" />
     <ClInclude Include="src\Threading\JobSystem.hpp" />
     <ClInclude Include="src\UI\UI.hpp" />
     <ClInclude Include="src\UI\UIFonts.hpp" />
@@ -275,6 +277,9 @@
     </ProjectReference>
     <ProjectReference Include="..\vendor\tinyobjloader\tinyobjloader.vcxproj">
       <Project>{DBBB7385-477C-EFBB-10B7-38397C363498}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\yaml\yaml.vcxproj">
+      <Project>{7814A17C-644B-A20D-0D38-8810F94D1E0F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

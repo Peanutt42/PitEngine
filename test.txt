@@ -1,0 +1,8 @@
+# EngineSettings
+WindowName: PitEngine-Editor
+WindowToolbar: true
+VSync: false
+UIDocking: true
+RenderingApi: 1
+AntiAliasing: 0
+Headless: false

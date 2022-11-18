@@ -47,7 +47,7 @@ namespace Pit::UI {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		if (Engine::GetInfo().UIDocking) {
+		if (Engine::GetSettings().UIDocking) {
 			if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
 				static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
@@ -82,7 +82,7 @@ namespace Pit::UI {
 
 		Engine::UIRenderEvent.Invoke();
 
-		if (Engine::GetInfo().UIDocking && ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
+		if (Engine::GetSettings().UIDocking && ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
 			ImGui::End();
 
 		ImGui::Render();

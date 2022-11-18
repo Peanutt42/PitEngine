@@ -10,9 +10,9 @@ using namespace Editor;
 
 void SceneViewportPanel::OnCreate() {
 	Name = "Viewport";
-	Shortcut = Array<KeyCode>{ LeftControl, Key_T };
+	Shortcut = Array<KeyCode>{ KeyCode::LeftControl, KeyCode::T };
 
-	if (!Engine::GetInfo().Headless)
+	if (!Engine::GetSettings().Headless)
 		m_SceneTexture = new Pit::Rendering::Texture("C:/Users/Peter/Pictures/Wallpaper/texture.jpeg");
 }
 
@@ -32,10 +32,10 @@ void SceneViewportPanel::OnGui() {
 	if (Input::IsMouseButtonDown(MouseButton::Button1)) {
 		cam->ProcessMouseMovement(Input::GetMouseDelta().x, -Input::GetMouseDelta().y);
 
-		if (Input::IsKeyDown(Key_W)) cam->ProcessKeyboard({ 0, 1, 0 });
-		if (Input::IsKeyDown(Key_S)) cam->ProcessKeyboard({ 0, -1, 0 });
-		if (Input::IsKeyDown(Key_A)) cam->ProcessKeyboard({ 1, 0, 0 });
-		if (Input::IsKeyDown(Key_D)) cam->ProcessKeyboard({ -1, 0, 0 });
+		if (Input::IsKeyDown(KeyCode::W)) cam->ProcessKeyboard({ 0, 1, 0 });
+		if (Input::IsKeyDown(KeyCode::S)) cam->ProcessKeyboard({ 0, -1, 0 });
+		if (Input::IsKeyDown(KeyCode::A)) cam->ProcessKeyboard({ 1, 0, 0 });
+		if (Input::IsKeyDown(KeyCode::D)) cam->ProcessKeyboard({ -1, 0, 0 });
 	
 		glm::vec2 windowPos;
 		Engine::Rendering()->Window->GetPosition(windowPos.x, windowPos.y);

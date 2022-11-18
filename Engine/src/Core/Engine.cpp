@@ -8,31 +8,32 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
+#include "Serialization/EngineSettingsSerializer.hpp"
 
 
 namespace Pit {
 
-	InitEvent Engine::InitEvent;
-	NetworkingUpdateEvent Engine::NetworkingUpdateEvent;
-	PhysicUpdateEvent Engine::PhysicUpdateEvent;
-	PreUpdateEvent Engine::PreUpdateEvent;
-	UpdateEvent Engine::UpdateEvent;
-	PostUpdateEvent Engine::PostUpdateEvent;
-	RenderEvent Engine::RenderEvent;
-	UIRenderEvent Engine::UIRenderEvent;
-	OnWindowResizeEvent Engine::OnWindowResizeEvent;
-	ShutdownEvent Engine::ShutdownEvent;
+	InitEvent					Engine::InitEvent;
+	NetworkingUpdateEvent		Engine::NetworkingUpdateEvent;
+	PhysicUpdateEvent			Engine::PhysicUpdateEvent;
+	PreUpdateEvent				Engine::PreUpdateEvent;
+	UpdateEvent					Engine::UpdateEvent;
+	PostUpdateEvent				Engine::PostUpdateEvent;
+	RenderEvent					Engine::RenderEvent;
+	UIRenderEvent				Engine::UIRenderEvent;
+	OnWindowResizeEvent			Engine::OnWindowResizeEvent;
+	ShutdownEvent				Engine::ShutdownEvent;
 
-	Engine::CreateInfo			Engine::s_CreateInfo = Engine::CreateInfo(0, nullptr, "PitEngine-NullInfo", true, false, false);
+	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "PitEngine-NullInfo", true, false, false);
 
-	AudioSubmodule* Engine::s_AudioSubmodule = nullptr;
-	AssetManagmentSubmodule* Engine::s_AssetManagmentSubmodule = nullptr;
-	ECSSubmodule* Engine::s_ECSSubmodule = nullptr;
-	NetworkingSubmodule* Engine::s_NetworkingSubmodule = nullptr;
-	PhysicsSubmodule* Engine::s_PhysicsSubmodule = nullptr;
-	RenderingSubmodule* Engine::s_RenderingSubmodule = nullptr;
+	AudioSubmodule*				Engine::s_AudioSubmodule = nullptr;
+	AssetManagmentSubmodule*	Engine::s_AssetManagmentSubmodule = nullptr;
+	ECSSubmodule*				Engine::s_ECSSubmodule = nullptr;
+	NetworkingSubmodule*		Engine::s_NetworkingSubmodule = nullptr;
+	PhysicsSubmodule*			Engine::s_PhysicsSubmodule = nullptr;
+	RenderingSubmodule*			Engine::s_RenderingSubmodule = nullptr;
 
-	std::atomic<bool>		Engine::s_Quit = false;
+	std::atomic<bool>			Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
 		catch (const std::exception& e) {											\
@@ -45,7 +46,7 @@ namespace Pit {
 		}
 
 
-	void Engine::Init(const CreateInfo& info) {
+	void Engine::Init(const EngineSettings& settings) {
 		PIT_PROFILE_FRAME("MainThread");
 
 		PIT_PROFILE_FUNCTION();
@@ -53,22 +54,24 @@ namespace Pit {
 		CrashHandler::Init();
 
 		try {
-			s_CreateInfo = info;
+			s_Settings = settings;
 
 			Debug::Logging::Init();
 
-			for (const auto& arg : s_CreateInfo.ConsoleArgs) {
-				if (arg == "-headless") s_CreateInfo.Headless = true;
+			Serialization::EngineSerializer::Deserialize("test.txt", s_Settings);
+
+			for (const auto& arg : s_Settings.ConsoleArgs) {
+				if (arg == "-headless") s_Settings.Headless = true;
 			}
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
-			if (s_CreateInfo.Headless)
+			if (s_Settings.Headless)
 				PIT_ENGINE_INFO(General, " - Headless Mode");
 			PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
 
 			JobSystem::Initialize();
 
-			if (!s_CreateInfo.Headless) {
+			if (!s_Settings.Headless) {
 				s_AudioSubmodule = new AudioSubmodule();
 				s_AudioSubmodule->Init();
 			}
@@ -76,7 +79,7 @@ namespace Pit {
 			s_ECSSubmodule = new ECSSubmodule();
 			s_ECSSubmodule->Init();
 
-			if (!s_CreateInfo.Headless) {
+			if (!s_Settings.Headless) {
 				s_RenderingSubmodule = new RenderingSubmodule();
 				s_RenderingSubmodule->Init();
 			}
@@ -103,7 +106,7 @@ namespace Pit {
 		try {
 			Engine::ShutdownEvent.Invoke();
 
-			if (!s_CreateInfo.Headless) {
+			if (!s_Settings.Headless) {
 				s_RenderingSubmodule->Shutdown();
 				delete s_RenderingSubmodule;
 			}
@@ -113,7 +116,7 @@ namespace Pit {
 			delete s_NetworkingSubmodule;
 			s_ECSSubmodule->Shutdown();
 			delete s_ECSSubmodule;
-			if (!s_CreateInfo.Headless) {
+			if (!s_Settings.Headless) {
 				s_AudioSubmodule->Shutdown();
 				delete s_AudioSubmodule;
 			}
@@ -157,7 +160,7 @@ namespace Pit {
 			s_ECSSubmodule->Update();
 			PostUpdateEvent.Invoke();
 
-			if (!s_CreateInfo.Headless) {
+			if (!s_Settings.Headless) {
 				s_RenderingSubmodule->Update();
 
 				s_AudioSubmodule->Update();
@@ -171,7 +174,7 @@ namespace Pit {
 	bool Engine::ShouldClose() {
 		if (s_Quit.load())
 			return true;
-		else if (!s_CreateInfo.Headless)
+		else if (!s_Settings.Headless)
 			return s_RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;

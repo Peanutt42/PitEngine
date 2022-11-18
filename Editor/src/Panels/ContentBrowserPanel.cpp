@@ -10,7 +10,7 @@ static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem
 
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
-	Shortcut = Array<KeyCode>{ LeftControl + Key_K };
+	Shortcut = Array<KeyCode>{ KeyCode::LeftControl , KeyCode::K };
 	Opened = false;
 
 	m_CurrentDirectory = s_AssetPath;
@@ -50,7 +50,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor = (m_CurrentDirectory == s_AssetPath) ? ImVec4(1, 1, 1, .5f) : ImVec4(1, 1, 1, 1);
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), {20, 20}, false, false, -1, {0,0,0,0}, tintColor) ||
 		// Maybe concider hovering: prob: child blocks windowhovered
-		Input::IsMouseButtonDown(Button3)) {
+		Input::IsMouseButtonDown(MouseButton::Button3)) {
 		if (m_CurrentDirectory != s_AssetPath) {
 			m_LastDirectory = m_CurrentDirectory;
 			m_CurrentDirectory = m_CurrentDirectory.parent_path();
@@ -61,7 +61,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 	ImVec4 tintColor2 = (m_LastDirectory == m_CurrentDirectory ||
 						 m_LastDirectory == std::filesystem::path()) ? ImVec4(1, 1, 1, .5f) : ImVec4(1, 1, 1, 1);
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(BackIcon), { 20, 20 }, true, false, -1, { 0,0,0,0 }, tintColor2) ||
-		(ImGui::IsWindowHovered() && Input::IsMouseButtonDown(Button4))) {
+		(ImGui::IsWindowHovered() && Input::IsMouseButtonDown(MouseButton::Button4))) {
 		if (m_LastDirectory != m_CurrentDirectory) {
 			m_CurrentDirectory = m_LastDirectory;
 		}
@@ -69,7 +69,7 @@ void ContentBrowserPanel::_DrawBrowserToolbar() {
 
 	ImGui::SameLine();
 	if (UI::ImageButton(EditorAssetManager::GetIconTexture(RefreshIcon), { 20, 20 }, false, false) ||
-		(Input::IsKeyDown(LeftControl) && Input::IsKeyDown(Key_R))) {
+		(Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyDown(KeyCode::R))) {
 
 		// Todo: research all elements in relative path
 	}

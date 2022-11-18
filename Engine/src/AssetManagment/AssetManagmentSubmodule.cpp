@@ -15,7 +15,7 @@ namespace Pit {
 
 		ScopedTimer t("AssetManagment load textures");
 
-		bool headless = Engine::GetInfo().Headless;
+		bool headless = Engine::GetSettings().Headless;
 
 		for (auto& directoryEntry : std::filesystem::recursive_directory_iterator(std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "assets"))) {
 			auto path = directoryEntry.path();

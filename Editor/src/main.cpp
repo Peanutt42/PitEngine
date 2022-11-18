@@ -5,8 +5,8 @@ using namespace Pit;
 using namespace Editor;
 
 int main(const int argc, const char* argv[]) {
-	Engine::CreateInfo engineInfo(argc, argv, "PitEngine-Editor", true, false, true);
-	Engine::Init(engineInfo);
+	EngineSettings engineSettings(argc, argv, "PitEngine-Editor", true, false, true);
+	Engine::Init(engineSettings);
 	
 	EditorApplication::Init();
 

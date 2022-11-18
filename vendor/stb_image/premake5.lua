@@ -23,6 +23,7 @@ project "stb_image"
 	filter { "configurations:Debug" }
 		buildoptions "/MDd"
 		runtime "Debug"
+		optimize "Debug"
 		symbols "on"
 		
 	filter { "configurations:Release" }

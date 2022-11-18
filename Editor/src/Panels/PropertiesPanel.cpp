@@ -20,7 +20,7 @@ using namespace Editor;
 
 void PropertiesPanel::OnCreate() {
 	Name = "Properties";
-	Shortcut = Array<KeyCode>{ LeftControl, Key_I };
+	Shortcut = Array<KeyCode>{ KeyCode::LeftControl, KeyCode::I };
 }
 
 void PropertiesPanel::OnDestroy() {

@@ -196,6 +196,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Serialization\EngineSettingsSerializer.hpp" />
+    <ClInclude Include="src\Core\EngineSettings.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">

@@ -16,7 +16,7 @@ namespace Pit {
 
 		Window = new Rendering::Window("PitEngine", 800, 600, true);
 		glfwMakeContextCurrent(Window->GetWindowHandle());
-		glfwSwapInterval(Engine::GetInfo().VSync);
+		glfwSwapInterval(Engine::GetSettings().VSync);
 
 		if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
 			PIT_ENGINE_FATAL(Rendering, "Failed to initialize GLAD");

@@ -6,7 +6,7 @@ using namespace Pit;
 using namespace Editor;
 
 void EditorAssetManager::Init() {
-	if (!Engine::GetInfo().Headless) {
+	if (!Engine::GetSettings().Headless) {
 		// see Icon enum for indexing
 		m_Icons.reserve(9);
 		m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/FolderIcon.png"));

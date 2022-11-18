@@ -63,7 +63,7 @@ void EditorApplication::Update() {
 		s_PanelKeyShortcutsPressed[i] = pressed;
 	}
 
-	if (Input::IsKeyDown(Space)) {
+	if (Input::IsKeyDown(KeyCode::Space)) {
 		test1();
 	}
 }

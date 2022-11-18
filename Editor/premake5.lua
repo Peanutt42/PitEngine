@@ -32,6 +32,7 @@ project "Editor"
 		"%{wks.location}/vendor/tinyobjloader/include",
 		"%{wks.location}/vendor/stb_image/include",
 		"%{wks.location}/vendor/optick/include",
+		"%{wks.location}/vendor/yaml/include",
 		"%{wks.location}/Engine/src"
 	}
 
@@ -58,6 +59,7 @@ project "Editor"
 		"spdlog",
 		"stb_image",
 		"tinyobjloader",
+		"yaml",
 		"sndfile.lib",
 		"opengl32.lib",
 		"glfw3.lib",
@@ -69,6 +71,7 @@ project "Editor"
 	filter { "configurations:Debug" }
 		buildoptions "/MDd"
 		runtime "Debug"
+		optimize "Debug"
 		symbols "on"
 		
 	filter { "configurations:Release" }

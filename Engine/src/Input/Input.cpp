@@ -20,7 +20,7 @@ namespace Pit {
 	}
 
 	void Input::Update() {
-		if (Engine::GetInfo().Headless) return; // TODO: Read console input as commands, not that straight forward though
+		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
 
 		GLFWwindow* window = GetWindow();
 		for (int i = MIN_KEY; i < KEY_COUNT; i++) {
@@ -42,39 +42,39 @@ namespace Pit {
 	}
 
 	bool Input::IsKeyUp(KeyCode key) {
-		return s_KeyStates[key] == KeyState::Released;
+		return s_KeyStates[Cast<uint16_t>(key)] == KeyState::Released;
 	}
 
 	bool Input::IsKeyDown(KeyCode key) {
-		return s_KeyStates[key] == KeyState::Pressed || s_KeyStates[key] == KeyState::Held;
+		return s_KeyStates[Cast<uint16_t>(key)] == KeyState::Pressed || s_KeyStates[Cast<uint16_t>(key)] == KeyState::Held;
 	}
 
 	bool Input::IsKeyPressed(KeyCode key) {
-		return s_KeyStateChanged[key] && s_KeyStates[key] == KeyState::Pressed || s_KeyStates[key] == KeyState::Held;
+		return s_KeyStateChanged[Cast<uint16_t>(key)] && s_KeyStates[Cast<uint16_t>(key)] == KeyState::Pressed || s_KeyStates[Cast<uint16_t>(key)] == KeyState::Held;
 	}
 
 	bool Input::IsKeyReleased(KeyCode key) {
-		return s_KeyStateChanged[key] && s_KeyStates[key] == KeyState::Released;
+		return s_KeyStateChanged[Cast<uint16_t>(key)] && s_KeyStates[Cast<uint16_t>(key)] == KeyState::Released;
 	}
 
 	KeyState Input::GetKey(KeyCode key) {
-		return s_KeyStates[key];
+		return s_KeyStates[Cast<uint16_t>(key)];
 	}
 
 	bool Input::IsMouseButtonUp(MouseButton button) {
-		return !s_MouseButtonStates[button];
+		return !s_MouseButtonStates[Cast<uint16_t>(button)];
 	}
 
 	bool Input::IsMouseButtonDown(MouseButton button) {
-		return s_MouseButtonStates[button];
+		return s_MouseButtonStates[Cast<uint16_t>(button)];
 	}
 
 	bool Input::IsMouseButtonPressed(MouseButton button) {
-		return s_MosueButtonStateChanged[button] && s_MouseButtonStates[button];
+		return s_MosueButtonStateChanged[Cast<uint16_t>(button)] && s_MouseButtonStates[Cast<uint16_t>(button)];
 	}
 
 	bool Input::IsMouseButtonReleased(MouseButton button) {
-		return s_MosueButtonStateChanged[button] && !s_MouseButtonStates[button];
+		return s_MosueButtonStateChanged[Cast<uint16_t>(button)] && !s_MouseButtonStates[Cast<uint16_t>(button)];
 	}
 
 	void Input::SetMousePos(const glm::vec2& newPos) {

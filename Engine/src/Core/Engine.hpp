@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreInclude.hpp"
+#include "EngineSettings.hpp"
 
 namespace Pit {
 	const static Version EngineVersion(0, 0, 1);
@@ -24,35 +25,17 @@ namespace Pit {
 	DEFINE_SIMPLE_EVENT(ShutdownEvent);
 	class Engine {
 	public:
-		enum class RenderingAPI {
-			None,
-			OpenGL
-		};
+		
 
-		struct CreateInfo {
-			Array<String> ConsoleArgs;
-			String WindowName;
-			bool WindowToolbar;
-			bool VSync;
-			bool UIDocking;
-			RenderingAPI RenderingApi;
-			int AntiAliasing;
-			bool Headless;
+		
 
-			CreateInfo(const int argc, const char* argv[], const String& windowName, bool windowToolbar, bool vsync, bool uiDocking, RenderingAPI rendereringApi = RenderingAPI::OpenGL, int antiAliasing = 0, bool headless = false)
-				: WindowName(windowName), WindowToolbar(windowToolbar), VSync(vsync), UIDocking(uiDocking), RenderingApi(rendereringApi), AntiAliasing(antiAliasing), Headless(headless) {
-
-				ConsoleArgs.assign(argv, argv + argc);
-			}
-		};
-
-		static void Init(const CreateInfo& info);
+		static void Init(const EngineSettings& settings);
 		static void Shutdown();
 		static void ForceShutdown() { s_Quit.store(true); }
 		static bool ShouldClose();
 		static void Update();
 
-		static const CreateInfo& GetInfo() { return s_CreateInfo; }
+		static const EngineSettings& GetSettings() { return s_Settings; }
 
 		static AudioSubmodule* Audio() { return s_AudioSubmodule; }
 		static AssetManagmentSubmodule* AssetManagment() { return s_AssetManagmentSubmodule; }
@@ -71,7 +54,7 @@ namespace Pit {
 		static ShutdownEvent ShutdownEvent;
 
 	private:
-		static CreateInfo s_CreateInfo;
+		static EngineSettings s_Settings;
 
 		static AudioSubmodule* s_AudioSubmodule;
 		static AssetManagmentSubmodule* s_AssetManagmentSubmodule;

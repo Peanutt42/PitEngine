@@ -20,12 +20,12 @@ namespace Pit::Rendering {
 
 		glfwWindowHint(GLFW_MAXIMIZED, fullscreen ? GLFW_TRUE : GLFW_FALSE);
 
-		glfwWindowHint(GLFW_SAMPLES, Engine::GetInfo().AntiAliasing);
+		glfwWindowHint(GLFW_SAMPLES, Engine::GetSettings().AntiAliasing);
 
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
 		GLFWmonitor* primaryMonitor = nullptr;
-		if (!Engine::GetInfo().WindowToolbar) {
+		if (!Engine::GetSettings().WindowToolbar) {
 			glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
 			primaryMonitor = glfwGetPrimaryMonitor(); // Force window on primary screen
 		}
