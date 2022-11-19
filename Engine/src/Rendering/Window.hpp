@@ -10,6 +10,9 @@
 #pragma warning(pop)
 
 namespace Pit::Rendering {
+	/// <summary>
+	/// Helper class to handle Windows
+	/// </summary>
 	class Window {
 	public:
 		Window(const String& title, int width, int height, bool fullscreen = true);

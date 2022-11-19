@@ -4,6 +4,9 @@
 #include <imgui/imgui.h>
 
 namespace Pit::UI {
+	/// <summary>
+	/// Libary of fonts to load and use
+	/// </summary>
 	class Fonts {
 	public:
 		enum FontType {

@@ -8,6 +8,9 @@
 #include "Camera.hpp"
 
 namespace Pit::Rendering {
+	/// <summary>
+	/// Renders things into texture that may or may not be displayed onto the Window
+	/// </summary>
 	class Renderer {
 	public:
 		Renderer();

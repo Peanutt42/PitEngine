@@ -6,6 +6,10 @@
 namespace Pit {
 	using uuid_type = uint64_t;
 
+	/// <summary>
+	/// Random number for identifing stuff.
+	/// Gets generated at construction
+	/// </summary>
 	class UUID {
 	public:
 		UUID();

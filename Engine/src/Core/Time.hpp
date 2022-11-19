@@ -6,6 +6,9 @@
 #include "Debug/Logging.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Simple Holder to get DeltaTime/current Frame
+	/// </summary>
 	class Time {
 	public:
 		static const float& DeltaTime() { return s_DeltaTime; }
@@ -23,6 +26,9 @@ namespace Pit {
 #define QUICK_SCOPE_PROFILE(name)	\
 	ScopedTimer __scopeTimer(name);
 
+	/// <summary>
+	/// Simple Timer class that capsures time between construction and Elapsed()
+	/// </summary>
 	class Timer {
 	public:
 		Timer() {
@@ -49,6 +55,9 @@ namespace Pit {
 		std::chrono::time_point<std::chrono::high_resolution_clock> m_Start;
 	};
 
+	/// <summary>
+	/// Simple Scope Timer that prints the time it took to get out of the current scope
+	/// </summary>
 	class ScopedTimer {
 	public:
 		ScopedTimer(const std::string& name)

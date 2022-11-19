@@ -13,6 +13,9 @@
 #pragma warning(pop)
 
 namespace Pit {
+	/// <summary>
+	/// Submodule that handles anything related to Graphics like Window Handeling, UI/2D/3D Rendering
+	/// </summary>
 	class RenderingSubmodule : public Submodule {
 	public:
 		virtual void Init();

@@ -6,6 +6,11 @@
 namespace Pit::ECS {
 #define ECS_NULL_CHECKS (DEBUG || RELEASE)
 
+	/// <summary>
+	/// Handle for the native entt::entity id that also
+	/// has a reference to the ecsworld, so it's more OOP
+	/// like Entity.AddComponent(component);
+	/// </summary>
 	class EntityHandle {
 	public:
 		EntityHandle(World* world, entt::entity id) : m_World(world), m_ID(id) {}

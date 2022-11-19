@@ -4,6 +4,9 @@
 #include <AL\alc.h>
 
 namespace Pit::Audio {
+	/// <summary>
+	/// Simple Wrapper around initializing OpenAl-soft
+	/// </summary>
 	class SoundDevice
 	{
 	public:

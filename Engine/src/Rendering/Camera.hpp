@@ -6,6 +6,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Pit::Rendering {
+    /// <summary>
+    /// Manager for calculating the needed ViewMatrix
+    /// </summary>
     class Camera {
     public:
         glm::vec3 Position;

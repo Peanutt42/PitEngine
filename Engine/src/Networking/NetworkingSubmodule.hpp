@@ -4,6 +4,9 @@
 #include "Core/Submodule.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Submodule for handeling Networking
+	/// </summary>
 	class NetworkingSubmodule : public Submodule {
 	public:
 		virtual void Init();

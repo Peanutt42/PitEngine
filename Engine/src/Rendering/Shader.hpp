@@ -4,6 +4,10 @@
 #include <glm/glm.hpp>
 
 namespace Pit::Rendering {
+    /// <summary>
+    /// Manager that handles the compilation, parameterization and activation of
+    /// any shader int the game
+    /// </summary>
     class Shader {
     public:
         Shader(const String& vertexPath, const String& fragmentPath);

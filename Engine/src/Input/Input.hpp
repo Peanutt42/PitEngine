@@ -4,6 +4,9 @@
 #include <glm/vec2.hpp>
 
 namespace Pit {	
+	/// <summary>
+	/// Get or Set Input
+	/// </summary>
 	class Input {
 	public:
 		static void Update();

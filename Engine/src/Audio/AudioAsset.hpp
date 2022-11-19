@@ -8,6 +8,9 @@
 namespace Pit::Audio {
 #define AUDIO_ASSET_TYPE 1
 
+	/// <summary>
+	/// Asset type for audio like sound effects or music
+	/// </summary>
 	class AudioAsset : public AssetManagment::Asset {
 	public:
 		AudioAsset(const String& path, bool asyncLoading = false) 

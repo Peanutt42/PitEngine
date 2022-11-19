@@ -3,6 +3,9 @@
 #include "Utils/StringUtils.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Every Keyboard Key as a special code
+	/// </summary>
 	enum class KeyCode : uint16_t {
 		A = 65,					// GLFW_KEY_A
 		B = 66,					// GLFW_KEY_B
@@ -74,6 +77,9 @@ namespace Pit {
 		F12 = 301,				// GLFW_KEY_F12
 	};
 
+	/// <summary>
+	/// Any state a key could be in
+	/// </summary>
 	enum class KeyState : int {
 		None = -1,
 		Released = 0,
@@ -81,12 +87,18 @@ namespace Pit {
 		Held = 2
 	};
 
+	/// <summary>
+	/// Diffrent Cursor Modes
+	/// </summary>
 	enum class CursorMode {
 		Normal = 0,
 		Hidden = 1,
 		Locked = 2
 	};
 
+	/// <summary>
+	/// Every supported mouse button
+	/// </summary>
 	enum class MouseButton : uint16_t {
 		Button0 = 0,
 		Button1 = 1,

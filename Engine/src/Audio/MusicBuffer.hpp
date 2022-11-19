@@ -9,6 +9,9 @@ namespace Pit::Audio {
 #define BUFFER_SAMPLES 8192
 #define NUM_BUFFERS 4
 
+	/// <summary>
+	/// Buffer of music that gets stream as it is played
+	/// </summary>
 	class MusicBuffer {
 	public:
 		MusicBuffer(const char* filename, bool asyncLoading = false);

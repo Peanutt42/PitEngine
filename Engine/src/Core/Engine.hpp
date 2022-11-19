@@ -23,6 +23,11 @@ namespace Pit {
 	DEFINE_SIMPLE_EVENT(UIRenderEvent);
 	DEFINE_SIMPLE_EVENT(OnWindowResizeEvent);
 	DEFINE_SIMPLE_EVENT(ShutdownEvent);
+	
+	/// <summary>
+	/// Main class of the GameEngine.
+	/// Used for initializing, updating and shutting down the Engine
+	/// </summary>
 	class Engine {
 	public:
 		

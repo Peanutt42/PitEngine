@@ -4,6 +4,9 @@
 #include <AL\al.h>
 
 namespace Pit::Audio {
+	/// <summary>
+	/// TODO: Maybe change/remove, since audio is now a asset type
+	/// </summary>
 	class SoundBuffer {
 	public:
 		~SoundBuffer();

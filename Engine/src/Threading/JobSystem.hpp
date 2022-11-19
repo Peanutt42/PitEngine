@@ -38,6 +38,9 @@ namespace Pit {
 		std::mutex lock;
 	};
 
+	/// <summary>
+	/// Simple Manager that can be used to run async/mulithreaded code
+	/// </summary>
 	class JobSystem {
 	public:
 		static void Initialize();

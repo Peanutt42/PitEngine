@@ -9,6 +9,10 @@ namespace Pit {
 		Error
 	};
 
+	/// <summary>
+	/// TODO: Remove, since we don't and shouldn't use this
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<typename T>
 	struct Result {
 		inline bool IsOk() {

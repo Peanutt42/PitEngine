@@ -7,6 +7,11 @@
 #include "Core/Submodule.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Submodule that handles the ECSWorld.
+	/// TODO: Add Loading/Unloading/Switching Worlds
+	/// TODO: Add support for multiple Worlds at the same time
+	/// </summary>
 	class ECSSubmodule : public Submodule {
 	public:
 		virtual void Init();

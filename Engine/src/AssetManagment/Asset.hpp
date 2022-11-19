@@ -5,6 +5,11 @@
 namespace Pit::AssetManagment {
 #define NULL_ASSET_TYPE 0
 
+	/// <summary>
+	/// Base Type for Asset. Examples: Texture, Audio, Mesh, Setting.
+	/// When making a new Asset type, remember to add a #define ..._ASSET_TYPE 123
+	/// and set m_TypeId to it
+	/// </summary>
 	class Asset {
 	public:
 		Asset() : m_Filepath(""), m_TypeId(NULL_ASSET_TYPE) {}

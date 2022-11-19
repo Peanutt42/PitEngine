@@ -4,6 +4,9 @@
 #include <AL\al.h>
 
 namespace Pit::Audio {
+	/// <summary>
+	/// Plays audio buffer with its settings
+	/// </summary>
 	class SoundSource {
 	public:
 		SoundSource();

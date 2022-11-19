@@ -4,6 +4,9 @@
 #include "spdlog/fmt/ostr.h"
 
 namespace Pit {
+	/// <summary>
+	/// Version containing Major, Minor and Path number
+	/// </summary>
 	struct Version {
 		uint Major;
 		uint Minor;

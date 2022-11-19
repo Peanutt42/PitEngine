@@ -5,6 +5,9 @@
 #include <glm/glm.hpp>
 
 namespace Pit {
+	/// <summary>
+	/// Simple helpers to easily get random values
+	/// </summary>
 	class Random {
 	public:
 		static int Int() {

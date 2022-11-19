@@ -8,6 +8,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 namespace Pit::Debug {
+	/// <summary>
+	/// Holder for Logging Stuff
+	/// </summary>
 	class Logging {
 	public:
 		static void Init();

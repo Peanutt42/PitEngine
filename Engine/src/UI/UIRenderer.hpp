@@ -4,6 +4,9 @@
 #include "Core/Submodule.hpp"
 
 namespace Pit::UI {
+	/// <summary>
+	/// Manager to render ImGui stuff to the window
+	/// </summary>
 	class UIRenderer {
 	public:
 		UIRenderer();

@@ -5,6 +5,9 @@
 #include "PhysicScene.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Submodule containing all physics Scene and Objects
+	/// </summary>
 	class PhysicsSubmodule : public Submodule {
 	public:
 		virtual void Init();

@@ -4,6 +4,10 @@
 #include <functional>
 
 namespace Pit {
+	/// <summary>
+	/// Simple Wrapper around std::function with operator overloading
+	/// </summary>
+	/// <typeparam name="EventArgs"></typeparam>
 	template<typename... Args>
 	struct Event {
 		using ListenFunc = std::function<void(Args...)>;

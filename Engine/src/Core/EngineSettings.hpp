@@ -21,6 +21,11 @@ namespace Pit {
 		return RenderingAPI::None;
 	}
 
+	/// <summary>
+	/// Settings for initializing the GameEngine.
+	/// Some settings get chosen from the code,
+	/// some are chosen from the config file(end user) like vsync...
+	/// </summary>
 	struct EngineSettings {
 		Array<String> ConsoleArgs;
 		String WindowName;

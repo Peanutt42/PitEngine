@@ -5,6 +5,9 @@
 #include "SoundDevice.hpp"
 
 namespace Pit {
+	/// <summary>
+	/// Handles playing audio to correct audio source
+	/// </summary>
 	class AudioSubmodule : public Submodule {
 	public:
 		virtual void Init();

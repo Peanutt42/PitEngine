@@ -23,6 +23,9 @@ namespace Pit::ECS {
 			name(name) { }
 	};
 
+	/// <summary>
+	/// ECS-World, could be named Scene
+	/// </summary>
 	class World {
 	public:
 		World(const WorldSpecs& specs) :

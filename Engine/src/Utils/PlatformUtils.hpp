@@ -6,6 +6,9 @@
 #endif
 
 namespace Pit {
+	/// <summary>
+	/// Handles Message prompts 
+	/// </summary>
 	class MessagePrompts {
 	public:
 #ifdef PIT_WINDOWS
@@ -14,6 +17,9 @@ namespace Pit {
 #endif
 	};
 
+	/// <summary>
+	/// Simplifies the running of external programs
+	/// </summary>
 	class Process {
 	public:
 #ifdef PIT_WINDOWS

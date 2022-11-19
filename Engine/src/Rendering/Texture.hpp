@@ -7,6 +7,9 @@
 #include <stb_image.h>
 
 namespace Pit::Rendering {
+	/// <summary>
+	/// Helper class to load and use textures for the game
+	/// </summary>
 	class Texture {
 	public:
 		Texture(uint32_t width, uint32_t height);
