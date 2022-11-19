@@ -10,8 +10,8 @@ namespace Pit {
 	};
 	static inline String RenderingApiToString(RenderingAPI api) {
 		switch (api) {
-		default:
-		case RenderingAPI::None: break;
+		default: return "";
+		case RenderingAPI::None: return "None";
 		case RenderingAPI::OpenGL: return "OpenGl";
 		}
 	}
@@ -43,7 +43,7 @@ namespace Pit {
 				if (arg == "-headless") Headless = true;
 			}
 
-			if (configFilepath != "NullConfig.ini")
+			if (configFilepath != "NULL")
 				Deserialize(configFilepath, *this);
 		}
 

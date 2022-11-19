@@ -23,7 +23,7 @@ namespace Pit {
 	OnWindowResizeEvent			Engine::OnWindowResizeEvent;
 	ShutdownEvent				Engine::ShutdownEvent;
 
-	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NullConfig.ini", "PitEngine-NullInfo", true, false);
+	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NULL", "PitEngine-NullInfo", true, false);
 
 	AudioSubmodule*				Engine::s_AudioSubmodule = nullptr;
 	AssetManagmentSubmodule*	Engine::s_AssetManagmentSubmodule = nullptr;
@@ -50,6 +50,8 @@ namespace Pit {
 
 		PIT_PROFILE_FUNCTION();
 
+		ScopedTimer t("EngineInitTime");
+
 		CrashHandler::Init();
 
 		try {
@@ -58,9 +60,12 @@ namespace Pit {
 			Debug::Logging::Init();
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
+			PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
+			PIT_ENGINE_INFO(General, " - Vsync {}", s_Settings.VSync ? "On" : "Off");
+			PIT_ENGINE_INFO(General, " - RenderingApi: {}", RenderingApiToString(s_Settings.RenderingApi));
+			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings.AntiAliasing);
 			if (s_Settings.Headless)
 				PIT_ENGINE_INFO(General, " - Headless Mode");
-			PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
 
 			JobSystem::Initialize();
 
@@ -97,6 +102,8 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
+			ScopedTimer t("EngineShutdownTime");
+
 			Engine::ShutdownEvent.Invoke();
 
 			s_AssetManagmentSubmodule->Shutdown();
@@ -118,6 +125,8 @@ namespace Pit {
 			}
 
 			JobSystem::Shutdown();
+
+			t.~ScopedTimer();
 
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 

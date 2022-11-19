@@ -17,11 +17,6 @@ namespace Pit::Editor {
 
 		static EditorAssetManager& AssetManager() { return s_AssetManager; }
 
-		static void test1() { test2(); }
-		static void test2() { test3(); }
-		static void test3() { test4(); }
-		static void test4() { CrashHandler::StackTrace(false, false); }
-
 	private:
 		static EditorAssetManager s_AssetManager;
 		static Array<EditorWindowPanel*> s_WindowPanels;
