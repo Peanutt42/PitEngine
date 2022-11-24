@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KeyCode.hpp"
+#include "Keybinding.hpp"
 #include <glm/vec2.hpp>
 
 namespace Pit {	
@@ -9,6 +10,8 @@ namespace Pit {
 	/// </summary>
 	class Input {
 	public:
+		static void Init();
+
 		static void Update();
 
 		// Is Key up
@@ -41,6 +44,14 @@ namespace Pit {
 		// Set CursorMode of the mouse
 		static void SetCursorMode(CursorMode mode);
 
+		static void AddBinding(const String& name, KeyCode keycode) { s_Bindings.AddBinding(name, keycode); }
+		static void AddBinding(const String& name, MouseButton mouseButton) { s_Bindings.AddBinding(name, mouseButton); }
+		static void SetBinding(const String& name, KeyCode newKeycode) { s_Bindings.SetBinding(name, newKeycode); }
+		static void SetBinding(const String& name, MouseButton newMouseButton) { s_Bindings.SetBinding(name, newMouseButton); }
+		static KeyCode GetBinding(const String& name) { return s_Bindings.GetBinding(name); }
+		static MouseButton GetMouseBinding(const String& name) { return s_Bindings.GetMouseBinding(name); }
+		static bool RemoveBinding(const String& name) { return s_Bindings.RemoveBinding(name); }
+
 		static glm::vec2 m_LastMousePos;
 		static glm::vec2 m_LastMousePosDelta;
 	private:
@@ -51,5 +62,6 @@ namespace Pit {
 		static bool s_KeyStateChanged[KEY_COUNT];
 		static bool s_MouseButtonStates[MOUSEBUTTON_COUNT];
 		static bool s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
+		static Keybindings s_Bindings;
 	};
 }

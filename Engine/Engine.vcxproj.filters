@@ -197,6 +197,7 @@
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Core\EngineSettings.hpp" />
+    <ClInclude Include="src\Input\Keybinding.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">

@@ -15,8 +15,18 @@ namespace Pit {
 	bool Input::s_MouseButtonStates[MOUSEBUTTON_COUNT];
 	bool Input::s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
 
+	Keybindings Input::s_Bindings;
+
 	static GLFWwindow* GetWindow() {
 		return Engine::Rendering()->Window->GetWindowHandle();
+	}
+
+	void Input::Init() {
+		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
+
+		s_Bindings.Deserize(FileSystem::GetConfigDir() + "Keybindings.ini");
+
+		Engine::SaveConfigEvent += []() {Input::s_Bindings.Serialize(FileSystem::GetConfigDir() + "Keybindings.ini"); };
 	}
 
 	void Input::Update() {

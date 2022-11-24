@@ -9,6 +9,10 @@ namespace Pit::FileSystem {
 		return rootDir;
 	}
 
+	inline std::string GetConfigDir() {
+		return "Config/";
+	}
+
 	inline std::string GetEngineDir() {
 		return "Engine/";
 	}

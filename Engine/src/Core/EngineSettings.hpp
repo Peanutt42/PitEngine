@@ -36,12 +36,16 @@ namespace Pit {
 		int AntiAliasing;
 		bool Headless;
 
+	private:
+		String m_ConfigFilepath;
+	public:
+
 		EngineSettings(const int argc, const char* argv[], const String& configFilepath,
 					   const String& windowName, bool windowToolbar,
 					   bool uiDocking, bool headless = false)
 			: WindowName(windowName), WindowToolbar(windowToolbar),
 			  VSync(false), UIDocking(uiDocking),
-			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless) {
+			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), m_ConfigFilepath(configFilepath) {
 
 			ConsoleArgs.assign(argv, argv + argc);
 			for (const auto& arg : ConsoleArgs) {
@@ -49,29 +53,29 @@ namespace Pit {
 			}
 
 			if (configFilepath != "NULL")
-				Deserialize(configFilepath, *this);
+				Deserialize(configFilepath);
 		}
 
-		static void Serialize(const String& filepath, EngineSettings& settings) {
+		void Serialize(const String& filepath = "default") {
 			using namespace YAML;
 			Emitter out;
 			out << BeginMap;
 
 			out << Comment("EngineSettings");
-			out << Key << "VSync" << Value << settings.VSync;
-			out << Key << "RenderingApi" << Value << RenderingApiToString(settings.RenderingApi);
-			out << Key << "AntiAliasing" << Value << settings.AntiAliasing;
+			out << Key << "VSync" << Value << VSync;
+			out << Key << "RenderingApi" << Value << RenderingApiToString(RenderingApi);
+			out << Key << "AntiAliasing" << Value << AntiAliasing;
 
 			out << EndMap;
 
-			std::ofstream fout(filepath);
+			std::ofstream fout(filepath == "default" ? m_ConfigFilepath : filepath);
 			if (!fout.is_open()) PIT_ENGINE_ERR(General, "file could not be created");
 			fout << out.c_str();
 			fout.close();
 		}
 
-		static void Deserialize(const String& filepath, EngineSettings& settings) {
-			if (!std::filesystem::exists(filepath)) Serialize(filepath, settings);
+		void Deserialize(const String& filepath) {
+			if (!std::filesystem::exists(filepath)) Serialize(filepath);
 			
 			std::ifstream fin(filepath);
 			if (!fin.is_open()) PIT_ENGINE_ERR(General, "file could not be opened");
@@ -83,9 +87,9 @@ namespace Pit {
 			using namespace YAML;
 			Node data = YAML::Load(strStream.str());
 
-			settings.VSync = data["VSync"].as<bool>();
-			settings.RenderingApi = StringToRenderingApi(data["RenderingApi"].as<String>());
-			settings.AntiAliasing = data["AntiAliasing"].as<int>();
+			VSync = data["VSync"].as<bool>();
+			RenderingApi = StringToRenderingApi(data["RenderingApi"].as<String>());
+			AntiAliasing = data["AntiAliasing"].as<int>();
 		}
 	};
 }

@@ -202,6 +202,7 @@
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
+    <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Input\KeyCode.hpp" />
     <ClInclude Include="src\Math\CoreMath.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />

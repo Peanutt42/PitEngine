@@ -22,6 +22,7 @@ namespace Pit {
 	DEFINE_SIMPLE_EVENT(RenderEvent);
 	DEFINE_SIMPLE_EVENT(UIRenderEvent);
 	DEFINE_SIMPLE_EVENT(OnWindowResizeEvent);
+	DEFINE_SIMPLE_EVENT(SaveConfigEvent);
 	DEFINE_SIMPLE_EVENT(ShutdownEvent);
 	
 	/// <summary>
@@ -56,6 +57,7 @@ namespace Pit {
 		static RenderEvent RenderEvent;
 		static UIRenderEvent UIRenderEvent;
 		static OnWindowResizeEvent OnWindowResizeEvent;
+		static SaveConfigEvent SaveConfigEvent;
 		static ShutdownEvent ShutdownEvent;
 
 	private:

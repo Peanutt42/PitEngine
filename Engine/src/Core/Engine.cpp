@@ -21,6 +21,7 @@ namespace Pit {
 	RenderEvent					Engine::RenderEvent;
 	UIRenderEvent				Engine::UIRenderEvent;
 	OnWindowResizeEvent			Engine::OnWindowResizeEvent;
+	SaveConfigEvent				Engine::SaveConfigEvent;
 	ShutdownEvent				Engine::ShutdownEvent;
 
 	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NULL", "PitEngine-NullInfo", true, false);
@@ -70,6 +71,8 @@ namespace Pit {
 			JobSystem::Initialize();
 
 			if (!s_Settings.Headless) {
+				Input::Init();
+
 				s_AudioSubmodule = new AudioSubmodule();
 				s_AudioSubmodule->Init();
 			}
@@ -125,6 +128,9 @@ namespace Pit {
 			}
 
 			JobSystem::Shutdown();
+
+			s_Settings.Serialize();
+			SaveConfigEvent.Invoke();
 
 			t.~ScopedTimer();
 
