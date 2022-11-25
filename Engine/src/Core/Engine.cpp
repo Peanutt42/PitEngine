@@ -33,6 +33,8 @@ namespace Pit {
 	PhysicsSubmodule*			Engine::s_PhysicsSubmodule = nullptr;
 	RenderingSubmodule*			Engine::s_RenderingSubmodule = nullptr;
 
+	std::ofstream				Engine::s_InstanceLockFile;
+
 	std::atomic<bool>			Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
@@ -67,6 +69,12 @@ namespace Pit {
 			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings.AntiAliasing);
 			if (s_Settings.Headless)
 				PIT_ENGINE_INFO(General, " - Headless Mode");
+
+#define INSTANCE_LOCK_FILENAME "Instancelock.lock"
+			if (s_Settings.OneInstanceOnly) {
+				if (std::filesystem::exists(INSTANCE_LOCK_FILENAME)) PIT_ENGINE_FATAL(General, "One instance of the application is already opened!");
+				s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
+			}
 
 			JobSystem::Initialize();
 
@@ -137,6 +145,11 @@ namespace Pit {
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 
 			Debug::Logging::Shutdown();
+
+			if (s_Settings.OneInstanceOnly) {
+				s_InstanceLockFile.close();
+				std::filesystem::remove({ INSTANCE_LOCK_FILENAME });
+			}
 		}
 		CATCH_EXCEPTIONS();
 	}

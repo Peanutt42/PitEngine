@@ -70,6 +70,8 @@ namespace Pit {
 		static PhysicsSubmodule* s_PhysicsSubmodule;
 		static RenderingSubmodule* s_RenderingSubmodule;
 		
+		static std::ofstream s_InstanceLockFile;
+
 		static std::atomic<bool> s_Quit;
 	};
 }

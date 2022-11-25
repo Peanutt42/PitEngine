@@ -34,7 +34,8 @@ namespace Pit {
 			// Textures
 			else if (fileExtention == ".png" ||
 					 fileExtention == ".jpg")
-				std::cout << "Loading texture file: " << path.string() << '\n';
+				m_Assets.push_back(new Rendering::TextureAsset(path.string(), LOAD_TEXTURE_ASYNC));
+
 		}
 
 		for (auto asset : m_Assets) {

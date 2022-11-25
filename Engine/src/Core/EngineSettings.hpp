@@ -35,6 +35,7 @@ namespace Pit {
 		RenderingAPI RenderingApi;
 		int AntiAliasing;
 		bool Headless;
+		bool OneInstanceOnly;
 
 	private:
 		String m_ConfigFilepath;
@@ -42,10 +43,10 @@ namespace Pit {
 
 		EngineSettings(const int argc, const char* argv[], const String& configFilepath,
 					   const String& windowName, bool windowToolbar,
-					   bool uiDocking, bool headless = false)
+					   bool uiDocking, bool headless = false, bool oneInstanceOnly = false)
 			: WindowName(windowName), WindowToolbar(windowToolbar),
 			  VSync(false), UIDocking(uiDocking),
-			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), m_ConfigFilepath(configFilepath) {
+			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), m_ConfigFilepath(configFilepath), OneInstanceOnly(oneInstanceOnly) {
 
 			ConsoleArgs.assign(argv, argv + argc);
 			for (const auto& arg : ConsoleArgs) {
