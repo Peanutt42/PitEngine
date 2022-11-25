@@ -3,7 +3,6 @@
 #include "Core/Engine.hpp"
 #include "EditorAssetManager.hpp"
 #include "EditorWindowPanel.hpp"
-#include <Debug/vcrash.h>
 
 namespace Pit::Editor {
 	class EditorApplication {

@@ -22,6 +22,7 @@
 	#elif TARGET_OS_IPHONE
 		#error "IOS is not supported!"
 	#elif TARGET_OS_MAC
+		#error "MacOS is not supported yet, but it shouldn't be too difficult to change that"
 		#ifndef PIT_MACOS	
 			#define PIT_MACOS
 		#endif
@@ -29,6 +30,7 @@
 		#error "Unknown Apple platform!"
 	#endif
 #elif defined(__linux__)
+	#error "Linux is not supported yet, but it shouldn't be too difficult to change that"
 	#ifndef PIT_LINUX
 		#define PIT_LINUX
 	#endif

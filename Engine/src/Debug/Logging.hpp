@@ -66,7 +66,7 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_INFO, Log::category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, Log::category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, Log::category, msg,  ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
+#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); PIT_DEBUGBREAK(); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}
@@ -94,11 +94,11 @@ using Log = Pit::Debug::Category;
 #define PIT_INFO(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_INFO, msg, ##__VA_ARGS__)
 #define PIT_WARN(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_WARN, msg, ##__VA_ARGS__)
 #define PIT_ERR(msg, ...)			PIT_BASE_LOG(SPDLOG_LOGGER_ERROR, msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); PIT_DEBUGBREAK(); }
 #else
 #define PIT_TRACE(msg, ...)	{}
 #define PIT_INFO(msg, ...)	{}
 #define PIT_WARN(msg, ...)	{}
 #define PIT_ERR(msg, ...)	{}
-#define PIT_FATAL(msg, ...)	{ Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
+#define PIT_FATAL(msg, ...)	{ Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); PIT_DEBUGBREAK(); }
 #endif

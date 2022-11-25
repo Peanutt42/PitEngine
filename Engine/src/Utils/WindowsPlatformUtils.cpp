@@ -11,17 +11,15 @@
 
 namespace Pit {
 
-	void MessagePrompts::InfoMessage(LPCWSTR msg) {
-		MessageBoxW(NULL, msg, L"PitEngine-Info", MB_USERICON | MB_OK);
+	void MessagePrompts::InfoMessage(const wchar_t* title, const wchar_t* msg) {
+		MessageBoxW(NULL, msg, title, MB_USERICON | MB_OK);
 	}
 
-	void MessagePrompts::ErrorMessage(LPCWSTR msg) {
-		MessageBox(NULL, msg, L"PitEngine-Error", MB_ICONERROR | MB_OK);
+	void MessagePrompts::ErrorMessage(const wchar_t* title, const wchar_t* msg) {
+		MessageBoxW(NULL, msg, title, MB_ICONERROR | MB_OK);
 	}
 
-
-
-	void Process::Run(LPCWSTR path) {
+	void Process::Run(const wchar_t* path) {
 		STARTUPINFO si;
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
@@ -33,5 +31,5 @@ namespace Pit {
 		CloseHandle(pi.hThread);
 	}
 
-#endif
 }
+#endif
