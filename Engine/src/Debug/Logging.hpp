@@ -72,7 +72,7 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}
 #define PIT_ENGINE_WARN(category, msg, ...)	 {}
 #define PIT_ENGINE_ERR(category, msg, ...)	 {}
-#define PIT_ENGINE_FATAL(category, msg, ...) { Pit::MessagePrompts::ErrorMessage(L#msg); PIT_DEBUGBREAK(); }
+#define PIT_ENGINE_FATAL(category, msg, ...) { Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); PIT_DEBUGBREAK(); }
 #endif
 
 // Game logging

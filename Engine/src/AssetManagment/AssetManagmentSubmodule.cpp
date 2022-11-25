@@ -13,7 +13,7 @@ namespace Pit {
 	void AssetManagmentSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		ScopedTimer t("AssetManagment load textures");
+		ScopedTimer t("AssetManagment load all assets from Sandbox/assets/.**");
 
 		bool headless = Engine::GetSettings().Headless;
 
@@ -34,7 +34,7 @@ namespace Pit {
 			// Textures
 			else if (fileExtention == ".png" ||
 					 fileExtention == ".jpg")
-				m_Assets.push_back(new Rendering::TextureAsset(path.string(), LOAD_TEXTURE_ASYNC));
+				std::cout << "Loading texture file: " << path.string() << '\n';
 		}
 
 		for (auto asset : m_Assets) {
@@ -50,7 +50,7 @@ namespace Pit {
 		JobSystem::Wait();
 
 		// Finish async loading with synchronization on the main thread
-		for (auto asset : m_Assets) {
+		for ([[maybe_unused]] auto asset : m_Assets) {
 			if (headless) continue;
 
 #if LOAD_AUDIO_ASYNC
