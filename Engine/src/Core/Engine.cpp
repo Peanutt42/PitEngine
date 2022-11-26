@@ -1,10 +1,6 @@
 #include "pch.hpp"
 #include "Engine.hpp"
-#include "Audio/AudioSubmodule.hpp"
-#include "AssetManagment/AssetManagmentSubmodule.hpp"
-#include "ECS/ECSSubmodule.hpp"
-#include "Networking/NetworkingSubmodule.hpp"
-#include "Physics/PhysicsSubmodule.hpp"
+#include "SubmoduleManager.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
@@ -27,12 +23,7 @@ namespace Pit {
 
 	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NULL", "PitEngine-NullInfo", true, false);
 
-	AudioSubmodule*				Engine::s_AudioSubmodule = nullptr;
-	AssetManagmentSubmodule*	Engine::s_AssetManagmentSubmodule = nullptr;
-	ECSSubmodule*				Engine::s_ECSSubmodule = nullptr;
-	NetworkingSubmodule*		Engine::s_NetworkingSubmodule = nullptr;
-	PhysicsSubmodule*			Engine::s_PhysicsSubmodule = nullptr;
-	RenderingSubmodule*			Engine::s_RenderingSubmodule = nullptr;
+	SubmoduleManager*			Engine::s_SubmoduleManager = nullptr;
 
 	std::ofstream				Engine::s_InstanceLockFile;
 
@@ -81,29 +72,10 @@ namespace Pit {
 
 			JobSystem::Initialize();
 
-			if (!s_Settings.Headless) {
+			if (!s_Settings.Headless)
 				Input::Init();
 
-				s_AudioSubmodule = new AudioSubmodule();
-				s_AudioSubmodule->Init();
-			}
-
-			s_ECSSubmodule = new ECSSubmodule();
-			s_ECSSubmodule->Init();
-
-			if (!s_Settings.Headless) {
-				s_RenderingSubmodule = new RenderingSubmodule();
-				s_RenderingSubmodule->Init();
-			}
-
-			s_NetworkingSubmodule = new NetworkingSubmodule();
-			s_NetworkingSubmodule->Init();
-
-			s_PhysicsSubmodule = new PhysicsSubmodule();
-			s_PhysicsSubmodule->Init();
-
-			s_AssetManagmentSubmodule = new AssetManagmentSubmodule();
-			s_AssetManagmentSubmodule->Init();
+			s_SubmoduleManager->Init();
 
 			InitEvent.Invoke();
 		}
@@ -120,23 +92,7 @@ namespace Pit {
 
 			Engine::ShutdownEvent.Invoke();
 
-			s_AssetManagmentSubmodule->Shutdown();
-			delete s_AssetManagmentSubmodule;
-
-			if (!s_Settings.Headless) {
-				s_RenderingSubmodule->Shutdown();
-				delete s_RenderingSubmodule;
-			}
-			s_PhysicsSubmodule->Shutdown();
-			delete s_PhysicsSubmodule;
-			s_NetworkingSubmodule->Shutdown();
-			delete s_NetworkingSubmodule;
-			s_ECSSubmodule->Shutdown();
-			delete s_ECSSubmodule;
-			if (!s_Settings.Headless) {
-				s_AudioSubmodule->Shutdown();
-				delete s_AudioSubmodule;
-			}
+			s_SubmoduleManager->Shutdown();
 
 			JobSystem::Shutdown();
 
@@ -175,23 +131,7 @@ namespace Pit {
 
 			Input::Update();
 
-			s_NetworkingSubmodule->Update();
-			NetworkingUpdateEvent.Invoke();
-
-			s_PhysicsSubmodule->Update();
-			PhysicUpdateEvent.Invoke();
-
-			PreUpdateEvent.Invoke();
-			UpdateEvent.Invoke();
-			s_ECSSubmodule->Update();
-			PostUpdateEvent.Invoke();
-
-			if (!s_Settings.Headless) {
-				s_RenderingSubmodule->Update();
-
-				s_AudioSubmodule->Update();
-			}
-
+			s_SubmoduleManager->Update();
 		}
 		CATCH_EXCEPTIONS();
 
@@ -201,8 +141,13 @@ namespace Pit {
 		if (s_Quit.load())
 			return true;
 		else if (!s_Settings.Headless)
-			return s_RenderingSubmodule->Window->ShouldClose();
+			return s_SubmoduleManager->RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;
 	}
+
+	AudioSubmodule* Engine::Audio() { return s_SubmoduleManager->AudioSubmodule; }
+	AssetManagmentSubmodule* Engine::AssetManagment() { return s_SubmoduleManager->AssetManagmentSubmodule; }
+	RenderingSubmodule* Engine::Rendering() { return s_SubmoduleManager->RenderingSubmodule; }
+	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
 }

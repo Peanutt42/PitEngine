@@ -6,13 +6,6 @@
 namespace Pit {
 	const static Version EngineVersion(0, 0, 1);
 
-	class AudioSubmodule;
-	class AssetManagmentSubmodule;
-	class ECSSubmodule;
-	class NetworkingSubmodule;
-	class PhysicsSubmodule;
-	class RenderingSubmodule;
-
 	DEFINE_SIMPLE_EVENT(InitEvent);
 	DEFINE_SIMPLE_EVENT(NetworkingUpdateEvent);
 	DEFINE_SIMPLE_EVENT(PhysicUpdateEvent);
@@ -31,10 +24,6 @@ namespace Pit {
 	/// </summary>
 	class Engine {
 	public:
-		
-
-		
-
 		static void Init(const EngineSettings& settings);
 		static void Shutdown();
 		static void ForceShutdown() { s_Quit.store(true); }
@@ -43,10 +32,10 @@ namespace Pit {
 
 		static const EngineSettings& GetSettings() { return s_Settings; }
 
-		static AudioSubmodule* Audio() { return s_AudioSubmodule; }
-		static AssetManagmentSubmodule* AssetManagment() { return s_AssetManagmentSubmodule; }
-		static RenderingSubmodule* Rendering() { return s_RenderingSubmodule; }
-		static ECSSubmodule* ECS() { return s_ECSSubmodule; }
+		static class AudioSubmodule* Audio();
+		static class AssetManagmentSubmodule* AssetManagment();
+		static class RenderingSubmodule* Rendering();
+		static class ECSSubmodule* ECS();
 
 		static InitEvent InitEvent;
 		static NetworkingUpdateEvent NetworkingUpdateEvent;
@@ -63,12 +52,7 @@ namespace Pit {
 	private:
 		static EngineSettings s_Settings;
 
-		static AudioSubmodule* s_AudioSubmodule;
-		static AssetManagmentSubmodule* s_AssetManagmentSubmodule;
-		static ECSSubmodule* s_ECSSubmodule;
-		static NetworkingSubmodule* s_NetworkingSubmodule;
-		static PhysicsSubmodule* s_PhysicsSubmodule;
-		static RenderingSubmodule* s_RenderingSubmodule;
+		static class SubmoduleManager* s_SubmoduleManager;
 		
 		static std::ofstream s_InstanceLockFile;
 

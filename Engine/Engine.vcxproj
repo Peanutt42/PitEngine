@@ -187,6 +187,7 @@
     <ClInclude Include="src\Core\Random.hpp" />
     <ClInclude Include="src\Core\Result.hpp" />
     <ClInclude Include="src\Core\Submodule.hpp" />
+    <ClInclude Include="src\Core\SubmoduleManager.hpp" />
     <ClInclude Include="src\Core\Time.hpp" />
     <ClInclude Include="src\Core\Types.hpp" />
     <ClInclude Include="src\Core\UUID.hpp" />
@@ -234,6 +235,7 @@
     <ClCompile Include="src\Audio\SoundSource.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
+    <ClCompile Include="src\Core\SubmoduleManager.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />

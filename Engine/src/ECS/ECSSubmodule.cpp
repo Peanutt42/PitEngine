@@ -22,6 +22,9 @@ namespace Pit {
 	void ECSSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
+		Engine::PreUpdateEvent.Invoke();
+		Engine::UpdateEvent.Invoke();
+		Engine::PostUpdateEvent.Invoke();
 	}
 
 	void ECSSubmodule::ResetECSWorld() {

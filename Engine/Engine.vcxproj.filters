@@ -199,6 +199,7 @@
     <ClInclude Include="src\Core\EngineSettings.hpp" />
     <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
+    <ClInclude Include="src\Core\SubmoduleManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
@@ -280,5 +281,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Core\SubmoduleManager.cpp" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "NetworkingSubmodule.hpp"
+#include "Core/Engine.hpp"
 
 namespace Pit {
 
@@ -16,5 +17,6 @@ namespace Pit {
 	void NetworkingSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
+		Engine::NetworkingUpdateEvent.Invoke();
 	}
 }

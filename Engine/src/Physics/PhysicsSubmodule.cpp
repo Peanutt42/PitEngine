@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "PhysicsSubmodule.hpp"
+#include "Core/Engine.hpp"
 
 namespace Pit {
 
@@ -41,6 +42,8 @@ namespace Pit {
 
 			accumulator -= m_FixedTimestep;
 		}
+
+		Engine::PhysicUpdateEvent.Invoke();
 	}
 
 	void PhysicsSubmodule::_InitPhysx() {
