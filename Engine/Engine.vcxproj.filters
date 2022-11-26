@@ -51,22 +51,7 @@
     <ClInclude Include="src\AssetManagment\AssetManagmentSubmodule.hpp">
       <Filter>AssetManagment</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\AudioAsset.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\MusicBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\SoundBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\SoundDevice.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\SoundSource.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Assert.hpp">
@@ -200,24 +185,18 @@
     <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
     <ClInclude Include="src\Core\SubmoduleManager.hpp" />
+    <ClInclude Include="src\Core\SmartPointers.hpp" />
+    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
+    <ClInclude Include="src\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="src\Audio\SoundDevice.hpp" />
+    <ClInclude Include="src\Audio\SoundSource.hpp" />
+    <ClInclude Include="src\Audio\AudioAsset.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
       <Filter>AssetManagment</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\MusicBuffer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\SoundBuffer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\SoundDevice.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\SoundSource.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
@@ -282,5 +261,9 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Core\SubmoduleManager.cpp" />
+    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
+    <ClCompile Include="src\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="src\Audio\SoundDevice.cpp" />
+    <ClCompile Include="src\Audio\SoundSource.cpp" />
   </ItemGroup>
 </Project>

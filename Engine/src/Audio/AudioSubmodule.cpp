@@ -8,8 +8,8 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		m_Device = new Audio::SoundDevice();
-		music = new Audio::MusicBuffer("C:/Users/Peter/Downloads/407640__drotzruhn__countdown-30-seconds.wav");
-		//music->Play();
+		music = new Audio::MusicBuffer("C:/dev/cpp/PitEngine/Sandbox/assets/audio/sample1.wav");
+		music->Play();
 	}
 
 	void AudioSubmodule::Shutdown() {
@@ -22,6 +22,6 @@ namespace Pit {
 	void AudioSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		//music->UpdateBufferStream();
+		music->UpdateBufferStream();
 	}
 }

@@ -4,6 +4,8 @@
 #include <string>
 #include <limits>
 
+#include "SmartPointers.hpp"
+
 namespace Pit {
 	using uint32 = uint32_t;
 	using uint64 = uint64_t;

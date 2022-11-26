@@ -186,6 +186,7 @@
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
     <ClInclude Include="src\Core\Result.hpp" />
+    <ClInclude Include="src\Core\SmartPointers.hpp" />
     <ClInclude Include="src\Core\Submodule.hpp" />
     <ClInclude Include="src\Core\SubmoduleManager.hpp" />
     <ClInclude Include="src\Core\Time.hpp" />

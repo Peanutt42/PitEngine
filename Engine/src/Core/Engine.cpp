@@ -75,6 +75,7 @@ namespace Pit {
 			if (!s_Settings.Headless)
 				Input::Init();
 
+			s_SubmoduleManager = new SubmoduleManager();
 			s_SubmoduleManager->Init();
 
 			InitEvent.Invoke();
