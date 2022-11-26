@@ -23,7 +23,7 @@ namespace Pit::Audio {
 			if (m_MusicBuffer) delete m_MusicBuffer;
 		}
 
-		virtual void Load() {
+		virtual void Load() override {
 			if (m_MusicBuffer) delete m_MusicBuffer;
 			if (m_AsyncLoading)
 				JobSystem::Execute([this]() {
@@ -33,7 +33,7 @@ namespace Pit::Audio {
 				m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
 		}
 
-		virtual void Unload() {
+		virtual void Unload() override {
 			if (m_MusicBuffer)
 				delete m_MusicBuffer;
 		}

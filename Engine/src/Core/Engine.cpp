@@ -8,6 +8,7 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
+#include "Debug/MemoryLeakDetector.hpp"
 
 
 namespace Pit {
@@ -56,6 +57,8 @@ namespace Pit {
 		ScopedTimer t("EngineInitTime");
 
 		CrashHandler::Init();
+
+		Debug::MemoryLeakDetector::Init();
 
 		try {
 			s_Settings = settings;
@@ -145,6 +148,8 @@ namespace Pit {
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 
 			Debug::Logging::Shutdown();
+
+			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
 
 			if (s_Settings.OneInstanceOnly) {
 				s_InstanceLockFile.close();

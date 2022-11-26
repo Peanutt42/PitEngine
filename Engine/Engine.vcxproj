@@ -192,6 +192,7 @@
     <ClInclude Include="src\Core\UUID.hpp" />
     <ClInclude Include="src\Core\Version.hpp" />
     <ClInclude Include="src\Debug\Logging.hpp" />
+    <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
     <ClInclude Include="src\Debug\ProfileStats.hpp" />
     <ClInclude Include="src\Debug\vcrash.h" />
     <ClInclude Include="src\ECS\ECSComponent.hpp" />

@@ -9,16 +9,29 @@
 namespace Pit::ECS {
 
 	static void UpdateRendering() {
+		PIT_PROFILE_FUNCTION("Pit::ECS::World::RenderingSystems");
+
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Render);
 	}
 	static void UpdateNetworking() {
+		PIT_PROFILE_FUNCTION("Pit::ECS::World::NetworkingSystems");
+
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Networking);
 	}
 	static void UpdatePhysics() {
+		PIT_PROFILE_FUNCTION("Pit::ECS::World::PhysicsSystems");
+
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Physic);
 	}
 	static void UpdateMain() {
+		PIT_PROFILE_FUNCTION("Pit::ECS::World::MainSystems");
+
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::General);
+	}
+
+	static void UpdateGameplay() {
+		PIT_PROFILE_FUNCTION("Pit::ECS::World::GameplaySystems");
+
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
 	}
 
@@ -31,6 +44,7 @@ namespace Pit::ECS {
 		Engine::NetworkingUpdateEvent += &UpdateNetworking;
 		Engine::PhysicUpdateEvent += &UpdatePhysics;
 		Engine::UpdateEvent += &UpdateMain;
+		Engine::UpdateEvent += &UpdateGameplay;
 		Engine::RenderEvent += &UpdateRendering;
 
 		PIT_ENGINE_INFO(ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
@@ -66,7 +80,7 @@ namespace Pit::ECS {
 
 	EntityHandle World::CreateEntity() {
 		auto e = CreateEntityID();
-		return { this, e };
+		return { *this, e };
 	}
 
 	void World::DestroyEntity(entt::entity entity) {

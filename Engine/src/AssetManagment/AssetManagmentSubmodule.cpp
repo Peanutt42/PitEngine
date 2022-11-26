@@ -69,8 +69,14 @@ namespace Pit {
 	void AssetManagmentSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
 
-		for (int i = 0; i < m_Assets.size(); i++)
+		for (int i = 0; i < m_Assets.size(); i++) {
+			switch (m_Assets[i]->GetType()) {
+			case NULL_ASSET_TYPE: PIT_ENGINE_ERR(AssetManagment, "Asset has invalid type."); break;
+			case TEXTURE_ASSET_TYPE: Cast<Rendering::TextureAsset*>(m_Assets[i])->Unload(); break;
+			case AUDIO_ASSET_TYPE: Cast<Audio::AudioAsset*>(m_Assets[i])->Unload(); break;
+			};
 			delete m_Assets[i];
+		}
 	}
 
 	void AssetManagmentSubmodule::Update() {

@@ -13,6 +13,9 @@ namespace Pit::Physics {
 		m_Scene = physics->createScene(sceneDesc);
 	}
 
+	Scene::~Scene() {
+	}
+
 	void Scene::AddActor(physx::PxActor& actor, const physx::PxBVHStructure* bvhStructure) {
 		m_Scene->addActor(actor, bvhStructure);
 	}

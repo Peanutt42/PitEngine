@@ -14,6 +14,8 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		delete m_Scene;
+		delete m_Dispatcher;
+		delete m_Physics;
 	}
 
 	void PhysicsSubmodule::Update() {

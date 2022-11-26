@@ -7,6 +7,8 @@ namespace Pit {
 	void ECSSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
+		m_ECSWorld = ECS::World(m_ECSWorldSpecs);
+
 		if (!m_ECSWorld.Init())
 			PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
 	}

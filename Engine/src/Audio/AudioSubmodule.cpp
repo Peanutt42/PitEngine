@@ -9,7 +9,7 @@ namespace Pit {
 
 		m_Device = new Audio::SoundDevice();
 		music = new Audio::MusicBuffer("C:/Users/Peter/Downloads/407640__drotzruhn__countdown-30-seconds.wav");
-		music->Play();
+		//music->Play();
 	}
 
 	void AudioSubmodule::Shutdown() {
@@ -22,6 +22,6 @@ namespace Pit {
 	void AudioSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		music->UpdateBufferStream();
+		//music->UpdateBufferStream();
 	}
 }

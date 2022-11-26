@@ -15,6 +15,7 @@ namespace Pit::Physics {
 	class Scene {
 	public:
 		Scene(physx::PxPhysics* physics, physx::PxDefaultCpuDispatcher* dispatcher);
+		~Scene();
 
 		void AddActor(physx::PxActor& actor, const physx::PxBVHStructure* bvhStructure = nullptr);
 
