@@ -1,5 +1,8 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
+#include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Camera.hpp"
+#include "Rendering/SpectatorCamera.hpp"
 
 
 int main(const int argc, const char* argv[]) {
@@ -9,8 +12,20 @@ int main(const int argc, const char* argv[]) {
 
 	Engine::Init(engineSettings);
 	
+	Input::AddBinding("MoveForward", KeyCode::W);
+	Input::AddBinding("MoveBackward", KeyCode::S);
+	Input::AddBinding("MoveLeft", KeyCode::A);
+	Input::AddBinding("MoveRight", KeyCode::D);
+	Input::AddBinding("MoveUp", KeyCode::E);
+	Input::AddBinding("MoveDown", KeyCode::Q);
+	Input::AddBinding("MoveFaster", KeyCode::LeftShift);
+	Input::AddBinding("MoveSlower", KeyCode::LeftControl);
+
 	while (!Engine::ShouldClose()) {
 		Engine::Update();
+		if (Input::IsMouseButtonDown(MouseButton::Button1))
+			SpectatorCamera::Update(&Engine::Rendering()->Renderer->m_Camera,
+									Input::GetBinding("MoveForward"), Input::GetBinding("MoveBackward"), Input::GetBinding("MoveLeft"), Input::GetBinding("MoveRight"), Input::GetBinding("MoveUp"), Input::GetBinding("MoveDown"), Input::GetBinding("MoveFaster"), Input::GetBinding("MoveSlower"));
 	}
 
 	Engine::Shutdown();

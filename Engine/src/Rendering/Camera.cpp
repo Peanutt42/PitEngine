@@ -3,13 +3,11 @@
 
 namespace Pit::Rendering {
 
-    Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-        : Front(glm::vec3(0, 0, -1)), MovementSpeed(2.5f), MouseSensitivity(.1f), Fov(90) {
+    Camera::Camera(glm::vec3 position, glm::vec3 up)
+        : Front(glm::vec3(0, 0, -1)), Rotation(-90, 0, 0), MovementSpeed(2.5f), MouseSensitivity(.1f), Fov(90) {
 
         Position = position;
         WorldUp = up;
-        Yaw = yaw;
-        Pitch = pitch;
 
         _UpdateCameraVectors();
     }
@@ -34,11 +32,11 @@ namespace Pit::Rendering {
         xoffset *= MouseSensitivity;
         yoffset *= MouseSensitivity;
 
-        Yaw += xoffset;
-        Pitch += yoffset;
+        Rotation.x += xoffset;
+        Rotation.y += yoffset;
 
         if (constrainPitch)
-            Pitch = Math::Clamp(Pitch, -90, 90);
+            Rotation.y = Math::Clamp(Rotation.y, -90, 90);
 
         _UpdateCameraVectors();
     }
@@ -53,9 +51,9 @@ namespace Pit::Rendering {
 
     void Camera::_UpdateCameraVectors() {
         glm::vec3 front;
-        front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        front.y = sin(glm::radians(Pitch));
-        front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+        front.x = cos(glm::radians(Rotation.x)) * cos(glm::radians(Rotation.y));
+        front.y = sin(glm::radians(Rotation.y));
+        front.z = sin(glm::radians(Rotation.x)) * cos(glm::radians(Rotation.y));
         Front = glm::normalize(front);
         Right = glm::normalize(glm::cross(Front, WorldUp));
         Up = glm::normalize(glm::cross(Right, Front));

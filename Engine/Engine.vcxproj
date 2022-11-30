@@ -215,6 +215,7 @@
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\Shader.hpp" />
+    <ClInclude Include="src\Rendering\SpectatorCamera.hpp" />
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\TextureAsset.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />

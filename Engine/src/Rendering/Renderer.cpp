@@ -58,8 +58,6 @@ namespace Pit::Rendering {
 		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // top-left              
 	};
 
-	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
 	Renderer::Renderer() {
 		PIT_PROFILE_FUNCTION();
 
@@ -67,8 +65,6 @@ namespace Pit::Rendering {
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_MULTISAMPLE);
-
-		glfwSetScrollCallback(Engine::Rendering()->Window->GetWindowHandle(), scroll_callback);
 
 		// cube VAO
 		glGenVertexArrays(1, &m_VAO);
@@ -202,9 +198,5 @@ namespace Pit::Rendering {
 		glBindVertexArray(m_ScreenQuadVAO);
 		glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);	// use the color attachment texture as the texture of the quad plane
 		glDrawArrays(GL_TRIANGLES, 0, 6);
-	}
-
-	static void scroll_callback(GLFWwindow* /*window*/, double /*xoffset*/, double yoffset) {
-		Engine::Rendering()->Renderer->m_Camera.ProcessMouseScroll(static_cast<float>(yoffset));
 	}
 }

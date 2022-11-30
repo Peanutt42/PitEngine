@@ -191,6 +191,7 @@
     <ClInclude Include="src\Audio\SoundDevice.hpp" />
     <ClInclude Include="src\Audio\SoundSource.hpp" />
     <ClInclude Include="src\Audio\AudioAsset.hpp" />
+    <ClInclude Include="src\Rendering\SpectatorCamera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">

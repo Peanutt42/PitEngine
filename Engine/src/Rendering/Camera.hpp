@@ -17,14 +17,15 @@ namespace Pit::Rendering {
         glm::vec3 Right;
         glm::vec3 WorldUp;
 
-        float Yaw;
-        float Pitch;
+        glm::vec3 Rotation;
+        //float Yaw;
+        //float Pitch;
 
         float MovementSpeed;
         float MouseSensitivity;
         float Fov;
 
-        Camera(glm::vec3 position = glm::vec3(0, 0, 0), glm::vec3 up = glm::vec3(0, 1, 0), float yaw = -90.0f, float pitch = 0.f);
+        Camera(glm::vec3 position = glm::vec3(0, 0, 0), glm::vec3 up = glm::vec3(0, 1, 0));
 
         glm::mat4 GetViewMatrix();
 

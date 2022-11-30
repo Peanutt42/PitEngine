@@ -20,6 +20,7 @@ namespace Pit {
 
 		~ScopeRef() {
 			_Cleanup();
+			std::cout << "Cleanup\n";
 		}
 
 		void operator=(ScopeRef<T>&& dyingObj) {

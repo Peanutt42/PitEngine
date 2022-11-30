@@ -2,6 +2,7 @@
 #include "SceneViewportPanel.hpp"
 #include "Core/Engine.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/SpectatorCamera.hpp"
 #include <imgui/imgui.h>
 #include <stb_image.h>
 
@@ -12,6 +13,10 @@ using namespace Editor;
 #define EDITOR_KEYBINDING_CAM_MOVE_BACKWARD "_Editor_Cam_MoveBackward"
 #define EDITOR_KEYBINDING_CAM_MOVE_LEFT "_Editor_Cam_MoveLeft"
 #define EDITOR_KEYBINDING_CAM_MOVE_RIGHT "_Editor_Cam_MoveRight"
+#define EDITOR_KEYBINDING_CAM_MOVE_UP "_Editor_Cam_MoveUp"
+#define EDITOR_KEYBINDING_CAM_MOVE_DOWN "_Editor_Cam_MoveDown"
+#define EDITOR_KEYBINDING_CAM_MOVE_FASTER "_Editor_Cam_MoveFaster"
+#define EDITOR_KEYBINDING_CAM_MOVE_SLOWER "_Editor_Cam_MoveSlower"
 
 void SceneViewportPanel::OnCreate() {
 	Name = "Viewport";
@@ -24,6 +29,10 @@ void SceneViewportPanel::OnCreate() {
 	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_BACKWARD, KeyCode::S);
 	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_LEFT , KeyCode::A);
 	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_RIGHT, KeyCode::D);
+	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_UP, KeyCode::E);
+	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_DOWN, KeyCode::Q);
+	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_FASTER, KeyCode::LeftShift);
+	Input::AddBinding(EDITOR_KEYBINDING_CAM_MOVE_SLOWER, KeyCode::LeftControl);
 }
 
 
@@ -38,14 +47,17 @@ void SceneViewportPanel::OnGui() {
 	ImGui::Image((ImTextureID)Cast<uint64>(Engine::Rendering()->Renderer->GetScreenTexColorBuffer()),
 				 ImVec2(region.x, region.y), ImVec2(0, 1), ImVec2(1, 0));
 
-	Rendering::Camera* cam = &Engine::Rendering()->Renderer->m_Camera;
 	if (Input::IsMouseButtonDown(MouseButton::Button1)) {
-		cam->ProcessMouseMovement(Input::GetMouseDelta().x, -Input::GetMouseDelta().y);
+		SpectatorCamera::Update(&Engine::Rendering()->Renderer->m_Camera,
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_FORWARD),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_BACKWARD),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_LEFT),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_RIGHT),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_UP),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_DOWN),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_FASTER),
+								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_SLOWER));
 
-		if (Input::IsKeyDown(Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_FORWARD))) cam->ProcessKeyboard({ 0, 1, 0 });
-		if (Input::IsKeyDown(Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_BACKWARD))) cam->ProcessKeyboard({ 0, -1, 0 });
-		if (Input::IsKeyDown(Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_LEFT))) cam->ProcessKeyboard({ 1, 0, 0 });
-		if (Input::IsKeyDown(Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_RIGHT))) cam->ProcessKeyboard({ -1, 0, 0 });
 	
 		glm::vec2 windowPos;
 		Engine::Rendering()->Window->GetPosition(windowPos.x, windowPos.y);
