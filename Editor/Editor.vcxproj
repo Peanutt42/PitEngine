@@ -177,6 +177,7 @@
     <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
+    <ClInclude Include="src\Panels\OpenProjectPanel.hpp" />
     <ClInclude Include="src\Panels\ProfilerPanel.hpp" />
     <ClInclude Include="src\Panels\PropertiesPanel.hpp" />
     <ClInclude Include="src\Panels\SceneViewportPanel.hpp" />

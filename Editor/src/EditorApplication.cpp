@@ -24,7 +24,7 @@ void EditorApplication::Init() {
 	s_WindowPanels.push_back(new SceneViewportPanel());
 	s_WindowPanels.push_back(new ProfilerPanel());
 	s_WindowPanels.push_back(new ContentBrowserPanel());
-
+	
 	Engine::UIRenderEvent += []() {
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File")) {
@@ -40,7 +40,7 @@ void EditorApplication::Init() {
 
 	for (auto* layer : s_WindowPanels) {
 		layer->OnCreate();
-		Engine::UIRenderEvent += [=]() { layer->OnGUI(); };
+		Engine::UIRenderEvent += [layer]() { layer->OnGUI(); };
 	}
 }
 

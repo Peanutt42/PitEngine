@@ -13,7 +13,7 @@ namespace Pit::Rendering {
 	class TextureAsset : public AssetManagment::Asset {
 	public:
 		TextureAsset(const String& path, bool asyncLoading = false) : m_AsyncLoading(asyncLoading) {
-			m_Filepath = std::filesystem::path(path);
+			m_Filepath = path;
 			m_TypeId = TEXTURE_ASSET_TYPE;
 		}
 
@@ -23,7 +23,7 @@ namespace Pit::Rendering {
 
 		virtual void Load() override {
 			if (m_Texture) delete m_Texture;
-			m_Texture = new Texture(m_Filepath.string(), m_AsyncLoading);
+			m_Texture = new Texture(m_Filepath, m_AsyncLoading);
 		}
 
 		virtual void Unload() override {

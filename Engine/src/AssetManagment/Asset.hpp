@@ -18,14 +18,14 @@ namespace Pit::AssetManagment {
 		virtual void Load() = 0;
 		virtual void Unload() = 0;
 
-		UUID& GetUUID() { return m_UUID; }
-		bool IsLoaded() { return m_Loaded; }
-		uint32 GetType() { return m_TypeId; }
-		std::filesystem::path& GetPath() { return m_Filepath; }
+		const UUID& GetUUID() const { return m_UUID; }
+		const bool IsLoaded() const { return m_Loaded; }
+		const uint32 GetType() const { return m_TypeId; }
+		const String& GetPath() const { return m_Filepath; }
 
 	protected:
 		UUID m_UUID;
-		std::filesystem::path m_Filepath;
+		String m_Filepath;
 		uint32 m_TypeId;
 		bool m_Loaded;
 	};

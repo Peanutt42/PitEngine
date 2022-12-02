@@ -16,6 +16,8 @@ namespace Pit {
 
 		virtual void Update();
 
+		Array<AssetManagment::Asset*>& GetAssets() { return m_Assets; }
+
 	private:
 		Array<AssetManagment::Asset*> m_Assets;
 	};

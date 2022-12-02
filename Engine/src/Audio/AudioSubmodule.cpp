@@ -1,4 +1,7 @@
 #include "pch.hpp"
+#include "Core/Engine.hpp"
+#include "AssetManagment/AssetManagmentSubmodule.hpp"
+#include "Audio/AudioAsset.hpp"
 #include "AudioSubmodule.hpp"
 #include "MusicBuffer.hpp"
 
@@ -7,21 +10,31 @@ namespace Pit {
 	void AudioSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		m_Device = new Audio::SoundDevice();
-		music = new Audio::MusicBuffer("C:/dev/cpp/PitEngine/Sandbox/assets/audio/sample1.wav");
-		music->Play();
+		m_Device = new Audio::SoundDevice();		
 	}
 
 	void AudioSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
 
-		delete music;
 		delete m_Device;
 	}
 
 	void AudioSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		music->UpdateBufferStream();
+		static bool init = false;
+		if (!init) {
+			AssetManagment::Asset* sample_asset = nullptr;
+			for (auto asset : Engine::AssetManagment()->GetAssets()) {
+				// TODO: Only for testing, next is some stable UUID that doesn't change to find assets
+				if (asset->GetType() == AUDIO_ASSET_TYPE && asset->GetPath().ends_with("sample1.wav")) sample_asset = asset;
+			}
+			if (sample_asset && sample_asset->GetType() == AUDIO_ASSET_TYPE)
+				music = Cast<Audio::AudioAsset*>(sample_asset)->Get();
+			music->Play();
+			init = true;
+		}
+		else
+			music->UpdateBufferStream();
 	}
 }

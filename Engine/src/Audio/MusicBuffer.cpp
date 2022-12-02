@@ -36,13 +36,15 @@ namespace Pit::Audio {
 	}
 
 	MusicBuffer::~MusicBuffer() {
-		alDeleteSources(1, &m_Source);
+		if (m_Source != 0)
+			alDeleteSources(1, &m_Source);
 
 		if (m_SndFile)
 			sf_close(m_SndFile);
-
 		m_SndFile = nullptr;
-		free(m_Membuf);
+		if (m_Membuf)
+			free(m_Membuf);
+		m_Membuf = nullptr;
 		alDeleteBuffers(NUM_BUFFERS, m_Buffers);
 	}
 
