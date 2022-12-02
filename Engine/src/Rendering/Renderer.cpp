@@ -13,51 +13,6 @@
 
 namespace Pit::Rendering {
 
-	float cubeVertices[] = {
-		// Back face
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right    
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right              
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left                
-		// Front face
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right        
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left        
-		// Left face
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left       
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
-		// Right face
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right      
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right          
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-		 // Bottom face          
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
-		  0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left        
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
-		 // Top face
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right                 
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
-		 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // bottom-left  
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // top-left              
-	};
-
 	Renderer::Renderer() {
 		PIT_PROFILE_FUNCTION();
 
@@ -66,33 +21,16 @@ namespace Pit::Rendering {
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_MULTISAMPLE);
 
-		// cube VAO
-		glGenVertexArrays(1, &m_VAO);
-		glGenBuffers(1, &m_VBO);
-		glBindVertexArray(m_VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		m_RenderingSystem.Setup();
+		
 
 		// Create Screen Quad
 		glGenVertexArrays(1, &m_ScreenQuadVAO);
 		glGenBuffers(1, &m_ScreenQuadVBO);
 		glBindVertexArray(m_ScreenQuadVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_ScreenQuadVBO);
-		const static float planeVertices[] = {
-			// positions          // texture Coords 
-			 5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-			-5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
-			-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-
-			 5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-			-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-			 5.0f, -0.5f, -5.0f,  2.0f, 2.0f
-		};
-		const static float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
+		
+		constexpr float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
 			// positions   // texCoords
 			-1.0f,  1.0f,  0.0f, 1.0f,
 			-1.0f, -1.0f,  0.0f, 0.0f,
@@ -110,8 +48,6 @@ namespace Pit::Rendering {
 
 		glPolygonMode(GL_FRONT, GL_FILL);
 
-		m_Shader.Use();
-		m_Shader.SetInt("texture1", 0);
 
 		m_ScreenShader.Use();
 		m_ScreenShader.SetInt("screenTexture", 0);
@@ -168,22 +104,7 @@ namespace Pit::Rendering {
 		glClearColor(.1f, .1f, .1f, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_Shader.Use();
-		glm::mat4 view = m_Camera.GetViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Fov), (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight(), .1f, 100.f);
-		m_Shader.SetMat4("view", view);
-		m_Shader.SetMat4("projection", projection);
-		// cubes
-		glBindVertexArray(m_VAO);
-		m_Texture.Bind();
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1, 0, -1));
-		m_Shader.SetMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(2, 0, 0));
-		m_Shader.SetMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		m_RenderingSystem.Render();
 
 		// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

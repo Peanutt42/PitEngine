@@ -48,7 +48,7 @@ void SceneViewportPanel::OnGui() {
 				 ImVec2(region.x, region.y), ImVec2(0, 1), ImVec2(1, 0));
 
 	if (Input::IsMouseButtonDown(MouseButton::Button1)) {
-		SpectatorCamera::Update(&Engine::Rendering()->Renderer->m_Camera,
+		SpectatorCamera::Update(Engine::Rendering()->Camera,
 								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_FORWARD),
 								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_BACKWARD),
 								Input::GetBinding(EDITOR_KEYBINDING_CAM_MOVE_LEFT),

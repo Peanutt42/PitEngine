@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "RenderingSubmodule.hpp"
+#include "Camera.hpp"
 
 namespace Pit {
 
@@ -24,10 +25,14 @@ namespace Pit {
 		Window->SetViewport(Window->GetWidth(), Window->GetHeight());
 		Renderer = new Rendering::Renderer();
 		UIRenderer = new UI::UIRenderer();
+
+		Camera = new Rendering::Camera({ 0.f, 0.f, 5.f });
 	}
 
 	void RenderingSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
+
+		delete Camera;
 
 		delete UIRenderer;
 		delete Renderer;

@@ -6,6 +6,7 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Camera.hpp"
+#include "RenderingSystem.hpp"
 
 namespace Pit::Rendering {
 	/// <summary>
@@ -18,19 +19,13 @@ namespace Pit::Rendering {
 
 		void Update();
 
-		Camera m_Camera = Camera({0.f, 0.f, 5.f});
 		uint GetScreenTexColorBuffer() { return m_ScreenTexColorBuffer; }
 	private:
-
-		uint m_VBO, m_VAO, m_EBO;
+		RenderingSystem m_RenderingSystem;
 		uint m_ScreenQuadVAO, m_ScreenQuadVBO;
 		uint m_ScreenTexColorBuffer;
 		uint m_ScreenFramebuffer;
-		//uint m_Texture;
-		Shader m_Shader = Shader(FileSystem::GetSandboxDir() + "assets/shaders/Shader.vert",
-								 FileSystem::GetSandboxDir() + "assets/shaders/Shader.frag");
 		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.vert",
 								 FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.frag");
-		Texture m_Texture = Texture(FileSystem::GetSandboxDir() + "assets/textures/wall.jpg");
 	};
 }

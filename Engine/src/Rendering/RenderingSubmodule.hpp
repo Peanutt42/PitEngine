@@ -27,5 +27,6 @@ namespace Pit {
 		Rendering::Window* Window = nullptr;
 		Rendering::Renderer* Renderer = nullptr;
 		UI::UIRenderer* UIRenderer = nullptr;
+		Rendering::Camera* Camera = nullptr;
 	};
 }
