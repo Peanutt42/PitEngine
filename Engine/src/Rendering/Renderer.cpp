@@ -96,9 +96,9 @@ namespace Pit::Rendering {
 		glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenFramebuffer);
 		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
 		glEnable(GL_MULTISAMPLE);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-		glFrontFace(GL_CCW);
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glFrontFace(GL_CCW);
 
 		// make sure we clear the framebuffer's content
 		glClearColor(.1f, .1f, .1f, 1);

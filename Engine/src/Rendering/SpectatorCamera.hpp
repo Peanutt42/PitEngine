@@ -7,8 +7,13 @@
 namespace Pit {
 	class SpectatorCamera {
 	public:
-		static void Update(Rendering::Camera* cam, const KeyCode& forwardBinding = KeyCode::W, const KeyCode& backwardBinding = KeyCode::S, const KeyCode& leftBinding = KeyCode::A, const KeyCode& rightBinding = KeyCode::D, const KeyCode& upBinding = KeyCode::E, const KeyCode& downBinding = KeyCode::Q, const KeyCode& fasterBinding = KeyCode::LeftShift, const KeyCode& slowerBinding = KeyCode::LeftControl) {
-			cam->ProcessMouseMovement(Input::GetMouseDelta().x, -Input::GetMouseDelta().y);
+		static constexpr float MovementSpeed = 2.5f;
+		static constexpr float MouseSensitivity = 0.1f;
+
+		static void Update(Rendering::Camera* cam, KeyCode forwardBinding = KeyCode::W, KeyCode backwardBinding = KeyCode::S, KeyCode leftBinding = KeyCode::A, KeyCode rightBinding = KeyCode::D, KeyCode upBinding = KeyCode::E, KeyCode downBinding = KeyCode::Q, KeyCode fasterBinding = KeyCode::LeftShift, KeyCode slowerBinding = KeyCode::LeftControl) {
+			cam->Rotation.x += Input::GetMouseDelta().x * MouseSensitivity;
+			cam->Rotation.y += -Input::GetMouseDelta().y * MouseSensitivity;
+			cam->Rotation.y = Math::Clamp(cam->Rotation.y, -89.9f, 89.9f);
 
 			glm::vec3 dir{ 0,0,0 };
 			if (Input::IsKeyDown(forwardBinding)) dir.z++;
@@ -20,14 +25,17 @@ namespace Pit {
 			if (dir != glm::vec3{ 0,0,0 }) {
 				dir = glm::normalize(dir);
 
-				float speed = cam->MovementSpeed * Time::DeltaTime();
+				float speed = MovementSpeed * Time::DeltaTime();
 				if (Input::IsKeyDown(fasterBinding)) speed *= 2;
 				if (Input::IsKeyDown(slowerBinding)) speed /= 2;
 
 				glm::vec3 move{ 0,0,0 };
-				move += dir.z * cam->Front;
-				move += dir.x * -cam->Right;
-				move += dir.y * cam->Up;
+				glm::vec3 front = glm::normalize(glm::vec3{ cos(glm::radians(cam->Rotation.x)) * cos(glm::radians(cam->Rotation.y)), sin(glm::radians(cam->Rotation.y)), sin(glm::radians(cam->Rotation.x)) * cos(glm::radians(cam->Rotation.y)) });
+				glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
+				glm::vec3 up = glm::normalize(glm::cross(right, front));
+				move += dir.z * front;
+				move += dir.x * -right;
+				move += dir.y * up;
 				cam->Position += glm::normalize(move) * speed;
 			}
 		}
