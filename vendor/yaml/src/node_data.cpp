@@ -101,7 +101,7 @@ std::size_t node_data::size() const {
     default:
       return 0;
   }
-  return 0;
+  //return 0;
 }
 
 void node_data::compute_seq_size() const {

@@ -100,6 +100,7 @@
     <Lib>
       <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Debug-windows-x86_64.bat</Command>
@@ -133,6 +134,7 @@
     <Lib>
       <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Release-windows-x86_64.bat</Command>
@@ -164,6 +166,7 @@
     <Lib>
       <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Dist-windows-x86_64.bat</Command>
@@ -242,6 +245,7 @@
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
+    <ClCompile Include="src\Debug\vcrash.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />

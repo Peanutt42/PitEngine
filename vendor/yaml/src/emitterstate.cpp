@@ -108,8 +108,8 @@ EmitterNodeType::value EmitterState::NextGroupType(
   return EmitterNodeType::FlowMap;
 
   // can't happen
-  assert(false);
-  return EmitterNodeType::NoType;
+  //assert(false);
+  //return EmitterNodeType::NoType;
 }
 
 void EmitterState::StartedDoc() {

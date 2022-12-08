@@ -268,5 +268,6 @@
     <ClCompile Include="src\Audio\SoundDevice.cpp" />
     <ClCompile Include="src\Audio\SoundSource.cpp" />
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
+    <ClCompile Include="src\Debug\vcrash.cpp" />
   </ItemGroup>
 </Project>
