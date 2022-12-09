@@ -174,7 +174,7 @@
     <ClInclude Include="src\Utils\DateUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\PlatformUtils.hpp">
+    <ClInclude Include="src\Platform\PlatformUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\StringUtils.hpp">
@@ -258,7 +258,7 @@
     <ClCompile Include="src\UI\UIRenderer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp">
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />

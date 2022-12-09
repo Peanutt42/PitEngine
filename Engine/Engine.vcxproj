@@ -228,7 +228,7 @@
     <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
-    <ClInclude Include="src\Utils\PlatformUtils.hpp" />
+    <ClInclude Include="src\Platform\PlatformUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
     <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
@@ -261,7 +261,7 @@
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
-    <ClCompile Include="src\Utils\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

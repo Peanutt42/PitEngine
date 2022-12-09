@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #ifdef PIT_WINDOWS
 
-#include "PlatformUtils.hpp"
+#include "Platform/PlatformUtils.hpp"
 #include "Core/Engine.hpp"
 #include <commdlg.h>
 #include <GLFW/glfw3.h>

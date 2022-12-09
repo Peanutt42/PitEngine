@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Assert.hpp"
-#include "Utils/PlatformUtils.hpp"
+#include "Platform/PlatformUtils.hpp"
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
