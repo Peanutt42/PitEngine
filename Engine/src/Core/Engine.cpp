@@ -30,17 +30,15 @@ namespace Pit {
 	std::atomic<bool>			Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
-		catch ([[maybe_unused]] const std::exception& e) {											\
+		catch ([[maybe_unused]] const std::exception& e) {							\
 			PIT_ENGINE_FATAL(General, "[Engine] Exception catched: {}", e.what());	\
-			return;																	\
 		}																			\
 		catch (...) {																\
 			PIT_ENGINE_FATAL(General, "[Engine] Exception catched!");				\
-			return;																	\
 		}
 
 
-	void Engine::Init(const EngineSettings& settings) {
+	bool Engine::Init(const EngineSettings& settings) {
 		PIT_PROFILE_FRAME("MainThread");
 
 		PIT_PROFILE_FUNCTION();
@@ -53,6 +51,16 @@ namespace Pit {
 
 		try {
 			s_Settings = settings;
+
+			for (auto& arg : s_Settings.ConsoleArgs) {
+				if (arg == "--version" || arg == "-v") {
+					std::cout << "PitEngine Game Engine\n"
+								 "Github page: https://github.com/Peanutt42/PitEngine\n"
+								 "Version: " << EngineVersion;
+					ForceShutdown();
+					return false;
+				}
+			}
 
 			Debug::Logging::Init();
 
@@ -81,6 +89,8 @@ namespace Pit {
 			InitEvent.Invoke();
 		}
 		CATCH_EXCEPTIONS();
+
+		return true;
 	}
 
 	void Engine::Shutdown() {

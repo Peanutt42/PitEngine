@@ -10,7 +10,7 @@ int main(const int argc, const char* argv[]) {
 	
 	EngineSettings engineSettings(argc, argv, FileSystem::GetConfigDir() + "SandboxEngineConfig.ini", "PitEngine-Sandbox", true, false, false);
 
-	Engine::Init(engineSettings);
+	if (!Engine::Init(engineSettings)) return 0;
 	
 	Input::AddBinding("MoveForward", KeyCode::W);
 	Input::AddBinding("MoveBackward", KeyCode::S);

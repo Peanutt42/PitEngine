@@ -24,7 +24,7 @@ namespace Pit {
 	/// </summary>
 	class Engine {
 	public:
-		static void Init(const EngineSettings& settings);
+		static bool Init(const EngineSettings& settings);
 		static void Shutdown();
 		static void ForceShutdown() { s_Quit.store(true); }
 		static bool ShouldClose();
