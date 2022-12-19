@@ -10,6 +10,8 @@ using namespace Pit;
 
 struct TestStruct {
 	int i;
+
+	TestStruct(int i = 0) : i(i) {}
 };
 
 PIT_TEST(SetupDebugMemoryBreak,
@@ -44,7 +46,7 @@ PIT_TEST_EQUALS("test", myPtr->i, 5);
 
 PIT_TEST(Smartpointer_ScopeRef,
 
-		 ScopeRef<TestStruct> myPtr = new TestStruct({ 5 });
+		 ScopeRef<TestStruct> myPtr = new TestStruct(5);
 PIT_TEST_EQUALS("test", myPtr->i, 5);
 PIT_TEST_TRUE("Existing pointers are true if data still exists", myPtr);
 myPtr.Release();
