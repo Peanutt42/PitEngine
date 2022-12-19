@@ -9,7 +9,8 @@ workspace "PitEngine"
 
 	flags {
 		"MultiProcessorCompile",
-		"LinkTimeOptimization"
+		"LinkTimeOptimization",
+		"FatalCompileWarnings"
 	}
 
 	warnings "Extra" -- /W4

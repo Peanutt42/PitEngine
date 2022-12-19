@@ -9,6 +9,6 @@
     <ClCompile Include="src\test.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\SmartpointerTest.cpp" />
+    <ClCompile Include="src\MemoryAllocations.cpp" />
   </ItemGroup>
 </Project>

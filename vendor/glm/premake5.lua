@@ -4,6 +4,8 @@ project "glm"
 	cppdialect "C++14"
 	staticruntime "off"
 
+	warnings "Default" -- /W3?
+
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 

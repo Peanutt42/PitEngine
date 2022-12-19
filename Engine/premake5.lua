@@ -42,21 +42,6 @@ project "Engine"
 		"%{wks.location}/vendor/glfw/lib-vc2022",
 		"%{wks.location}/vendor/optick/lib/x64/release"
 	}
-
-	links {
-		"glad",
-		"glm",
-		"imgui",
-		"spdlog",
-		"stb_image",
-		"tinyobjloader",
-		"yaml",
-		"sndfile.lib",
-		"opengl32.lib",
-		"glfw3.lib",
-		"OptickCore.lib",
-		"Dbghelp.lib"
-	}
 	
 	postbuildcommands {
 		"%{wks.location}/Scripts/CopyDlls_" .. outputdir .. ".bat"

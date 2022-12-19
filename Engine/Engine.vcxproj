@@ -27,7 +27,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -35,7 +34,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -43,7 +41,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -81,6 +78,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -91,16 +89,13 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Debug-windows-x86_64.bat</Command>
@@ -111,6 +106,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -132,9 +128,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Release-windows-x86_64.bat</Command>
@@ -145,6 +139,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\spdlog\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
@@ -164,9 +159,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;OptickCore.lib;Dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>$(SolutionDir)/Scripts/CopyDlls_Dist-windows-x86_64.bat</Command>
@@ -198,8 +191,10 @@
     <ClInclude Include="src\Core\Version.hpp" />
     <ClInclude Include="src\Debug\Logging.hpp" />
     <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
-    <ClInclude Include="src\Debug\ProfileStats.hpp" />
+    <ClInclude Include="src\Debug\Profiling.hpp" />
     <ClInclude Include="src\Debug\vcrash.h" />
+    <ClInclude Include="src\DesignPatterns\Command.hpp" />
+    <ClInclude Include="src\DesignPatterns\Singleton.hpp" />
     <ClInclude Include="src\ECS\ECSComponent.hpp" />
     <ClInclude Include="src\ECS\ECSComponents.hpp" />
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
@@ -208,12 +203,14 @@
     <ClInclude Include="src\ECS\ECSWorld.hpp" />
     <ClInclude Include="src\Event\Event.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
-    <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Input\KeyCode.hpp" />
+    <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Math\CoreMath.hpp" />
+    <ClInclude Include="src\Memory\BumpAllocator.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicScene.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
+    <ClInclude Include="src\Platform\PlatformUtils.hpp" />
     <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
     <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
@@ -228,7 +225,6 @@
     <ClInclude Include="src\UI\UIFonts.hpp" />
     <ClInclude Include="src\UI\UIRenderer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
-    <ClInclude Include="src\Platform\PlatformUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
     <ClInclude Include="src\pch.hpp" />
   </ItemGroup>
@@ -246,12 +242,14 @@
     <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
+    <ClCompile Include="src\DesignPatterns\Singleton.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicScene.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
@@ -261,7 +259,6 @@
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -273,29 +270,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\vendor\glad\glad.vcxproj">
-      <Project>{DD62977C-C999-980D-7286-7E105E9C140F}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\glm\glm.vcxproj">
-      <Project>{6577880B-D180-887C-5AFC-9E7CC604947C}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\imgui\imgui.vcxproj">
-      <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\spdlog\spdlog.vcxproj">
-      <Project>{8EAD431C-7A4F-6EF2-630A-82464F4BF542}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\stb_image\stb_image.vcxproj">
-      <Project>{3096E6B0-9C00-9B27-E53E-4CCD51E8787C}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\tinyobjloader\tinyobjloader.vcxproj">
-      <Project>{DBBB7385-477C-EFBB-10B7-38397C363498}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\vendor\yaml\yaml.vcxproj">
-      <Project>{7814A17C-644B-A20D-0D38-8810F94D1E0F}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
