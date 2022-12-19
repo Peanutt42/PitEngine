@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "Logging.hpp"
 #if DEBUG || RELEASE
-#include "ProfileStats.hpp"
+#include "Profiling.hpp"
 #endif
 
 namespace Pit::Debug {

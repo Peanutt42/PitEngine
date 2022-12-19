@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/CoreInclude.hpp"
+#include <string>
 #include <filesystem>
 
 namespace Pit::FileSystem {

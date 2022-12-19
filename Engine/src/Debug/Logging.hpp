@@ -33,6 +33,7 @@ namespace Pit::Debug {
 		Editor,
 		Audio,
 		AssetManagment,
+		Memory,
 		Networking,
 		ECS,
 		Phyisics,

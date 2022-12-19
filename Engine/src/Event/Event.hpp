@@ -2,10 +2,11 @@
 
 #include <vector>
 #include <functional>
+#include "Debug/Profiling.hpp"
 
 namespace Pit {
 	/// <summary>
-	/// Simple Wrapper around std::function with operator overloading
+	/// Simple Wrapper around std::function(of void(Args...))[] with operator overloading
 	/// </summary>
 	/// <typeparam name="EventArgs"></typeparam>
 	template<typename... Args>
@@ -51,15 +52,15 @@ namespace Pit {
 		}
 
 	protected:
-		Array<ListenFunc> m_Listeners;
+		std::vector<ListenFunc> m_Listeners;
 	};
 
 	template<>
-	inline void Event<>::Invoke() {
+	inline virtual void Event<>::Invoke() {
 		PIT_PROFILE_FUNCTION("Pit::Event::Invoke");
 
-		for (auto& callack : m_Listeners)
-			callack();
+		for (auto& callback : m_Listeners)
+			callback();
 	}
 
 #define DEFINE_SIMPLE_EVENT(name) \

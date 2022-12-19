@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include "Debug/Logging.hpp"
 
 namespace Pit {
 	/// <summary>
@@ -64,7 +63,8 @@ namespace Pit {
 			: m_Name(name) {}
 		~ScopedTimer() {
 			[[maybe_unused]] float time = m_Timer.ElapsedMillis();
-			PIT_ENGINE_INFO(General, "[TIMER] {0:3s} - {1:f}s, {2:f}ms, {3:f}fps", m_Name, time / 1000, time, 1 / time * 1000);
+			std::cout << "[Engine::General]    [TIMER] " << m_Name << " - " << time / 1000 << "ms, " << 1 / time * 1000 << "fps\n";
+			//PIT_ENGINE_INFO(General, "[TIMER] {0:3s} - {1:f}s, {2:f}ms, {3:f}fps", m_Name, time / 1000, time, 1 / time * 1000);
 		}
 	private:
 		std::string m_Name;

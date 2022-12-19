@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core/CoreInclude.hpp"
 #include <xhash>
 
 namespace Pit {

@@ -28,7 +28,7 @@ using namespace std::chrono_literals; // for ex: 200ms
 #include "Types.hpp"
 #include "Version.hpp"
 #include "Debug/Logging.hpp"
-#include "Debug/ProfileStats.hpp"
+#include "Debug/Profiling.hpp"
 #include "Event/Event.hpp"
 #include "Input/Input.hpp"
 #include "Input/KeyCode.hpp"

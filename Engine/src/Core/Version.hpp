@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core/CoreInclude.hpp"
 #include "spdlog/fmt/ostr.h"
 
 namespace Pit {
@@ -8,11 +7,11 @@ namespace Pit {
 	/// Version containing Major, Minor and Path number
 	/// </summary>
 	struct Version {
-		uint Major;
-		uint Minor;
-		uint Patch;
+		unsigned int Major;
+		unsigned int Minor;
+		unsigned int Patch;
 		
-		Version(const uint& major, const uint& minor, const uint& patch)
+		Version(const unsigned int& major, const unsigned int& minor, const unsigned int& patch)
 			: Major(major), Minor(minor), Patch(patch) {}
 
 		void Print() {
@@ -22,8 +21,7 @@ namespace Pit {
 #pragma warning(push)
 #pragma warning(disable: 4505) // Not referenced function with internal references
 	static std::ostream& operator<<(std::ostream& os, const Version& version) {
-		os << version.Major << '.' << version.Minor << '.' << version.Patch;
-		return os;
+		return os << version.Major << '.' << version.Minor << '.' << version.Patch;
 	}
 #pragma warning(pop)
 }

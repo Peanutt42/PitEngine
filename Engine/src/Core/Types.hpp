@@ -34,8 +34,14 @@ namespace Pit {
 	template<typename T>
 	using Array = std::vector<T>;
 
+
+	// Casts type with some compiler checks that the type is actually convertable
 	template<typename To, typename From>
-	FORCEINLINE To Cast(From src) {
+	__forceinline To Cast(From src) {
+		static_assert((std::is_convertible_v<From, To> || std::is_convertible_v<To, From>) ||
+					  (std::is_enum_v<To> || std::is_enum_v<From>) ||
+					  (std::is_pointer_v<To> && std::is_pointer_v<From>), "Converting from 'From' to 'To' is not allowed!");
+			
 		return static_cast<To>(src);
 	}
 }

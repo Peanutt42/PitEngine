@@ -75,7 +75,7 @@ void SceneViewportPanel::OnGui() {
 
 	if (ImGui::BeginDragDropTarget()) {
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(CONTENT_BROWSER_DRAG_DROP)) {
-			[[maybe_unused]] const char* path = Cast<const char*>(payload->Data);
+			[[maybe_unused]] char* path = Cast<char*>(payload->Data);
 			PIT_ENGINE_INFO(Editor, "Scene Viewport DragDrop Accepted: path: {}", path);
 		}
 		ImGui::EndDragDropTarget();
