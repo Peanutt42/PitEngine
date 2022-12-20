@@ -16,6 +16,10 @@ namespace Pit {
 		static const int& Frame() { return s_Frame; }
 		static void SetFrame(int Frame) { s_Frame = Frame; }
 
+		// Waits the specified milliseconds on the current thread
+		static void Sleep(uint64_t milliseconds);
+		static void MicroSleep(uint64_t microseconds);
+
 	private:
 		static float s_DeltaTime;
 		static int s_Frame;

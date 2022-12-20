@@ -5,7 +5,7 @@ using namespace Pit;
 using namespace Editor;
 
 int main(const int argc, const char* argv[]) {
-	EngineSettings engineSettings(argc, argv, FileSystem::GetConfigDir() + "EditorEngineConfig.ini", "PitEngine-Editor", true, true, false);
+	EngineSettings engineSettings(argc, argv, FileSystem::GetConfigDir() + "EditorEngineConfig.ini", "PitEngine-Editor", true, true, false, true);
 	if (!Engine::Init(engineSettings)) return 0;
 	
 	EditorApplication::Init();

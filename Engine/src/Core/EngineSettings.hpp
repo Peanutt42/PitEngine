@@ -31,6 +31,7 @@ namespace Pit {
 		String WindowName;
 		bool WindowToolbar;
 		bool VSync;
+		int MaxFps;
 		bool UIDocking;
 		RenderingAPI RenderingApi;
 		int AntiAliasing;
@@ -45,7 +46,7 @@ namespace Pit {
 					   const String& windowName, bool windowToolbar,
 					   bool uiDocking, bool headless = false, bool oneInstanceOnly = false)
 			: WindowName(windowName), WindowToolbar(windowToolbar),
-			  VSync(false), UIDocking(uiDocking),
+			  VSync(false), MaxFps(-1), UIDocking(uiDocking),
 			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), m_ConfigFilepath(configFilepath), OneInstanceOnly(oneInstanceOnly) {
 
 			ConsoleArgs.assign(argv, argv + argc);
@@ -64,6 +65,7 @@ namespace Pit {
 
 			out << Comment("EngineSettings");
 			out << Key << "VSync" << Value << VSync;
+			out << Key << "MaxFps" << Value << MaxFps;
 			out << Key << "RenderingApi" << Value << RenderingApiToString(RenderingApi);
 			out << Key << "AntiAliasing" << Value << AntiAliasing;
 
@@ -89,6 +91,7 @@ namespace Pit {
 			Node data = YAML::Load(strStream.str());
 
 			VSync = data["VSync"].as<bool>();
+			MaxFps = data["MaxFps"].as<int>();
 			RenderingApi = StringToRenderingApi(data["RenderingApi"].as<String>());
 			AntiAliasing = data["AntiAliasing"].as<int>();
 		}

@@ -22,8 +22,14 @@ namespace Pit::Memory {
 		}
 
 		// Resets the current m_Next ptr to m_Start, so no memory is actually beeing flushed/erased
-		void Flush() {
+		void Reset() {
 			m_Next = m_Start;
+		}
+
+		void Resize(size_t size) {
+			m_Start = (std::byte*)realloc(m_Start, size);
+			if (!m_Start) std::cerr << "BumpAllocator failed to resize(realloc())!\n";
+			m_Size = size;
 		}
 
 		void* Allocate(size_t size) {
@@ -33,6 +39,8 @@ namespace Pit::Memory {
 			}
 			if ((size_t)(m_Size - (m_Next - m_Start)) < size) {
 				std::cerr << "Trying to allocate " << size << " bytes to a BumpAllocator that only has " << m_Size - (m_Next - m_Start) << " bytes left!\n";//PIT_ENGINE_ERR(Memory, "Trying to allocate{0} bytes to a BumpAllocator that only has {1} bytes left!", size, m_FreePtr - m_Start);
+				std::cerr << "Now resizing BumpAllocator to 1.5 times its size\n";
+				Resize((size_t)(m_Size * 1.5f));
 				return nullptr;
 			}
 			void* output = m_Next;

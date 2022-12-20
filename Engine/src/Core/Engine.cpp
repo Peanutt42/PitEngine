@@ -43,8 +43,6 @@ namespace Pit {
 
 		PIT_PROFILE_FUNCTION();
 
-		ScopedTimer t("EngineInitTime");
-
 		CrashHandler::Init();
 
 		Debug::MemoryLeakDetector::Init();
@@ -62,6 +60,17 @@ namespace Pit {
 				}
 			}
 
+#define INSTANCE_LOCK_FILENAME "Instancelock.lock"
+			if (s_Settings.OneInstanceOnly) {
+				if (std::filesystem::exists(INSTANCE_LOCK_FILENAME)) {
+					MessagePrompts::InfoMessage(L"Application is already opened", L"One instance of the application is already opened!");
+					return false;
+				}
+				s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
+			}
+
+			ScopedTimer t("EngineInitTime");
+
 			Debug::Logging::Init();
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
@@ -69,14 +78,9 @@ namespace Pit {
 			PIT_ENGINE_INFO(General, " - Vsync {}", s_Settings.VSync ? "On" : "Off");
 			PIT_ENGINE_INFO(General, " - RenderingApi: {}", RenderingApiToString(s_Settings.RenderingApi));
 			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings.AntiAliasing);
+			PIT_ENGINE_INFO(General, " - MaxFps: {}", s_Settings.MaxFps);
 			if (s_Settings.Headless)
 				PIT_ENGINE_INFO(General, " - Headless Mode");
-
-#define INSTANCE_LOCK_FILENAME "Instancelock.lock"
-			if (s_Settings.OneInstanceOnly) {
-				if (std::filesystem::exists(INSTANCE_LOCK_FILENAME)) PIT_ENGINE_FATAL(General, "One instance of the application is already opened!");
-				s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
-			}
 
 			JobSystem::Initialize();
 
@@ -99,18 +103,17 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
-			ScopedTimer t("EngineShutdownTime");
+			{
+				ScopedTimer t("EngineShutdownTime");
+				Engine::ShutdownEvent.Invoke();
 
-			Engine::ShutdownEvent.Invoke();
+				s_SubmoduleManager->Shutdown();
 
-			s_SubmoduleManager->Shutdown();
+				JobSystem::Shutdown();
 
-			JobSystem::Shutdown();
-
-			s_Settings.Serialize();
-			SaveConfigEvent.Invoke();
-
-			t.~ScopedTimer();
+				s_Settings.Serialize();
+				SaveConfigEvent.Invoke();
+			}
 
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 
@@ -143,6 +146,16 @@ namespace Pit {
 			Input::Update();
 
 			s_SubmoduleManager->Update();
+
+			// Limit the Fps
+			if (s_Settings.MaxFps != -1 && s_Settings.MaxFps != 0) {
+				float updateTime = duration_cast<nanoseconds>(high_resolution_clock::now() - now).count() * .000000001f;
+				float timeLeft = (1.f / s_Settings.MaxFps) - updateTime;
+				if (timeLeft > 0.f) {
+					PIT_PROFILE_FUNCTION("Pit::Engine::MaxFpsLimitWait");
+					Time::MicroSleep(Cast<uint64>(floor(timeLeft * 1000 * 1000))); // Wait for microseconds
+				}
+			}
 		}
 		CATCH_EXCEPTIONS();
 
