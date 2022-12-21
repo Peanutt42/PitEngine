@@ -33,9 +33,3 @@ project "yaml"
 		runtime "Release"
 		optimize "on"
 		symbols "on"
-
-	filter { "configurations:Dist" }
-		buildoptions "/MD"
-		runtime "Release"
-		optimize "on"
-		symbols "off"

@@ -80,15 +80,7 @@ project "Sandbox"
 		optimize "on"
 		symbols "on"
 
-	filter { "configurations:Dist" }
-		buildoptions "/MD"
-		runtime "Release"
-		optimize "on"
-		symbols "off"
-
 	filter { "configurations:Debug" }
 		defines { "DEBUG" }
 	filter { "configurations:Release" }
 		defines { "RELEASE" }
-	filter { "configurations:Dist" }
-		defines { "DIST" }

@@ -10,5 +10,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\MemoryAllocations.cpp" />
+    <ClCompile Include="src\SmartpointerTest.cpp" />
   </ItemGroup>
 </Project>

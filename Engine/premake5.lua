@@ -62,12 +62,6 @@ project "Engine"
 		optimize "on"
 		symbols "on"
 
-	filter { "configurations:Dist" }
-		buildoptions "/MD"
-		runtime "Release"
-		optimize "on"
-		symbols "off"
-
 	filter { "system:windows" }
 		defines {
 			"PIT_WINDOWS"
@@ -85,5 +79,3 @@ project "Engine"
 		defines { "DEBUG" }
 	filter { "configurations:Release" }
 		defines { "RELEASE" }
-	filter { "configurations:Dist" }
-		defines { "DIST" }
