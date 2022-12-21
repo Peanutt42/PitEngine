@@ -31,7 +31,7 @@ namespace Pit {
 	bool						Engine::s_InUpdateLoop = false;
 
 #define CATCH_EXCEPTIONS() \
-		catch (const std::bad_alloc& e)	{											\
+		catch ([[maybe_unused]] const std::bad_alloc& e)	{						\
 			PIT_ENGINE_FATAL(Memory, "[Engine] Bad Allocation catched: {}", e.what());	\
 		}																			\
 		catch ([[maybe_unused]] const std::exception& e) {							\

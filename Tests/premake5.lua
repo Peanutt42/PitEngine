@@ -48,6 +48,7 @@ project "Tests"
 		buildoptions "/MD"
 		runtime "Release"
 		optimize "on"
+		symbols "off"
 
 	filter { "configurations:Debug" }
 		defines { "DEBUG" }

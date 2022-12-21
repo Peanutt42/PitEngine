@@ -180,6 +180,9 @@
     <ClInclude Include="src\Memory\BumpAllocator.hpp">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="src\Memory\MemorySubmodule.hpp">
+      <Filter>Memory</Filter>
+    </ClInclude>
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
@@ -238,7 +241,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Memory\MemorySubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
@@ -292,6 +294,12 @@
     <ClCompile Include="src\Input\Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="src\Memory\BumpAllocator.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\MemorySubmodule.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
@@ -332,7 +340,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Memory\BumpAllocator.cpp" />
-    <ClCompile Include="src\Memory\MemorySubmodule.cpp" />
   </ItemGroup>
 </Project>

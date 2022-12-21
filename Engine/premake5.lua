@@ -66,6 +66,7 @@ project "Engine"
 		buildoptions "/MD"
 		runtime "Release"
 		optimize "on"
+		symbols "off"
 
 	filter { "system:windows" }
 		defines {
