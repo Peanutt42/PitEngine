@@ -28,8 +28,12 @@ namespace Pit {
 	std::ofstream				Engine::s_InstanceLockFile;
 
 	std::atomic<bool>			Engine::s_Quit = false;
+	bool						Engine::s_InUpdateLoop = false;
 
 #define CATCH_EXCEPTIONS() \
+		catch (const std::bad_alloc& e)	{											\
+			PIT_ENGINE_FATAL(Memory, "[Engine] Bad Allocation catched: {}", e.what());	\
+		}																			\
 		catch ([[maybe_unused]] const std::exception& e) {							\
 			PIT_ENGINE_FATAL(General, "[Engine] Exception catched: {}", e.what());	\
 		}																			\
@@ -104,7 +108,7 @@ namespace Pit {
 
 		try {
 			{
-				ScopedTimer t("EngineShutdownTime");
+				Timer t;
 				Engine::ShutdownEvent.Invoke();
 
 				s_SubmoduleManager->Shutdown();
@@ -113,6 +117,7 @@ namespace Pit {
 
 				s_Settings.Serialize();
 				SaveConfigEvent.Invoke();
+				std::cout << "[Engine::General]    [TIMER] EngineShutdownTime - " << t.ElapsedMillis() << "ms.\n";
 			}
 
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
@@ -135,6 +140,8 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
+			s_InUpdateLoop = true;
+
 			Time::SetFrame((Time::Frame() + 1) % 1000);
 
 			using namespace std::chrono;
@@ -156,6 +163,8 @@ namespace Pit {
 					Time::MicroSleep(Cast<uint64>(floor(timeLeft * 1000 * 1000))); // Wait for microseconds
 				}
 			}
+
+			s_InUpdateLoop = false;
 		}
 		CATCH_EXCEPTIONS();
 
@@ -174,4 +183,6 @@ namespace Pit {
 	AssetManagmentSubmodule* Engine::AssetManagment() { return s_SubmoduleManager->AssetManagmentSubmodule; }
 	RenderingSubmodule* Engine::Rendering() { return s_SubmoduleManager->RenderingSubmodule; }
 	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
+	
+	MemorySubmodule* Engine::Memory() { return s_SubmoduleManager->MemorySubmodule; }
 }

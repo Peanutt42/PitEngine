@@ -8,9 +8,13 @@
 #include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
 #include "AssetManagment/AssetManagmentSubmodule.hpp"
+#include "Memory/MemorySubmodule.hpp"
 
 namespace Pit {
 	void SubmoduleManager::Init() {
+		MemorySubmodule = new Pit::MemorySubmodule();
+		MemorySubmodule->Init();
+
 		if (!Engine::GetSettings().Headless) {
 			AudioSubmodule = new Pit::AudioSubmodule();
 			AudioSubmodule->Init();
@@ -52,9 +56,13 @@ namespace Pit {
 			AudioSubmodule->Shutdown();
 			delete AudioSubmodule;
 		}
+		MemorySubmodule->Shutdown();
+		delete MemorySubmodule;
 	}
 
 	void SubmoduleManager::Update() {
+		MemorySubmodule->Update();
+
 		NetworkingSubmodule->Update();
 
 		PhysicsSubmodule->Update();

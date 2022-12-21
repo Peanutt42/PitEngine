@@ -68,14 +68,14 @@ using Log = Pit::Debug::Category;
 #define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_WARN, Log::category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(SPDLOG_LOGGER_ERROR, Log::category, msg,  ##__VA_ARGS__)
 #define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); PIT_DEBUGBREAK(); }
-#define PIT_ENGINE_ASSERT(result, category, msg, ...)	if (!result) { PIT_ENGINE_FATAL(category, "Assertion Failed: " msg, ##__VA_ARGS__); }
+#define PIT_ENGINE_ASSERT(category, result, msg, ...)	if (!result) { PIT_ENGINE_FATAL(category, "Assertion Failed: " msg, ##__VA_ARGS__); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
 #define PIT_ENGINE_INFO(category, msg, ...)	 {}
 #define PIT_ENGINE_WARN(category, msg, ...)	 {}
 #define PIT_ENGINE_ERR(category, msg, ...)	 {}
 #define PIT_ENGINE_FATAL(category, msg, ...) { Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); PIT_DEBUGBREAK(); }
-#define PIT_ENGINE_ASSERT(result, category, msg, ...) {}
+#define PIT_ENGINE_ASSERT(category, result, msg, ...) {}
 #endif
 
 // Game logging

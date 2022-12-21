@@ -238,6 +238,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Memory\MemorySubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
@@ -331,5 +332,7 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Memory\BumpAllocator.cpp" />
+    <ClCompile Include="src\Memory\MemorySubmodule.cpp" />
   </ItemGroup>
 </Project>

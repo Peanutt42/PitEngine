@@ -36,6 +36,7 @@ namespace Pit {
 		static class AssetManagmentSubmodule* AssetManagment();
 		static class RenderingSubmodule* Rendering();
 		static class ECSSubmodule* ECS();
+		static class MemorySubmodule* Memory();
 
 		static InitEvent InitEvent;
 		static NetworkingUpdateEvent NetworkingUpdateEvent;
@@ -49,6 +50,8 @@ namespace Pit {
 		static SaveConfigEvent SaveConfigEvent;
 		static ShutdownEvent ShutdownEvent;
 
+		static const bool IsInUpdateLoop() { return s_InUpdateLoop; }
+
 	private:
 		static EngineSettings s_Settings;
 
@@ -57,5 +60,6 @@ namespace Pit {
 		static std::ofstream s_InstanceLockFile;
 
 		static std::atomic<bool> s_Quit;
+		static bool s_InUpdateLoop;
 	};
 }

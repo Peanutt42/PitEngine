@@ -24,9 +24,8 @@ void HierachyPanel::OnDestroy() {
 }
 
 void HierachyPanel::OnGui() {
-	auto& ecsworld = Engine::ECS()->GetEcsWorld();
-	ecsworld.Each([&](entt::entity e) {
-		if (ecsworld.GetRegistry().valid(e))
+	Engine::ECS()->GetEcsWorld().Each([this](entt::entity e) {
+		if (Engine::ECS()->GetEcsWorld().GetRegistry().valid(e))
 			_DrawEntityNode(e);
 	});
 
@@ -36,7 +35,7 @@ void HierachyPanel::OnGui() {
 	// Right-click on blank space
 	if (ImGui::BeginPopupContextWindow("EntityCreateMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_NoOpenOverExistingPopup)) {
 		if (ImGui::MenuItem("Create Entity"))
-			ecsworld.CreateEntity();
+			Engine::ECS()->GetEcsWorld().CreateEntity();
 
 		ImGui::EndPopup();
 	}

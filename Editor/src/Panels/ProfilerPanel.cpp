@@ -2,6 +2,7 @@
 #include "ProfilerPanel.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
 #include "ECS/ECSSubmodule.hpp"
+#include "Memory/MemorySubmodule.hpp"
 #include <imgui/imgui.h>
 
 using namespace Pit;
@@ -39,6 +40,13 @@ void ProfilerPanel::OnGui() {
 		is_recording = false;
 	}
 	ImGui::SameLine();
-	if (is_recording)	ImGui::Text((String(" to stop recording and save it into ") + capturedFile).c_str());
+	if (is_recording)	ImGui::Text((" to stop recording and save it into " + capturedFile).c_str());
 	else				ImGui::Text(" to start recording");
+
+	ImGui::Dummy({ 20, 20 });
+	ImGui::Text("=== Memory ===");
+	ImGui::Text("FrameAllocator: ");
+	size_t allocUsage = Engine::Memory()->GetFrameAllocatorUsage(), allocSize = Engine::Memory()->GetFrameAllocatorSize();
+	ImGui::Text(" - Usage: %s (%.2f%%)", BytesToString(allocUsage).c_str(), (float)allocUsage / (float)allocSize);
+	ImGui::Text(" - Size: %s", BytesToString(allocSize).c_str());
 }

@@ -207,6 +207,7 @@
     <ClInclude Include="src\Input\Keybinding.hpp" />
     <ClInclude Include="src\Math\CoreMath.hpp" />
     <ClInclude Include="src\Memory\BumpAllocator.hpp" />
+    <ClInclude Include="src\Memory\MemorySubmodule.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicScene.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
@@ -246,6 +247,8 @@
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Memory\BumpAllocator.cpp" />
+    <ClCompile Include="src\Memory\MemorySubmodule.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicScene.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />

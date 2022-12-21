@@ -10,6 +10,7 @@ namespace Pit {
 	class NetworkingSubmodule;
 	class PhysicsSubmodule;
 	class RenderingSubmodule;
+	class MemorySubmodule;
 
 	class SubmoduleManager {
 	public:
@@ -21,6 +22,7 @@ namespace Pit {
 
 
 		AudioSubmodule* AudioSubmodule;
+		MemorySubmodule* MemorySubmodule;
 		AssetManagmentSubmodule* AssetManagmentSubmodule;
 		ECSSubmodule* ECSSubmodule;
 		NetworkingSubmodule* NetworkingSubmodule;
