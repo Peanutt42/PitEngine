@@ -1,22 +1,44 @@
 #pragma once
 
 // std(c++20)
-#include <string>
+// - containers
 #include <vector>
 #include <array>
-#include <iostream>
-#include <functional>
-#include <memory>
-#include <thread>
-#include <fstream>
 #include <set>
 #include <unordered_set>
+#include <hash_set>
 #include <map>
 #include <unordered_map>
+#include <hash_map>
 #include <queue>
+#include <deque>
+#include <span>
+#include <tuple>
+#include <utility>
 #include <numeric>
-using namespace std::chrono_literals; // for ex: 200ms
+#include <algorithm>
+
+// - file io
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <istream>
+#include <ostream>
+
+// - string
+#include <string>
+#include <sstream>
+#include <string_view>
+
+// - low level
 #include <atomic>
+#include <thread>
+#include <functional>
+#include <memory>
+
+#include <chrono>
+using namespace std::chrono_literals; // for ex: 200ms
+
 
 // Own
 #include "Assert.hpp"
