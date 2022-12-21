@@ -171,6 +171,8 @@
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\TextureAsset.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
+    <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
     <ClInclude Include="src\Threading\JobSystem.hpp" />
     <ClInclude Include="src\UI\UI.hpp" />
     <ClInclude Include="src\UI\UIFonts.hpp" />

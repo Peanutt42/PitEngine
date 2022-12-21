@@ -2,7 +2,7 @@
 
 #include "Core/CoreInclude.hpp"
 #include "KeyCode.hpp"
-#include <yaml-cpp/yaml.h>
+#include "Serialization/KeyValueSerialization.hpp"
 
 namespace Pit {
 	struct KeyBindingEntry {
@@ -73,39 +73,23 @@ namespace Pit {
 		}
 
 		void Serialize(const String& filepath) {
-			std::ofstream fout;
-			fout.open(filepath);
+			Serialization::KeyValueSerialization out(filepath);
 			for (auto& binding : m_Bindings)
-				fout << binding.Name << ": " << (binding.Key != KeyCode::Null ? KeyCodeToString(binding.Key) : MouseButtonToString(binding.MouseButton)) << '\n';
-
-			fout.close();
+				out.AddKeyValue(binding.Name, (binding.Key != KeyCode::Null ? KeyCodeToString(binding.Key) : MouseButtonToString(binding.MouseButton)));
+			out.Save();
 		}
 
 		void Deserize(const String& filepath) {
 			if (!std::filesystem::exists(filepath)) Serialize(filepath);
 
-			std::ifstream fin;
-			fin.open(filepath);
-			std::string line;
-			while (getline(fin, line)) {
-				// example: _THIS_IS_A_TEST_BINDING: Space
-				std::string key, value;
-				bool keyFinished = false;
-				for (auto c : line) {
-					if (c == 0) break;
-					if (c == ':')
-						keyFinished = true;
-					else if (keyFinished && c != ' ')
-						value += c;
-					else if (c != ' ')
-						key += c;
-				}
-				if (StringToKeyCode(value) != KeyCode::Null)
-					AddBinding(key, StringToKeyCode(value), true);
+			Array<Serialization::KeyValueDeserialization::KeyValuePair> keyValuePairs;
+			Serialization::KeyValueDeserialization::Deserialize(filepath, keyValuePairs);
+			for (auto& pair : keyValuePairs) {
+				if (StringToKeyCode(pair.Value) != KeyCode::Null)
+					AddBinding(pair.Key, StringToKeyCode(pair.Value), true);
 				else
-					AddBinding(key, StringToMouseButton(value), true);
+					AddBinding(pair.Key, StringToMouseButton(pair.Value), true);
 			}
-			fin.close();
 		}
 
 	private:

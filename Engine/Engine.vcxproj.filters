@@ -241,6 +241,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
+    <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">

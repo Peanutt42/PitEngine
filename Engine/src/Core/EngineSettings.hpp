@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include <yaml-cpp/yaml.h>
+#include "Serialization/YAMLSerializer.hpp"
 
 namespace Pit {
 	enum class RenderingAPI {
@@ -59,41 +59,30 @@ namespace Pit {
 		}
 
 		void Serialize(const String& filepath = "default") {
-			using namespace YAML;
-			Emitter out;
-			out << BeginMap;
+			Serialization::YamlSerializer out;
+			out << YAML::BeginMap;
 
-			out << Comment("EngineSettings");
-			out << Key << "VSync" << Value << VSync;
-			out << Key << "MaxFps" << Value << MaxFps;
-			out << Key << "RenderingApi" << Value << RenderingApiToString(RenderingApi);
-			out << Key << "AntiAliasing" << Value << AntiAliasing;
+			out << YAML::Comment("EngineSettings");
+			out << YAML::Key << "VSync" << YAML::Value << VSync;
+			out << YAML::Key << "MaxFps" << YAML::Value << MaxFps;
+			out << YAML::Key << "RenderingApi" << YAML::Value << RenderingApiToString(RenderingApi);
+			out << YAML::Key << "AntiAliasing" << YAML::Value << AntiAliasing;
 
-			out << EndMap;
-
-			std::ofstream fout(filepath == "default" ? m_ConfigFilepath : filepath);
-			if (!fout.is_open()) PIT_ENGINE_ERR(General, "file could not be created");
-			fout << out.c_str();
-			fout.close();
+			out << YAML::EndMap;
+			out.SaveToFile(filepath == "default" ? m_ConfigFilepath : filepath);
 		}
 
 		void Deserialize(const String& filepath) {
 			if (!std::filesystem::exists(filepath)) Serialize(filepath);
-			
-			std::ifstream fin(filepath);
-			if (!fin.is_open()) PIT_ENGINE_ERR(General, "file could not be opened");
 
-			std::stringstream strStream;
-			strStream << fin.rdbuf();
-			fin.close();
+			Serialization::YamlDeserializer in(filepath);
 
-			using namespace YAML;
-			Node data = YAML::Load(strStream.str());
-
-			VSync = data["VSync"].as<bool>();
-			MaxFps = data["MaxFps"].as<int>();
-			RenderingApi = StringToRenderingApi(data["RenderingApi"].as<String>());
-			AntiAliasing = data["AntiAliasing"].as<int>();
+			in.Find("VSync", VSync);
+			in.Find("MaxFps", MaxFps);
+			String renderingApiStr;
+			in.Find("RenderingApi", renderingApiStr);
+			RenderingApi = StringToRenderingApi(renderingApiStr);
+			in.Find("AntiAliasing", AntiAliasing);
 		}
 	};
 }
