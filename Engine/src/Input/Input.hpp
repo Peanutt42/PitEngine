@@ -44,13 +44,13 @@ namespace Pit {
 		// Set CursorMode of the mouse
 		static void SetCursorMode(CursorMode mode);
 
-		static void AddBinding(const String& name, KeyCode keycode) { s_Bindings.AddBinding(name, keycode); }
-		static void AddBinding(const String& name, MouseButton mouseButton) { s_Bindings.AddBinding(name, mouseButton); }
-		static void SetBinding(const String& name, KeyCode newKeycode) { s_Bindings.SetBinding(name, newKeycode); }
-		static void SetBinding(const String& name, MouseButton newMouseButton) { s_Bindings.SetBinding(name, newMouseButton); }
-		static KeyCode GetBinding(const String& name) { return s_Bindings.GetBinding(name); }
-		static MouseButton GetMouseBinding(const String& name) { return s_Bindings.GetMouseBinding(name); }
-		static bool RemoveBinding(const String& name) { return s_Bindings.RemoveBinding(name); }
+		static void AddBinding(const String& name, KeyCode keycode);
+		static void AddBinding(const String& name, MouseButton mouseButton);
+		static void SetBinding(const String& name, KeyCode newKeycode);
+		static void SetBinding(const String& name, MouseButton newMouseButton);
+		static KeyCode GetBinding(const String& name);
+		static MouseButton GetMouseBinding(const String& name);
+		static bool RemoveBinding(const String& name);
 
 		static glm::vec2 m_LastMousePos;
 		static glm::vec2 m_LastMousePosDelta;

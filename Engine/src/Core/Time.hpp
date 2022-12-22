@@ -10,14 +10,15 @@ namespace Pit {
 	/// </summary>
 	class Time {
 	public:
-		static const float& DeltaTime() { return s_DeltaTime; }
-		static void SetDeltaTime(float DeltaTime) { s_DeltaTime = DeltaTime; }
+		static const float DeltaTime();
+		static void SetDeltaTime(float deltaTime);
 
-		static const int& Frame() { return s_Frame; }
-		static void SetFrame(int Frame) { s_Frame = Frame; }
+		static const int Frame();
+		static void SetFrame(int frame);
 
 		// Waits the specified milliseconds on the current thread
 		static void Sleep(uint64_t milliseconds);
+		// Waits the specified microseconds on the current thread
 		static void MicroSleep(uint64_t microseconds);
 
 	private:

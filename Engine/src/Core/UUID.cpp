@@ -19,4 +19,6 @@ namespace Pit {
 
 
 	}
+	
+	UUID::operator uuid_type() const { return m_UUID; }
 }

@@ -21,10 +21,10 @@ namespace Pit::Physics {
 
 		void Simulate(float delta);
 
-		const SceneDescription& GetDescription() { return m_Description; }
+		const SceneDescription& GetDescription();
 		void UpdateDescription(const SceneDescription& newDescription);
 
-		physx::PxScene* GetNative() { return m_Scene; }
+		physx::PxScene* GetNative();
 
 	private:
 		SceneDescription m_Description;

@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp" />
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp" />
+    <ClCompile Include="src\Audio\AudioAsset.cpp" />
     <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
     <ClCompile Include="src\Audio\MusicBuffer.cpp" />
     <ClCompile Include="src\Audio\SoundBuffer.cpp" />
@@ -195,12 +196,15 @@
     <ClCompile Include="src\Core\SubmoduleManager.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
+    <ClCompile Include="src\Core\Version.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
+    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
     <ClCompile Include="src\DesignPatterns\Singleton.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\ECS\ECSWorld.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Input\Keybinding.cpp" />
     <ClCompile Include="src\Memory\BumpAllocator.cpp" />
     <ClCompile Include="src\Memory\MemorySubmodule.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
@@ -213,6 +217,7 @@
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
+    <ClCompile Include="src\Rendering\TextureAsset.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />

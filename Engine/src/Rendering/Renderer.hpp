@@ -19,7 +19,7 @@ namespace Pit::Rendering {
 
 		void Update();
 
-		uint GetScreenTexColorBuffer() { return m_ScreenTexColorBuffer; }
+		uint GetScreenTexColorBuffer();
 	private:
 		RenderingSystem m_RenderingSystem;
 		uint m_ScreenQuadVAO, m_ScreenQuadVBO;

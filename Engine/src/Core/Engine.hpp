@@ -50,7 +50,7 @@ namespace Pit {
 		static SaveConfigEvent SaveConfigEvent;
 		static ShutdownEvent ShutdownEvent;
 
-		static const bool IsInUpdateLoop() { return s_InUpdateLoop; }
+		static const bool IsInUpdateLoop();
 
 	private:
 		static EngineSettings s_Settings;

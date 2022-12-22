@@ -17,10 +17,11 @@ namespace Pit::Debug {
 
 		static void Shutdown();
 
-		static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return s_EngineLogger; }
-		static std::shared_ptr<spdlog::logger>& GetGameLogger() { return s_GameLogger; }
+		static std::shared_ptr<spdlog::logger>& GetEngineLogger();
+		static std::shared_ptr<spdlog::logger>& GetGameLogger();
 
 		static bool LoggerInitialized;
+
 	private:
 		static std::shared_ptr<spdlog::sinks::basic_file_sink_mt> s_FileSink;
 

@@ -28,8 +28,7 @@ namespace Pit::ECS {
 	/// </summary>
 	class World {
 	public:
-		World(const WorldSpecs& specs) :
-			m_Specs(specs) { }
+		World(const WorldSpecs& specs);
 
 		bool Init();
 		void Update(const SystemTopic topic);
@@ -49,10 +48,10 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& AddComponent(entt::entity entity, Args&&... args) {
-#if DEBUG || RELEASE
+			#if DEBUG || RELEASE
 			m_ComponentMemSize += sizeof(T);
 			m_ComponentCount++;
-#endif
+			#endif
 			return m_Registry.emplace<T>(entity, std::forward<Args>(args)...);
 		}
 
@@ -69,20 +68,20 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void RemoveComponent(entt::entity entity) {
-#if DEBUG || RELEASE
+			#if DEBUG || RELEASE
 			m_ComponentMemSize -= sizeof(T);
 			m_ComponentCount--;
-#endif
+			#endif
 			m_Registry.remove<T>(entity);
 		}
 
 		template<typename T>
 		bool TryRemoveComponent(entt::entity entity) {
 			if (HasComponent<T>(entity)) {
-#if DEBUG || RELEASE
+				#if DEBUG || RELEASE
 				m_ComponentMemSize -= sizeof(T);
 				m_ComponentCount--;
-#endif
+				#endif
 				m_Registry.remove<T>(entity);
 				return true;
 			}
@@ -98,20 +97,20 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& AddOrReplaceComponent(entt::entity entity, Args&&... args) {
-#if DEBUG || RELEASE
+			#if DEBUG || RELEASE
 			if (!HasComponent<T>(entity)) {
 				m_ComponentMemSize += sizeof(T);
 				m_ComponentCount++;
 			}
-#endif
+			#endif
 			return m_Registry.emplace_or_replace<T>(entity, std::forward<Args>(args)...);
 		}
 
 		template<typename T, typename... Args>
 		T& GetOrAddComponent(entt::entity entity, Args&&... args) {
-#if DEBUG || RELEASE
+			#if DEBUG || RELEASE
 			if (!HasComponent<T>(entity)) m_ComponentMemSize += sizeof(T);
-#endif
+			#endif
 			return m_Registry.get_or_emplace<T>(entity, std::forward<Args>(args)...);
 		}
 #pragma endregion

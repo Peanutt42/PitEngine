@@ -12,25 +12,14 @@ namespace Pit::Rendering {
 	/// </summary>
 	class TextureAsset : public AssetManagment::Asset {
 	public:
-		TextureAsset(const String& path, bool asyncLoading = false) : m_AsyncLoading(asyncLoading) {
-			m_Filepath = path;
-			m_TypeId = TEXTURE_ASSET_TYPE;
-		}
+		TextureAsset(const String& path, bool asyncLoading = false);
 
-		~TextureAsset() {
-			if (m_Texture) delete m_Texture;
-		}
+		~TextureAsset();
 
-		virtual void Load() override {
-			if (m_Texture) delete m_Texture;
-			m_Texture = new Texture(m_Filepath, m_AsyncLoading);
-		}
+		virtual void Load() override;
+		virtual void Unload() override;
 
-		virtual void Unload() override {
-			if (m_Texture) delete m_Texture;
-		}
-
-		Texture* Get() { return m_Texture; }
+		Texture* Get();
 
 	private:
 		bool m_AsyncLoading;

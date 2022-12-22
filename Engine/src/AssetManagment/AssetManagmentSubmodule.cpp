@@ -77,4 +77,5 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 	}
+	Array<AssetManagment::Asset*>& AssetManagmentSubmodule::GetAssets() { return m_Assets; }
 }

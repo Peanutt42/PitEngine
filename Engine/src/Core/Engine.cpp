@@ -185,4 +185,6 @@ namespace Pit {
 	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
 	
 	MemorySubmodule* Engine::Memory() { return s_SubmoduleManager->MemorySubmodule; }
+	
+	const bool Engine::IsInUpdateLoop() { return s_InUpdateLoop; }
 }

@@ -63,4 +63,8 @@ namespace Pit::Debug {
 		LoggerInitialized = false;
 #endif
 	}
+	
+	std::shared_ptr<spdlog::logger>& Logging::GetEngineLogger() { return s_EngineLogger; }
+
+	std::shared_ptr<spdlog::logger>& Logging::GetGameLogger() { return s_GameLogger; }
 }

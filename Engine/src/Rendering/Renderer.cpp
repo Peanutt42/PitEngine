@@ -120,4 +120,6 @@ namespace Pit::Rendering {
 		glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);	// use the color attachment texture as the texture of the quad plane
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
+	
+	uint Renderer::GetScreenTexColorBuffer() { return m_ScreenTexColorBuffer; }
 }

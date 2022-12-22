@@ -20,7 +20,7 @@ namespace Pit::Memory {
 		const size_t GetSize() const;
 		const size_t GetUsage() const;
 
-		static BumpAllocator* GetInstance() { return s_Instance; }
+		static BumpAllocator* GetInstance();
 
 	private:
 		bool _Check();

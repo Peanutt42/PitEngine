@@ -33,4 +33,6 @@ namespace Pit {
 		if (!m_ECSWorld.Init())
 			PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
 	}
+	
+	ECS::World& ECSSubmodule::GetEcsWorld() { return m_ECSWorld; }
 }

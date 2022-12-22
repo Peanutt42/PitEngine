@@ -79,7 +79,7 @@ namespace Pit {
 	};
 
 #pragma region ToString/FromString
-	static String KeyCodeToString(KeyCode code) {
+	[[maybe_unused]] static String KeyCodeToString(KeyCode code) {
 		switch (code) {
 		case KeyCode::Null: return "Null";
 
@@ -155,7 +155,7 @@ namespace Pit {
 		return "";
 	}
 
-	static KeyCode StringToKeyCode(const String& string) {
+	[[maybe_unused]] static KeyCode StringToKeyCode(const String& string) {
 		if (string == "Null") return KeyCode::Null;
 
 		if (string == "A") return KeyCode::A;
@@ -267,7 +267,7 @@ namespace Pit {
 	};
 
 #pragma region ToString/FromString
-	static String MouseButtonToString(MouseButton button) {
+	[[maybe_unused]] static String MouseButtonToString(MouseButton button) {
 		switch (button) {
 		case MouseButton::Null:		return "Null";
 		case MouseButton::Left:		return "Left";
@@ -280,7 +280,7 @@ namespace Pit {
 		return "Null";
 	}
 
-	static MouseButton StringToMouseButton(const String& string) {
+	[[maybe_unused]] static MouseButton StringToMouseButton(const String& string) {
 		if (string == "Null")		return MouseButton::Null;
 		if (string == "Left")		return MouseButton::Left;
 		if (string == "Right")		return MouseButton::Right;

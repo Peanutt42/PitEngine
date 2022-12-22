@@ -73,6 +73,25 @@ namespace Pit::Rendering {
 		glViewport(0, 0, m_Width, m_Height);
 	}
 
+	int Window::GetWidth() { return m_Width; }
+	int Window::GetHeight() { return m_Height; }
+
+	GLFWwindow* Window::GetWindowHandle() { return m_Window; }
+
+	void Window::SetMaximized(bool maximized) { return glfwSetWindowAttrib(m_Window, GLFW_MAXIMIZED, maximized ? GLFW_TRUE : GLFW_FALSE); }
+
+	bool Window::IsMaximized() { return glfwGetWindowAttrib(m_Window, GLFW_MAXIMIZED) == GLFW_TRUE; }
+	bool Window::IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
+	bool Window::IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
+	bool Window::IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
+
+	void Window::GetPosition(float& x, float& y) {
+		int _x, _y;
+		glfwGetWindowPos(m_Window, &_x, &_y);
+		x = Cast<float>(_x);
+		y = Cast<float>(_y);
+	}
+
 	void Window::SetIcon(const String& iconFilePath) {
 		int w, h, channels;
 		stbi_set_flip_vertically_on_load(iconFilePath.ends_with(".jpg") ? 1 : 0);
@@ -81,6 +100,9 @@ namespace Pit::Rendering {
 		glfwSetWindowIcon(m_Window, 1, images);
 		stbi_image_free(pixels);
 	}
+
+	bool Window::WasWindowResized() { return m_FramebufferResized; }
+	void Window::SetWindowResizedFlag(bool resized) { m_FramebufferResized = resized; }
 
 
 	void Window::_GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description) {

@@ -27,6 +27,8 @@ namespace Pit::Physics {
 		m_Scene->fetchResults(true);
 	}
 
+	const SceneDescription& Scene::GetDescription() { return m_Description; }
+
 	void Scene::UpdateDescription(const SceneDescription& newDescription) {
 		PIT_PROFILE_FUNCTION();
 
@@ -34,4 +36,6 @@ namespace Pit::Physics {
 
 		m_Scene->setGravity(m_Description.Gravity);
 	}
+	
+	physx::PxScene* Scene::GetNative() { return m_Scene; }
 }

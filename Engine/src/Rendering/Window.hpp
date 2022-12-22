@@ -23,21 +23,17 @@ namespace Pit::Rendering {
 
 		void SetViewport(int width, int height);
 
-		int GetWidth() { return m_Width; }
-		int GetHeight() { return m_Height; }
-		GLFWwindow* GetWindowHandle() { return m_Window; }
-		bool IsMaximized() { return glfwGetWindowAttrib(m_Window, GLFW_MAXIMIZED) == GLFW_TRUE; }
-		void SetMaximized(bool maximized) { return glfwSetWindowAttrib(m_Window, GLFW_MAXIMIZED, maximized ? GLFW_TRUE : GLFW_FALSE); }
-		bool IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
-		bool IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
-		bool IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
+		int GetWidth(), GetHeight();
+		GLFWwindow* GetWindowHandle();
+		void SetMaximized(bool maximized);
+		bool IsMaximized(), IsMinimized(), IsFocused(), IsHovered();
 
-		void GetPosition(float& x, float& y) { int _x, _y; glfwGetWindowPos(m_Window, &_x, &_y); x = Cast<float>(_x); y = Cast<float>(_y); }
+		void GetPosition(float& x, float& y);
 
 		void SetIcon(const String& iconFilePath);
 
-		bool WasWindowResized() { return m_FramebufferResized; }
-		void SetWindowResizedFlag(bool resized) { m_FramebufferResized = resized; }
+		bool WasWindowResized();
+		void SetWindowResizedFlag(bool resized);
 
 	private:
 		GLFWwindow* m_Window = nullptr;

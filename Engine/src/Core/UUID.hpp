@@ -15,7 +15,7 @@ namespace Pit {
 		UUID(uuid_type uuid);
 		UUID(const UUID&) = default;
 
-		operator uuid_type() const { return m_UUID; }
+		operator uuid_type() const;
 
 	private:
 		uuid_type m_UUID;

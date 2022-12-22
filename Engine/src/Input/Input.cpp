@@ -95,4 +95,18 @@ namespace Pit {
 	void Input::SetCursorMode(CursorMode mode) {
 		glfwSetInputMode(GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL + (int)mode);
 	}
+	
+	void Input::AddBinding(const String& name, KeyCode keycode) { s_Bindings.AddBinding(name, keycode); }
+	
+	void Input::AddBinding(const String& name, MouseButton mouseButton) { s_Bindings.AddBinding(name, mouseButton); }
+	
+	void Input::SetBinding(const String& name, KeyCode newKeycode) { s_Bindings.SetBinding(name, newKeycode); }
+	
+	void Input::SetBinding(const String& name, MouseButton newMouseButton) { s_Bindings.SetBinding(name, newMouseButton); }
+	
+	KeyCode Input::GetBinding(const String& name) { return s_Bindings.GetBinding(name); }
+	
+	MouseButton Input::GetMouseBinding(const String& name) { return s_Bindings.GetMouseBinding(name); }
+	
+	bool Input::RemoveBinding(const String& name) { return s_Bindings.RemoveBinding(name); }
 }

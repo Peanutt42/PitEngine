@@ -63,6 +63,8 @@ namespace Pit::Memory {
 		return m_UsedSize;
 	}
 
+	BumpAllocator* BumpAllocator::GetInstance() { return s_Instance; }
+
 	bool BumpAllocator::_Check() {
 		if (!m_Start) {
 			PIT_ENGINE_ERR(Memory, "Trying to allocate to a BumpAllocator that isn't setup right (m_Start == nullptr)!");

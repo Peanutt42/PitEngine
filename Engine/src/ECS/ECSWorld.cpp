@@ -35,6 +35,9 @@ namespace Pit::ECS {
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
 	}
 
+	World::World(const WorldSpecs& specs) :
+		m_Specs(specs) {}
+
 	bool World::Init() {
 		PIT_PROFILE_FUNCTION();
 
@@ -69,7 +72,7 @@ namespace Pit::ECS {
 		m_Registry.clear();
 	}
 
-#pragma region Entity
+	#pragma region Entity
 	entt::entity World::CreateEntityID() {
 		auto e = m_Registry.create();
 		m_Registry.emplace<UUIDComponent>(e);
@@ -86,7 +89,7 @@ namespace Pit::ECS {
 	void World::DestroyEntity(entt::entity entity) {
 		m_Registry.destroy(entity);
 	}
-#pragma endregion
+	#pragma endregion
 
 	void World::SetWorldSpecs(WorldSpecs specs) {
 		m_Specs = specs;

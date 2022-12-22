@@ -22,7 +22,7 @@ namespace Pit {
 
 		void ResetECSWorld();
 
-		ECS::World& GetEcsWorld() { return m_ECSWorld; }
+		ECS::World& GetEcsWorld();
 
 	private:
 		ECS::WorldSpecs m_ECSWorldSpecs {

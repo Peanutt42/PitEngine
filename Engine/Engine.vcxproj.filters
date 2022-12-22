@@ -344,5 +344,10 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp" />
+    <ClCompile Include="src\Audio\AudioAsset.cpp" />
+    <ClCompile Include="src\Core\Version.cpp" />
+    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
+    <ClCompile Include="src\Input\Keybinding.cpp" />
+    <ClCompile Include="src\Rendering\TextureAsset.cpp" />
   </ItemGroup>
 </Project>

@@ -17,19 +17,18 @@ namespace Pit::Rendering {
 		void FinishAsyncLoadingMainThread();
 		virtual ~Texture();
 
-		uint32_t GetWidth() const { return m_Width; }
-		uint32_t GetHeight() const { return m_Height; }
-		uint32_t GetRendererID() const { return m_RendererID; }
+		uint32_t GetWidth() const;
+		uint32_t GetHeight() const;
+		uint32_t GetRendererID() const;
 
-		const std::string& GetPath() const { return m_Path; }
+		const std::string& GetPath() const;
 		void SetData(void* data, uint32_t size);
 
 		void Bind(int slot = 0) const;
-		bool IsLoaded() const { return m_IsLoaded; }
+		bool IsLoaded() const;
 
-		bool operator==(const Texture& other) const {
-			return m_RendererID == other.GetRendererID();
-		}
+		bool operator==(const Texture& other) const;
+
 	private:
 		std::string m_Path;
 		bool m_IsLoaded = false;

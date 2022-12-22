@@ -11,12 +11,13 @@ namespace Pit {
 		unsigned int Minor;
 		unsigned int Patch;
 		
-		Version(const unsigned int& major, const unsigned int& minor, const unsigned int& patch)
-			: Major(major), Minor(minor), Patch(patch) {}
+		Version(const unsigned int& major, const unsigned int& minor, const unsigned int& patch);
 
-		void Print() {
-			std::cout << this;
-		}
+		void Print();
+
+		const bool operator ==(const Version& other);
+		const bool operator >(const Version& other);
+		const bool operator <(const Version& other);
 	};
 #pragma warning(push)
 #pragma warning(disable: 4505) // Not referenced function with internal references

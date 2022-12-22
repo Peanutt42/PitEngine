@@ -82,6 +82,14 @@ namespace Pit::Rendering {
 		glDeleteTextures(1, &m_RendererID);
 	}
 
+	uint32_t Texture::GetWidth() const { return m_Width; }
+
+	uint32_t Texture::GetHeight() const { return m_Height; }
+
+	uint32_t Texture::GetRendererID() const { return m_RendererID; }
+
+	const std::string& Texture::GetPath() const { return m_Path; }
+
 	void Texture::SetData(void* data, uint32_t size) {
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		if (size != m_Width * m_Height * bpp)
@@ -92,5 +100,11 @@ namespace Pit::Rendering {
 	void Texture::Bind(int slot) const {
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+	}
+	
+	bool Texture::IsLoaded() const { return m_IsLoaded; }
+	
+	bool Texture::operator==(const Texture& other) const {
+		return m_RendererID == other.GetRendererID();
 	}
 }

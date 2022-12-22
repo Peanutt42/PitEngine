@@ -111,18 +111,9 @@ namespace Pit::Serialization {
 		}
 #pragma endregion
 
-		const bool SaveToFile(const String& filepath) {
-			std::ofstream fout(filepath);
-			if (!fout.is_open()) return false;
-			
-			fout << m_Emitter.c_str();
-			fout.close();
-			return true;
-		}
+		const bool SaveToFile(const String& filepath);
 
-		const char* GetString() const {
-			return m_Emitter.c_str();
-		}
+		const char* GetString() const;
 
 	private:
 		YAML::Emitter m_Emitter;
@@ -132,18 +123,7 @@ namespace Pit::Serialization {
 
 	class YamlDeserializer {
 	public:
-		YamlDeserializer(const String& filepath) {
-			if (!std::filesystem::exists(filepath)) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath);
-
-			std::ifstream fin(filepath);
-			if (!fin.is_open()) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath);
-
-			std::stringstream strStream;
-			strStream << fin.rdbuf();
-			fin.close();
-
-			m_Data = YAML::Load(strStream.str());
-		}
+		YamlDeserializer(const String& filepath);
 
 		template<typename T>
 		bool Find(const String& name, T& output) {
