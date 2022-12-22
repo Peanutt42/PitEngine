@@ -243,6 +243,7 @@
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
     <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
+    <ClInclude Include="src\AntiCheat\AntiCheatSubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
@@ -342,5 +343,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp" />
   </ItemGroup>
 </Project>

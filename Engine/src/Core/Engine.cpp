@@ -117,7 +117,7 @@ namespace Pit {
 
 				s_Settings.Serialize();
 				SaveConfigEvent.Invoke();
-				std::cout << "[Engine::General]    [TIMER] EngineShutdownTime - " << t.ElapsedMillis() << "ms.\n";
+				std::cout << "[Engine::General]      [TIMER] EngineShutdownTime - " << t.ElapsedMillis() << "ms.\n";
 			}
 
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");

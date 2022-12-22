@@ -3,10 +3,12 @@
 #include "BumpAllocator.hpp"
 #include "Core/Engine.hpp"
 
+static std::thread::id s_MainThreadId = std::this_thread::get_id();
+
 void* operator new(size_t size) {
 	Pit::Memory::BumpAllocator* bumpAlloc = Pit::Memory::BumpAllocator::GetInstance();
 	void* output = nullptr;
-	if (Pit::Engine::IsInUpdateLoop() && bumpAlloc)
+	if (Pit::Engine::IsInUpdateLoop() && bumpAlloc && std::this_thread::get_id() == s_MainThreadId)
 		output = bumpAlloc->Allocate(size);
 	else
 		output = malloc(size);
