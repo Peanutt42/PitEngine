@@ -12,6 +12,7 @@ namespace Pit {
 		unsigned int Patch;
 		
 		Version(const unsigned int& major, const unsigned int& minor, const unsigned int& patch);
+		Version(const String& string);
 
 		void Print();
 

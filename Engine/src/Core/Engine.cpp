@@ -54,11 +54,11 @@ namespace Pit {
 		try {
 			s_Settings = settings;
 
-			for (auto& arg : s_Settings.ConsoleArgs) {
+			for (const auto& arg : s_Settings.ConsoleArgs) {
 				if (arg == "--version" || arg == "-v") {
 					std::cout << "PitEngine Game Engine\n"
 								 "Github page: https://github.com/Peanutt42/PitEngine\n"
-								 "Version: " << EngineVersion;
+								 "Version: " << Engine::Version;
 					ForceShutdown();
 					return false;
 				}
@@ -78,7 +78,7 @@ namespace Pit {
 			Debug::Logging::Init();
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
-			PIT_ENGINE_INFO(General, " - Version: {}", EngineVersion);
+			PIT_ENGINE_INFO(General, " - Version: {}", Engine::Version);
 			PIT_ENGINE_INFO(General, " - Vsync {}", s_Settings.VSync ? "On" : "Off");
 			PIT_ENGINE_INFO(General, " - RenderingApi: {}", RenderingApiToString(s_Settings.RenderingApi));
 			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings.AntiAliasing);

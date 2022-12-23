@@ -14,8 +14,17 @@ EditorAssetManager EditorApplication::s_AssetManager;
 Array<EditorWindowPanel*> EditorApplication::s_WindowPanels;
 Array<bool> EditorApplication::s_PanelKeyShortcutsPressed;
 
+ProjectInfo EditorApplication::s_CurrentProject{ .Name = "NULL", .EngineVersion = Version(0,0,0) };
+
+
+void EditorApplication::SelectProject(const ProjectInfo& projectInfo) {
+	s_CurrentProject = projectInfo;
+}
 
 void EditorApplication::Init() {
+	PIT_ENGINE_ASSERT(Editor, s_CurrentProject.Name != "NULL", "Editor has no project selected!\n - add -proj MyProject to your console args");
+	PIT_ENGINE_ASSERT(Editor, s_CurrentProject.EngineVersion == Engine::Version, "Selected Project has a diffrent version ({0}) than this editors version {1}", s_CurrentProject.EngineVersion, Engine::Version);
+
 	s_AssetManager.Init();
 
 	s_WindowPanels.reserve(5);

@@ -4,8 +4,6 @@
 #include "EngineSettings.hpp"
 
 namespace Pit {
-	const static Version EngineVersion(0, 0, 1);
-
 	DEFINE_SIMPLE_EVENT(InitEvent);
 	DEFINE_SIMPLE_EVENT(NetworkingUpdateEvent);
 	DEFINE_SIMPLE_EVENT(PhysicUpdateEvent);
@@ -51,6 +49,8 @@ namespace Pit {
 		static ShutdownEvent ShutdownEvent;
 
 		static const bool IsInUpdateLoop();
+
+		inline static Version Version = Version(0, 0, 1);
 
 	private:
 		static EngineSettings s_Settings;

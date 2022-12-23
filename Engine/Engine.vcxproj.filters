@@ -349,5 +349,7 @@
     <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
     <ClCompile Include="src\Input\Keybinding.cpp" />
     <ClCompile Include="src\Rendering\TextureAsset.cpp" />
+    <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
+    <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
   </ItemGroup>
 </Project>
