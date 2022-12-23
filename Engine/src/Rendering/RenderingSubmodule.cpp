@@ -15,7 +15,7 @@ namespace Pit {
 		glfwInit();
 		glfwSetErrorCallback(GLFWErrorCallback);
 
-		Window = new Rendering::Window("PitEngine", 800, 600, true);
+		Window = new Rendering::Window(Engine::GetSettings().WindowName, 800, 600, true);
 		glfwMakeContextCurrent(Window->GetWindowHandle());
 		glfwSwapInterval(Engine::GetSettings().VSync);
 

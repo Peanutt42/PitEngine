@@ -20,7 +20,7 @@ namespace Pit::Rendering {
 
 		glfwWindowHint(GLFW_MAXIMIZED, fullscreen ? GLFW_TRUE : GLFW_FALSE);
 
-		glfwWindowHint(GLFW_SAMPLES, Engine::GetSettings().AntiAliasing);
+		glfwWindowHint(GLFW_SAMPLES, 0);// Weil wir die scene eh in einen seperaten framebuffer render (für post-processing) Engine::GetSettings().AntiAliasing);
 
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
@@ -46,7 +46,7 @@ namespace Pit::Rendering {
 		glfwSetFramebufferSizeCallback(m_Window, _FramebufferResizedCallback);
 		glfwSetWindowSizeCallback(m_Window, _WindowResizedCallback);
 		glfwSetWindowPosCallback(m_Window, _WindowPositionCallback);
-		glfwSetWindowSizeLimits(m_Window, 200, 200, 9999999, 9999999);
+		glfwSetWindowSizeLimits(m_Window, 200, 200, GLFW_DONT_CARE, GLFW_DONT_CARE);
 	}
 
 	Window::~Window() {

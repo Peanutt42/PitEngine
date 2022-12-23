@@ -22,7 +22,7 @@ namespace Pit {
 	void AudioSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		static bool init = false;
+		/*static bool init = false;
 		if (!init) {
 			AssetManagment::Asset* sample_asset = nullptr;
 			for (auto asset : Engine::AssetManagment()->GetAssets()) {
@@ -35,6 +35,6 @@ namespace Pit {
 			init = true;
 		}
 		else
-			music->UpdateBufferStream();
+			music->UpdateBufferStream();*/
 	}
 }

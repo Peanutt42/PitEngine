@@ -155,7 +155,7 @@ namespace Pit {
 			s_SubmoduleManager->Update();
 
 			// Limit the Fps
-			if (s_Settings.MaxFps != -1 && s_Settings.MaxFps != 0) {
+			if (s_Settings.MaxFps > 0) {
 				float updateTime = duration_cast<nanoseconds>(high_resolution_clock::now() - now).count() * .000000001f;
 				float timeLeft = (1.f / s_Settings.MaxFps) - updateTime;
 				if (timeLeft > 0.f) {
