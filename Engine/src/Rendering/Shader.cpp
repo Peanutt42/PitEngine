@@ -4,29 +4,44 @@
 
 namespace Pit::Rendering {
 
-    Shader::Shader(const String& vertexPath, const String& fragmentPath) {
+    Shader::Shader(const String& filepath) {
         PIT_PROFILE_FUNCTION();
 
-        std::string vertexCode;
-        std::string fragmentCode;
-        std::ifstream vShaderFile;
-        std::ifstream fShaderFile;
-        vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try {
-            vShaderFile.open(vertexPath);
-            fShaderFile.open(fragmentPath);
-            std::stringstream vShaderStream, fShaderStream;
-            vShaderStream << vShaderFile.rdbuf();
-            fShaderStream << fShaderFile.rdbuf();
-            vShaderFile.close();
-            fShaderFile.close();
-            vertexCode = vShaderStream.str();
-            fragmentCode = fShaderStream.str();
+        ScopedTimer t(filepath + " shader compiling");
+
+        std::string shaderFileContents;
+        std::ifstream shaderFile(filepath, std::ios::in | std::ios::binary);
+        if (shaderFile) {
+            shaderFile.seekg(0, std::ios::end);
+            size size = shaderFile.tellg();
+            if (size != -1) {
+                shaderFileContents.resize(size);
+                shaderFile.seekg(0, std::ios::beg);
+                shaderFile.read(&shaderFileContents[0], size);
+            }
+            else PIT_ENGINE_FATAL(Rendering, "Could not open shaderFile {}", filepath);
         }
-        catch ([[maybe_unused]] std::ifstream::failure& e) {
-            PIT_ENGINE_ERR(Rendering, "Error some shaderfile couldn't be read: Exeption:{}", e.what());
+        
+        String vertexCode, fragmentCode;
+        
+        const char* typeToken = "#type";
+        size_t typeTokenLength = strlen(typeToken);
+        size_t pos = shaderFileContents.find(typeToken, 0); //Start of shader type declaration line
+        while (pos != std::string::npos) {
+            size_t eol = shaderFileContents.find_first_of("\r\n", pos); //End of shader type declaration line
+            PIT_ENGINE_ASSERT(Rendering, eol != std::string::npos, "Syntax error");
+            size_t begin = pos + typeTokenLength + 1; //Start of shader type name (after "#type " keyword)
+            std::string type = shaderFileContents.substr(begin, eol - begin);
+
+            size_t nextLinePos = shaderFileContents.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
+            PIT_ENGINE_ASSERT(Rendering, nextLinePos != std::string::npos, "Syntax error");
+            pos = shaderFileContents.find(typeToken, nextLinePos); //Start of next shader type declaration line
+
+            if (type == "vertex") vertexCode = (pos == std::string::npos) ? shaderFileContents.substr(nextLinePos) : shaderFileContents.substr(nextLinePos, pos - nextLinePos);
+            else if (type == "fragment") fragmentCode = (pos == std::string::npos) ? shaderFileContents.substr(nextLinePos) : shaderFileContents.substr(nextLinePos, pos - nextLinePos);
+            else PIT_ENGINE_ERR(Rendering, "Unkown shader type {}", type);
         }
+       
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
         unsigned int vertex, fragment;

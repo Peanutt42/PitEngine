@@ -10,7 +10,7 @@ namespace Pit::Rendering {
     /// </summary>
     class Shader {
     public:
-        Shader(const String& vertexPath, const String& fragmentPath);
+        Shader(const String& filepath);
 
         unsigned int GetID() { return m_ID; }
 

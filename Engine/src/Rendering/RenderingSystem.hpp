@@ -23,10 +23,8 @@ namespace Pit::Rendering {
 
 		unsigned int VBO, cubeVAO;
 		unsigned int lightCubeVAO;
-		Shader lightingShader { FileSystem::GetSandboxDir() + "assets/shaders/BasicLight.vert",
-								FileSystem::GetSandboxDir() + "assets/shaders/BasicLight.frag" };
-		Shader lightCubeShader { FileSystem::GetSandboxDir() + "assets/shaders/LightCube.vert",
-								 FileSystem::GetSandboxDir() + "assets/shaders/LightCube.frag" };
+		Shader lightingShader { FileSystem::GetSandboxDir() + "assets/shaders/BasicLight.shader" };
+		Shader lightCubeShader { FileSystem::GetSandboxDir() + "assets/shaders/LightCube.shader" };
 #endif
 	};
 }

@@ -26,7 +26,6 @@ namespace Pit::Rendering {
 		uint m_ScreenTexColorBuffer;
 		uint m_ScreenFramebuffer;
 		uint m_ScreenIntermediateFramebuffer;
-		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.vert",
-								 FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.frag");
+		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "assets/shaders/ScreenShader.shader");
 	};
 }

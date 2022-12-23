@@ -352,4 +352,7 @@
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
     <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Shaders\ScreenShader.shader" />
+  </ItemGroup>
 </Project>
