@@ -1,2 +1,2 @@
 cd ../
-call bin\Debug-windows-x86_64\Sandbox\Sandbox.exe
+call bin\windows-x86_64\Debug\Sandbox\Sandbox.exe

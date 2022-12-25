@@ -23,9 +23,16 @@ int main(const int argc, const char* argv[]) {
 
 	while (!Engine::ShouldClose()) {
 		Engine::Update();
-		if (Input::IsMouseButtonDown(MouseButton::Button1))
+		if (Input::IsMouseButtonDown(MouseButton::Right))
 			SpectatorCamera::Update(Engine::Rendering()->Camera,
-									Input::GetBinding("MoveForward"), Input::GetBinding("MoveBackward"), Input::GetBinding("MoveLeft"), Input::GetBinding("MoveRight"), Input::GetBinding("MoveUp"), Input::GetBinding("MoveDown"), Input::GetBinding("MoveFaster"), Input::GetBinding("MoveSlower"));
+									Input::GetBinding("MoveForward"),
+									Input::GetBinding("MoveBackward"),
+									Input::GetBinding("MoveLeft"),
+									Input::GetBinding("MoveRight"),
+									Input::GetBinding("MoveUp"),
+									Input::GetBinding("MoveDown"),
+									Input::GetBinding("MoveFaster"),
+									Input::GetBinding("MoveSlower"));
 	}
 
 	Engine::Shutdown();

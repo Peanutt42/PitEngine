@@ -1,2 +1,2 @@
 cd ../
-call bin\Debug-windows-x86_64\Editor\Editor.exe
+call bin\windows-x86_64\Debug\Editor\Editor.exe

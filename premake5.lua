@@ -16,7 +16,7 @@ workspace "PitEngine"
 
 	startproject "Editor"
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
 group "Dependencies"
 	include "vendor/glad"

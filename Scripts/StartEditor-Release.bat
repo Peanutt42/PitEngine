@@ -1,2 +1,2 @@
 cd ../
-call bin\Release-windows-x86_64\Editor\Editor.exe
+call bin\windows-x86_64\Release\Editor\Editor.exe

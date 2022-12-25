@@ -42,14 +42,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\bin\Debug-windows-x86_64\tinyobjloader\</OutDir>
-    <IntDir>..\..\bin-int\Debug-windows-x86_64\tinyobjloader\</IntDir>
+    <OutDir>..\..\bin\windows-x86_64\Debug\tinyobjloader\</OutDir>
+    <IntDir>..\..\bin-int\windows-x86_64\Debug\tinyobjloader\</IntDir>
     <TargetName>tinyobjloader</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\..\bin\Release-windows-x86_64\tinyobjloader\</OutDir>
-    <IntDir>..\..\bin-int\Release-windows-x86_64\tinyobjloader\</IntDir>
+    <OutDir>..\..\bin\windows-x86_64\Release\tinyobjloader\</OutDir>
+    <IntDir>..\..\bin-int\windows-x86_64\Release\tinyobjloader\</IntDir>
     <TargetName>tinyobjloader</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -67,7 +67,6 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

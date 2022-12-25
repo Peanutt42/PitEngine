@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="AntiCheat">
+      <UniqueIdentifier>{D61147E5-427C-FB5B-8BBA-AC01F763D9B0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="AssetManagment">
       <UniqueIdentifier>{BD9CC5BA-A96A-B9C0-92FE-29E77E6B9525}</UniqueIdentifier>
     </Filter>
@@ -46,6 +49,9 @@
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Serialization">
+      <UniqueIdentifier>{2319AF09-8FD9-2A40-5814-74BDC4936F1C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Threading">
       <UniqueIdentifier>{DB1BCC5F-4786-80D6-90C4-317CFC6D5E2B}</UniqueIdentifier>
     </Filter>
@@ -57,6 +63,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AntiCheat\AntiCheatSubmodule.hpp">
+      <Filter>AntiCheat</Filter>
+    </ClInclude>
     <ClInclude Include="src\AssetManagment\Asset.hpp">
       <Filter>AssetManagment</Filter>
     </ClInclude>
@@ -222,6 +231,12 @@
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Serialization\KeyValueSerialization.hpp">
+      <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Serialization\YAMLSerializer.hpp">
+      <Filter>Serialization</Filter>
+    </ClInclude>
     <ClInclude Include="src\Threading\JobSystem.hpp">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -241,13 +256,16 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
-    <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
-    <ClInclude Include="src\AntiCheat\AntiCheatSubmodule.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
+      <Filter>AntiCheat</Filter>
+    </ClCompile>
     <ClCompile Include="src\AssetManagment\AssetManagmentSubmodule.cpp">
       <Filter>AssetManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\AudioAsset.cpp">
+      <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
       <Filter>Audio</Filter>
@@ -279,7 +297,13 @@
     <ClCompile Include="src\Core\UUID.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Version.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Debug\Logging.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\vcrash.cpp">
@@ -295,6 +319,9 @@
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Keybinding.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Memory\BumpAllocator.cpp">
@@ -333,8 +360,17 @@
     <ClCompile Include="src\Rendering\Texture.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\TextureAsset.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Serialization\KeyValueSerialization.cpp">
+      <Filter>Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Serialization\YAMLSerializer.cpp">
+      <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="src\Threading\JobSystem.cpp">
       <Filter>Threading</Filter>
@@ -343,16 +379,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp" />
-    <ClCompile Include="src\Audio\AudioAsset.cpp" />
-    <ClCompile Include="src\Core\Version.cpp" />
-    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
-    <ClCompile Include="src\Input\Keybinding.cpp" />
-    <ClCompile Include="src\Rendering\TextureAsset.cpp" />
-    <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
-    <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\Shaders\ScreenShader.shader" />
   </ItemGroup>
 </Project>

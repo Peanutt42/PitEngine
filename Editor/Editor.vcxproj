@@ -43,15 +43,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug-windows-x86_64\Editor\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\Editor\</IntDir>
+    <OutDir>..\bin\windows-x86_64\Debug\Editor\</OutDir>
+    <IntDir>..\bin-int\windows-x86_64\Debug\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release-windows-x86_64\Editor\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\Editor\</IntDir>
+    <OutDir>..\bin\windows-x86_64\Release\Editor\</OutDir>
+    <IntDir>..\bin-int\windows-x86_64\Release\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
@@ -71,7 +71,6 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,7 +79,7 @@
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)/Scripts/CopyDlls_Debug-windows-x86_64.bat</Command>
+      <Command>$(SolutionDir)/Scripts/CopyDlls_windows-x86_64/Debug.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -112,7 +111,7 @@
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SolutionDir)/Scripts/CopyDlls_Release-windows-x86_64.bat</Command>
+      <Command>$(SolutionDir)/Scripts/CopyDlls_windows-x86_64/Release.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

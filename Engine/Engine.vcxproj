@@ -42,14 +42,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\bin\Debug-windows-x86_64\Engine\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\Engine\</IntDir>
+    <OutDir>..\bin\windows-x86_64\Debug\Engine\</OutDir>
+    <IntDir>..\bin-int\windows-x86_64\Debug\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\bin\Release-windows-x86_64\Engine\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\Engine\</IntDir>
+    <OutDir>..\bin\windows-x86_64\Release\Engine\</OutDir>
+    <IntDir>..\bin-int\windows-x86_64\Release\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -69,7 +69,6 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,7 +78,7 @@
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>$(SolutionDir)/Scripts/CopyDlls_Debug-windows-x86_64.bat</Command>
+      <Command>$(SolutionDir)/Scripts/CopyDlls_windows-x86_64/Debug.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -112,7 +111,7 @@
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>$(SolutionDir)/Scripts/CopyDlls_Release-windows-x86_64.bat</Command>
+      <Command>$(SolutionDir)/Scripts/CopyDlls_windows-x86_64/Release.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -231,9 +230,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\Shaders\ScreenShader.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
