@@ -42,10 +42,6 @@ project "Engine"
 		"%{wks.location}/vendor/glfw/lib-vc2022",
 		"%{wks.location}/vendor/optick/lib/x64/release"
 	}
-	
-	postbuildcommands {
-		"%{wks.location}/Scripts/CopyDlls_" .. outputdir .. ".bat"
-	}
 
 	defines {
 	}
@@ -53,13 +49,13 @@ project "Engine"
 	filter { "configurations:Debug" }
 		buildoptions "/MDd"
 		runtime "Debug"
-		optimize "Debug"
+		optimize "off"
 		symbols "on"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "on"
+		optimize "Speed"
 		symbols "on"
 
 	filter { "system:windows" }

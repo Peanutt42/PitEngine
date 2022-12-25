@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\optick">
+      <UniqueIdentifier>{CCD11319-3892-8F4F-01CD-D8CC6D4CD42B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\optick\lib">
+      <UniqueIdentifier>{F2761B3F-5E8D-19D5-A704-A5F6135AEA5C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\optick\lib\x64">
+      <UniqueIdentifier>{636B1DBD-CFD7-D8B7-98CB-701504F7FA1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\optick\lib\x64\release">
+      <UniqueIdentifier>{B3AD7134-1FC6-585E-E872-E8F7544AEDF7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\sndfile">
+      <UniqueIdentifier>{E799A969-D367-9D6F-BCFB-0D96A86879D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\sndfile\bin">
+      <UniqueIdentifier>{0FAA3DF7-FB8D-FE4C-64EE-F89F50F1E8CE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\pch.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

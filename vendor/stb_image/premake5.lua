@@ -23,11 +23,11 @@ project "stb_image"
 	filter { "configurations:Debug" }
 		buildoptions "/MDd"
 		runtime "Debug"
-		optimize "Debug"
+		optimize "off"
 		symbols "on"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "on"
+		optimize "Speed"
 		symbols "on"

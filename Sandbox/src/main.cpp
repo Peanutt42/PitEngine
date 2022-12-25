@@ -21,6 +21,8 @@ int main(const int argc, const char* argv[]) {
 	Input::AddBinding("MoveFaster", KeyCode::LeftShift);
 	Input::AddBinding("MoveSlower", KeyCode::LeftControl);
 
+
+
 	while (!Engine::ShouldClose()) {
 		Engine::Update();
 		if (Input::IsMouseButtonDown(MouseButton::Right))

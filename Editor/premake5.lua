@@ -43,11 +43,6 @@ project "Editor"
 		"%{wks.location}/vendor/optick/lib/x64/release"
 	}
 
-	
-	postbuildcommands {
-		"%{wks.location}/Scripts/CopyDlls_" .. outputdir .. ".bat"
-	}
-
 	defines {
 		"PIT_EDITOR"
 	}
@@ -68,16 +63,21 @@ project "Editor"
 		"Engine"
 	}
 
+	postbuildcommands {
+		"xcopy \"%{wks.location}vendor\\sndfile\\bin\\sndfile.dll\"  \"%{wks.location}bin\\" .. outputdir .. "\\%{prj.name}\\\" /D /Y /I",
+		"xcopy \"%{wks.location}vendor\\optick\\lib\\x64\\release\\OptickCore.dll\"  \"%{wks.location}bin\\" .. outputdir .. "\\%{prj.name}\\\" /D /Y /I"
+	}
+
 	filter { "configurations:Debug" }
 		buildoptions "/MDd"
 		runtime "Debug"
-		optimize "Debug"
+		optimize "off"
 		symbols "on"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "on"
+		optimize "Speed"
 		symbols "on"
 
 	filter { "configurations:Debug" }
