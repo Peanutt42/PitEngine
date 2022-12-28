@@ -7,7 +7,7 @@ namespace Pit {
 	/// Every Keyboard Key as a special code
 	/// </summary>
 	enum class KeyCode : uint16_t {
-		Null = 0,
+		None = 0,
 		A = 65,					// GLFW_KEY_A
 		B = 66,					// GLFW_KEY_B
 		C = 67,					// GLFW_KEY_C
@@ -81,7 +81,7 @@ namespace Pit {
 #pragma region ToString/FromString
 	[[maybe_unused]] static String KeyCodeToString(KeyCode code) {
 		switch (code) {
-		case KeyCode::Null: return "Null";
+		case KeyCode::None: return "None";
 
 		case KeyCode::A: return "A";
 		case KeyCode::B: return "B";
@@ -156,7 +156,7 @@ namespace Pit {
 	}
 
 	[[maybe_unused]] static KeyCode StringToKeyCode(const String& string) {
-		if (string == "Null") return KeyCode::Null;
+		if (string == "None") return KeyCode::None;
 
 		if (string == "A") return KeyCode::A;
 		if (string == "B") return KeyCode::B;
@@ -227,14 +227,167 @@ namespace Pit {
 		if (string == "F11") return KeyCode::F11;
 		if (string == "F12") return KeyCode::F12;
 
-		return KeyCode::Null;
+		return KeyCode::None;
 	}
 #pragma endregion
 
+	// Controllers
+	enum class ControllerId {
+		None = -1,
+		ID1 = 0,
+		ID2 = 1,
+		ID3 = 2,
+		ID4 = 3,
+		ID5 = 4,
+		ID6 = 5,
+		ID7 = 6,
+		ID8 = 7,
+		ID9 = 8,
+		ID10 = 9,
+		ID11 = 10,
+		ID12 = 11,
+		ID13 = 12,
+		ID14 = 13,
+		ID15 = 14,
+		ID16 = 15
+	};
+
+	enum class ControllerType {
+		None = 0,
+		XboxController
+	};
+
+	[[maybe_unused]] static ControllerType GetControllerType(const std::string& controllerName) {
+		if (controllerName == "Xbox Controller") return ControllerType::XboxController;
+
+		return ControllerType::None;
+	}
+
+	enum class ControllerAxis {
+		None = 0,
+		Left,
+		Right
+	};
+
+	enum class ControllerPedal {
+		None = 0,
+		Left,
+		Right
+	};
+
+	enum class ControllerButton {
+		None = 0,
+		Up,
+		Down,
+		Left,
+		Right,
+		LeftTrigger,
+		RightTrigger,
+		LeftPad,
+		RightPad,
+		UpPad,
+		DownPad,
+		LeftStickPress,
+		RightStickPress
+	};
+
+	#pragma region ToString/FromString
+	[[maybe_unused]] static String ControllerButtonToString(ControllerButton button) {
+		switch (button) {
+		default:
+		case ControllerButton::None: return "None";
+		case ControllerButton::Up: return "Up";
+		case ControllerButton::Down: return "Down";
+		case ControllerButton::Left: return "Left";
+		case ControllerButton::Right: return "Right";
+		case ControllerButton::LeftTrigger: return "LeftTrigger";
+		case ControllerButton::RightTrigger: return "RightTrigger";
+		case ControllerButton::LeftPad: return "LeftPad";
+		case ControllerButton::RightPad: return "RightPad";
+		case ControllerButton::UpPad: return "UpPad";
+		case ControllerButton::DownPad: return "DownPad";
+		case ControllerButton::LeftStickPress: return "LeftStickPress";
+		case ControllerButton::RightStickPress: return "RightStickPress";
+		}
+	}
+	[[maybe_unused]] static ControllerButton ControllerButtonFromString(const String& string) {
+		if (string == "None") return ControllerButton::None;
+		else if (string == "Up") return ControllerButton::Up;
+		else if (string == "Down") return ControllerButton::Down;
+		else if (string == "Left") return ControllerButton::Left;
+		else if (string == "Right") return ControllerButton::Right;
+		else if (string == "LeftTrigger") return ControllerButton::LeftTrigger;
+		else if (string == "RightTrigger") return ControllerButton::RightTrigger;
+		else if (string == "LeftPad") return ControllerButton::LeftPad;
+		else if (string == "RightPad") return ControllerButton::RightPad;
+		else if (string == "UpPad") return ControllerButton::UpPad;
+		else if (string == "DownPad") return ControllerButton::DownPad;
+		else if (string == "LeftStickPress") return ControllerButton::LeftStickPress;
+		else if (string == "RightStickPress") return ControllerButton::RightStickPress;
+		return ControllerButton::None;
+	}
+	#pragma endregion
+
+	#define CONTROLLER_LEFT_AXIS_X 0
+	#define CONTROLLER_LEFT_AXIS_Y 1
+	#define CONTROLLER_RIGHT_AXIS_X 2
+	#define CONTROLLER_RIGHT_AXIS_Y 3
+	#define CONTROLLER_LEFT_TRIGGER 4
+	#define CONTROLLER_RIGHT_TRIGGER 5
+
+	// - Xbox Controller
+	#define XBOX_CONTROLLER_A 0
+	#define XBOX_CONTROLLER_B 1
+	#define XBOX_CONTROLLER_X 2
+	#define XBOX_CONTROLLER_Y 3
+
+	#define XBOX_CONTROLLER_TRIGGER_L 4
+	#define XBOX_CONTROLLER_TRIGGER_R 5
+
+	#define XBOX_CONTROLLER_TABS 6
+	#define XBOX_COTNROLLER_MENU 7
+
+	#define XBOX_CONTROLLER_PAD_LEFT 14
+	#define XBOX_CONTROLLER_PAD_RIGHT 12
+	#define XBOX_CONTROLLER_PAD_UP 11
+	#define XBOX_CONTROLLER_PAD_DOWN 13
+
+	#define XBOX_CONTROLLER_LEFT_STICK_PRESS 9
+	#define XBOX_CONTROLLER_RIGHT_STICK_PRESS 10
+
+	[[maybe_unused]] static int GetControllerButton(ControllerType type, ControllerButton button) {
+		switch (type) {
+		default: 
+		case ControllerType::None:		return -1;
+		case ControllerType::XboxController:
+			switch (button) {
+			default:
+			case ControllerButton::None:			return -1;
+
+			case ControllerButton::Up:				return XBOX_CONTROLLER_Y;
+			case ControllerButton::Down:			return XBOX_CONTROLLER_A;
+			case ControllerButton::Left:			return XBOX_CONTROLLER_X;
+			case ControllerButton::Right:			return XBOX_CONTROLLER_B;
+
+			case ControllerButton::LeftTrigger:		return XBOX_CONTROLLER_TRIGGER_L;
+			case ControllerButton::RightTrigger:	return XBOX_CONTROLLER_TRIGGER_R;
+
+			case ControllerButton::LeftPad:			return XBOX_CONTROLLER_PAD_LEFT;
+			case ControllerButton::RightPad:		return XBOX_CONTROLLER_PAD_RIGHT;
+			case ControllerButton::UpPad:			return XBOX_CONTROLLER_PAD_UP;
+			case ControllerButton::DownPad:			return XBOX_CONTROLLER_PAD_DOWN;
+
+			case ControllerButton::LeftStickPress:	return XBOX_CONTROLLER_LEFT_STICK_PRESS;
+			case ControllerButton::RightStickPress:	return XBOX_CONTROLLER_RIGHT_STICK_PRESS;
+			}
+		}
+	}
+
+
 	/// <summary>
-	/// Any state a key could be in
+	/// Any state a button could be in
 	/// </summary>
-	enum class KeyState : int {
+	enum class ButtonState : int {
 		None = -1,
 		Released = 0,
 		Pressed = 1,
@@ -254,7 +407,7 @@ namespace Pit {
 	/// Every supported mouse button
 	/// </summary>
 	enum class MouseButton : uint16_t {
-		Null = (uint16_t)-1,
+		None = (uint16_t)-1,
 		Button0 = 0,
 		Button1 = 1,
 		Button2 = 2,
@@ -269,7 +422,7 @@ namespace Pit {
 #pragma region ToString/FromString
 	[[maybe_unused]] static String MouseButtonToString(MouseButton button) {
 		switch (button) {
-		case MouseButton::Null:		return "Null";
+		case MouseButton::None:		return "None";
 		case MouseButton::Left:		return "Left";
 		case MouseButton::Right:	return "Right";
 		case MouseButton::Middle:	return "Middle";
@@ -277,18 +430,20 @@ namespace Pit {
 		case MouseButton::Button4:	return "Button4";
 		case MouseButton::Button5:	return "Button5";
 		}
-		return "Null";
+		return "None";
 	}
 
 	[[maybe_unused]] static MouseButton StringToMouseButton(const String& string) {
-		if (string == "Null")		return MouseButton::Null;
+		if (string == "None")		return MouseButton::None;
 		if (string == "Left")		return MouseButton::Left;
 		if (string == "Right")		return MouseButton::Right;
 		if (string == "Middle")		return MouseButton::Middle;
 		if (string == "Button3")	return MouseButton::Button3;
 		if (string == "Button4")	return MouseButton::Button4;
 		if (string == "Button5")	return MouseButton::Button5;
-		return MouseButton::Null;
+		return MouseButton::None;
 	}
 #pragma endregion
+
+	enum class 
 }
