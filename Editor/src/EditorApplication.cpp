@@ -5,6 +5,7 @@
 #include "Panels/SceneViewportPanel.hpp"
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
+#include "Panels\LoggingOutputPanel.hpp"
 #include "EditorDockspace.hpp"
 
 using namespace Pit;
@@ -33,6 +34,7 @@ void EditorApplication::Init() {
 	s_WindowPanels.push_back(new SceneViewportPanel());
 	s_WindowPanels.push_back(new ProfilerPanel());
 	s_WindowPanels.push_back(new ContentBrowserPanel());
+	s_WindowPanels.push_back(new LoggingOutputPanel());
 	
 	Engine::UIRenderEvent += []() {
 		if (ImGui::BeginMenuBar()) {
@@ -77,7 +79,12 @@ void EditorApplication::MenubarCallback() {
 	Array<bool> openWindows(s_WindowPanels.size());
 	if (ImGui::BeginMenu("Windows")) {
 		for (int i = 0; i < s_WindowPanels.size(); i++) {
-			if (ImGui::MenuItem(s_WindowPanels[i]->Name.c_str(), "wip", nullptr, s_WindowPanels[i]->Enabled))
+			String shortcutStr;
+			for (int j = 0; j < s_WindowPanels[i]->Shortcut.size(); j++) {
+				shortcutStr += KeyCodeToString(s_WindowPanels[i]->Shortcut[j]);
+				if (j + 1 != s_WindowPanels[i]->Shortcut.size()) shortcutStr += " + ";
+			}
+			if (ImGui::MenuItem(s_WindowPanels[i]->Name.c_str(), shortcutStr.c_str(), nullptr, s_WindowPanels[i]->Enabled))
 				openWindows[i] = true;
 		}
 		ImGui::EndMenu();
