@@ -13,8 +13,5 @@ namespace Pit::Editor {
 		virtual void OnDestroy() override;
 
 		virtual void OnGui() override;
-
-	private:
-		Pit::Rendering::Texture* m_SceneTexture;
 	};
 }

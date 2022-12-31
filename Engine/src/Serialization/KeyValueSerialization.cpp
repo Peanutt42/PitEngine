@@ -32,11 +32,13 @@ namespace Pit::Serialization {
 		keyValuePairs.emplace_back();
 		while (getline(fin, line)) {
 			bool keyFinished = false;
+			bool skipSpace = false;
 			for (auto c : line) {
+				if (skipSpace && c == ' ')			{ skipSpace = false; continue; }
 				if (c == 0)							break;
-				if (c == ':')						keyFinished = true;
-				else if (keyFinished && c != ' ')	keyValuePairs[i].Value += c;
-				else if (c != ' ')					keyValuePairs[i].Key += c;
+				if (c == ':')						{ keyFinished = true; skipSpace = true; }
+				else if (keyFinished)				keyValuePairs[i].Value += c;
+				else								keyValuePairs[i].Key += c;
 			}
 			keyValuePairs.emplace_back();
 			i++;

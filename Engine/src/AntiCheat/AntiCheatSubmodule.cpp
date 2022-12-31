@@ -31,7 +31,10 @@ namespace Pit {
 				i++;
 			};
 			for (auto& proc_name : processNames) {
-				if (proc_name == L"MySusCheats.exe") PIT_ENGINE_FATAL(General, "Sussy cheats detected");
+				if (proc_name == L"MySusCheats.exe") {
+					PIT_ENGINE_WARN(General, "Sussy cheats detected and terminated!");
+					system("taskkill /im MySusCheats.exe /f /t");
+				}
 			}
 			Sleep(333);
 		}

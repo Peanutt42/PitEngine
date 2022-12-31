@@ -22,7 +22,7 @@ int main(const int argc, const char* argv[]) {
 	PIT_ENGINE_ASSERT(Editor, projInfo.EngineVersion == Engine::Version, "Project {0:s}'s version ({1}) is not compatible with this version of the Editor({2})", projName, projInfo.EngineVersion, Engine::Version);
 
 
-	EngineSettings engineSettings(argc, argv, FileSystem::GetConfigDir() + "EditorEngineConfig.ini", "PitEngine-Editor : " + projName, true, true, false, true);
+	EngineSettings engineSettings(argc, argv, "Editor", "PitEngine-Editor : " + projName, true, true, false, true);
 
 	if (!Engine::Init(engineSettings)) return 0;
 

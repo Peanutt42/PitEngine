@@ -125,6 +125,7 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
     <ClInclude Include="src\EditorWindowPanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
+    <ClInclude Include="src\Panels\LoggingOutputPanel.hpp" />
     <ClInclude Include="src\Panels\ProfilerPanel.hpp" />
     <ClInclude Include="src\Panels\PropertiesPanel.hpp" />
     <ClInclude Include="src\Panels\SceneViewportPanel.hpp" />
@@ -135,6 +136,7 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
     <ClCompile Include="src\EditorAssetManager.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\HierachyPanel.cpp" />
+    <ClCompile Include="src\Panels\LoggingOutputPanel.cpp" />
     <ClCompile Include="src\Panels\ProfilerPanel.cpp" />
     <ClCompile Include="src\Panels\PropertiesPanel.cpp" />
     <ClCompile Include="src\Panels\SceneViewportPanel.cpp" />

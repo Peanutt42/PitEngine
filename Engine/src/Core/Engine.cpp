@@ -21,13 +21,13 @@ namespace Pit {
 	SaveConfigEvent				Engine::SaveConfigEvent;
 	ShutdownEvent				Engine::ShutdownEvent;
 
-	EngineSettings				Engine::s_Settings = EngineSettings(0, nullptr, "NULL", "PitEngine-NullInfo", true, false);
+	EngineSettings*				Engine::s_Settings = nullptr;
 
 	SubmoduleManager*			Engine::s_SubmoduleManager = nullptr;
 
 	std::ofstream				Engine::s_InstanceLockFile;
 
-	std::atomic<bool>			Engine::s_Quit = false;
+	bool						Engine::s_Quit = false;
 	bool						Engine::s_InUpdateLoop = false;
 
 #define CATCH_EXCEPTIONS() \
@@ -42,7 +42,7 @@ namespace Pit {
 		}
 
 
-	bool Engine::Init(const EngineSettings& settings) {
+	bool Engine::Init(EngineSettings& settings) {
 		PIT_PROFILE_FRAME("MainThread");
 
 		PIT_PROFILE_FUNCTION();
@@ -52,9 +52,11 @@ namespace Pit {
 		Debug::MemoryLeakDetector::Init();
 
 		try {
-			s_Settings = settings;
+			s_Settings = &settings;
 
-			for (const auto& arg : s_Settings.ConsoleArgs) {
+			s_Settings->Deserialize(FileSystem::GetConfigDir() + s_Settings->Prefix + "Config.ini");
+
+			for (const auto& arg : s_Settings->ConsoleArgs) {
 				if (arg == "--version" || arg == "-v") {
 					std::cout << "PitEngine Game Engine\n"
 								 "Github page: https://github.com/Peanutt42/PitEngine\n"
@@ -65,7 +67,7 @@ namespace Pit {
 			}
 
 #define INSTANCE_LOCK_FILENAME "Instancelock.lock"
-			if (s_Settings.OneInstanceOnly) {
+			if (s_Settings->OneInstanceOnly) {
 				if (std::filesystem::exists(INSTANCE_LOCK_FILENAME)) {
 					MessagePrompts::InfoMessage(L"Application is already opened", L"One instance of the application is already opened!");
 					return false;
@@ -79,16 +81,16 @@ namespace Pit {
 
 			PIT_ENGINE_INFO(General, "=== Initializing PIT::ENGINE ===");
 			PIT_ENGINE_INFO(General, " - Version: {}", Engine::Version);
-			PIT_ENGINE_INFO(General, " - Vsync {}", s_Settings.VSync ? "On" : "Off");
-			PIT_ENGINE_INFO(General, " - RenderingApi: {}", RenderingApiToString(s_Settings.RenderingApi));
-			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings.AntiAliasing);
-			PIT_ENGINE_INFO(General, " - MaxFps: {}", s_Settings.MaxFps);
-			if (s_Settings.Headless)
+			PIT_ENGINE_INFO(General, " - Vsync {}", s_Settings->VSync ? "On" : "Off");
+			PIT_ENGINE_INFO(General, " - RenderingApi: {}", RenderingApiToString(s_Settings->RenderingApi));
+			PIT_ENGINE_INFO(General, " - Antialiasing: {}", s_Settings->AntiAliasing);
+			PIT_ENGINE_INFO(General, " - MaxFps: {}", s_Settings->MaxFps);
+			if (s_Settings->Headless)
 				PIT_ENGINE_INFO(General, " - Headless Mode");
 
 			JobSystem::Initialize();
 
-			if (!s_Settings.Headless)
+			if (!s_Settings->Headless)
 				Input::Init();
 
 			s_SubmoduleManager = new SubmoduleManager();
@@ -108,16 +110,15 @@ namespace Pit {
 
 		try {
 			{
-				Timer t;
+				ScopedTimer t("EngineShutdownTime");
 				Engine::ShutdownEvent.Invoke();
 
 				s_SubmoduleManager->Shutdown();
 
 				JobSystem::Shutdown();
 
-				s_Settings.Serialize();
+				s_Settings->Serialize(FileSystem::GetConfigDir() + s_Settings->Prefix + "Config.ini");
 				SaveConfigEvent.Invoke();
-				std::cout << "[Engine::General]      [TIMER] EngineShutdownTime - " << t.ElapsedMillis() << "ms.\n";
 			}
 
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
@@ -126,7 +127,7 @@ namespace Pit {
 
 			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
 
-			if (s_Settings.OneInstanceOnly) {
+			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
 				s_InstanceLockFile.close();
 				std::filesystem::remove({ INSTANCE_LOCK_FILENAME });
 			}
@@ -155,9 +156,9 @@ namespace Pit {
 			s_SubmoduleManager->Update();
 
 			// Limit the Fps
-			if (s_Settings.MaxFps > 0) {
+			if (s_Settings->MaxFps > 0) {
 				float updateTime = duration_cast<nanoseconds>(high_resolution_clock::now() - now).count() * .000000001f;
-				float timeLeft = (1.f / s_Settings.MaxFps) - updateTime;
+				float timeLeft = (1.f / s_Settings->MaxFps) - updateTime;
 				if (timeLeft > 0.f) {
 					PIT_PROFILE_FUNCTION("Pit::Engine::MaxFpsLimitWait");
 					Time::MicroSleep(Cast<uint64>(floor(timeLeft * 1000 * 1000))); // Wait for microseconds
@@ -170,10 +171,12 @@ namespace Pit {
 
 	}
 
+	const EngineSettings& Engine::GetSettings() { return *s_Settings; }
+
 	bool Engine::ShouldClose() {
-		if (s_Quit.load())
+		if (s_Quit)
 			return true;
-		else if (!s_Settings.Headless)
+		else if (!s_Settings->Headless)
 			return s_SubmoduleManager->RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;

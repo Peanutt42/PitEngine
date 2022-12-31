@@ -180,7 +180,7 @@
     <ClInclude Include="src\Input\KeyCode.hpp">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\Keybinding.hpp">
+    <ClInclude Include="src\Input\InputBinding.hpp">
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\CoreMath.hpp">
@@ -321,7 +321,7 @@
     <ClCompile Include="src\Input\Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\Keybinding.cpp">
+    <ClCompile Include="src\Input\InputBinding.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Memory\BumpAllocator.cpp">

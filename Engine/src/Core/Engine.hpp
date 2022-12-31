@@ -22,13 +22,13 @@ namespace Pit {
 	/// </summary>
 	class Engine {
 	public:
-		static bool Init(const EngineSettings& settings);
+		static bool Init(EngineSettings& settings);
 		static void Shutdown();
-		static void ForceShutdown() { s_Quit.store(true); }
+		static void ForceShutdown() { s_Quit = true; }
 		static bool ShouldClose();
 		static void Update();
 
-		static const EngineSettings& GetSettings() { return s_Settings; }
+		static const EngineSettings& GetSettings();
 
 		static class AudioSubmodule* Audio();
 		static class AssetManagmentSubmodule* AssetManagment();
@@ -53,13 +53,13 @@ namespace Pit {
 		inline static Version Version = Version(0, 0, 1);
 
 	private:
-		static EngineSettings s_Settings;
+		static EngineSettings* s_Settings;
 
 		static class SubmoduleManager* s_SubmoduleManager;
 		
 		static std::ofstream s_InstanceLockFile;
 
-		static std::atomic<bool> s_Quit;
+		static bool s_Quit;
 		static bool s_InUpdateLoop;
 	};
 }

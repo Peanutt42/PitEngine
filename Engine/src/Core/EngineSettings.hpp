@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Core/CoreInclude.hpp"
@@ -28,6 +29,7 @@ namespace Pit {
 	/// </summary>
 	struct EngineSettings {
 		Array<String> ConsoleArgs;
+		String Prefix;
 		String WindowName;
 		bool WindowToolbar;
 		bool VSync;
@@ -38,27 +40,22 @@ namespace Pit {
 		bool Headless;
 		bool OneInstanceOnly;
 
-	private:
-		String m_ConfigFilepath;
 	public:
 
-		EngineSettings(const int argc, const char* argv[], const String& configFilepath,
+		EngineSettings(const int argc, const char* argv[], const String& prefix,
 					   const String& windowName, bool windowToolbar,
 					   bool uiDocking, bool headless = false, bool oneInstanceOnly = false)
-			: WindowName(windowName), WindowToolbar(windowToolbar),
+			: Prefix(prefix), WindowName(windowName), WindowToolbar(windowToolbar),
 			  VSync(false), MaxFps(-1), UIDocking(uiDocking),
-			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), m_ConfigFilepath(configFilepath), OneInstanceOnly(oneInstanceOnly) {
+			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), OneInstanceOnly(oneInstanceOnly) {
 
 			ConsoleArgs.assign(argv, argv + argc);
 			for (const auto& arg : ConsoleArgs) {
 				if (arg == "-headless") Headless = true;
 			}
-
-			if (configFilepath != "NULL")
-				Deserialize(configFilepath);
 		}
 
-		void Serialize(const String& filepath = "default") {
+		void Serialize(const String& filepath) {
 			Serialization::YamlSerializer out;
 			out << YAML::BeginMap;
 
@@ -69,7 +66,7 @@ namespace Pit {
 			out << YAML::Key << "AntiAliasing" << YAML::Value << AntiAliasing;
 
 			out << YAML::EndMap;
-			out.SaveToFile(filepath == "default" ? m_ConfigFilepath : filepath);
+			out.SaveToFile(filepath);
 		}
 
 		void Deserialize(const String& filepath) {

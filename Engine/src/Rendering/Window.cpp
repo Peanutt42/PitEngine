@@ -27,12 +27,13 @@ namespace Pit::Rendering {
 		GLFWmonitor* primaryMonitor = nullptr;
 		if (!Engine::GetSettings().WindowToolbar) {
 			glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
-			primaryMonitor = glfwGetPrimaryMonitor(); // Force window on primary screen
+			glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 		}
 
 		if (fullscreen) {
-			m_Width = glfwGetVideoMode(glfwGetPrimaryMonitor())->width;
-			m_Height = glfwGetVideoMode(glfwGetPrimaryMonitor())->height;
+			primaryMonitor = glfwGetPrimaryMonitor(); // Force window on primary screen
+			m_Width = glfwGetVideoMode(primaryMonitor)->width;
+			m_Height = glfwGetVideoMode(primaryMonitor)->height;
 		}
 
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), primaryMonitor, nullptr);

@@ -78,6 +78,8 @@ namespace Pit {
 		F12 = 301,				// GLFW_KEY_F12
 	};
 
+
+	
 #pragma region ToString/FromString
 	[[maybe_unused]] static String KeyCodeToString(KeyCode code) {
 		switch (code) {
@@ -230,6 +232,59 @@ namespace Pit {
 		return KeyCode::None;
 	}
 #pragma endregion
+	struct KeyAxis {
+		KeyCode Up, Down, Left, Right;
+		
+		KeyAxis(KeyCode up, KeyCode down, KeyCode left, KeyCode right) : Up(up), Down(down), Left(left), Right(right) { }
+
+		KeyAxis(const String& str) {
+			// Min sized string: [1,1,1,1] -> 9 chars
+			PIT_ENGINE_ASSERT(General, str.size() >= 9, "Parsing string to KeyAxis failed, due to too small string size {} ( <9 chars)", str.size());
+			PIT_ENGINE_ASSERT(General, str[0] == '[' && str[str.size() - 1] == ']', "Parsing string to KeyAxis failed, due to bad syntax -> begin: '[' and ending: ']'!");
+			String temp;
+			bool upParsed = false, downParsed = false, leftParsed = false;
+			for (int i = 0; i < str.size(); i++) {
+				if (str[i] == '[') continue;
+				if (str[i] == ',' || str[i] == ']') {
+					if (!upParsed) {
+						Up = StringToKeyCode(temp);
+						temp = "";
+						upParsed = true;
+					}
+					else if (!downParsed) {
+						Down = StringToKeyCode(temp);
+						temp = "";
+						downParsed = true;
+					}
+					else if (!leftParsed) {
+						Left = StringToKeyCode(temp);
+						temp = "";
+						leftParsed = true;
+					}
+					else {
+						Right = StringToKeyCode(temp);
+						break;
+					}
+					continue;
+				}
+
+				temp += str[i];
+			}
+		}
+
+		String ToString() {
+			String output = "[";
+			output += KeyCodeToString(Up);
+			output += ", ";
+			output += KeyCodeToString(Down);
+			output += ", ";
+			output += KeyCodeToString(Left);
+			output += ", ";
+			output += KeyCodeToString(Right);
+			output += ']';
+			return output;
+		}
+	};
 
 	// Controllers
 	enum class ControllerId {
@@ -252,13 +307,17 @@ namespace Pit {
 		ID16 = 15
 	};
 
+
 	enum class ControllerType {
 		None = 0,
 		XboxController
 	};
 
 	[[maybe_unused]] static ControllerType GetControllerType(const std::string& controllerName) {
-		if (controllerName == "Xbox Controller") return ControllerType::XboxController;
+		if (controllerName == "Xbox Controller" ||
+			controllerName == "Wireless Xbox Controller") return ControllerType::XboxController;
+
+		PIT_ENGINE_ERR(General, "This Engine doesn't support controller '{}' yet!", controllerName);
 
 		return ControllerType::None;
 	}
@@ -268,6 +327,22 @@ namespace Pit {
 		Left,
 		Right
 	};
+
+	[[maybe_unused]] static String ControllerAxisToString(ControllerAxis axis) {
+		switch (axis) {
+		default:
+		case ControllerAxis::None: return "ControllerAxis_None";
+		case ControllerAxis::Left: return "ControllerAxis_Left";
+		case ControllerAxis::Right: return "ControllerAxis_Right";
+		}
+	}
+	[[maybe_unused]] static ControllerAxis ControllerAxisFromString(const String& string) {
+		if (string == "ControllerAxis_None") return ControllerAxis::None;
+		if (string == "ControllerAxis_Left") return ControllerAxis::Left;
+		if (string == "ControllerAxis_Right") return ControllerAxis::Right;
+
+		return ControllerAxis::None;
+	}
 
 	enum class ControllerPedal {
 		None = 0,
@@ -347,13 +422,13 @@ namespace Pit {
 	#define XBOX_CONTROLLER_TABS 6
 	#define XBOX_COTNROLLER_MENU 7
 
-	#define XBOX_CONTROLLER_PAD_LEFT 14
-	#define XBOX_CONTROLLER_PAD_RIGHT 12
-	#define XBOX_CONTROLLER_PAD_UP 11
-	#define XBOX_CONTROLLER_PAD_DOWN 13
+	#define XBOX_CONTROLLER_PAD_LEFT 13
+	#define XBOX_CONTROLLER_PAD_RIGHT 11
+	#define XBOX_CONTROLLER_PAD_UP 10
+	#define XBOX_CONTROLLER_PAD_DOWN 12
 
-	#define XBOX_CONTROLLER_LEFT_STICK_PRESS 9
-	#define XBOX_CONTROLLER_RIGHT_STICK_PRESS 10
+	#define XBOX_CONTROLLER_LEFT_STICK_PRESS 8
+	#define XBOX_CONTROLLER_RIGHT_STICK_PRESS 9
 
 	[[maybe_unused]] static int GetControllerButton(ControllerType type, ControllerButton button) {
 		switch (type) {
@@ -444,6 +519,4 @@ namespace Pit {
 		return MouseButton::None;
 	}
 #pragma endregion
-
-	enum class 
 }

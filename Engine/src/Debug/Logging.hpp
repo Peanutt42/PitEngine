@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Assert.hpp"
+#include "Event\Event.hpp"
 #include "Platform/PlatformUtils.hpp"
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -8,11 +9,27 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 namespace Pit::Debug {
+	DEFINE_SIMPLE_EVENT(OnLogEvent);
+
 	/// <summary>
 	/// Holder for Logging Stuff
 	/// </summary>
 	class Logging {
 	public:
+	enum Category {
+		General,
+		Editor,
+		Audio,
+		AssetManagment,
+		Serialization,
+		Memory,
+		Networking,
+		ECS,
+		Phyisics,
+		Rendering,
+		UI
+	};
+
 		static void Init();
 
 		static void Shutdown();
@@ -28,24 +45,10 @@ namespace Pit::Debug {
 		static std::shared_ptr<spdlog::logger> s_EngineLogger;
 		static std::shared_ptr<spdlog::logger> s_GameLogger;
 	};
-
-	enum Category {
-		General,
-		Editor,
-		Audio,
-		AssetManagment,
-		Serialization,
-		Memory,
-		Networking,
-		ECS,
-		Phyisics,
-		Rendering,
-		UI
-	};
 }
 
 
-using Log = Pit::Debug::Category;
+using Log = Pit::Debug::Logging::Category;
 
 // Engine logging
 #if DEBUG || RELEASE
