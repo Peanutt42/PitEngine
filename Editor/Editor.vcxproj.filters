@@ -17,6 +17,9 @@
     <ClInclude Include="src\Panels\HierachyPanel.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\LoggingOutputPanel.hpp">
+      <Filter>Panels</Filter>
+    </ClInclude>
     <ClInclude Include="src\Panels\ProfilerPanel.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
@@ -27,7 +30,6 @@
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Panels\LoggingOutputPanel.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
@@ -36,6 +38,9 @@
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\HierachyPanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\LoggingOutputPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\Panels\ProfilerPanel.cpp">
@@ -49,6 +54,5 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Panels\LoggingOutputPanel.cpp" />
   </ItemGroup>
 </Project>

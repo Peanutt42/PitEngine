@@ -1,9 +1,8 @@
 #include "pch.hpp"
-#ifdef PIT_WINDOWS
-
 #include "Platform/PlatformUtils.hpp"
 #include "Core/Engine.hpp"
-#include <commdlg.h>
+
+#ifdef PIT_WINDOWS
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>

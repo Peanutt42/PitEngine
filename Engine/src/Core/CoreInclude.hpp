@@ -30,6 +30,7 @@
 
 // - low level
 #include <atomic>
+#include <mutex>
 #include <thread>
 #include <functional>
 #include <memory>

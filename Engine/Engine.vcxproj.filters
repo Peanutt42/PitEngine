@@ -135,6 +135,9 @@
     <ClInclude Include="src\Core\Version.hpp">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Debug\ConsoleLogger.hpp">
+      <Filter>Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\Debug\Logging.hpp">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -177,10 +180,10 @@
     <ClInclude Include="src\Input\Input.hpp">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\KeyCode.hpp">
+    <ClInclude Include="src\Input\InputBinding.hpp">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\InputBinding.hpp">
+    <ClInclude Include="src\Input\KeyCode.hpp">
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\CoreMath.hpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\Version.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\ConsoleLogger.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Debug\Logging.cpp">
       <Filter>Debug</Filter>

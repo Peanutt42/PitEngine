@@ -25,7 +25,7 @@ project "Engine"
 		"%{wks.location}/vendor/glad/include",
 		"%{wks.location}/vendor/EnTT/include",
 		"%{wks.location}/vendor/glm/include",
-		"%{wks.location}/vendor/spdlog/include",
+		"%{wks.location}/vendor/fmt/include",
 		"%{wks.location}/vendor/vulkan/include",
 		"%{wks.location}/vendor/imgui/include",
 		"%{wks.location}/vendor/glfw/include",

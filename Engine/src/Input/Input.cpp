@@ -256,7 +256,6 @@ namespace Pit {
 			else
 				return true;
 		}
-		return true;
 	}
 
 	const bool Input::IsBindingDown(const String& name) {
@@ -274,7 +273,6 @@ namespace Pit {
 			else
 				return false;
 		}
-		return false;
 	}
 
 	const bool Input::IsBindingPressed(const String& name) {
@@ -292,7 +290,6 @@ namespace Pit {
 			else
 				return false;
 		}
-		return false;
 	}
 
 	const bool Input::IsBindingReleased(const String& name) {
@@ -310,7 +307,6 @@ namespace Pit {
 			else
 				return false;
 		}
-		return false;
 	}
 
 	const glm::vec2 Input::GetAxisBinding(const String& name) {

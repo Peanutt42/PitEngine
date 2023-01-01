@@ -13,11 +13,11 @@ namespace Pit {
 	struct Event {
 		using ListenFunc = std::function<void(Args...)>;
 
-		inline void operator+=(const ListenFunc& func) {
+		inline void operator+=(ListenFunc func) {
 			Add(func);
 		}
 
-		inline void operator-=(const ListenFunc& func) {
+		inline void operator-=(ListenFunc func) {
 			Remove(func);
 		}
 
@@ -25,18 +25,18 @@ namespace Pit {
 			Invoke(std::forward<Args>(args)...);
 		}
 
-		inline void Add(const ListenFunc& func) {
+		inline void Add(ListenFunc func) {
 			m_Listeners.emplace_back(func);
 		}
 
-		inline void Remove(const ListenFunc& func) {
+		inline void Remove(ListenFunc func) {
 			for (int i = 0; i < m_Listeners.size(); i++) {
 				if (m_Listeners[i] == func)
 					m_Listeners.erase(m_Listeners.begin() + i);
 			}
 		}
 
-		inline virtual void Invoke(Args&&... args) {
+		inline virtual void Invoke(Args... args) {
 			PIT_PROFILE_FUNCTION("Pit::Event<Args...>::Invoke");
 
 			for (auto& callack : m_Listeners)

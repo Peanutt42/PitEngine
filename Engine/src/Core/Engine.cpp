@@ -69,10 +69,14 @@ namespace Pit {
 #define INSTANCE_LOCK_FILENAME "Instancelock.lock"
 			if (s_Settings->OneInstanceOnly) {
 				if (std::filesystem::exists(INSTANCE_LOCK_FILENAME)) {
-					MessagePrompts::InfoMessage(L"Application is already opened", L"One instance of the application is already opened!");
-					return false;
+					s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
+					if (!s_InstanceLockFile.is_open()) {
+						MessagePrompts::InfoMessage(L"Application is already opened", L"One instance of the application is already opened!");
+						return false;
+					}
 				}
-				s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
+				else
+					s_InstanceLockFile.open(INSTANCE_LOCK_FILENAME);
 			}
 
 			ScopedTimer t("EngineInitTime");
@@ -125,7 +129,7 @@ namespace Pit {
 
 			Debug::Logging::Shutdown();
 
-			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
+			//Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
 
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
 				s_InstanceLockFile.close();
@@ -150,6 +154,13 @@ namespace Pit {
 			time_point<high_resolution_clock> now = high_resolution_clock::now();
 			Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * .000000001f);
 			lastUpdate = now;
+
+			static int i = 0;
+			i++;
+			if (i > 1000) {
+				PIT_ENGINE_INFO(General, "Test");
+				i = 0;
+			}
 
 			Input::Update();
 

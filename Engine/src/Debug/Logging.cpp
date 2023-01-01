@@ -1,25 +1,17 @@
 #include "pch.hpp"
 #include "Logging.hpp"
-#if DEBUG || RELEASE
-#include "Profiling.hpp"
-#endif
 
 namespace Pit::Debug {
 
-	std::shared_ptr<spdlog::sinks::basic_file_sink_mt> Logging::s_FileSink;
+	ConsoleLoggerMT* Logging::s_EngineLogger;
+	ConsoleLoggerMT* Logging::s_GameLogger;
 
-	std::shared_ptr<spdlog::logger> Logging::s_EngineLogger;
-	std::shared_ptr<spdlog::logger> Logging::s_GameLogger;
+	std::ofstream Logging::s_LogFile;
 
 	bool Logging::LoggerInitialized = false;
 
-	static std::ofstream PerformanceReportFile;
-
 	void Logging::Init() {
 #if DEBUG || RELEASE
-		constexpr const char* pattern = "%^%v%$";
-		spdlog::set_pattern(pattern);
-
 		// Destroy the 10th saved log file if over 10
 		size filecount = std::distance(std::filesystem::directory_iterator("Logs"), std::filesystem::directory_iterator{});
 		if (filecount >= 10) {
@@ -31,40 +23,34 @@ namespace Pit::Debug {
 			}
 		}
 		Pit::String filepath = Pit::String("Logs/") + CurrentTimeToString() + Pit::String("_Log.log");
+		s_LogFile.open(filepath);
+		PIT_ENGINE_ASSERT(General, s_LogFile.is_open(), "Failed to open new Logfile!");
 
-		s_FileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(filepath);
-		s_FileSink->set_pattern(pattern);
-		s_FileSink->set_level(spdlog::level::trace);
+		s_EngineLogger = new ConsoleLoggerMT("Engine", ConsoleColor::Green);
+		s_GameLogger = new ConsoleLoggerMT("Game", ConsoleColor::Green);
 
-		s_EngineLogger = spdlog::stdout_color_mt("Engine");
-		s_EngineLogger->set_level(spdlog::level::trace);
-		s_EngineLogger->sinks().push_back(s_FileSink);
-
-
-		s_GameLogger = spdlog::stdout_color_mt("Game");
-		s_GameLogger->set_level(spdlog::level::trace);
-		s_GameLogger->sinks().push_back(s_FileSink);
+		auto logToFileFunc = []([[maybe_unused]] LogVerbosity verbosity, [[maybe_unused]] const String& msg) { s_LogFile << msg << '\n'; };
+		s_EngineLogger->OnLogEvent += logToFileFunc;
+		s_GameLogger->OnLogEvent += logToFileFunc;
 
 		LoggerInitialized = true;
-
-		PerformanceReportFile = std::ofstream(Pit::String("Logs/") + CurrentTimeToString() + Pit::String("_ProfilingReport.log"));
 #endif
 	}
 
 	void Logging::Shutdown() {
 #if DEBUG || RELEASE
-		spdlog::shutdown();
+		if (s_LogFile.is_open()) s_LogFile.close();
 
-		s_FileSink.reset();
+		s_EngineLogger->SetColor(ConsoleColor::White);
+		s_GameLogger->SetColor(ConsoleColor::White);
 
-		s_EngineLogger.reset();
-		s_GameLogger.reset();
+		delete s_EngineLogger;
+		delete s_GameLogger;
 
 		LoggerInitialized = false;
 #endif
 	}
 	
-	std::shared_ptr<spdlog::logger>& Logging::GetEngineLogger() { return s_EngineLogger; }
-
-	std::shared_ptr<spdlog::logger>& Logging::GetGameLogger() { return s_GameLogger; }
+	ConsoleLoggerMT* Logging::GetEngineLogger() { return s_EngineLogger; }
+	ConsoleLoggerMT* Logging::GetGameLogger() { return s_GameLogger; }
 }

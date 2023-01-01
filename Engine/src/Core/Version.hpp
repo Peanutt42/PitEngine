@@ -1,6 +1,7 @@
 #pragma once
 
-#include "spdlog/fmt/ostr.h"
+#include "fmt\fmt.h"
+#include "fmt\ostr.h"
 
 namespace Pit {
 	/// <summary>
