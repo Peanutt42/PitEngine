@@ -5,6 +5,7 @@
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
 #include "Debug/MemoryLeakDetector.hpp"
+#include "Memory\MemorySubmodule.hpp"
 
 
 namespace Pit {
@@ -28,7 +29,6 @@ namespace Pit {
 	std::ofstream				Engine::s_InstanceLockFile;
 
 	bool						Engine::s_Quit = false;
-	bool						Engine::s_InUpdateLoop = false;
 
 #define CATCH_EXCEPTIONS() \
 		catch ([[maybe_unused]] const std::bad_alloc& e)	{						\
@@ -145,7 +145,7 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
-			s_InUpdateLoop = true;
+			Memory()->ToggleFrameAllocator(true);
 
 			Time::SetFrame((Time::Frame() + 1) % 1000);
 
@@ -176,7 +176,7 @@ namespace Pit {
 				}
 			}
 
-			s_InUpdateLoop = false;
+			Memory()->ToggleFrameAllocator(false);
 		}
 		CATCH_EXCEPTIONS();
 
@@ -199,6 +199,4 @@ namespace Pit {
 	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
 	
 	MemorySubmodule* Engine::Memory() { return s_SubmoduleManager->MemorySubmodule; }
-	
-	const bool Engine::IsInUpdateLoop() { return s_InUpdateLoop; }
 }

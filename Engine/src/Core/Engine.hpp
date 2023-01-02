@@ -48,8 +48,6 @@ namespace Pit {
 		static SaveConfigEvent SaveConfigEvent;
 		static ShutdownEvent ShutdownEvent;
 
-		static const bool IsInUpdateLoop();
-
 		inline static Version Version = Version(0, 0, 1);
 
 	private:
@@ -60,6 +58,5 @@ namespace Pit {
 		static std::ofstream s_InstanceLockFile;
 
 		static bool s_Quit;
-		static bool s_InUpdateLoop;
 	};
 }

@@ -2,13 +2,14 @@
 #include "MemorySubmodule.hpp"
 #include "BumpAllocator.hpp"
 #include "Core/Engine.hpp"
+#include "Platform\PlatformUtils.hpp"
 
-static std::thread::id s_MainThreadId = std::this_thread::get_id();
+static bool s_UseFrameallocator = false;
 
 void* operator new(size_t size) {
 	Pit::Memory::BumpAllocator* bumpAlloc = Pit::Memory::BumpAllocator::GetInstance();
 	void* output = nullptr;
-	if (Pit::Engine::IsInUpdateLoop() && bumpAlloc && std::this_thread::get_id() == s_MainThreadId)
+	if (s_UseFrameallocator && bumpAlloc && std::this_thread::get_id() == Pit::Thread::MainThreadId)
 		output = bumpAlloc->Allocate(size);
 	else
 		output = malloc(size);
@@ -17,8 +18,10 @@ void* operator new(size_t size) {
 }
 
 void operator delete(void* p) {
-	if (!Pit::Engine::IsInUpdateLoop() || !Pit::Memory::BumpAllocator::GetInstance())
-		free(p);
+	if (s_UseFrameallocator) {
+		if (!Pit::Memory::BumpAllocator::GetInstance())
+			free(p);
+	}
 }
 
 namespace Pit {
@@ -39,6 +42,8 @@ namespace Pit {
 
 		m_FrameAllocator->Reset();
 	}
+
+	void MemorySubmodule::ToggleFrameAllocator(bool on) { s_UseFrameallocator = on; }
 
 	const size_t MemorySubmodule::GetFrameAllocatorSize() const {
 		return m_FrameAllocator->GetSize();

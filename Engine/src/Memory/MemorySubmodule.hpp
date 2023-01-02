@@ -19,6 +19,8 @@ namespace Pit {
 
 		virtual void Update();
 
+		void ToggleFrameAllocator(bool on);
+
 		const size_t GetFrameAllocatorUsage() const;
 		const size_t GetFrameAllocatorSize() const;
 
