@@ -10,4 +10,9 @@ namespace Pit {
 		const auto now = std::chrono::system_clock::now();
 		return std::format("{:%d-%m-%Y__%H-%M-%OS}", now);
 	}
+
+	inline std::string CurrentTimeToStringPretty() {
+		const auto now = std::chrono::system_clock::now();
+		return std::format("{:%d-%m-%Y  %H:%M:%OS}", now);
+	}
 }

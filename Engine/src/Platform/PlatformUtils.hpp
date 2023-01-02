@@ -6,15 +6,48 @@ namespace Pit {
 	/// <summary>
 	/// Handles Message prompts 
 	/// </summary>
-	namespace MessagePrompts {
-		void InfoMessage(const wchar_t* title, const wchar_t* msg);
-		void ErrorMessage(const wchar_t* title, const wchar_t* msg);
-	}
+	class MessagePrompts {
+	public:
+		static void InfoMessage(const wchar_t* title, const wchar_t* msg);
+		static void ErrorMessage(const wchar_t* title, const wchar_t* msg);
+	};
 
 	/// <summary>
 	/// Simplifies the running of external programs
 	/// </summary>
-	namespace Process {
-		void Run(const wchar_t* path);
-	}
+	class Process {
+	public:
+		static void Run(const wchar_t* path);
+		static const unsigned long GetCurrentProcessID();
+		static const std::wstring GetName(unsigned long processId);
+	};
+
+	class Thread {
+	public:
+		static std::thread::id MainThreadId;
+	};
+
+	class OperatingSystem {
+	public:
+		enum class Type {
+			None = 0,
+			// Windows
+			WindowsXP,
+			WindowsVista,
+			Windows7,
+			Windows8,
+			Windows8_1,
+			Windows10,
+			Windows11
+		};
+
+		static Type Get();
+		static std::string ToString(Type sys);
+	};
+
+	class PhysicalStats {
+	public:
+		/// <returns>Physical ram size (in kilobytes)</returns>
+		static const size_t GetRam();
+	};
 }

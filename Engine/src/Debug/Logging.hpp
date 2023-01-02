@@ -4,6 +4,7 @@
 #include "Event/Event.hpp"
 #include "Platform/PlatformUtils.hpp"
 #include "ConsoleLogger.hpp"
+#include "vcrash.h"
 
 namespace Pit::Debug {
 	/// <summary>
@@ -32,14 +33,16 @@ namespace Pit::Debug {
 		static ConsoleLoggerMT* GetEngineLogger();
 		static ConsoleLoggerMT* GetGameLogger();
 
+		static const std::string& GetLastErrorMsg() { return s_LastErrorMsg; }
+
 		static bool LoggerInitialized;
 
 	private:
-
 		static ConsoleLoggerMT* s_EngineLogger;
 		static ConsoleLoggerMT* s_GameLogger;
 
 		static std::ofstream s_LogFile;
+		static std::string s_LastErrorMsg;
 	};
 }
 
@@ -69,7 +72,7 @@ using Log = Pit::Debug::Logging::Category;
 #define PIT_ENGINE_INFO(category, msg, ...)		PIT_ENGINE_BASE_LOG(Info, Log::category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_WARN(category, msg, ...)		PIT_ENGINE_BASE_LOG(Warn, Log::category, msg, ##__VA_ARGS__)
 #define PIT_ENGINE_ERR(category, msg, ...)		PIT_ENGINE_BASE_LOG(Error, Log::category, msg,  ##__VA_ARGS__)
-#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); abort(); }
+#define PIT_ENGINE_FATAL(category, msg, ...)	{ PIT_ENGINE_ERR(category, msg, ##__VA_ARGS__) Pit::MessagePrompts::ErrorMessage(L"PitEngine::" L#category, L#msg); CrashHandler::OnProcessCrashed(SIGABRT); PIT_DEBUGBREAK(); }
 #define PIT_ENGINE_ASSERT(category, result, msg, ...)	if (!(result)) { PIT_ENGINE_FATAL(category, "Assertion Failed: " msg, ##__VA_ARGS__); }
 #else
 #define PIT_ENGINE_TRACE(category, msg, ...) {}
@@ -99,11 +102,11 @@ using Log = Pit::Debug::Logging::Category;
 #define PIT_INFO(msg, ...)			PIT_BASE_LOG(Info, msg, ##__VA_ARGS__)
 #define PIT_WARN(msg, ...)			PIT_BASE_LOG(Warn, msg, ##__VA_ARGS__)
 #define PIT_ERR(msg, ...)			PIT_BASE_LOG(Error, msg, ##__VA_ARGS__)
-#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); abort(); }
+#define PIT_FATAL(msg, ...)			{ PIT_ERR(msg, ##__VA_ARGS__); Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); CrashHandler::OnProcessCrashed(SIGABRT); PIT_DEBUGBREAK(); }
 #else
 #define PIT_TRACE(msg, ...)	{}
 #define PIT_INFO(msg, ...)	{}
 #define PIT_WARN(msg, ...)	{}
 #define PIT_ERR(msg, ...)	{}
-#define PIT_FATAL(msg, ...)	{ Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); abort(); }
+#define PIT_FATAL(msg, ...)	{ Pit::MessagePrompts::ErrorMessage(L"Sandbox", L#msg); CrashHandler::OnProcessCrashed(SIGABRT); PIT_DEBUGBREAK(); }
 #endif

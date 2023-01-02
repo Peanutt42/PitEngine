@@ -7,6 +7,7 @@ namespace Pit::Debug {
 	ConsoleLoggerMT* Logging::s_GameLogger;
 
 	std::ofstream Logging::s_LogFile;
+	std::string Logging::s_LastErrorMsg;
 
 	bool Logging::LoggerInitialized = false;
 
@@ -30,8 +31,11 @@ namespace Pit::Debug {
 		s_GameLogger = new ConsoleLoggerMT("Game", ConsoleColor::Green);
 
 		auto logToFileFunc = []([[maybe_unused]] LogVerbosity verbosity, [[maybe_unused]] const String& msg) { s_LogFile << msg << '\n'; };
+		auto copyLastErrorMsgFunc = [](LogVerbosity verbosity, const String& msg) { if (verbosity >= LogVerbosity::Error) s_LastErrorMsg = msg; };
 		s_EngineLogger->OnLogEvent += logToFileFunc;
+		s_EngineLogger->OnLogEvent += copyLastErrorMsgFunc;
 		s_GameLogger->OnLogEvent += logToFileFunc;
+		s_GameLogger->OnLogEvent += copyLastErrorMsgFunc;
 
 		LoggerInitialized = true;
 #endif

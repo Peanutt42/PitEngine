@@ -45,7 +45,7 @@ public:
 	static void Init();
 	// on crash mode, don't print calls made after the crash occured
 	// on cut setup, don't print calls made before main is called.
-	static void StackTrace(bool crashMode, bool cutSetup);
+	static void StackTrace(bool cutSetup, std::ostream& out = std::cout);
 
 	static void OnProcessCrashed(int sig);
 };

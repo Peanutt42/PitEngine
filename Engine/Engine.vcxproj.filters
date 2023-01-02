@@ -240,9 +240,6 @@
     <ClInclude Include="src\Serialization\YAMLSerializer.hpp">
       <Filter>Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="src\Threading\JobSystem.hpp">
-      <Filter>Threading</Filter>
-    </ClInclude>
     <ClInclude Include="src\UI\UI.hpp">
       <Filter>UI</Filter>
     </ClInclude>
@@ -259,6 +256,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Threading\JobSystem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -378,12 +376,10 @@
     <ClCompile Include="src\Serialization\YAMLSerializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="src\Threading\JobSystem.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
     <ClCompile Include="src\UI\UIRenderer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Threading\JobSystem.cpp" />
   </ItemGroup>
 </Project>

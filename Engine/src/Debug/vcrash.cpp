@@ -2,6 +2,11 @@
 #include "vcrash.h"
 
 #include <string.h>
+#include "Core/Engine.hpp"
+#include "Debug\Logging.hpp"
+#include "Memory\MemorySubmodule.hpp"
+#include "Utils\DateUtils.hpp"
+#include "Platform\PlatformUtils.hpp"
 
 #ifdef PIT_WINDOWS
 #include <windows.h>
@@ -12,14 +17,26 @@
 #include <stdlib.h>
 #include <signal.h>
 
+static void ShutdownEngine(int /*sig*/) { Pit::Engine::ForceShutdown(); }
+
 void CrashHandler::Init() {
 	signal(SIGINT, OnProcessCrashed); // catch segfaults
 	signal(SIGILL, OnProcessCrashed); // catch segfaults
 	signal(SIGSEGV, OnProcessCrashed); // catch segfaults
 	signal(SIGABRT, OnProcessCrashed); // catch exceptions
+	signal(SIGTERM, ShutdownEngine);
 }
 
-void CrashHandler::StackTrace(bool crashMode, bool cutSetup) {
+
+static BOOL CALLBACK _EnumerateModuleCallBack(PCTSTR ModuleName, DWORD64 ModuleBase, [[maybe_unused]] ULONG ModuleSize, PVOID UserContext) {
+	std::map<DWORD, std::wstring>* pModuleMap = (std::map<DWORD, std::wstring>*)UserContext;
+	LPCWSTR name = wcsrchr(ModuleName, TEXT('\\')) + 1;
+	(*pModuleMap)[(DWORD)ModuleBase] = name;
+
+	return TRUE;
+}
+
+void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 #ifdef PIT_WINDOWS
 	HANDLE process = GetCurrentProcess();
 	HANDLE thread = GetCurrentThread();
@@ -63,16 +80,16 @@ void CrashHandler::StackTrace(bool crashMode, bool cutSetup) {
 	stackframe.AddrStack.Mode = AddrModeFlat;
 #endif
 
-	bool printEnable = !crashMode;
+	std::map<DWORD, std::wstring> moduleMap;
+	if (!EnumerateLoadedModulesW64(process, _EnumerateModuleCallBack, &moduleMap))
+		printf("[CrashLogger][ERROR] Fail to Enumerate loaded modules! Error Code: %d\n", GetLastError());
 
-	for (size_t i = 0; i < 25; i++) {
-		BOOL result = StackWalk64(
-			image, process, thread,
-			&stackframe, &context, NULL,
-			SymFunctionTableAccess64, SymGetModuleBase64, NULL);
+	#if DEBUG
+	out << "To get the source files location, change your configuration to release!\n";
+	#endif
 
-		if (!result) { break; }
-
+	int i = 1;
+	while (StackWalk64(image, process, thread, &stackframe, &context, NULL,	SymFunctionTableAccess64, SymGetModuleBase64, NULL)) {
 		char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
 		PSYMBOL_INFO symbol = (PSYMBOL_INFO)buffer;
 		symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
@@ -83,45 +100,62 @@ void CrashHandler::StackTrace(bool crashMode, bool cutSetup) {
 		lineCounter->SizeOfStruct = sizeof(PIMAGEHLP_LINE64);
 
 		DWORD64 displacement = 0;
-		DWORD displacement32 = 0;
+		[[maybe_unused]] DWORD displacement32 = 0;
 
 		if (SymFromAddr(process, stackframe.AddrPC.Offset, &displacement, symbol)) {
+			if (strcmp(symbol->Name, "abort") == 0)
+				out << '[' << i << "] Internal function: abort()\n";
+			else if (strcmp(symbol->Name, "raise") == 0)
+				out << '[' << i << "] Internal function: raise()\n";
+			else if (strcmp(symbol->Name, "CrashHandler::OnProcessCrashed") == 0 || strcmp(symbol->Name, "CrashHandler::StackTrace") == 0)
+				continue;
+			else {
+				out << '[' << i << "] At " << symbol->Name << "()";
+				#if RELEASE
+				out << " in ";
+				if (SymGetLineFromAddr64(process, stackframe.AddrPC.Offset, &displacement32, lineCounter))
+					out << lineCounter->FileName << ":" << lineCounter->LineNumber;
+				else
+					out << " ???";
+				#endif
+				out << '\n';
 
-			if (printEnable) {
-				fprintf(stderr, "At %s(...)", symbol->Name);
-
-				// get line of symbol.
-				if (SymGetLineFromAddr64(process, stackframe.AddrPC.Offset, &displacement32, lineCounter)) {
-					fprintf(stderr, " (%s:%li)", lineCounter->FileName, lineCounter->LineNumber);
-				}
-				else {
-					fprintf(stderr, " ???");
-				}
-				fprintf(stderr, "\n");
+				if (cutSetup && strcmp(symbol->Name, "main") == 0)
+					break;
 			}
-
-			if (cutSetup && strcmp(symbol->Name, "main") == 0) {
-				break;
-			}
-			if (!printEnable && (strcmp(symbol->Name, "abort") == 0 || strcmp(symbol->Name, "KiUserExceptionDispatcher") == 0)) {
-				printEnable = true;
-			}
-
 		}
-		else {
-			fprintf(stderr, "[%lli] ???\n", i);
-		}
-
+		else
+			out << "[" << i << "] ???\n";
+		i++;
 	}
 	SymCleanup(process);
 #endif
 }
 
-void CrashHandler::OnProcessCrashed(int sig) {
-	fprintf(stderr, "A crash occured.\n");
-	fflush(stderr);
+void CrashHandler::OnProcessCrashed([[maybe_unused]] int sig) {
+	Pit::Engine::Memory()->ToggleFrameAllocator(false);
+	std::cout << "A crash occured.\n";
+	
+	StackTrace(true);
 
-	StackTrace(true, true);
-	fflush(stderr);
-	exit(sig);
+	std::ofstream out(std::string("Logs/CrashReports/") + Pit::CurrentTimeToString() + "_Crash.log");
+	if (out.is_open()) {
+		out << "### System Info ###\n";
+		out << "Platform: PC\n";
+		out << "OS: " << Pit::OperatingSystem::ToString(Pit::OperatingSystem::Get()) << '\n';
+		out << "Architecture: x64\n";
+		out << "Cpu Processors: " << std::thread::hardware_concurrency() << '\n';
+		out << "Ram: " << Pit::PhysicalStats::GetRam() / 1024 / 1024 << "GB\n";
+
+		out << "\n### Crash Info ###\n";
+		out << "Date: " << Pit::CurrentTimeToStringPretty() << '\n';
+		const unsigned long currentProcId = Pit::Process::GetCurrentProcessID();
+		out << "Process: " << Pit::StringFromWString(Pit::Process::GetName(currentProcId)) << "(" << currentProcId << ")\n";
+		out << "Thread: " << (std::this_thread::get_id() == Pit::Thread::MainThreadId ? "Main Thread(" : "Additional Thread(") << std::this_thread::get_id() << ")\n";
+		out << "Last recorded error msg: " << Pit::Debug::Logging::GetLastErrorMsg() << '\n';
+		out << "Stacktrace:\n";
+		StackTrace(true, out);
+		out.close();
+	}
+	Pit::Engine::ForceShutdown();
 }

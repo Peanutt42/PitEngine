@@ -15,6 +15,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Editor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -78,6 +79,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)vendor\sndfile\bin\sndfile.dll"  "$(SolutionDir)bin\windows-x86_64/Debug\$(ProjectName)\" /D /Y /I
@@ -111,6 +114,8 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)vendor\sndfile\bin\sndfile.dll"  "$(SolutionDir)bin\windows-x86_64/Release\$(ProjectName)\" /D /Y /I

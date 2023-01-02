@@ -28,4 +28,11 @@ namespace Pit {
 		}
 		return output;
 	}
+
+	static __forceinline std::string StringFromWString(const std::wstring& ws) {
+		#pragma warning(push)
+		#pragma warning(disable: 4244) // conversion from 'const wchar_t' to 'const _Elem', possible loss of data...
+		return std::string(ws.begin(), ws.end());
+		#pragma warning(pop)
+	}
 }

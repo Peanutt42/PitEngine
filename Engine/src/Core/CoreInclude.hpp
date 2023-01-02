@@ -34,6 +34,7 @@
 #include <thread>
 #include <functional>
 #include <memory>
+#include <signal.h>
 
 #include <chrono>
 using namespace std::chrono_literals; // for ex: 200ms
