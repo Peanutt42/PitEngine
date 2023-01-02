@@ -6,6 +6,7 @@
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
 #include "Panels\LoggingOutputPanel.hpp"
+#include "Panels\BuildGamePanel.hpp"
 #include "EditorDockspace.hpp"
 
 using namespace Pit;
@@ -35,6 +36,7 @@ void EditorApplication::Init() {
 	s_WindowPanels.push_back(new ProfilerPanel());
 	s_WindowPanels.push_back(new ContentBrowserPanel());
 	s_WindowPanels.push_back(new LoggingOutputPanel());
+	s_WindowPanels.push_back(new BuildGamePanel());
 	
 	Engine::UIRenderEvent += []() {
 		if (ImGui::BeginMenuBar()) {

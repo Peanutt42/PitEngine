@@ -12,12 +12,6 @@ entt::entity HierachyPanel::s_SelectedEntity = entt::null;
 void HierachyPanel::OnCreate() {
 	Name = "Hierachy";
 	Shortcut = Array<KeyCode>{ KeyCode::LeftControl, KeyCode::H };
-
-	auto& ecsworld = Engine::ECS()->GetEcsWorld();
-	for (int i = 0; i < 15; i++) {
-		auto e = ecsworld.CreateEntity();
-		e.GetComponent<ECS::NameComponent>().Name = "Entity" + std::to_string((uint32)e.GetID());
-	}
 }
 
 void HierachyPanel::OnDestroy() {

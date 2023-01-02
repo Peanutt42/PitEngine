@@ -58,28 +58,27 @@ namespace Pit {
 
 
 	OperatingSystem::Type OperatingSystem::Get() {
-		return OperatingSystem::Type::Windows10; // TODO
-		/* This thinks im using Windows 8...
-		if (IsWindows10OrGreater()) return OperatingSystem::Type::Windows10;
-		if (IsWindows8Point1OrGreater()) return OperatingSystem::Type::Windows8_1;
-		if (IsWindows8OrGreater()) return OperatingSystem::Type::Windows8;
-		if (IsWindows7OrGreater()) return OperatingSystem::Type::Windows7;
-		if (IsWindowsVistaOrGreater()) return OperatingSystem::Type::WindowsVista;
-		if (IsWindowsXPOrGreater()) return OperatingSystem::Type::WindowsXP;
-		return OperatingSystem::Type::None;*/
+		#ifdef PIT_WINDOWS
+			#ifdef _WIN64
+				return OperatingSystem::Type::Win64;
+			#else
+				return OperatingSystem::Type::Win32;
+			#endif
+		#elif defined(PIT_LINUX)
+			return OperatingSystem::Type::Linux;
+		#elif defined(PIT_MACOS)
+		return OperatingSystem::Type::MacOS;
+		#endif
 	}
 
 	std::string OperatingSystem::ToString(OperatingSystem::Type sys) {
 		switch (sys) {
 		default:
 		case OperatingSystem::Type::None: return "None";
-		case OperatingSystem::Type::WindowsXP: return "Windows-XP";
-		case OperatingSystem::Type::WindowsVista: return "Windows-Vista";
-		case OperatingSystem::Type::Windows7: return "Windows7";
-		case OperatingSystem::Type::Windows8: return "Windows8";
-		case OperatingSystem::Type::Windows8_1: return "Windows8.1";
-		case OperatingSystem::Type::Windows10: return "Windows10";
-		case OperatingSystem::Type::Windows11: return "Windows11";
+		case OperatingSystem::Type::Win32: return "Win32";
+		case OperatingSystem::Type::Win64: return "Win64";
+		case OperatingSystem::Type::MacOS: return "MacOS";
+		case OperatingSystem::Type::Linux: return "Linux";
 		}
 	}
 

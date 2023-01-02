@@ -119,6 +119,7 @@
     <ClInclude Include="src\Audio\SoundBuffer.hpp" />
     <ClInclude Include="src\Audio\SoundDevice.hpp" />
     <ClInclude Include="src\Audio\SoundSource.hpp" />
+    <ClInclude Include="src\BuildSystem\BuildSystem.hpp" />
     <ClInclude Include="src\Core\Assert.hpp" />
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\Audio\SoundBuffer.cpp" />
     <ClCompile Include="src\Audio\SoundDevice.cpp" />
     <ClCompile Include="src\Audio\SoundSource.cpp" />
+    <ClCompile Include="src\BuildSystem\BuildSystem.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\Random.cpp" />
     <ClCompile Include="src\Core\SubmoduleManager.cpp" />

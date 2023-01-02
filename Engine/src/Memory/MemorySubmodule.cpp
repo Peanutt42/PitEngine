@@ -43,7 +43,9 @@ namespace Pit {
 		m_FrameAllocator->Reset();
 	}
 
-	void MemorySubmodule::ToggleFrameAllocator(bool on) { s_UseFrameallocator = on; }
+	const bool MemorySubmodule::GetFrameAllocatorActive() const { return s_UseFrameallocator; }
+
+	void MemorySubmodule::SetFrameAllocatorActive(bool on) { s_UseFrameallocator = on; }
 
 	const size_t MemorySubmodule::GetFrameAllocatorSize() const {
 		return m_FrameAllocator->GetSize();

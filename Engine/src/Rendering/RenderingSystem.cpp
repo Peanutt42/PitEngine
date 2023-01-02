@@ -10,55 +10,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Pit::Rendering {
-#define TEST1 1
-#define TEST2 2
-#define TEST TEST2
-#if TEST == TEST1
-	constexpr float cubeVertices[] = {
-		// Back face
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right    
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right              
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left                
-		// Front face
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right        
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left        
-		// Left face
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left       
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
-		// Right face
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right      
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right          
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-		 // Bottom face          
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
-		  0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left        
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
-		 // Top face
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right                 
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
-		 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // bottom-left  
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // top-left              
-	};
-#elif TEST == TEST2
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -102,25 +53,7 @@ namespace Pit::Rendering {
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
-#endif
 	void RenderingSystem::Setup() {
-#if TEST == TEST1
-		// cube VAO
-		glGenVertexArrays(1, &m_VAO);
-		glGenBuffers(1, &m_VBO);
-		glBindVertexArray(m_VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-
-		m_Shader.Use();
-		m_Shader.SetInt("texture1", 0);
-
-#endif
-#if TEST == TEST2
 		// first, configure the cube's VAO (and VBO)
 		
 		glGenVertexArrays(1, &cubeVAO);
@@ -148,7 +81,6 @@ namespace Pit::Rendering {
 		// note that we update the lamp's position attribute's stride to reflect the updated buffer data
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-#endif
 		Engine::UIRenderEvent += [this]() {
 			ImGui::Begin("Test");
 			ImGui::ColorPicker3("LightColor", glm::value_ptr(lightColor));
@@ -158,26 +90,6 @@ namespace Pit::Rendering {
 	}
 
 	void RenderingSystem::Render() {
-#if TEST == TEST1
-		m_Shader.Use();
-		Camera* cam = Engine::Rendering()->Camera;
-		glm::mat4 view = cam->GetViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(cam->Fov), (float)Engine::Rendering()->Window->GetWidth() /
-												(float)Engine::Rendering()->Window->GetHeight(), cam->NearPlane, cam->FarPlane);
-		m_Shader.SetMat4("view", view);
-		m_Shader.SetMat4("projection", projection);
-
-		glBindVertexArray(m_VAO);
-		m_Texture.Bind();
-
-		auto renderEntities = Engine::ECS()->GetEcsWorld().View<ECS::TransformComponent>();
-		for (auto e : renderEntities) {
-			auto transform = renderEntities.get<ECS::TransformComponent>(e);
-			m_Shader.SetMat4("model", transform.mat4());
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-#endif
-#if TEST == TEST2
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.Use();
 		lightingShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
@@ -195,11 +107,16 @@ namespace Pit::Rendering {
 
 		// world transformation
 		glm::mat4 model = glm::mat4(1.0f);
-		lightingShader.SetMat4("model", model);
 
 		// render the cube
 		glBindVertexArray(cubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		auto entityview = Engine::ECS()->GetEcsWorld().View<ECS::TransformComponent>();
+		for (auto e : entityview) {
+			ECS::TransformComponent& transform = entityview.get<ECS::TransformComponent>(e);
+			model = transform.mat4();
+			lightingShader.SetMat4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 
 		// also draw the lamp object
@@ -213,6 +130,5 @@ namespace Pit::Rendering {
 
 		glBindVertexArray(lightCubeVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-#endif
 	}
 }

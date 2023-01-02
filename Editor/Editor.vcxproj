@@ -128,6 +128,7 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
     <ClInclude Include="src\EditorCameraController.hpp" />
     <ClInclude Include="src\EditorDockspace.hpp" />
     <ClInclude Include="src\EditorWindowPanel.hpp" />
+    <ClInclude Include="src\Panels\BuildGamePanel.hpp" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp" />
     <ClInclude Include="src\Panels\HierachyPanel.hpp" />
     <ClInclude Include="src\Panels\LoggingOutputPanel.hpp" />
@@ -139,6 +140,7 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
     <ClCompile Include="src\EditorAssetManager.cpp" />
+    <ClCompile Include="src\Panels\BuildGamePanel.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\HierachyPanel.cpp" />
     <ClCompile Include="src\Panels\LoggingOutputPanel.cpp" />

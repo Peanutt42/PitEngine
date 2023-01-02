@@ -32,13 +32,12 @@ namespace Pit {
 		enum class Type {
 			None = 0,
 			// Windows
-			WindowsXP,
-			WindowsVista,
-			Windows7,
-			Windows8,
-			Windows8_1,
-			Windows10,
-			Windows11
+			Win32,
+			Win64,
+			// MacOS
+			MacOS,
+			// Linux
+			Linux
 		};
 
 		static Type Get();

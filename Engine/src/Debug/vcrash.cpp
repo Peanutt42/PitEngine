@@ -120,7 +120,7 @@ void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 }
 
 void CrashHandler::OnProcessCrashed([[maybe_unused]] int sig) {
-	Pit::Engine::Memory()->ToggleFrameAllocator(false);
+	Pit::Engine::Memory()->SetFrameAllocatorActive(false);
 	std::cout << "A crash occured.\n";
 	
 	StackTrace(true);

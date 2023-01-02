@@ -11,6 +11,12 @@ namespace Pit {
 
 		if (!m_ECSWorld.Init())
 			PIT_ENGINE_FATAL(ECS, "Error while initializing ECSWorld");
+
+		for (int i = 0; i < 15; i++) {
+			auto e = m_ECSWorld.CreateEntity();
+			e.GetComponent<ECS::TransformComponent>().position.x = i * 1.5f;
+			e.GetComponent<ECS::NameComponent>().Name = "Entity" + std::to_string((uint32)e.GetID());
+		}
 	}
 
 	void ECSSubmodule::Shutdown() {

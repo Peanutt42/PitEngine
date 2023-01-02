@@ -30,6 +30,7 @@
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Panels\BuildGamePanel.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
@@ -54,5 +55,6 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Panels\BuildGamePanel.cpp" />
   </ItemGroup>
 </Project>

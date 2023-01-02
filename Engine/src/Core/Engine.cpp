@@ -147,7 +147,7 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
-			Memory()->ToggleFrameAllocator(true);
+			Memory()->SetFrameAllocatorActive(true);
 
 			Time::SetFrame((Time::Frame() + 1) % 1000);
 
@@ -178,7 +178,7 @@ namespace Pit {
 				}
 			}
 
-			Memory()->ToggleFrameAllocator(false);
+			Memory()->SetFrameAllocatorActive(false);
 		}
 		CATCH_EXCEPTIONS();
 

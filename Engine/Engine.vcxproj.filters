@@ -257,6 +257,7 @@
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Threading\JobSystem.hpp" />
+    <ClInclude Include="src\BuildSystem\BuildSystem.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -381,5 +382,6 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
+    <ClCompile Include="src\BuildSystem\BuildSystem.cpp" />
   </ItemGroup>
 </Project>
