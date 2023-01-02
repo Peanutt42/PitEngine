@@ -4,16 +4,10 @@
 #include "Camera.hpp"
 
 namespace Pit {
-
-	static void GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description) {
-		PIT_ENGINE_ERR(Rendering, "[GLFW]: {0:d}: {1:s}", errorCode, description);
-	}
-
 	void RenderingSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
 		glfwInit();
-		glfwSetErrorCallback(GLFWErrorCallback);
 
 		Window = new Rendering::Window(Engine::GetSettings().WindowName, 1920, 1080, false);
 		glfwMakeContextCurrent(Window->GetWindowHandle());

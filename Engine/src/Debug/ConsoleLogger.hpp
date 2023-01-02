@@ -23,6 +23,15 @@ namespace Pit::Debug {
 		Critical
 	};
 
+	struct OnLogEvent : public Event<LogVerbosity, const std::string&> {
+		virtual void Invoke(LogVerbosity verbosity, const std::string& msg) {
+			PIT_PROFILE_FUNCTION();
+
+			for (auto& callback : m_Listeners)
+				callback(verbosity, msg);
+		}
+	};
+
 	class ConsoleLoggerMT {
 	public:
 		ConsoleLoggerMT(const std::string& name, ConsoleColor consoleColor = ConsoleColor::White, LogVerbosity verbosity = LogVerbosity::Trace);
@@ -62,7 +71,7 @@ namespace Pit::Debug {
 			Log(LogVerbosity::Critical, msg, std::forward<T>(args)...);
 		}
 
-		Event<LogVerbosity, const std::string&> OnLogEvent;
+		OnLogEvent OnLogEvent;
 
 	private:
 		std::string m_Name;
@@ -109,7 +118,7 @@ namespace Pit::Debug {
 			Log(LogVerbosity::Critical, msg, std::forward<T>(args)...);
 		}
 
-		Event<LogVerbosity, const std::string&> OnLogEvent;
+		OnLogEvent OnLogEvent;
 
 	private:
 		std::string m_Name;

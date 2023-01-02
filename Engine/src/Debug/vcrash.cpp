@@ -20,20 +20,11 @@
 static void ShutdownEngine(int /*sig*/) { Pit::Engine::ForceShutdown(); }
 
 void CrashHandler::Init() {
-	signal(SIGINT, OnProcessCrashed); // catch segfaults
-	signal(SIGILL, OnProcessCrashed); // catch segfaults
-	signal(SIGSEGV, OnProcessCrashed); // catch segfaults
-	signal(SIGABRT, OnProcessCrashed); // catch exceptions
+	signal(SIGINT, OnProcessCrashed);
+	signal(SIGILL, OnProcessCrashed);
+	signal(SIGSEGV, OnProcessCrashed);
+	signal(SIGABRT, OnProcessCrashed);
 	signal(SIGTERM, ShutdownEngine);
-}
-
-
-static BOOL CALLBACK _EnumerateModuleCallBack(PCTSTR ModuleName, DWORD64 ModuleBase, [[maybe_unused]] ULONG ModuleSize, PVOID UserContext) {
-	std::map<DWORD, std::wstring>* pModuleMap = (std::map<DWORD, std::wstring>*)UserContext;
-	LPCWSTR name = wcsrchr(ModuleName, TEXT('\\')) + 1;
-	(*pModuleMap)[(DWORD)ModuleBase] = name;
-
-	return TRUE;
 }
 
 void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
@@ -79,10 +70,6 @@ void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 	stackframe.AddrStack.Offset = context.IntSp;
 	stackframe.AddrStack.Mode = AddrModeFlat;
 #endif
-
-	std::map<DWORD, std::wstring> moduleMap;
-	if (!EnumerateLoadedModulesW64(process, _EnumerateModuleCallBack, &moduleMap))
-		printf("[CrashLogger][ERROR] Fail to Enumerate loaded modules! Error Code: %d\n", GetLastError());
 
 	#if DEBUG
 	out << "To get the source files location, change your configuration to release!\n";

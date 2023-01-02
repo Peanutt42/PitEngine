@@ -30,7 +30,7 @@ namespace Pit::Debug {
 		s_EngineLogger = new ConsoleLoggerMT("Engine", ConsoleColor::Green);
 		s_GameLogger = new ConsoleLoggerMT("Game", ConsoleColor::Green);
 
-		auto logToFileFunc = []([[maybe_unused]] LogVerbosity verbosity, [[maybe_unused]] const String& msg) { s_LogFile << msg << '\n'; };
+		auto logToFileFunc = []([[maybe_unused]] LogVerbosity verbosity, const String& msg) { if (s_LogFile.is_open()) s_LogFile << msg << '\n'; };
 		auto copyLastErrorMsgFunc = [](LogVerbosity verbosity, const String& msg) { if (verbosity >= LogVerbosity::Error) s_LastErrorMsg = msg; };
 		s_EngineLogger->OnLogEvent += logToFileFunc;
 		s_EngineLogger->OnLogEvent += copyLastErrorMsgFunc;

@@ -129,7 +129,9 @@ namespace Pit {
 
 			Debug::Logging::Shutdown();
 
+			#if DEBUG
 			//Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
+			#endif
 
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
 				s_InstanceLockFile.close();
