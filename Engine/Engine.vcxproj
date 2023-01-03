@@ -214,12 +214,7 @@
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
     <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

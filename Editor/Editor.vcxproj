@@ -137,12 +137,7 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
     <ClCompile Include="src\Panels\SceneViewportPanel.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

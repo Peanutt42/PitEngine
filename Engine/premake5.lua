@@ -10,7 +10,7 @@ project "Engine"
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.hpp"
-    pchsource "pch.cpp"
+    pchsource "src/pch.cpp"
 
 	files {
 		"src/**.h",
