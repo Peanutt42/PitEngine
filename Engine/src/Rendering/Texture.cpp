@@ -32,7 +32,7 @@ namespace Pit::Rendering {
 		stbi_set_flip_vertically_on_load(path.ends_with(".jpg"));
 		m_TextureFileData = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
-		if (!m_TextureFileData) PIT_ENGINE_FATAL(Rendering, "Failed to properly load texture");
+		if (!m_TextureFileData) PIT_ENGINE_FATAL(Rendering, "Failed to properly load texture '{}'", path);
 
 
 		m_IsLoaded = true;

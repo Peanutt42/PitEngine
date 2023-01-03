@@ -14,7 +14,12 @@ namespace Pit::Editor {
 		ShaderIcon = 5,
 		BackIcon = 6,
 		RefreshIcon = 7,
-		OptionsIcon = 8
+		OptionsIcon = 8,
+		PlayButton = 9,
+		Stopbutton = 10,
+		SimulateButton = 11,
+		StepButton = 12,
+		ExitButton = 13
 	};
 
 	class EditorAssetManager {

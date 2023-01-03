@@ -2,7 +2,9 @@
 #include "SceneViewportPanel.hpp"
 #include "Core/Engine.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Texture.hpp"
 #include "Rendering/SpectatorCamera.hpp"
+#include "UI/UI.hpp"
 #include <imgui/imgui.h>
 
 using namespace Pit;
@@ -40,7 +42,11 @@ void SceneViewportPanel::OnCreate() {
 
 void SceneViewportPanel::OnDestroy() {}
 
+static void UIToolbar();
+
 void SceneViewportPanel::OnGui() {
+	UIToolbar();
+
 	auto region = ImGui::GetContentRegionAvail();
 	auto panelSize = ImGui::GetWindowSize();
 	auto panelPos = ImGui::GetWindowPos();
@@ -90,4 +96,68 @@ void SceneViewportPanel::OnGui() {
 		}
 		ImGui::EndDragDropTarget();
 	}
+}
+
+static void UIToolbar() {
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+	auto& colors = ImGui::GetStyle().Colors;
+	const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+	const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+	ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+	float size = ImGui::GetWindowHeight() - 6.0f;
+	ImGui::SetWindowSize(ImVec2(size * 4, size));
+	//ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+
+	enum State {
+		Edit,
+		Play,
+		Simulate
+	};
+
+	const Rendering::Texture* m_IconPlay = EditorAssetManager::GetIconTexture(Icon::PlayButton);
+	const Rendering::Texture* m_IconStop = EditorAssetManager::GetIconTexture(Icon::Stopbutton);
+	const Rendering::Texture* m_IconSimulate = EditorAssetManager::GetIconTexture(Icon::SimulateButton);
+	const Rendering::Texture* m_IconStep = EditorAssetManager::GetIconTexture(Icon::StepButton);
+	const Rendering::Texture* m_IconExit = EditorAssetManager::GetIconTexture(Icon::ExitButton);
+
+	static State state = Edit;
+	static bool paused = false;
+
+
+	switch (state) {
+	default:
+	case Edit:
+		if (UI::ImageButton(m_IconPlay, { size, size })) { state = Play; paused = false; }
+		ImGui::SameLine();
+		if (UI::ImageButton(m_IconSimulate, { size, size })) { state = Simulate; paused = false; }
+		break;
+	case Play:
+		if (UI::ImageButton(paused ? m_IconPlay : m_IconStop, { size, size })) { paused = !paused; }
+		ImGui::SameLine();
+		if (UI::ImageButton(m_IconExit, ImVec2(size, size))) { state = Edit; paused = false; }
+		if (paused) {
+			ImGui::SameLine();
+			UI::ImageButton(m_IconStep, { size, size });
+		}
+		break;
+	case Simulate:
+		ImGui::Dummy(ImVec2(size, size));
+		ImGui::SameLine();
+		if (UI::ImageButton(m_IconStop, { size, size })) { state = Edit; }
+		if (paused) {
+			ImGui::SameLine();
+			UI::ImageButton(m_IconStep, { size, size });
+		}
+		break;
+	}	
+
+	ImGui::PopStyleVar(2);
+	ImGui::PopStyleColor(3);
+	ImGui::End();
 }

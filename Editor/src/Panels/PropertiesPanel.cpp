@@ -109,8 +109,7 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	});
 
 	DrawComponent<ECS::ScriptComponent>("Script", entity, [](ECS::ScriptComponent& script) {
-		const auto& entityClassesList = Engine::Scripting()->GetEntityClassList();
-		bool scriptClassExists = entityClassesList.find(script.Name) != entityClassesList.end();
+		bool scriptClassExists = Engine::Scripting()->EntityClassExists(script.Name);
 		
 		if (!scriptClassExists) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
 

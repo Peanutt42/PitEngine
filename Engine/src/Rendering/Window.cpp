@@ -60,8 +60,14 @@ namespace Pit::Rendering {
 	void Window::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		glfwSwapBuffers(m_Window);
-		glfwPollEvents();
+		{
+			PIT_PROFILE_FUNCTION("Pit::Rendering::Window::Update::PollEvents");
+			glfwPollEvents();
+		}
+		{
+			PIT_PROFILE_FUNCTION("Pit::Rendering::Window::Update::SwapBuffers");
+			glfwSwapBuffers(m_Window);
+		}
 	}
 
 	bool Window::ShouldClose() {

@@ -43,7 +43,6 @@ using namespace std::chrono_literals; // for ex: 200ms
 // Own
 #include "Assert.hpp"
 #include "PlatformDetection.hpp"
-#include "Result.hpp"
 #include "Time.hpp"
 #include "FileSystem.hpp"
 #include "UUID.hpp"

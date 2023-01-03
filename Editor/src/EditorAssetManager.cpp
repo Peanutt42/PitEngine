@@ -17,6 +17,11 @@ namespace Pit::Editor {
 			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/BackIcon.png"));
 			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/RefreshIcon.png"));
 			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/Options.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/PlayButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/StopButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/SimulateButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/StepButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/ExitButton.png"));
 		}
 	}
 

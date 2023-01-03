@@ -129,62 +129,49 @@ namespace Pit::Rendering {
 	void Renderer::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		if (Engine::GetSettings().AntiAliasing != 0) {
-			// 1. draw scene as normal in multisampled buffers
 			glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenFramebuffer);
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glEnable(GL_DEPTH_TEST);
 
 			m_RenderingSystem.Render();
 
-			// 2. now blit multisampled buffer(s) to normal colorbuffer of intermediate FBO. Image is stored in screenTexture
 			glBindFramebuffer(GL_READ_FRAMEBUFFER, m_ScreenFramebuffer);
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_ScreenIntermediateFramebuffer);
 			glBlitFramebuffer(0, 0, Engine::Rendering()->Window->GetWidth(), Engine::Rendering()->Window->GetHeight(), 0, 0, Engine::Rendering()->Window->GetWidth(), Engine::Rendering()->Window->GetHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-			// 3. now render quad with scene's visuals as its texture image
+
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glDisable(GL_DEPTH_TEST);
 
-			// draw Screen quad
 			m_ScreenShader.Use();
 			glBindVertexArray(m_ScreenQuadVAO);
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer); // use the now resolved color attachment as the quad's texture
+			glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 		else {
-			// bind to framebuffer and draw scene as we normally would to color texture 
 			glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenFramebuffer);
 
-			glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-			//glEnable(GL_CULL_FACE);
-			//glCullFace(GL_FRONT);
-			//glFrontFace(GL_CCW);
-
-			// make sure we clear the framebuffer's content
-			glClearColor(.1f, .1f, .1f, 1);
+			glEnable(GL_DEPTH_TEST);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			m_RenderingSystem.Render();
 
-			// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
+
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+			glDisable(GL_DEPTH_TEST);
 			glDisable(GL_CULL_FACE);
-			// clear all relevant buffers
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			m_ScreenShader.Use();
 			glBindVertexArray(m_ScreenQuadVAO);
-			glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);	// use the color attachment texture as the texture of the quad plane
+			glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 	}

@@ -78,12 +78,6 @@
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\MusicBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\SoundBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\SoundDevice.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
@@ -115,9 +109,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Random.hpp">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Result.hpp">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\SmartPointers.hpp">
@@ -259,6 +250,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -271,12 +263,6 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\MusicBuffer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\SoundBuffer.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\SoundDevice.cpp">
@@ -391,5 +377,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
   </ItemGroup>
 </Project>
