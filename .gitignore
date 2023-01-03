@@ -13,3 +13,6 @@ Intermediates/
 **.vcxproj.filters
 **.vcxproj.user
 **.csproj
+
+# Random dir
+JSON/
