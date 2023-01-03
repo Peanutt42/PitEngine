@@ -13,6 +13,7 @@ namespace Pit {
 	bool Input::s_KeyStateChanged[KEY_COUNT];
 	bool Input::s_MouseButtonStates[MOUSEBUTTON_COUNT];
 	bool Input::s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
+	bool Input::s_ControllerActiveStates[MAX_CONTROLLER_COUNT];
 	ButtonState Input::s_ControllerButtonStates[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
 	bool Input::s_ControllerButtonStateChanged[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
 	float Input::s_ControllerAxises[MAX_CONTROLLER_COUNT][CONTROLLER_AXIS_COUNT];
@@ -45,6 +46,11 @@ namespace Pit {
 
 		for (int controller = 0; controller < MAX_CONTROLLER_COUNT; controller++) {
 			if (glfwJoystickPresent(controller)) {
+				if (!s_ControllerActiveStates[controller]) {
+					PIT_ENGINE_INFO(General, "New Controller connected: ID{}: {}", controller, glfwGetJoystickName(controller));
+					s_ControllerActiveStates[controller] = true;
+				}
+
 				int numAxes;
 				const float* axises = glfwGetJoystickAxes(controller, &numAxes);
 				for (int i = 0; i < numAxes; i++) {
@@ -68,6 +74,7 @@ namespace Pit {
 				}
 				s_ControllerTypes[controller] = Pit::GetControllerType(glfwGetJoystickName(controller));
 			}
+			else s_ControllerActiveStates[controller] = false;
 		}
 
 		GLFWwindow* window = GetWindow();
