@@ -1,6 +1,0 @@
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Intermediates\Debug\Engine-ScriptCore.csproj.AssemblyReference.cache
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Intermediates\Debug\Engine-ScriptCore.csproj.CoreCompileInputs.cache
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Intermediates\Debug\Engine-ScriptCore.dll
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Intermediates\Debug\Engine-ScriptCore.pdb
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Engine-ScriptCore.dll
-C:\dev\cpp\PitEngine\Editor\Resources\Scripts\Engine-ScriptCore.pdb
