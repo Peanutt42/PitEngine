@@ -18,8 +18,8 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\Editor\Resources\Scripts\</OutputPath>
-    <BaseIntermediateOutputPath>..\Editor\Resources\Scripts\Intermediates\Debug\</BaseIntermediateOutputPath>
+    <OutputPath>..\Engine\Resources\Scripts\</OutputPath>
+    <BaseIntermediateOutputPath>..\Engine\Resources\Scripts\Intermediates\Debug\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -31,8 +31,8 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>..\Editor\Resources\Scripts\</OutputPath>
-    <BaseIntermediateOutputPath>..\Editor\Resources\Scripts\Intermediates\Release\</BaseIntermediateOutputPath>
+    <OutputPath>..\Engine\Resources\Scripts\</OutputPath>
+    <BaseIntermediateOutputPath>..\Engine\Resources\Scripts\Intermediates\Release\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -44,6 +44,7 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\InternalCalls.cs" />
     <Compile Include="Source\Main.cs" />
   </ItemGroup>
   <ItemGroup>

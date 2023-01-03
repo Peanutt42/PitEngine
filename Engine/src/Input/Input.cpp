@@ -28,7 +28,7 @@ namespace Pit {
 	}
 
 	void Input::Init() {
-		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
+		if (Engine::GetSettings().Headless) return;
 
 		String filePrefix = FileSystem::GetConfigDir() + Engine::GetSettings().Prefix;
 		s_InputBinding.Deserize(filePrefix + "KeyboardBindings.ini",
@@ -42,7 +42,7 @@ namespace Pit {
 	void Input::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
+		if (Engine::GetSettings().Headless) return;
 
 		for (int controller = 0; controller < MAX_CONTROLLER_COUNT; controller++) {
 			if (glfwJoystickPresent(controller)) {
@@ -259,7 +259,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonUp(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonUp(ControllerId::ID1, button);
 			else
 				return true;
 		}
@@ -276,7 +276,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonDown(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonDown(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -293,7 +293,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonPressed(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonPressed(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -310,7 +310,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonReleased(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonReleased(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -331,7 +331,7 @@ namespace Pit {
 			}
 		}
 		else
-			return GetControllerAxis(ControllerId::ID1, GetControllerAxisBinding(name)); // TODO: Allow multiple controllers
+			return GetControllerAxis(ControllerId::ID1, GetControllerAxisBinding(name));
 	}
 	
 	bool Input::RemoveBinding(const String& name) { return s_InputBinding.RemoveBinding(name); }

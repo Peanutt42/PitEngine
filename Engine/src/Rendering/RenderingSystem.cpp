@@ -115,7 +115,7 @@ namespace Pit::Rendering {
 		auto entityview = Engine::ECS()->GetEcsWorld().View<ECS::TransformComponent>();
 		for (auto e : entityview) {
 			ECS::TransformComponent& transform = entityview.get<ECS::TransformComponent>(e);
-			model = transform.mat4();
+			transform.mat4(model);
 			lightingShader.SetMat4("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}

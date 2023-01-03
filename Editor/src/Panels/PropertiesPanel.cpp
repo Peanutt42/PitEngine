@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
+#include "Scripting/ScriptingSubmodule.hpp"
 #include "PropertiesPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "UI/UIFonts.hpp"
@@ -108,10 +109,17 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	});
 
 	DrawComponent<ECS::ScriptComponent>("Script", entity, [](ECS::ScriptComponent& script) {
+		const auto& entityClassesList = Engine::Scripting()->GetEntityClassList();
+		bool scriptClassExists = entityClassesList.find(script.Name) != entityClassesList.end();
+		
+		if (!scriptClassExists) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
+
 		static char buffer[64];
 		strcpy_s(buffer, script.Name.c_str());
 		if (ImGui::InputText("Class", buffer, 64))
 			script.Name = buffer;
+
+		if (!scriptClassExists) ImGui::PopStyleColor();
 	});
 
 	ImGui::Spacing();

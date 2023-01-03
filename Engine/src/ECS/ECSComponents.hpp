@@ -18,7 +18,7 @@ namespace Pit::ECS {
         glm::vec3 rotation{};
         glm::vec3 scale{ 1.f, 1.f, 1.f };
 
-        glm::mat4 mat4() {
+        void mat4(glm::mat4& out) {
             // Simplified but slower:
             // auto transform = glm::translate(glm::mat4(1), position);
 
@@ -35,7 +35,7 @@ namespace Pit::ECS {
             const float s2 = glm::sin(rotation.x);
             const float c1 = glm::cos(rotation.y);
             const float s1 = glm::sin(rotation.y);
-            return glm::mat4{
+            out = glm::mat4{
                 {
                     scale.x * (c1 * c3 + s1 * s2 * s3),
                     scale.x * (c2 * s3),
