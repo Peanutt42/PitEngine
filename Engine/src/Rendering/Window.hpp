@@ -39,11 +39,13 @@ namespace Pit::Rendering {
 		GLFWwindow* m_Window = nullptr;
 		String m_Title;
 		int m_Width, m_Height;
+		bool m_Maximized = false, m_Minimized = false;
 		bool m_FramebufferResized = false;
 
 		static void _GLFWErrorCallback(int errorCode, const char* description);
 		static void _FramebufferResizedCallback(GLFWwindow* window, int width, int height);
 		static void _WindowResizedCallback(GLFWwindow* window, int width, int height);
 		static void _WindowPositionCallback(GLFWwindow* window, int xpos, int ypos);
+		static void _WindowMaximizeCallback(GLFWwindow* window, int maximized);
 	};
 }

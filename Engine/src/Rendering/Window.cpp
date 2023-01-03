@@ -48,6 +48,7 @@ namespace Pit::Rendering {
 		glfwSetWindowSizeCallback(m_Window, _WindowResizedCallback);
 		glfwSetWindowPosCallback(m_Window, _WindowPositionCallback);
 		glfwSetWindowSizeLimits(m_Window, 200, 200, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowMaximizeCallback(m_Window, _WindowMaximizeCallback);
 	}
 
 	Window::~Window() {
@@ -81,8 +82,8 @@ namespace Pit::Rendering {
 
 	void Window::SetMaximized(bool maximized) { return glfwSetWindowAttrib(m_Window, GLFW_MAXIMIZED, maximized ? GLFW_TRUE : GLFW_FALSE); }
 
-	bool Window::IsMaximized() { return glfwGetWindowAttrib(m_Window, GLFW_MAXIMIZED) == GLFW_TRUE; }
-	bool Window::IsMinimized() { return m_Width <= 0 || m_Height <= 0; }
+	bool Window::IsMaximized() { return m_Maximized; }
+	bool Window::IsMinimized() { return m_Minimized; }
 	bool Window::IsFocused() { return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) == GLFW_TRUE; }
 	bool Window::IsHovered() { return glfwGetWindowAttrib(m_Window, GLFW_HOVERED) == GLFW_TRUE; }
 
@@ -113,7 +114,7 @@ namespace Pit::Rendering {
 	void Window::_FramebufferResizedCallback(GLFWwindow* window, int width, int height) {
 		glViewport(0, 0, width, height);
 		auto _window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
-		if (_window && !_window->WasWindowResized()) {
+		if (_window) {
 			_window->m_FramebufferResized = true;
 			_window->m_Width = width;
 			_window->m_Height = height;
@@ -124,7 +125,7 @@ namespace Pit::Rendering {
 	void Window::_WindowResizedCallback(GLFWwindow* window, int width, int height) {
 		auto _window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
 		glViewport(0, 0, width, height);
-		if (_window && !_window->WasWindowResized()) {
+		if (_window) {
 			_window->m_FramebufferResized = true;
 			_window->m_Width = width;
 			_window->m_Height = height;
@@ -134,5 +135,13 @@ namespace Pit::Rendering {
 
 	void Window::_WindowPositionCallback(GLFWwindow* /*window*/, int /*xpos*/, int /*ypos*/) {
 		Engine::Update();
+	}
+	
+	void Window::_WindowMaximizeCallback(GLFWwindow* window, int maximized) {
+		auto _window = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
+		if (_window) {
+			_window->m_Maximized = maximized == 1;
+			_window->m_Minimized = maximized == 0;
+		}
 	}
 }

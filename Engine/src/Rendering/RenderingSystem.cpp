@@ -90,6 +90,7 @@ namespace Pit::Rendering {
 	}
 
 	void RenderingSystem::Render() {
+
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.Use();
 		lightingShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
@@ -99,8 +100,9 @@ namespace Pit::Rendering {
 
 		// view/projection transformations
 		Camera* cam = Engine::Rendering()->Camera;
-		glm::mat4 projection = glm::perspective(glm::radians(cam->Fov), (float)Engine::Rendering()->Window->GetWidth() /
-												(float)Engine::Rendering()->Window->GetHeight(), cam->NearPlane, cam->FarPlane);
+		float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
+		if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
+		glm::mat4 projection = glm::perspective(glm::radians(cam->Fov), aspect, cam->NearPlane, cam->FarPlane);
 		glm::mat4 view = cam->GetViewMatrix();
 		lightingShader.SetMat4("projection", projection);
 		lightingShader.SetMat4("view", view);
