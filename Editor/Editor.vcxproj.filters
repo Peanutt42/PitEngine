@@ -11,6 +11,9 @@
     <ClInclude Include="src\EditorCameraController.hpp" />
     <ClInclude Include="src\EditorDockspace.hpp" />
     <ClInclude Include="src\EditorWindowPanel.hpp" />
+    <ClInclude Include="src\Panels\BuildGamePanel.hpp">
+      <Filter>Panels</Filter>
+    </ClInclude>
     <ClInclude Include="src\Panels\ContentBrowserPanel.hpp">
       <Filter>Panels</Filter>
     </ClInclude>
@@ -30,11 +33,13 @@
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Panels\BuildGamePanel.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
     <ClCompile Include="src\EditorAssetManager.cpp" />
+    <ClCompile Include="src\Panels\BuildGamePanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
@@ -55,6 +60,5 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Panels\BuildGamePanel.cpp" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ project "glm"
 	language "C++"
 	cppdialect "C++14"
 	staticruntime "off"
-
+	
 	warnings "Default" -- /W3?
 
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -28,10 +28,10 @@ project "glm"
 		buildoptions "/MDd"
 		runtime "Debug"
 		optimize "off"
-		symbols "on"
+		symbols "Default"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "Speed"
-		symbols "on"
+		optimize "Full"
+		symbols "Default"

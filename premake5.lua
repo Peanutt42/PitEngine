@@ -8,10 +8,11 @@ workspace "PitEngine"
 
 	flags {
 		"MultiProcessorCompile",
-		"LinkTimeOptimization",
 		"FatalCompileWarnings"
 	}
 
+	editandcontinue "Off"
+	
 	warnings "Extra" -- /W4
 
 	startproject "Editor"
@@ -27,7 +28,16 @@ group "Dependencies"
 	include "vendor/yaml"
 group ""
 
-include "Editor"
-include "Engine"
-include "Sandbox"
-include "Tests"
+group "Core"
+	include "Engine"
+	include "Engine-ScriptCore"
+group ""
+
+group "Tools"
+	include "Editor"
+	include "Tests"
+group ""
+
+group "Misc"
+	include "Sandbox"
+group ""

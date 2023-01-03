@@ -22,14 +22,12 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -61,9 +59,8 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\bullet\src;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\bullet\src;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -71,13 +68,11 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;libmono-static-sgen.lib;Ws2_32.lib;Winmm.lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\vendor\mono\lib\Debug;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)vendor\sndfile\bin\sndfile.dll"  "$(SolutionDir)bin\windows-x86_64/Debug\$(ProjectName)\" /D /Y /I
@@ -90,10 +85,9 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\bullet\src;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\bullet\src;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
@@ -106,11 +100,10 @@ xcopy "$(SolutionDir)vendor\optick\lib\x64\release\OptickCore.dll"  "$(SolutionD
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sndfile.lib;opengl32.lib;glfw3.lib;Dbghelp.lib;OptickCore.lib;libmono-static-sgen.lib;Ws2_32.lib;Winmm.lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\vendor\mono\lib\Release;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)vendor\sndfile\bin\sndfile.dll"  "$(SolutionDir)bin\windows-x86_64/Release\$(ProjectName)\" /D /Y /I

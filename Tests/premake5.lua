@@ -37,13 +37,13 @@ project "Tests"
 		buildoptions "/MDd"
 		runtime "Debug"
 		optimize "off"
-		symbols "on"
+		symbols "Default"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "Speed"
-		symbols "on"
+		optimize "Full"
+		symbols "Default"
 
 	filter { "configurations:Debug" }
 		defines { "DEBUG" }
