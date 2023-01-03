@@ -19,9 +19,9 @@ namespace Pit::UI {
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 			constexpr float defaultSize = 18.f;
 
-			auto regular =		io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Regular.ttf").c_str(), defaultSize);
-			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), defaultSize);
-			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "assets/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), defaultSize);
+			auto regular =		io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-Regular.ttf").c_str(), defaultSize);
+			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-Bold.ttf").c_str(), defaultSize);
+			io.Fonts->AddFontFromFileTTF((FileSystem::GetEngineDir() + "Resources/Fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf").c_str(), defaultSize);
 
 			io.FontDefault = regular;
 		}

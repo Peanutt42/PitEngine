@@ -16,7 +16,7 @@ namespace Pit::Rendering {
 	Renderer::Renderer() {
 		PIT_PROFILE_FUNCTION();
 
-		Engine::Rendering()->Window->SetIcon(FileSystem::GetEngineDir() + "assets/Icons/PitEngineLogo.png");
+		Engine::Rendering()->Window->SetIcon(FileSystem::GetEngineDir() + "Resources/Icons/PitEngineLogo.png");
 
 		glEnable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT, GL_FILL);

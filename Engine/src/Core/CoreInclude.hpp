@@ -51,7 +51,7 @@ using namespace std::chrono_literals; // for ex: 200ms
 #include "Version.hpp"
 #include "Debug/Logging.hpp"
 #include "Debug/Profiling.hpp"
-#include "Event/Event.hpp"
+#include "Core/Event.hpp"
 #include "Input/Input.hpp"
 #include "Input/KeyCode.hpp"
 #include "Math/CoreMath.hpp"

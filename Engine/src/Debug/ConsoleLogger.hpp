@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core\CoreInclude.hpp"
-#include "Event\Event.hpp"
+#include "Core\Event.hpp"
 #include "fmt\fmt.h"
 
 namespace Pit::Debug {

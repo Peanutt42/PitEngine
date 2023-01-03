@@ -10,6 +10,7 @@
 #include "AssetManagment/AssetManagmentSubmodule.hpp"
 #include "Memory/MemorySubmodule.hpp"
 #include "AntiCheat/AntiCheatSubmodule.hpp"
+#include "Scripting\ScriptingSubmodule.hpp"
 
 namespace Pit {
 	void SubmoduleManager::Init() {
@@ -19,6 +20,7 @@ namespace Pit {
 		AntiCheatSubmodule = new Pit::AntiCheatSubmodule();
 		AntiCheatSubmodule->Init();
 
+
 		if (!Engine::GetSettings().Headless) {
 			AudioSubmodule = new Pit::AudioSubmodule();
 			AudioSubmodule->Init();
@@ -26,6 +28,9 @@ namespace Pit {
 
 		ECSSubmodule = new Pit::ECSSubmodule();
 		ECSSubmodule->Init();
+
+		ScriptingSubmodule = new Pit::ScriptingSubmodule();
+		ScriptingSubmodule->Init();
 
 		if (!Engine::GetSettings().Headless) {
 			RenderingSubmodule = new Pit::RenderingSubmodule();
@@ -54,6 +59,8 @@ namespace Pit {
 		delete PhysicsSubmodule;
 		NetworkingSubmodule->Shutdown();
 		delete NetworkingSubmodule;
+		ScriptingSubmodule->Shutdown();
+		delete ScriptingSubmodule;
 		ECSSubmodule->Shutdown();
 		delete ECSSubmodule;
 		if (!Engine::GetSettings().Headless) {
@@ -76,6 +83,8 @@ namespace Pit {
 
 		PhysicsSubmodule->Update();
 		
+		ScriptingSubmodule->Update();
+
 		ECSSubmodule->Update();
 
 		if (!Engine::GetSettings().Headless) {

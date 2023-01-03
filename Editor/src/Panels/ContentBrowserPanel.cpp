@@ -6,7 +6,7 @@
 
 using namespace Pit::Editor;
 
-static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "assets");
+static std::filesystem::path s_AssetPath = std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "Resources");
 
 void ContentBrowserPanel::OnCreate() {
 	Name = "Content Browser";
