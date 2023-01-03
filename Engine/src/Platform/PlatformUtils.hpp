@@ -12,6 +12,13 @@ namespace Pit {
 		static void ErrorMessage(const wchar_t* title, const wchar_t* msg);
 	};
 
+
+	class FileDialogs {
+	public:
+		static const std::string OpenFile(const std::string& filter);
+		static const std::string SaveFile(const std::string& filter);
+	};
+
 	/// <summary>
 	/// Simplifies the running of external programs
 	/// </summary>

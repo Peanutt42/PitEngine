@@ -3,7 +3,7 @@
 #pragma once
 
 #include "EditorWindowPanel.hpp"
-#include "ECS/ECSWorld.hpp"
+#include "ECS/ECSScene.hpp"
 
 namespace Pit::Editor {
 	class PropertiesPanel : public EditorWindowPanel {

@@ -12,7 +12,7 @@ namespace Pit::Rendering {
 	/// </summary>
 	class TextureAsset : public AssetManagment::Asset {
 	public:
-		TextureAsset(const String& path, bool asyncLoading = false);
+		TextureAsset(const std::filesystem::path& path, bool asyncLoading = false);
 
 		~TextureAsset();
 

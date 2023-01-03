@@ -21,11 +21,11 @@ namespace Pit::AssetManagment {
 		const UUID& GetUUID() const { return m_UUID; }
 		const bool IsLoaded() const { return m_Loaded; }
 		const uint32 GetType() const { return m_TypeId; }
-		const String& GetPath() const { return m_Filepath; }
+		const std::filesystem::path& GetPath() const { return m_Filepath; }
 
 	protected:
 		UUID m_UUID;
-		String m_Filepath;
+		std::filesystem::path m_Filepath;
 		uint32 m_TypeId;
 		bool m_Loaded;
 	};

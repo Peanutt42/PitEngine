@@ -159,7 +159,7 @@
     <ClInclude Include="src\ECS\ECSSystem.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSWorld.hpp">
+    <ClInclude Include="src\ECS\ECSScene.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\Input.hpp">
@@ -307,7 +307,7 @@
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ECSWorld.cpp">
+    <ClCompile Include="src\ECS\ECSScene.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">

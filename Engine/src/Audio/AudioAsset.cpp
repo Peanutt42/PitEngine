@@ -2,7 +2,7 @@
 #include "AudioAsset.hpp"
 
 namespace Pit::Audio {
-	AudioAsset::AudioAsset(const String& path, bool asyncLoading)
+	AudioAsset::AudioAsset(const std::filesystem::path& path, bool asyncLoading)
 		: m_AsyncLoading(asyncLoading) {
 		m_Filepath = path;
 		m_TypeId = AUDIO_ASSET_TYPE;
@@ -16,10 +16,10 @@ namespace Pit::Audio {
 		if (m_MusicBuffer) delete m_MusicBuffer;
 		if (m_AsyncLoading)
 			JobSystem::Execute([this]() {
-			m_MusicBuffer = new MusicBuffer(m_Filepath.c_str(), m_AsyncLoading);
+			m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
 		});
 		else
-			m_MusicBuffer = new MusicBuffer(m_Filepath.c_str(), m_AsyncLoading);
+			m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
 	}
 	
 	void AudioAsset::Unload() {

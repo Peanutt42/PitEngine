@@ -6,7 +6,7 @@
 #include "UI/UIFonts.hpp"
 #include "UI/UI.hpp"
 #include "ECS/ECSSubmodule.hpp"
-#include "ECS/ECSWorld.hpp"
+#include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
 #pragma warning(push)

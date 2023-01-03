@@ -102,7 +102,8 @@ namespace Pit::Rendering {
 
 	void Window::SetIcon(const String& iconFilePath) {
 		int w, h, channels;
-		stbi_set_flip_vertically_on_load(iconFilePath.ends_with(".jpg") ? 1 : 0);
+		PIT_ENGINE_ASSERT(Rendering, std::filesystem::exists(iconFilePath), "IconFile '{}' doesn't exist!", iconFilePath);
+		stbi_set_flip_vertically_on_load(iconFilePath.ends_with(".jpg"));
 		unsigned char* pixels = stbi_load(iconFilePath.c_str(), &w, &h, &channels, 4);
 		GLFWimage images[1]{ {w, h, pixels} };
 		glfwSetWindowIcon(m_Window, 1, images);

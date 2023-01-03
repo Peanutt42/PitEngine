@@ -5,7 +5,7 @@
 namespace Pit::Serialization {
 	class KeyValueSerialization {
 	public:
-		KeyValueSerialization(const String& filepath);
+		KeyValueSerialization(const std::filesystem::path& filepath);
 		~KeyValueSerialization();
 
 		void AddKeyValue(const String& key, const String& value);
@@ -23,6 +23,6 @@ namespace Pit::Serialization {
 			String Value;
 		};
 
-		static void Deserialize(const String& filepath, Array<KeyValuePair>& keyValuePairs);
+		static void Deserialize(const std::filesystem::path& filepath, Array<KeyValuePair>& keyValuePairs);
 	};
 }

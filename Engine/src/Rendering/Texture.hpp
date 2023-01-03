@@ -13,7 +13,7 @@ namespace Pit::Rendering {
 	class Texture {
 	public:
 		Texture(uint32_t width, uint32_t height);
-		Texture(const std::string& path, bool asyncLoading = false);
+		Texture(const std::filesystem::path& path, bool asyncLoading = false);
 		void FinishAsyncLoadingMainThread();
 		virtual ~Texture();
 
@@ -21,7 +21,7 @@ namespace Pit::Rendering {
 		uint32_t GetHeight() const;
 		uint32_t GetRendererID() const;
 
-		const std::string& GetPath() const;
+		const std::filesystem::path& GetPath() const;
 		void SetData(void* data, uint32_t size);
 
 		void Bind(int slot = 0) const;
@@ -30,7 +30,7 @@ namespace Pit::Rendering {
 		bool operator==(const Texture& other) const;
 
 	private:
-		std::string m_Path;
+		std::filesystem::path m_Path;
 		bool m_IsLoaded = false;
 		stbi_uc* m_TextureFileData;
 		uint32_t m_Width, m_Height;

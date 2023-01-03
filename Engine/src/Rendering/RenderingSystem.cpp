@@ -4,7 +4,7 @@
 #include "RenderingSubmodule.hpp"
 #include "Camera.hpp"
 #include "ECS/ECSSubmodule.hpp"
-#include "ECS/ECSWorld.hpp"
+#include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>

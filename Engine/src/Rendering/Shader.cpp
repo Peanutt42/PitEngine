@@ -4,10 +4,10 @@
 
 namespace Pit::Rendering {
 
-    Shader::Shader(const String& filepath) {
+    Shader::Shader(const std::filesystem::path& filepath) {
         PIT_PROFILE_FUNCTION();
 
-        ScopedTimer t(filepath + " shader compiling");
+        ScopedTimer t(filepath.string() + " shader compiling");
 
         std::string shaderFileContents;
         std::ifstream shaderFile(filepath, std::ios::in | std::ios::binary);
@@ -19,7 +19,7 @@ namespace Pit::Rendering {
                 shaderFile.seekg(0, std::ios::beg);
                 shaderFile.read(&shaderFileContents[0], size);
             }
-            else PIT_ENGINE_FATAL(Rendering, "Could not open shaderFile {}", filepath);
+            else PIT_ENGINE_FATAL(Rendering, "Could not open shaderFile {}", filepath.string());
         }
         
         String vertexCode, fragmentCode;

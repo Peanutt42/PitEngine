@@ -136,7 +136,7 @@
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
     <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
     <ClInclude Include="src\ECS\ECSSystem.hpp" />
-    <ClInclude Include="src\ECS\ECSWorld.hpp" />
+    <ClInclude Include="src\ECS\ECSScene.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
     <ClInclude Include="src\Input\InputBinding.hpp" />
     <ClInclude Include="src\Input\KeyCode.hpp" />
@@ -188,7 +188,7 @@
     <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
-    <ClCompile Include="src\ECS\ECSWorld.cpp" />
+    <ClCompile Include="src\ECS\ECSScene.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Input\InputBinding.cpp" />
     <ClCompile Include="src\Memory\BumpAllocator.cpp" />

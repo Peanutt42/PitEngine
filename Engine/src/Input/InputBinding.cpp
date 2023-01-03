@@ -160,7 +160,7 @@ namespace Pit {
 		return false;
 	}
 	
-	void InputBinding::Serialize(const String& keyboardBindingFilepath, const String& controllerBindingFilepath) {
+	void InputBinding::Serialize(const std::filesystem::path& keyboardBindingFilepath, const std::filesystem::path& controllerBindingFilepath) {
 		Serialization::KeyValueSerialization keyboardOut(keyboardBindingFilepath);
 		Serialization::KeyValueSerialization controllerOut(controllerBindingFilepath);
 		for (auto& binding : m_Bindings) {
@@ -190,7 +190,7 @@ namespace Pit {
 		controllerOut.Save();
 	}
 	
-	void InputBinding::Deserize(const String& keyboardBindingFilepath, const String& controllerBindingFilepath) {
+	void InputBinding::Deserize(const std::filesystem::path& keyboardBindingFilepath, const std::filesystem::path& controllerBindingFilepath) {
 		if (!std::filesystem::exists(keyboardBindingFilepath) ||
 			!std::filesystem::exists(controllerBindingFilepath)) Serialize(keyboardBindingFilepath, controllerBindingFilepath);
 

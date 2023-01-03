@@ -18,6 +18,7 @@ Array<bool> EditorApplication::s_PanelKeyShortcutsPressed;
 
 ProjectInfo EditorApplication::s_CurrentProject{ .Name = "NULL", .EngineVersion = Version(0,0,0) };
 
+std::filesystem::path EditorApplication::s_CurrentSceneFilepath;
 
 void EditorApplication::SelectProject(const ProjectInfo& projectInfo) {
 	s_CurrentProject = projectInfo;
@@ -65,6 +66,16 @@ void EditorApplication::Shutdown() {
 	s_AssetManager.Shutdown();
 }
 
+static void OpenSceneFromFile() {
+	String filepath = FileDialogs::OpenFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
+}
+static void SaveSceneToFile() {
+	String filepath = FileDialogs::SaveFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
+}
+static void SaveScene() {
+	
+}
+
 void EditorApplication::Update() {
 	s_PanelKeyShortcutsPressed.resize(s_WindowPanels.size());
 	for (int i = 0; i < s_WindowPanels.size(); i++) {
@@ -75,10 +86,28 @@ void EditorApplication::Update() {
 		}
 		s_PanelKeyShortcutsPressed[i] = pressed;
 	}
+
+	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyPressed(KeyCode::O))
+		OpenSceneFromFile();
+
+	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyReleased(KeyCode::S))
+		SaveScene();
+	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyDown(KeyCode::LeftShift) && Input::IsKeyReleased(KeyCode::S))
+		SaveSceneToFile();
 }
 
 void EditorApplication::MenubarCallback() {
 	Array<bool> openWindows(s_WindowPanels.size());
+	if (ImGui::BeginMenu("File")) {
+		if (ImGui::MenuItem("Open File", "Ctrl + O"))
+			OpenSceneFromFile();
+		if (ImGui::MenuItem("Save", "Ctrl + S"))
+			SaveScene();
+		if (ImGui::MenuItem("Save to File", "Ctrl + Shift + S"))
+			SaveSceneToFile();
+
+		ImGui::EndMenu();
+	}
 	if (ImGui::BeginMenu("Windows")) {
 		for (int i = 0; i < s_WindowPanels.size(); i++) {
 			String shortcutStr;

@@ -2,7 +2,7 @@
 #include "YAMLSerializer.hpp"
 
 namespace Pit::Serialization {
-	const bool YamlSerializer::SaveToFile(const String& filepath) {
+	const bool YamlSerializer::SaveToFile(const std::filesystem::path& filepath) {
 		std::ofstream fout(filepath);
 		if (!fout.is_open()) return false;
 
@@ -16,11 +16,11 @@ namespace Pit::Serialization {
 	}
 	
 	
-	YamlDeserializer::YamlDeserializer(const String& filepath) {
-		if (!std::filesystem::exists(filepath)) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath);
+	YamlDeserializer::YamlDeserializer(const std::filesystem::path& filepath) {
+		if (!std::filesystem::exists(filepath)) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath.string());
 
 		std::ifstream fin(filepath);
-		if (!fin.is_open()) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath);
+		if (!fin.is_open()) PIT_ENGINE_FATAL(Serialization, "YamlDeserializer can't open this file {}", filepath.string());
 
 		std::stringstream strStream;
 		strStream << fin.rdbuf();
