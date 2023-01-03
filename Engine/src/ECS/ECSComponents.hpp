@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "ECS/ECSComponent.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include <entt.hpp>
 
 namespace Pit::ECS {
-    struct NameComponent : public Component {
+    struct NameComponent {
         String Name;
     };
 
-    struct UUIDComponent : public Component {
+    struct UUIDComponent {
         UUID Id;
     };
 
-    struct TransformComponent : public Component {
+    struct TransformComponent {
         glm::vec3 position{};
         glm::vec3 rotation{};
         glm::vec3 scale{ 1.f, 1.f, 1.f };
@@ -83,4 +83,20 @@ namespace Pit::ECS {
                 } };
         }
     };
+
+    struct ScriptComponent {
+        String Name = "";
+    };
+
+
+	#define PIT_REGISTER_COMPONENT(component) reg->emplace<component>(registerEntity); reg->remove<component>(registerEntity)
+
+	[[maybe_unused]] static void RegisterComponents(entt::registry* reg) {
+		entt::entity registerEntity = reg->create();
+		PIT_REGISTER_COMPONENT(NameComponent);
+		PIT_REGISTER_COMPONENT(UUIDComponent);
+		PIT_REGISTER_COMPONENT(TransformComponent);
+		PIT_REGISTER_COMPONENT(ScriptComponent);
+		reg->destroy(registerEntity);
+	}
 }

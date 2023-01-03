@@ -29,5 +29,5 @@ void LoggingOutputPanel::OnDestroy() {
 
 void LoggingOutputPanel::OnGui() {
 	ImGui::Text(m_Logs.c_str());
-	if (Input::IsKeyDown(KeyCode::Space)) PIT_ENGINE_FATAL(General, "This was a test");
+	//if (Input::IsKeyDown(KeyCode::Space)) PIT_ENGINE_FATAL(General, "This was a test");
 }

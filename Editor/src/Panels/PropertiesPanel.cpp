@@ -29,18 +29,18 @@ void PropertiesPanel::OnDestroy() {
 
 void PropertiesPanel::OnGui() {
 	auto& ecsworld = Engine::ECS()->GetEcsWorld();
-	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity)) {
-		_DrawComponents(&ecsworld, HierachyPanel::s_SelectedEntity);
+	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity.GetID())) {
+		_DrawComponents(HierachyPanel::s_SelectedEntity);
 	}
 }
 
 template<typename T, typename UIFunction>
-static void DrawComponent(const String& name, Pit::ECS::World* world, entt::entity entity, UIFunction uifunction) {
-	if (!world->HasComponent<T>(entity)) return;
+static void DrawComponent(const String& name, ECS::EntityHandle entity, UIFunction uifunction) {
+	if (!entity.HasComponent<T>()) return;
 
 	const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 
-	auto& component = world->GetComponent<T>(entity);
+	auto& component = entity.GetComponent<T>();
 	ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
@@ -70,38 +70,48 @@ static void DrawComponent(const String& name, Pit::ECS::World* world, entt::enti
 	}
 
 	if (removeComponent)
-		world->RemoveComponent<T>(entity);
+		entity.RemoveComponent<T>();
 }
 
 template<typename T>
 static void DisplayAddComponentEntry(const String& entryName) {
-	auto& ecsworld = Pit::Engine::ECS()->GetEcsWorld();
-	if (!ecsworld.HasComponent<T>(HierachyPanel::s_SelectedEntity)) {
+	if (!HierachyPanel::s_SelectedEntity.HasComponent<T>()) {
 		if (ImGui::MenuItem(entryName.c_str())) {
-			ecsworld.AddComponent<T>(HierachyPanel::s_SelectedEntity);
+			HierachyPanel::s_SelectedEntity.AddComponent<T>();
 			ImGui::CloseCurrentPopup();
 		}
 	}
 }
 
-void PropertiesPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
-	if (world->HasComponent<ECS::NameComponent>(entity)) {
-		auto& entityComp = world->GetComponent<ECS::NameComponent>(entity);
+void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
+	if (entity.HasComponent<ECS::NameComponent>()) {
+		auto& entityComp = entity.GetComponent<ECS::NameComponent>();
 		auto& name = entityComp.Name;
 
-		char buffer[256];
+		static char buffer[256];
 		memset(buffer, 0, sizeof(buffer));
 		strcpy_s(buffer, name.c_str());
 		if (ImGui::InputText("Name", buffer, sizeof(buffer)))
 			name = String(buffer);
 	}
 
-	DrawComponent<ECS::TransformComponent>("Transform", world, entity, [](ECS::TransformComponent& component) {
-		UI::Vec3("Translation", component.position);
-		glm::vec3 rotation = glm::degrees(component.rotation);
+	DrawComponent<ECS::TransformComponent>("Transform", entity, [](ECS::TransformComponent& transform) {
+		UI::Vec3("Position", transform.position);
+		glm::vec3 rotation = glm::degrees(transform.rotation);
 		UI::Vec3("Rotation", rotation);
-		component.rotation = glm::radians(rotation);
-		UI::Vec3("Scale", component.scale, 1.0f);
+		transform.rotation = glm::radians(rotation);
+		UI::Vec3("Scale", transform.scale, 1.0f);
+	});
+
+	DrawComponent<ECS::UUIDComponent>("UUID", entity, [](ECS::UUIDComponent& uuid) {
+		ImGui::Text("UUID: %d", uuid.Id);
+	});
+
+	DrawComponent<ECS::ScriptComponent>("Script", entity, [](ECS::ScriptComponent& script) {
+		static char buffer[64];
+		strcpy_s(buffer, script.Name.c_str());
+		if (ImGui::InputText("Class", buffer, 64))
+			script.Name = buffer;
 	});
 
 	ImGui::Spacing();
@@ -114,7 +124,10 @@ void PropertiesPanel::_DrawComponents(ECS::World* world, entt::entity entity) {
 		ImGui::OpenPopup("AddComponent");
 
 	if (ImGui::BeginPopup("AddComponent")) {
-		// DisplayAddComponentEntry<CameraComponent>("Camera");// Example
+		//DisplayAddComponentEntry<ECS::CameraComponent>("Camera");// Example
+		DisplayAddComponentEntry<ECS::TransformComponent>("Transform");
+		DisplayAddComponentEntry<ECS::UUIDComponent>("UUID");
+		DisplayAddComponentEntry<ECS::ScriptComponent>("Script");
 		ImGui::EndPopup();
 	}
 }

@@ -156,9 +156,6 @@
     <ClInclude Include="src\Debug\vcrash.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSComponent.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\ECS\ECSComponents.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -230,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptGlue.hpp">
+      <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp">
       <Filter>Scripting</Filter>
@@ -371,6 +371,9 @@
     </ClCompile>
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptGlue.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp">
       <Filter>Scripting</Filter>

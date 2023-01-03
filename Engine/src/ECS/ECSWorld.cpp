@@ -52,6 +52,8 @@ namespace Pit::ECS {
 
 		PIT_ENGINE_INFO(ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
 
+		RegisterComponents(&m_Registry);
+
 		return true;
 	}
 
@@ -83,7 +85,7 @@ namespace Pit::ECS {
 
 	EntityHandle World::CreateEntity() {
 		auto e = CreateEntityID();
-		return { *this, e };
+		return { this, e };
 	}
 
 	void World::DestroyEntity(entt::entity entity) {

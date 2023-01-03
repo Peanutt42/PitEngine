@@ -15,6 +15,6 @@ namespace Pit::Editor {
 		virtual void OnGui() override;
 
 	private:
-		void _DrawComponents(ECS::World* world, entt::entity entity);
+		void _DrawComponents(ECS::EntityHandle entity);
 	};
 }

@@ -3,6 +3,7 @@
 bin-int/
 Intermediates/
 Editor/Resources/Scripts/
+Engine/Resources/Scripts/
 
 # Log files
 *.log

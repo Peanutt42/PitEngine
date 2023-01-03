@@ -47,8 +47,12 @@ void SceneViewportPanel::OnGui() {
 	ImGui::Image((ImTextureID)Cast<uint64>(Engine::Rendering()->Renderer->GetScreenTexColorBuffer()),
 				 ImVec2(region.x, region.y), ImVec2(0, 1), ImVec2(1, 0));
 
-	if (Input::IsKeyboardAndMouseInUse() && Input::IsMouseButtonDown(MouseButton::Right) ||
-		Input::IsControllerInUse()) {
+	static bool lookAround = false;
+	if (ImGui::IsWindowHovered() && Input::IsMouseButtonPressed(MouseButton::Right)) lookAround = true;
+	else if (Input::IsMouseButtonReleased(MouseButton::Right)) lookAround = false;
+	if (Input::IsControllerInUse()) lookAround = true;
+	
+	if (lookAround) {
 		glm::vec3 moveDir{ 0,0,0 };
 		glm::vec2 moveInput = Input::GetAxisBinding(EDITOR_KEYBINDING_CAM_MOVE);
 		moveDir.x = -moveInput.x;
