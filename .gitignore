@@ -2,6 +2,7 @@
 **/bin/
 bin-int/
 Intermediates/
+Editor/Resources/Scripts/
 
 # Log files
 *.log
