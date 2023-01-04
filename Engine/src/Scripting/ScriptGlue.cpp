@@ -4,7 +4,7 @@
 #include "mono/metadata/object.h"
 
 namespace Pit::Scripting {
-	#define PIT_ADD_INTERNAL_CALL(name) mono_add_internal_call("Pit.Engine.InternalCalls::" #name, (const void*)name)
+	#define PIT_ADD_INTERNAL_CALL(name) mono_add_internal_call("PitEngine.InternalCalls::" #name, (const void*)name)
 	
 	static void Log(MonoString* msg) {
 		char* str = mono_string_to_utf8(msg);
@@ -12,7 +12,7 @@ namespace Pit::Scripting {
 		mono_free(str);
 	}
 
-	void ScriptGlue::RegisterFunctions() {
+	void ScriptGlue::RegisterCoreFunctions() {
 		PIT_ADD_INTERNAL_CALL(Log);
 	}
 }

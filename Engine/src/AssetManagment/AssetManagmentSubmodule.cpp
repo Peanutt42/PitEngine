@@ -13,11 +13,11 @@ namespace Pit {
 	void AssetManagmentSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		ScopedTimer t("AssetManagment load all assets from Sandbox/Resources/.**");
+		ScopedTimer t("AssetManagment load all assets from Sandbox/Assets/.**");
 
 		bool headless = Engine::GetSettings().Headless;
 
-		for (auto& directoryEntry : std::filesystem::recursive_directory_iterator(std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "Resources"))) {
+		for (auto& directoryEntry : std::filesystem::recursive_directory_iterator(std::filesystem::path(Pit::FileSystem::GetSandboxDir() + "Assets"))) {
 			auto path = directoryEntry.path();
 			if (directoryEntry.is_directory()) continue;
 

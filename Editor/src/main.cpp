@@ -12,9 +12,9 @@ int main(const int argc, const char* argv[]) {
 		if (strcmp(argv[i], "-proj") == 0 && argc < i + 1)
 			projDir = argv[i + 1];
 	}
-	while (projDir.empty() || !std::filesystem::exists(projDir)) {
-		projDir = FileDialogs::OpenFile("PitEngine Project (*.pitproj)\0*.pitproj\0");
-	}
+	if (projDir.empty()) projDir = FileDialogs::OpenFile("PitEngine Project (*.pitproj)\0*.pitproj\0");
+
+	if (!std::filesystem::exists(projDir)) return 0;
 
 	Serialization::YamlDeserializer in(projDir);
 	String projName;

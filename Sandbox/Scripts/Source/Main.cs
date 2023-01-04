@@ -1,18 +1,17 @@
-using Pit.Engine;
+﻿using PitEngine;
 
-namespace Pit {
+namespace Sandbox {
     public class Main {
         public void PrintCustomMessage(string message) {
             Debug.Log($"C# says: {message}");
         }
     }
 
-    public class Component {
-        public Component() { }
-        ~Component() { }
+    public struct Component {
+
     }
 
-    public class System {
+    public class TestSystem : PitEngine.ECS.System {
         public void Update() {
             Debug.Log("System.Update()");
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Pit.Engine {
+namespace PitEngine {
     internal static class InternalCalls {
 
         #region Logging

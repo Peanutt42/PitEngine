@@ -18,28 +18,24 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\Engine\Resources\Scripts\</OutputPath>
-    <BaseIntermediateOutputPath>..\Engine\Resources\Scripts\Intermediates\Debug\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Engine-ScriptCore\Binaries\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Engine-ScriptCore\Intermediates\Debug\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>..\Engine\Resources\Scripts\</OutputPath>
-    <BaseIntermediateOutputPath>..\Engine\Resources\Scripts\Intermediates\Release\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Engine-ScriptCore\Binaries\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Engine-ScriptCore\Intermediates\Release\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
   </ItemGroup>
@@ -48,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Source\InternalCalls.cs" />
     <Compile Include="Source\InternalType.cs" />
-    <Compile Include="Source\Main.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

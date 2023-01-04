@@ -28,6 +28,8 @@ group "Dependencies"
 	include "vendor/yaml"
 group ""
 
+RootDir = "../"
+
 group "Core"
 	include "Engine"
 	include "Engine-ScriptCore"

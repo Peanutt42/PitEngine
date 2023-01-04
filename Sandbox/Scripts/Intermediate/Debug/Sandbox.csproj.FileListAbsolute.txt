@@ -1,0 +1,9 @@
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Binaries\Sandbox.dll
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Binaries\Sandbox.pdb
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Binaries\Engine-ScriptCore.dll
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Binaries\Engine-ScriptCore.pdb
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Intermediate\Debug\Sandbox.csproj.AssemblyReference.cache
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Intermediate\Debug\Sandbox.csproj.CoreCompileInputs.cache
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Intermediate\Debug\Sandbox.csproj.CopyComplete
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Intermediate\Debug\Sandbox.dll
+C:\dev\cpp\PitEngine\Sandbox\Scripts\Intermediate\Debug\Sandbox.pdb

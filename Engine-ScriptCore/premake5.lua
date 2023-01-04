@@ -3,8 +3,8 @@ project "Engine-ScriptCore"
 	language "C#"
 	dotnetframework "4.7.2"
 
-	targetdir ("%{wks.location}/Engine/Resources/Scripts")
-	objdir ("%{wks.location}/Engine/Resources/Scripts/Intermediates")
+	targetdir (RootDir .. "/Engine-ScriptCore/Binaries")
+	objdir (RootDir .. "/Engine-ScriptCore/Intermediates")
 
 	files
 	{

@@ -10,13 +10,56 @@ extern "C" {
 	typedef struct _MonoImage MonoImage;
 	typedef struct _MonoDomain MonoDomain;
 	typedef struct _MonoAssembly MonoAssembly;
+	typedef struct _MonoClassField MonoClassField;
 }
 
 namespace Pit {
+	enum class ScriptFieldType {
+		None = 0,
+		Float, Double,
+		Bool, Char, Byte, Short, Int, Long,
+		UByte, UShort, UInt, ULong
+	};
+
+	struct ScriptField {
+		ScriptFieldType Type;
+		std::string Name;
+
+		MonoClassField* ClassField;
+	};
+
+	// ScriptField + data storage
+	struct ScriptFieldInstance {
+		ScriptField Field;
+
+		ScriptFieldInstance() {
+			memset(m_Buffer, 0, sizeof(m_Buffer));
+		}
+
+		template<typename T>
+		T GetValue() {
+			static_assert(sizeof(T) <= 16, "Type too large!");
+			return *(T*)m_Buffer;
+		}
+
+		template<typename T>
+		void SetValue(T value) {
+			static_assert(sizeof(T) <= 16, "Type too large!");
+			std::memcpy(m_Buffer, &value, sizeof(T));
+		}
+	private:
+		uint8_t m_Buffer[16];
+
+		friend class ScriptingSubmodule;
+		friend class ScriptInstance;
+	};
+
+	using ScriptFieldMap = std::unordered_map<std::string, ScriptFieldInstance>;
+
 	class ScriptClass {
 	public:
 		ScriptClass() = default;
-		ScriptClass(const String& classNamespace, const String& className);
+		ScriptClass(const String& classNamespace, const String& className, bool isCore = false);
 
 		MonoMethod* GetMethod(const String& name, int paramCount);
 
@@ -26,7 +69,10 @@ namespace Pit {
 
 	private:
 		String m_ClassNamespace, m_ClassName;
+		std::map<std::string, ScriptField> m_Fields;
 		MonoClass* m_MonoClass = nullptr;
+
+		friend class ScriptingSubmodule;
 	};
 
 	class ScriptInstance {
@@ -50,7 +96,9 @@ namespace Pit {
 		virtual void Shutdown() override;
 		virtual void Update() override;
 
-		const bool LoadAssembly(const std::filesystem::path& binaryFilepath);
+		const bool LoadCoreAssembly(const std::filesystem::path& binaryFilepath);
+		const bool LoadAppAssembly(const std::filesystem::path& binaryFilepath);
+		void ReloadAssembly();
 
 		const bool ComponentClassExists(const String& className) const;
 
@@ -60,7 +108,7 @@ namespace Pit {
 		void InitMono(), ShutdownMono();
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
-		void LoadAssemblyMetadata(MonoAssembly* assembly);
+		void LoadAssemblyClasses();
 
 		friend class ScriptClass;
 		friend class ScriptInstance;

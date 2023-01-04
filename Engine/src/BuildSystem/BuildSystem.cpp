@@ -20,18 +20,18 @@ namespace Pit {
 
 		String buildDir = FileSystem::GetSandboxDir() + "Builds/" + OperatingSystem::ToString(os) + "/" + BuildConfigurationToString(config);
 		if (!std::filesystem::exists(buildDir)) std::filesystem::create_directories(buildDir);
-		String resourceDir = buildDir + "/Resources";
-		if (!std::filesystem::exists(resourceDir)) std::filesystem::create_directories(resourceDir);
+		String assetDir = buildDir + "/Assets";
+		if (!std::filesystem::exists(assetDir)) std::filesystem::create_directories(assetDir);
 
-		String sceneDir = resourceDir + "/Scenes";
+		String sceneDir = assetDir + "/Scenes";
 		if (!std::filesystem::exists(sceneDir)) std::filesystem::create_directories(sceneDir);
-		String shaderDir = resourceDir + "/Shaders";
+		String shaderDir = assetDir + "/Shaders";
 		if (!std::filesystem::exists(shaderDir)) std::filesystem::create_directories(shaderDir);
-		String textureDir = resourceDir + "/Textures";
+		String textureDir = assetDir + "/Textures";
 		if (!std::filesystem::exists(textureDir)) std::filesystem::create_directories(textureDir);
-		String modelDir = resourceDir + "/Models";
+		String modelDir = assetDir + "/Models";
 		if (!std::filesystem::exists(modelDir)) std::filesystem::create_directories(modelDir);
-		String audioDir = resourceDir + "/Audio";
+		String audioDir = assetDir + "/Audio";
 		if (!std::filesystem::exists(audioDir)) std::filesystem::create_directories(audioDir);
 
 		BuildReport report{ .Successful = successful,
