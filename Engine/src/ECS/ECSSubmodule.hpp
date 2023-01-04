@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "ECSWorld.hpp"
+#include "ECSScene.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
 #include "Core/Submodule.hpp"
@@ -22,12 +22,9 @@ namespace Pit {
 
 		void ResetECSWorld();
 
-		ECS::World& GetEcsWorld();
+		ECS::Scene& GetEcsWorld();
 
 	private:
-		ECS::WorldSpecs m_ECSWorldSpecs {
-			"MainECSWorld"
-		};
-		ECS::World m_ECSWorld = ECS::World(m_ECSWorldSpecs);
+		ECS::Scene m_ECSScene = ECS::Scene(String("MainECSScene"));
 	};
 }

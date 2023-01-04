@@ -7,28 +7,22 @@
 
 namespace Pit::ECS {
 	class EntityHandle;
-	class World;
+	class Scene;
 
 	struct SystemHandle {
 		SystemIndex SystemIndex;
 		SystemTopic Topic = SystemTopic::None;
 		int32 ExecuteOrder;
-		std::function<void(World&)> Update;
-	};
-	
-	struct WorldSpecs {
-		String name = "ECS-World";
-
-		WorldSpecs(const String& name) :
-			name(name) { }
+		std::function<void(Scene&)> Update;
 	};
 
 	/// <summary>
-	/// ECS-World, could be named Scene
+	/// ECSScene
 	/// </summary>
-	class World {
+	class Scene {
 	public:
-		World(const WorldSpecs& specs);
+		Scene(const String& name);
+		Scene(const std::filesystem::path& sceneFilepath, bool binaryVersion = false);
 
 		bool Init();
 		void Update(const SystemTopic topic);
@@ -42,13 +36,13 @@ namespace Pit::ECS {
 
 #pragma region Component
 		template<typename T>
-		bool HasComponent(entt::entity entity) const {
+		const bool HasComponent(entt::entity entity) const {
 			return m_Registry.any_of<T>(entity);
 		}
 
 		template<typename T, typename... Args>
 		T& AddComponent(entt::entity entity, Args&&... args) {
-			#if DEBUG || RELEASE
+			#if DEBUG
 			m_ComponentMemSize += sizeof(T);
 			m_ComponentCount++;
 			#endif
@@ -68,7 +62,7 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void RemoveComponent(entt::entity entity) {
-			#if DEBUG || RELEASE
+			#if DEBUG
 			m_ComponentMemSize -= sizeof(T);
 			m_ComponentCount--;
 			#endif
@@ -78,7 +72,7 @@ namespace Pit::ECS {
 		template<typename T>
 		bool TryRemoveComponent(entt::entity entity) {
 			if (HasComponent<T>(entity)) {
-				#if DEBUG || RELEASE
+				#if DEBUG
 				m_ComponentMemSize -= sizeof(T);
 				m_ComponentCount--;
 				#endif
@@ -97,7 +91,7 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& AddOrReplaceComponent(entt::entity entity, Args&&... args) {
-			#if DEBUG || RELEASE
+			#if DEBUG
 			if (!HasComponent<T>(entity)) {
 				m_ComponentMemSize += sizeof(T);
 				m_ComponentCount++;
@@ -108,7 +102,7 @@ namespace Pit::ECS {
 
 		template<typename T, typename... Args>
 		T& GetOrAddComponent(entt::entity entity, Args&&... args) {
-			#if DEBUG || RELEASE
+			#if DEBUG
 			if (!HasComponent<T>(entity)) m_ComponentMemSize += sizeof(T);
 			#endif
 			return m_Registry.get_or_emplace<T>(entity, std::forward<Args>(args)...);
@@ -142,7 +136,7 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void AddSystem() {
-#if DEBUG || RELEASE
+#if DEBUG
 			m_SystemCount++;
 #endif
 			m_Systems.emplace_back(GetSystemIndex<T>(), T::GetTopic(), T::GetExecuteOrder(), &T::Update);
@@ -151,7 +145,7 @@ namespace Pit::ECS {
 
 		template<typename T>
 		void RemoveSystem() {
-#if DEBUG || RELEASE
+#if DEBUG
 			m_SystemCount--;
 #endif
 			SystemIndex systemIndex = GetSystemIndex<T>();
@@ -173,18 +167,18 @@ namespace Pit::ECS {
 		}
 #pragma endregion
 
-		WorldSpecs& GetWorldSpecs() { return m_Specs; }
-		void SetWorldSpecs(WorldSpecs specs);
+		const String& GetName() const;
+		void SetName(const String& name);
 		
 		entt::registry& GetRegistry() { return m_Registry; }
 		bool Paused = false;
 
 	private:
-		WorldSpecs m_Specs;
+		String m_Name;
 		entt::registry m_Registry;
 		Array<SystemHandle> m_Systems;
 
-#if DEBUG || RELEASE
+#if DEBUG
 		size m_ComponentMemSize = 0;
 		size m_ComponentCount = 0;
 		size m_SystemCount = 0;

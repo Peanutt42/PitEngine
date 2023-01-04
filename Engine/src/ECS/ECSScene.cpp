@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "ECSSubmodule.hpp"
-#include "ECSWorld.hpp"
+#include "ECSScene.hpp"
 #include "ECSSystem.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
@@ -35,14 +35,21 @@ namespace Pit::ECS {
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
 	}
 
-	World::World(const WorldSpecs& specs) :
-		m_Specs(specs) {}
+	Scene::Scene(const String& name) :
+		m_Name(name) {}
 
-	bool World::Init() {
+	Scene::Scene(const std::filesystem::path& sceneFilepath, bool binaryVersion) {
+		PIT_ENGINE_ASSERT(ECS, std::filesystem::exists(sceneFilepath), "Trying to load scene file '{}' yet it doesn't exists!", sceneFilepath.string());
+		if (binaryVersion) {
+			PIT_ENGINE_ASSERT(ECS, false, "binaryVersion isn't implomented yet!");
+		}
+		else {
+
+		}
+	}
+
+	bool Scene::Init() {
 		PIT_PROFILE_FUNCTION();
-
-		// Set Specs
-		SetWorldSpecs(m_Specs);
 
 		Engine::NetworkingUpdateEvent += &UpdateNetworking;
 		Engine::PhysicUpdateEvent += &UpdatePhysics;
@@ -50,14 +57,12 @@ namespace Pit::ECS {
 		Engine::UpdateEvent += &UpdateGameplay;
 		Engine::RenderEvent += &UpdateRendering;
 
-		PIT_ENGINE_INFO(ECS, "ECS-World '{}' succesfully initialized", m_Specs.name);
-
 		RegisterComponents(&m_Registry);
 
 		return true;
 	}
 
-	void World::Update(const SystemTopic topic) {
+	void Scene::Update(const SystemTopic topic) {
 		PIT_PROFILE_FUNCTION();
 
 		if (Paused) return;
@@ -68,14 +73,14 @@ namespace Pit::ECS {
 		}
 	}
 
-	void World::Clear() {
+	void Scene::Clear() {
 		PIT_PROFILE_FUNCTION();
 
 		m_Registry.clear();
 	}
 
 	#pragma region Entity
-	entt::entity World::CreateEntityID() {
+	entt::entity Scene::CreateEntityID() {
 		auto e = m_Registry.create();
 		m_Registry.emplace<UUIDComponent>(e);
 		m_Registry.emplace<NameComponent>(e);
@@ -83,17 +88,16 @@ namespace Pit::ECS {
 		return e;
 	}
 
-	EntityHandle World::CreateEntity() {
+	EntityHandle Scene::CreateEntity() {
 		auto e = CreateEntityID();
 		return { this, e };
 	}
 
-	void World::DestroyEntity(entt::entity entity) {
+	void Scene::DestroyEntity(entt::entity entity) {
 		m_Registry.destroy(entity);
 	}
 	#pragma endregion
 
-	void World::SetWorldSpecs(WorldSpecs specs) {
-		m_Specs = specs;
-	}
+	void Scene::SetName(const String& name) { m_Name = name; }
+	const String& Scene::GetName() const { return m_Name; }
 }
