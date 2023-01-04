@@ -63,12 +63,12 @@ namespace Pit::Math {
 	}
 
 	/// <returns>Bigger Value</returns>
-	inline static uint64 Max(const uint64& a, const uint64& b) {
+	inline static unsigned long long Max(const unsigned long long& a, const unsigned long long& b) {
 		return a > b ? a : b;
 	}
 
 	/// <returns>Smaller Value</returns>
-	inline static uint64 Min(const uint64& a, const uint64& b) {
+	inline static unsigned long long Min(const unsigned long long& a, const unsigned long long& b) {
 		return a < b ? a : b;
 	}
 }

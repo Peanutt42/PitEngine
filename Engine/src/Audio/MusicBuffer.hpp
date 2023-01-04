@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include <AL\al.h>
+#include <AL/al.h>
 #include <sndfile.h>
 
 namespace Pit::Audio {

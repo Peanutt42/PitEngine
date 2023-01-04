@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "SoundDevice.hpp"
-#include <AL\al.h>
+#include <AL/al.h>
 #include <stdio.h>
 
 namespace Pit::Audio {

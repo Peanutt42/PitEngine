@@ -55,7 +55,7 @@ namespace Pit {
 			}
 		}
 
-		void Serialize(const String& filepath) {
+		void Serialize(const std::filesystem::path& filepath) {
 			Serialization::YamlSerializer out;
 			out << YAML::BeginMap;
 
@@ -69,7 +69,7 @@ namespace Pit {
 			out.SaveToFile(filepath);
 		}
 
-		void Deserialize(const String& filepath) {
+		void Deserialize(const std::filesystem::path& filepath) {
 			if (!std::filesystem::exists(filepath)) Serialize(filepath);
 
 			Serialization::YamlDeserializer in(filepath);

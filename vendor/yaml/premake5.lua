@@ -3,7 +3,7 @@ project "yaml"
 	language "C++"
 	cppdialect "C++14"
 	staticruntime "off"
-
+	
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -26,10 +26,10 @@ project "yaml"
 		buildoptions "/MDd"
 		runtime "Debug"
 		optimize "off"
-		symbols "on"
+		symbols "Default"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "Speed"
-		symbols "on"
+		optimize "Full"
+		symbols "Default"

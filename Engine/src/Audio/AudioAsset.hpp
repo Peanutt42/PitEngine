@@ -13,7 +13,7 @@ namespace Pit::Audio {
 	/// </summary>
 	class AudioAsset : public AssetManagment::Asset {
 	public:
-		AudioAsset(const String& path, bool asyncLoading = false);
+		AudioAsset(const std::filesystem::path& path, bool asyncLoading = false);
 		~AudioAsset();
 
 		virtual void Load() override;

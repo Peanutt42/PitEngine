@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "BuildGamePanel.hpp"
-#include "BuildSystem\BuildSystem.hpp"
+#include "BuildSystem/BuildSystem.hpp"
 #include <imgui/imgui.h>
 
 using namespace Pit;

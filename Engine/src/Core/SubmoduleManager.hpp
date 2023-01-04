@@ -12,6 +12,7 @@ namespace Pit {
 	class RenderingSubmodule;
 	class MemorySubmodule;
 	class AntiCheatSubmodule;
+	class ScriptingSubmodule;
 
 	class SubmoduleManager {
 	public:
@@ -30,5 +31,6 @@ namespace Pit {
 		NetworkingSubmodule* NetworkingSubmodule;
 		PhysicsSubmodule* PhysicsSubmodule;
 		RenderingSubmodule* RenderingSubmodule;
+		ScriptingSubmodule* ScriptingSubmodule;
 	};
 }

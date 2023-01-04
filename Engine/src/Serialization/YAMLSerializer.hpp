@@ -111,7 +111,7 @@ namespace Pit::Serialization {
 		}
 #pragma endregion
 
-		const bool SaveToFile(const String& filepath);
+		const bool SaveToFile(const std::filesystem::path& filepath);
 
 		const char* GetString() const;
 
@@ -123,7 +123,7 @@ namespace Pit::Serialization {
 
 	class YamlDeserializer {
 	public:
-		YamlDeserializer(const String& filepath);
+		YamlDeserializer(const std::filesystem::path& filepath);
 
 		template<typename T>
 		bool Find(const String& name, T& output) {

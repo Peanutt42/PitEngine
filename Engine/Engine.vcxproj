@@ -22,14 +22,12 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -60,8 +58,7 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -69,14 +66,12 @@
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\vendor\mono\lib\Debug;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -86,9 +81,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\vulkan\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
@@ -101,12 +95,11 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\vendor\vulkan\Lib;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\vendor\mono\lib\Release;..\vendor\sndfile\lib;..\vendor\glfw\lib-vc2022;..\vendor\optick\lib\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -116,7 +109,6 @@
     <ClInclude Include="src\Audio\AudioAsset.hpp" />
     <ClInclude Include="src\Audio\AudioSubmodule.hpp" />
     <ClInclude Include="src\Audio\MusicBuffer.hpp" />
-    <ClInclude Include="src\Audio\SoundBuffer.hpp" />
     <ClInclude Include="src\Audio\SoundDevice.hpp" />
     <ClInclude Include="src\Audio\SoundSource.hpp" />
     <ClInclude Include="src\BuildSystem\BuildSystem.hpp" />
@@ -124,10 +116,10 @@
     <ClInclude Include="src\Core\CoreInclude.hpp" />
     <ClInclude Include="src\Core\Engine.hpp" />
     <ClInclude Include="src\Core\EngineSettings.hpp" />
+    <ClInclude Include="src\Core\Event.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
-    <ClInclude Include="src\Core\Result.hpp" />
     <ClInclude Include="src\Core\SmartPointers.hpp" />
     <ClInclude Include="src\Core\Submodule.hpp" />
     <ClInclude Include="src\Core\SubmoduleManager.hpp" />
@@ -140,15 +132,11 @@
     <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
     <ClInclude Include="src\Debug\Profiling.hpp" />
     <ClInclude Include="src\Debug\vcrash.h" />
-    <ClInclude Include="src\DesignPatterns\Command.hpp" />
-    <ClInclude Include="src\DesignPatterns\Singleton.hpp" />
-    <ClInclude Include="src\ECS\ECSComponent.hpp" />
     <ClInclude Include="src\ECS\ECSComponents.hpp" />
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
     <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
     <ClInclude Include="src\ECS\ECSSystem.hpp" />
-    <ClInclude Include="src\ECS\ECSWorld.hpp" />
-    <ClInclude Include="src\Event\Event.hpp" />
+    <ClInclude Include="src\ECS\ECSScene.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
     <ClInclude Include="src\Input\InputBinding.hpp" />
     <ClInclude Include="src\Input\KeyCode.hpp" />
@@ -168,6 +156,8 @@
     <ClInclude Include="src\Rendering\Texture.hpp" />
     <ClInclude Include="src\Rendering\TextureAsset.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
+    <ClInclude Include="src\Scripting\ScriptGlue.hpp" />
+    <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp" />
     <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
     <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
     <ClInclude Include="src\Threading\JobSystem.hpp" />
@@ -184,7 +174,6 @@
     <ClCompile Include="src\Audio\AudioAsset.cpp" />
     <ClCompile Include="src\Audio\AudioSubmodule.cpp" />
     <ClCompile Include="src\Audio\MusicBuffer.cpp" />
-    <ClCompile Include="src\Audio\SoundBuffer.cpp" />
     <ClCompile Include="src\Audio\SoundDevice.cpp" />
     <ClCompile Include="src\Audio\SoundSource.cpp" />
     <ClCompile Include="src\BuildSystem\BuildSystem.cpp" />
@@ -198,9 +187,8 @@
     <ClCompile Include="src\Debug\Logging.cpp" />
     <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
-    <ClCompile Include="src\DesignPatterns\Singleton.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
-    <ClCompile Include="src\ECS\ECSWorld.cpp" />
+    <ClCompile Include="src\ECS\ECSScene.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Input\InputBinding.cpp" />
     <ClCompile Include="src\Memory\BumpAllocator.cpp" />
@@ -217,17 +205,14 @@
     <ClCompile Include="src\Rendering\Texture.cpp" />
     <ClCompile Include="src\Rendering\TextureAsset.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
+    <ClCompile Include="src\Scripting\ScriptGlue.cpp" />
+    <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp" />
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
     <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
     <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

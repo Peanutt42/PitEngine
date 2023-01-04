@@ -1,12 +1,11 @@
 #include "pch.hpp"
 #include "vcrash.h"
 
-#include <string.h>
 #include "Core/Engine.hpp"
-#include "Debug\Logging.hpp"
-#include "Memory\MemorySubmodule.hpp"
-#include "Utils\DateUtils.hpp"
-#include "Platform\PlatformUtils.hpp"
+#include "Debug/Logging.hpp"
+#include "Memory/MemorySubmodule.hpp"
+#include "Utils/DateUtils.hpp"
+#include "Platform/PlatformUtils.hpp"
 
 #ifdef PIT_WINDOWS
 #include <windows.h>
@@ -70,10 +69,6 @@ void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 	stackframe.AddrStack.Offset = context.IntSp;
 	stackframe.AddrStack.Mode = AddrModeFlat;
 #endif
-
-	#if DEBUG
-	out << "To get the source files location, change your configuration to release!\n";
-	#endif
 
 	int i = 1;
 	while (StackWalk64(image, process, thread, &stackframe, &context, NULL,	SymFunctionTableAccess64, SymGetModuleBase64, NULL)) {

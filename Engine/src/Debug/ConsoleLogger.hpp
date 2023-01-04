@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core\CoreInclude.hpp"
-#include "Event\Event.hpp"
-#include "fmt\fmt.h"
+#include "Core/CoreInclude.hpp"
+#include "Core/Event.hpp"
+#include <fmt/fmt.h>
 
 namespace Pit::Debug {
 	enum class ConsoleColor {
@@ -44,6 +44,14 @@ namespace Pit::Debug {
 		void Log(LogVerbosity verbosity, fmt::format_string<T...> msg, T... args) {
 			if (verbosity >= m_Verbosity) {
 				std::scoped_lock lock(m_LogMutex);
+				switch (verbosity) {
+				default:
+				case LogVerbosity::Trace: SetColor(ConsoleColor::White); break;
+				case LogVerbosity::Info: SetColor(ConsoleColor::Green); break;
+				case LogVerbosity::Warning: SetColor(ConsoleColor::Yellow); break;
+				case LogVerbosity::Error:
+				case LogVerbosity::Critical: SetColor(ConsoleColor::Red); break;
+				}
 				std::string formatted = fmt::format(msg, std::forward<T>(args)...);
 				std::cout << formatted << '\n';
 				OnLogEvent.Invoke(verbosity, formatted);
@@ -91,6 +99,14 @@ namespace Pit::Debug {
 		template<typename... T>
 		void Log(LogVerbosity verbosity, [[maybe_unused]] fmt::format_string<T...> msg, T... args) {
 			if (verbosity >= m_Verbosity) {
+				switch (verbosity) {
+				default:
+				case LogVerbosity::Trace: SetColor(ConsoleColor::White);
+				case LogVerbosity::Info: SetColor(ConsoleColor::Green);
+				case LogVerbosity::Warning: SetColor(ConsoleColor::Magenta);
+				case LogVerbosity::Error:
+				case LogVerbosity::Critical: SetColor(ConsoleColor::Red);
+				}
 				std::string formatted = fmt::format(msg, std::forward<T>(args)...);
 				std::cout << formatted << '\n';
 				OnLogEvent.Invoke(verbosity, formatted);

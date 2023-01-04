@@ -10,20 +10,17 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BuildSystem">
+      <UniqueIdentifier>{1A861F75-863B-986A-0F30-92417BE48E6E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{0C95060D-78A9-2EBE-412B-D21DADFE2AEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DesignPatterns">
-      <UniqueIdentifier>{10AA6C8E-FC77-6094-E50B-D1BAD1783CF9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ECS">
       <UniqueIdentifier>{60E1870B-CCEA-877C-5566-9E7CC16E937C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Event">
-      <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Input">
       <UniqueIdentifier>{953A660D-014F-8EBE-CAD0-311E36A48AEF}</UniqueIdentifier>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{985A7358-04C5-27CF-4D03-D974B9AC0524}</UniqueIdentifier>
     </Filter>
     <Filter Include="Serialization">
       <UniqueIdentifier>{2319AF09-8FD9-2A40-5814-74BDC4936F1C}</UniqueIdentifier>
@@ -78,17 +78,14 @@
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\MusicBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\SoundBuffer.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\SoundDevice.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\SoundSource.hpp">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BuildSystem\BuildSystem.hpp">
+      <Filter>BuildSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Assert.hpp">
       <Filter>Core</Filter>
@@ -102,6 +99,9 @@
     <ClInclude Include="src\Core\EngineSettings.hpp">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Event.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\FileSystem.hpp">
       <Filter>Core</Filter>
     </ClInclude>
@@ -109,9 +109,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Random.hpp">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Result.hpp">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\SmartPointers.hpp">
@@ -150,15 +147,6 @@
     <ClInclude Include="src\Debug\vcrash.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="src\DesignPatterns\Command.hpp">
-      <Filter>DesignPatterns</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DesignPatterns\Singleton.hpp">
-      <Filter>DesignPatterns</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\ECSComponent.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\ECS\ECSComponents.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -171,11 +159,8 @@
     <ClInclude Include="src\ECS\ECSSystem.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSWorld.hpp">
+    <ClInclude Include="src\ECS\ECSScene.hpp">
       <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Event\Event.hpp">
-      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\Input.hpp">
       <Filter>Input</Filter>
@@ -234,11 +219,20 @@
     <ClInclude Include="src\Rendering\Window.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptGlue.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Serialization\KeyValueSerialization.hpp">
       <Filter>Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\Serialization\YAMLSerializer.hpp">
       <Filter>Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Threading\JobSystem.hpp">
+      <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UI.hpp">
       <Filter>UI</Filter>
@@ -256,8 +250,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Threading\JobSystem.hpp" />
-    <ClInclude Include="src\BuildSystem\BuildSystem.hpp" />
+    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -272,17 +265,14 @@
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Audio\MusicBuffer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\SoundBuffer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
     <ClCompile Include="src\Audio\SoundDevice.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\SoundSource.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BuildSystem\BuildSystem.cpp">
+      <Filter>BuildSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Core</Filter>
@@ -314,13 +304,10 @@
     <ClCompile Include="src\Debug\vcrash.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\DesignPatterns\Singleton.cpp">
-      <Filter>DesignPatterns</Filter>
-    </ClCompile>
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ECSWorld.cpp">
+    <ClCompile Include="src\ECS\ECSScene.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">
@@ -371,17 +358,25 @@
     <ClCompile Include="src\Rendering\Window.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptGlue.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="src\Serialization\YAMLSerializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="src\Threading\JobSystem.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
     <ClCompile Include="src\UI\UIRenderer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Threading\JobSystem.cpp" />
-    <ClCompile Include="src\BuildSystem\BuildSystem.cpp" />
+    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
   </ItemGroup>
 </Project>

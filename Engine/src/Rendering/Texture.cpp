@@ -22,17 +22,20 @@ namespace Pit::Rendering {
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
-	Texture::Texture(const std::string& path, bool asyncLoading)
+	Texture::Texture(const std::filesystem::path& path, bool asyncLoading)
 		: m_Path(path) {
 
 		PIT_PROFILE_FUNCTION();
 
+		String pathStr = path.string();
+		PIT_ENGINE_ASSERT(Rendering, std::filesystem::exists(path), "Trying to load texture '' that doesn't exists!", pathStr);
+
 		int width, height, channels;
 
-		stbi_set_flip_vertically_on_load(path.ends_with(".jpg"));
-		m_TextureFileData = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		stbi_set_flip_vertically_on_load(pathStr.ends_with(".jpg"));
+		m_TextureFileData = stbi_load(pathStr.c_str(), &width, &height, &channels, 0);
 
-		if (!m_TextureFileData) PIT_ENGINE_FATAL(Rendering, "Failed to properly load texture");
+		if (!m_TextureFileData) PIT_ENGINE_FATAL(Rendering, "Failed to properly load texture '{}'", pathStr);
 
 
 		m_IsLoaded = true;
@@ -88,7 +91,7 @@ namespace Pit::Rendering {
 
 	uint32_t Texture::GetRendererID() const { return m_RendererID; }
 
-	const std::string& Texture::GetPath() const { return m_Path; }
+	const std::filesystem::path& Texture::GetPath() const { return m_Path; }
 
 	void Texture::SetData(void* data, uint32_t size) {
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;

@@ -17,7 +17,7 @@ namespace Pit::Rendering {
 
 		unsigned int VBO, cubeVAO;
 		unsigned int lightCubeVAO;
-		Shader lightingShader { FileSystem::GetSandboxDir() + "assets/shaders/BasicLight.shader" };
-		Shader lightCubeShader { FileSystem::GetSandboxDir() + "assets/shaders/LightCube.shader" };
+		Shader lightingShader { FileSystem::GetSandboxDir() + "Resources/shaders/BasicLight.shader" };
+		Shader lightCubeShader { FileSystem::GetSandboxDir() + "Resources/shaders/LightCube.shader" };
 	};
 }

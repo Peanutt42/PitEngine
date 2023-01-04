@@ -21,20 +21,5 @@ namespace Pit {
 
 	void AudioSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
-
-		/*static bool init = false;
-		if (!init) {
-			AssetManagment::Asset* sample_asset = nullptr;
-			for (auto asset : Engine::AssetManagment()->GetAssets()) {
-				// TODO: Only for testing, next is some stable UUID that doesn't change to find assets
-				if (asset->GetType() == AUDIO_ASSET_TYPE && asset->GetPath().ends_with("sample1.wav")) sample_asset = asset;
-			}
-			if (sample_asset && sample_asset->GetType() == AUDIO_ASSET_TYPE)
-				music = Cast<Audio::AudioAsset*>(sample_asset)->Get();
-			music->Play();
-			init = true;
-		}
-		else
-			music->UpdateBufferStream();*/
 	}
 }

@@ -13,6 +13,7 @@ namespace Pit {
 	bool Input::s_KeyStateChanged[KEY_COUNT];
 	bool Input::s_MouseButtonStates[MOUSEBUTTON_COUNT];
 	bool Input::s_MosueButtonStateChanged[MOUSEBUTTON_COUNT];
+	bool Input::s_ControllerActiveStates[MAX_CONTROLLER_COUNT];
 	ButtonState Input::s_ControllerButtonStates[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
 	bool Input::s_ControllerButtonStateChanged[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
 	float Input::s_ControllerAxises[MAX_CONTROLLER_COUNT][CONTROLLER_AXIS_COUNT];
@@ -27,7 +28,7 @@ namespace Pit {
 	}
 
 	void Input::Init() {
-		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
+		if (Engine::GetSettings().Headless) return;
 
 		String filePrefix = FileSystem::GetConfigDir() + Engine::GetSettings().Prefix;
 		s_InputBinding.Deserize(filePrefix + "KeyboardBindings.ini",
@@ -41,10 +42,15 @@ namespace Pit {
 	void Input::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		if (Engine::GetSettings().Headless) return; // TODO: Read console input as commands, not that straight forward though
+		if (Engine::GetSettings().Headless) return;
 
 		for (int controller = 0; controller < MAX_CONTROLLER_COUNT; controller++) {
 			if (glfwJoystickPresent(controller)) {
+				if (!s_ControllerActiveStates[controller]) {
+					PIT_ENGINE_INFO(General, "New Controller connected: ID{}: {}", controller, glfwGetJoystickName(controller));
+					s_ControllerActiveStates[controller] = true;
+				}
+
 				int numAxes;
 				const float* axises = glfwGetJoystickAxes(controller, &numAxes);
 				for (int i = 0; i < numAxes; i++) {
@@ -68,6 +74,7 @@ namespace Pit {
 				}
 				s_ControllerTypes[controller] = Pit::GetControllerType(glfwGetJoystickName(controller));
 			}
+			else s_ControllerActiveStates[controller] = false;
 		}
 
 		GLFWwindow* window = GetWindow();
@@ -252,7 +259,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonUp(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonUp(ControllerId::ID1, button);
 			else
 				return true;
 		}
@@ -269,7 +276,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonDown(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonDown(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -286,7 +293,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonPressed(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonPressed(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -303,7 +310,7 @@ namespace Pit {
 		else {
 			ControllerButton button = GetControllerButtonBinding(name);
 			if (button != ControllerButton::None)
-				return IsControllerButtonReleased(ControllerId::ID1, button); // TODO: Allow multiple controllers
+				return IsControllerButtonReleased(ControllerId::ID1, button);
 			else
 				return false;
 		}
@@ -324,7 +331,7 @@ namespace Pit {
 			}
 		}
 		else
-			return GetControllerAxis(ControllerId::ID1, GetControllerAxisBinding(name)); // TODO: Allow multiple controllers
+			return GetControllerAxis(ControllerId::ID1, GetControllerAxisBinding(name));
 	}
 	
 	bool Input::RemoveBinding(const String& name) { return s_InputBinding.RemoveBinding(name); }

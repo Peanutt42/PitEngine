@@ -3,40 +3,26 @@
 #ifdef PIT_WINDOWS
 #include <windows.h>
 #include <tlhelp32.h>
-#include <tchar.h>
+#include <cwchar>
 #endif
 
 namespace Pit {
 #ifdef PIT_WINDOWS
 	void AntiCheatSubmodule::_AntiCheatThreadMain(AntiCheatSubmodule* antiCheat) {
-		HANDLE hProcessSnap;
-		[[maybe_unused]] HANDLE hProcess;
 		PROCESSENTRY32 pe32;
 		pe32.dwSize = sizeof(PROCESSENTRY32);
-		[[maybe_unused]] DWORD dwPriorityClass;
-		hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		void* hProcessSnap = nullptr;
 		while (!antiCheat->m_AntiCheatThreadQuit) {
-			Array<std::wstring> processNames;
-			processNames.reserve(200);
 			hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 			int i = 0;
 			while (Process32Next(hProcessSnap, &pe32)) {
 				if (i < 3) { i++; continue; }
-				std::wstring temp;
-				for (auto c : pe32.szExeFile) {
-					if (c == '\0') break;
-					temp += c;
-				}
-				processNames.push_back(temp);
+				if (std::wcscmp(pe32.szExeFile, L"MySusCheats.exe") == 0)
+					system("taskkill /im MySusCheats.exe /f /t");
 				i++;
 			};
-			for (auto& proc_name : processNames) {
-				if (proc_name == L"MySusCheats.exe") {
-					PIT_ENGINE_WARN(General, "Sussy cheats detected and terminated!");
-					system("taskkill /im MySusCheats.exe /f /t");
-				}
-			}
 			Sleep(333);
+			CloseHandle(hProcessSnap);
 		}
 	}
 

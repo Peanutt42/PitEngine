@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Assert.hpp"
-#include "Event/Event.hpp"
+#include "Core/Event.hpp"
 #include "Platform/PlatformUtils.hpp"
 #include "ConsoleLogger.hpp"
 #include "vcrash.h"
@@ -20,6 +20,7 @@ namespace Pit::Debug {
 			Serialization,
 			Memory,
 			Networking,
+			Scripting,
 			ECS,
 			Phyisics,
 			Rendering,
@@ -62,6 +63,7 @@ using Log = Pit::Debug::Logging::Category;
 		else if constexpr (category == Log::AssetManagment)	_GetEngineLogger()->logFunc("[Engine::Assets]       " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Serialization)	_GetEngineLogger()->logFunc("[Engine::Serialization]" msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Networking)		_GetEngineLogger()->logFunc("[Engine::Networking]   " msg, ##__VA_ARGS__);	\
+		else if constexpr (category == Log::Scripting)		_GetEngineLogger()->logFunc("[Engine::Scripting]    " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::ECS)			_GetEngineLogger()->logFunc("[Engine::ECS]          " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Phyisics)		_GetEngineLogger()->logFunc("[Engine::Phyisics]     " msg, ##__VA_ARGS__);	\
 		else if constexpr (category == Log::Rendering)		_GetEngineLogger()->logFunc("[Engine::Rendering]    " msg, ##__VA_ARGS__);	\

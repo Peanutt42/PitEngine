@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "LoggingOutputPanel.hpp"
 #include <imgui/imgui.h>
-#include "Memory\MemorySubmodule.hpp"
+#include "Memory/MemorySubmodule.hpp"
 
 using namespace Pit;
 using namespace Editor;
@@ -29,5 +29,5 @@ void LoggingOutputPanel::OnDestroy() {
 
 void LoggingOutputPanel::OnGui() {
 	ImGui::Text(m_Logs.c_str());
-	if (Input::IsKeyDown(KeyCode::Space)) PIT_ENGINE_FATAL(General, "This was a test");
+	//if (Input::IsKeyDown(KeyCode::Space)) PIT_ENGINE_FATAL(General, "This was a test");
 }

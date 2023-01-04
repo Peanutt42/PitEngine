@@ -3,14 +3,14 @@ project "Sandbox"
 	language "C++"
 	cppdialect "C++20"
 	staticruntime "off"
-	
+		
 	debugdir "$(SolutionDir)"
 
 	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.hpp"
-    pchsource "pch.cpp"
+    pchsource "src/pch.cpp"
 
 	files {
 		"src/**.h",
@@ -26,7 +26,7 @@ project "Sandbox"
 		"%{wks.location}/vendor/EnTT/include",
 		"%{wks.location}/vendor/glm/include",
 		"%{wks.location}/vendor/fmt/include",
-		"%{wks.location}/vendor/vulkan/include",
+		"%{wks.location}/vendor/mono/include",
 		"%{wks.location}/vendor/imgui/include",
 		"%{wks.location}/vendor/glfw/include",
 		"%{wks.location}/vendor/tinyobjloader/include",
@@ -38,7 +38,7 @@ project "Sandbox"
 	}
 
 	libdirs {
-		"%{wks.location}/vendor/vulkan/Lib",
+		"%{wks.location}/vendor/mono/lib/%{cfg.buildcfg}",
 		"%{wks.location}/vendor/sndfile/lib",
 		"%{wks.location}/vendor/glfw/lib-vc2022",
 		"%{wks.location}/vendor/optick/lib/x64/release"
@@ -60,6 +60,7 @@ project "Sandbox"
 		"glfw3.lib",
 		"Dbghelp.lib",
 		"OptickCore.lib",
+		"libmono-static-sgen.lib",
 		"Engine"
 	}
 	
@@ -72,15 +73,26 @@ project "Sandbox"
 		buildoptions "/MDd"
 		runtime "Debug"
 		optimize "off"
-		symbols "on"
+		symbols "Default"
 		
 	filter { "configurations:Release" }
 		buildoptions "/MD"
 		runtime "Release"
-		optimize "Speed"
-		symbols "on"
+		optimize "Full"
+		symbols "Default"
+
+
+	filter { "system:windows" }
+		defines { "PIT_WINDOWS" }
+	filter { "system:linux" }
+		defines { "PIT_LINUX" }
+	filter { "system:macosx" }
+		defines { "PIT_MACOS" }
 
 	filter { "configurations:Debug" }
 		defines { "DEBUG" }
 	filter { "configurations:Release" }
 		defines { "RELEASE" }
+
+	filter { "system:windows" }
+		links { "Ws2_32.lib", "Winmm.lib", "Version.lib", "Bcrypt.lib" }

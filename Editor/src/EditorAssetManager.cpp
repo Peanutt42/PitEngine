@@ -8,15 +8,20 @@ namespace Pit::Editor {
 		if (!Engine::GetSettings().Headless) {
 			// see Icon enum for indexing
 			m_Icons.reserve(9);
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/FolderIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/TextIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/AudioIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/MeshIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/ImageIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/ShaderIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/BackIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/RefreshIcon.png"));
-			m_Icons.push_back(new Rendering::Texture("Editor/assets/Icons/Options.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/FolderIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/TextIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/AudioIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/MeshIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/ImageIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/ShaderIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/BackIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/RefreshIcon.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/Options.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/PlayButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/StopButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/SimulateButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/StepButton.png"));
+			m_Icons.push_back(new Rendering::Texture("Editor/Resources/Icons/ExitButton.png"));
 		}
 	}
 

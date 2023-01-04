@@ -1,24 +1,24 @@
 #pragma once
 
 #include "Core/CoreInclude.hpp"
-#include "ECS/ECSComponent.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include <entt.hpp>
 
 namespace Pit::ECS {
-    struct NameComponent : public Component {
+    struct NameComponent {
         String Name;
     };
 
-    struct UUIDComponent : public Component {
+    struct UUIDComponent {
         UUID Id;
     };
 
-    struct TransformComponent : public Component {
+    struct TransformComponent {
         glm::vec3 position{};
         glm::vec3 rotation{};
         glm::vec3 scale{ 1.f, 1.f, 1.f };
 
-        glm::mat4 mat4() {
+        void mat4(glm::mat4& out) {
             // Simplified but slower:
             // auto transform = glm::translate(glm::mat4(1), position);
 
@@ -35,7 +35,7 @@ namespace Pit::ECS {
             const float s2 = glm::sin(rotation.x);
             const float c1 = glm::cos(rotation.y);
             const float s1 = glm::sin(rotation.y);
-            return glm::mat4{
+            out = glm::mat4{
                 {
                     scale.x * (c1 * c3 + s1 * s2 * s3),
                     scale.x * (c2 * s3),
@@ -83,4 +83,20 @@ namespace Pit::ECS {
                 } };
         }
     };
+
+    struct CSharpComponent {
+        String ClassName;
+    };
+
+
+
+	[[maybe_unused]] static void RegisterComponents(entt::registry* reg) {
+		entt::entity registerEntity = reg->create();
+	#define PIT_REGISTER_COMPONENT(component) reg->emplace<component>(registerEntity); reg->remove<component>(registerEntity)
+		PIT_REGISTER_COMPONENT(NameComponent);
+		PIT_REGISTER_COMPONENT(UUIDComponent);
+		PIT_REGISTER_COMPONENT(TransformComponent);
+		PIT_REGISTER_COMPONENT(CSharpComponent);
+		reg->destroy(registerEntity);
+	}
 }

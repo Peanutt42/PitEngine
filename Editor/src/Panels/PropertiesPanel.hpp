@@ -3,7 +3,7 @@
 #pragma once
 
 #include "EditorWindowPanel.hpp"
-#include "ECS/ECSWorld.hpp"
+#include "ECS/ECSScene.hpp"
 
 namespace Pit::Editor {
 	class PropertiesPanel : public EditorWindowPanel {
@@ -15,6 +15,6 @@ namespace Pit::Editor {
 		virtual void OnGui() override;
 
 	private:
-		void _DrawComponents(ECS::World* world, entt::entity entity);
+		void _DrawComponents(ECS::EntityHandle entity);
 	};
 }

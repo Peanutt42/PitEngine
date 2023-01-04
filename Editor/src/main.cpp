@@ -1,6 +1,6 @@
 ﻿#include "pch.hpp"
 #include "EditorApplication.hpp"
-#include "Serialization\YAMLSerializer.hpp"
+#include "Serialization/YAMLSerializer.hpp"
 
 using namespace Pit;
 using namespace Editor;
@@ -8,7 +8,7 @@ using namespace Editor;
 int main(const int argc, const char* argv[]) {
 	String projDir = "Sandbox/Sandbox.pitproj";
 	for (int i = 1; i < argc; i++) {
-		if (String(argv[i]) == "-proj" && argc < i + 1)
+		if (strcmp(argv[i], "-proj") == 0 && argc < i + 1)
 			projDir = argv[i + 1];
 	}
 	PIT_ENGINE_ASSERT(Editor, std::filesystem::exists(projDir), "The project specified doesn't exists!");

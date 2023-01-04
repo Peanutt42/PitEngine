@@ -2,7 +2,7 @@
 #include "TextureAsset.hpp"
 
 namespace Pit::Rendering {
-	TextureAsset::TextureAsset(const String& path, bool asyncLoading) : m_AsyncLoading(asyncLoading) {
+	TextureAsset::TextureAsset(const std::filesystem::path& path, bool asyncLoading) : m_AsyncLoading(asyncLoading) {
 		m_Filepath = path;
 		m_TypeId = TEXTURE_ASSET_TYPE;
 	}

@@ -35,6 +35,7 @@ namespace Pit {
 		static class RenderingSubmodule* Rendering();
 		static class ECSSubmodule* ECS();
 		static class MemorySubmodule* Memory();
+		static class ScriptingSubmodule* Scripting();
 
 		static InitEvent InitEvent;
 		static NetworkingUpdateEvent NetworkingUpdateEvent;

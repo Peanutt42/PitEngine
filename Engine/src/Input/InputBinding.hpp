@@ -52,8 +52,8 @@ namespace Pit {
 		bool RemoveBinding(const String& name);
 		bool RemoveAxisBinding(const String& name);
 
-		void Serialize(const String& keyboardBindingFilepath, const String& controllerBindingFilepath);
-		void Deserize(const String& keyboardBindingFilepath, const String& controllerBindingFilepath);
+		void Serialize(const std::filesystem::path& keyboardBindingFilepath, const std::filesystem::path& controllerBindingFilepath);
+		void Deserize(const std::filesystem::path& keyboardBindingFilepath, const std::filesystem::path& controllerBindingFilepath);
 
 	private:
 		Array<ButtonBindingEntry> m_Bindings;

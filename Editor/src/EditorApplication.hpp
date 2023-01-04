@@ -29,6 +29,7 @@ namespace Pit::Editor {
 		static Array<bool> s_PanelKeyShortcutsPressed;
 
 		static ProjectInfo s_CurrentProject;
+		static std::filesystem::path s_CurrentSceneFilepath;
 	};
 
 

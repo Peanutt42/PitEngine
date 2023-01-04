@@ -2,7 +2,7 @@
 #include "KeyValueSerialization.hpp"
 
 namespace Pit::Serialization {
-	KeyValueSerialization::KeyValueSerialization(const String& filepath)
+	KeyValueSerialization::KeyValueSerialization(const std::filesystem::path& filepath)
 		: m_Fout(filepath) {
 
 		PIT_ENGINE_ASSERT(Serialization, m_Fout.is_open(), "Failed to create file {}", filepath);
@@ -20,11 +20,11 @@ namespace Pit::Serialization {
 	
 	
 	
-	void KeyValueDeserialization::Deserialize(const String& filepath, Array<KeyValuePair>& keyValuePairs) {
-		PIT_ENGINE_ASSERT(Serialization, std::filesystem::exists(filepath), "Trying to deserialize file: {} that ", filepath);
+	void KeyValueDeserialization::Deserialize(const std::filesystem::path& filepath, Array<KeyValuePair>& keyValuePairs) {
+		PIT_ENGINE_ASSERT(Serialization, std::filesystem::exists(filepath), "Trying to deserialize file: {} that ", filepath.string().c_str());
 
 		std::ifstream fin(filepath);
-		PIT_ENGINE_ASSERT(Serialization, fin.is_open(), "Failed to open file {}", filepath);
+		PIT_ENGINE_ASSERT(Serialization, fin.is_open(), "Failed to open file {}", filepath.string());
 
 		String line;
 		int i = 0;

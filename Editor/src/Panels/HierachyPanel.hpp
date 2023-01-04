@@ -3,7 +3,7 @@
 #pragma once
 
 #include "EditorWindowPanel.hpp"
-#include <entt.hpp>
+#include "ECS/ECSEntityHandle.hpp"
 
 namespace Pit::Editor {
 	class HierachyPanel : public EditorWindowPanel {
@@ -14,7 +14,7 @@ namespace Pit::Editor {
 
 		virtual void OnGui() override;
 
-		static entt::entity s_SelectedEntity;
+		static ECS::EntityHandle s_SelectedEntity;
 
 	private:
 		void _DrawEntityNode(entt::entity entity);

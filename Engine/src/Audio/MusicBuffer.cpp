@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "MusicBuffer.hpp"
 #include <cstddef>
-#include <AL\alext.h>
+#include <AL/alext.h>
 #include <malloc.h>
 
 namespace Pit::Audio {

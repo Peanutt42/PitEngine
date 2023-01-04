@@ -11,8 +11,8 @@ int main(const int argc, const char* argv[]) {
 	EngineSettings engineSettings(argc, argv, "Game", "PitEngine-Sandbox", true, false, false);
 
 	if (!Engine::Init(engineSettings)) return 0;
-	
-	Input::AddAxisBinding("Move", KeyAxis(KeyCode::W, KeyCode::S, KeyCode::A, KeyCode::D));
+
+	Input::SetAxisBinding("Move", KeyAxis(KeyCode::W, KeyCode::S, KeyCode::A, KeyCode::D));
 	Input::AddMouseAxisBinding("Look");
 	Input::AddBinding("MoveUp", KeyCode::E);
 	Input::AddBinding("MoveDown", KeyCode::Q);

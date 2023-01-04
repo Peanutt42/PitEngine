@@ -97,6 +97,8 @@ namespace Pit {
 
 
 #define MAX_CONTROLLER_COUNT 16
+		static bool s_ControllerActiveStates[MAX_CONTROLLER_COUNT];
+
 #define CONTROLLER_BUTTON_COUNT 14
 		static ButtonState s_ControllerButtonStates[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
 		static bool s_ControllerButtonStateChanged[MAX_CONTROLLER_COUNT][CONTROLLER_BUTTON_COUNT];
