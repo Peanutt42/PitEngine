@@ -130,7 +130,7 @@ namespace Pit {
 			Debug::Logging::Shutdown();
 
 			#if DEBUG
-			//Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
+			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
 			#endif
 
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
@@ -188,11 +188,11 @@ namespace Pit {
 			return false;
 	}
 
-	AudioSubmodule* Engine::Audio() { return s_SubmoduleManager->AudioSubmodule; }
-	AssetManagmentSubmodule* Engine::AssetManagment() { return s_SubmoduleManager->AssetManagmentSubmodule; }
-	RenderingSubmodule* Engine::Rendering() { return s_SubmoduleManager->RenderingSubmodule; }
-	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
+	AudioSubmodule* Engine::Audio()						{ if (s_SubmoduleManager) return s_SubmoduleManager->AudioSubmodule; else return nullptr; }
+	AssetManagmentSubmodule* Engine::AssetManagment()	{ if (s_SubmoduleManager) return s_SubmoduleManager->AssetManagmentSubmodule;  else return nullptr; }
+	RenderingSubmodule* Engine::Rendering()				{ if (s_SubmoduleManager) return s_SubmoduleManager->RenderingSubmodule;  else return nullptr; }
+	ECSSubmodule* Engine::ECS()							{ if (s_SubmoduleManager) return s_SubmoduleManager->ECSSubmodule;  else return nullptr; }
 	
-	MemorySubmodule* Engine::Memory() { return s_SubmoduleManager->MemorySubmodule; }
-	ScriptingSubmodule* Engine::Scripting() { return s_SubmoduleManager->ScriptingSubmodule;}
+	MemorySubmodule* Engine::Memory()					{ if (s_SubmoduleManager) return s_SubmoduleManager->MemorySubmodule;  else return nullptr; }
+	ScriptingSubmodule* Engine::Scripting()				{ if (s_SubmoduleManager) return s_SubmoduleManager->ScriptingSubmodule;  else return nullptr; }
 }

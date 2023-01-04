@@ -24,45 +24,44 @@ namespace Pit {
 		MessageBoxW(NULL, msg, title, MB_ICONERROR | MB_OK);
 	}
 
-
-	const std::string FileDialogs::OpenFile(const std::string& filter) {
+	const std::string FileDialogs::OpenFile(const char* filter) {
 		OPENFILENAMEA ofn;
-		CHAR szFile[260] = { 0 };
-		CHAR currentDir[256] = { 0 };
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		if (Engine::Rendering())
+			ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		else
+			ofn.hwndOwner = nullptr;
+		char szFile[260] = { 0 };
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
-		if (GetCurrentDirectoryA(256, currentDir))
-			ofn.lpstrInitialDir = currentDir;
-		ofn.lpstrFilter = filter.c_str();
+		ofn.lpstrFilter = filter;
 		ofn.nFilterIndex = 1;
-		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+		ofn.Flags = OFN_PATHMUSTEXIST |
+					OFN_FILEMUSTEXIST |
+					OFN_NOCHANGEDIR;
 
-		if (GetOpenFileNameA(&ofn) == TRUE)
+		if (GetOpenFileNameA(&ofn))
 			return ofn.lpstrFile;
 
 		return std::string();
 	}
 
-	const std::string FileDialogs::SaveFile(const std::string& filter) {
+	const std::string FileDialogs::SaveFile(const char* filter) {
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
-		CHAR currentDir[256] = { 0 };
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		if (Engine::Rendering())
+			ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		else
+			ofn.hwndOwner = nullptr;
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
-		if (GetCurrentDirectoryA(256, currentDir))
-			ofn.lpstrInitialDir = currentDir;
-		ofn.lpstrFilter = filter.c_str();
+		ofn.lpstrFilter = filter;
 		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR;
-
-		// Sets the default extension by extracting it from the filter
-		ofn.lpstrDefExt = strchr(filter.c_str(), '\0') + 1;
+		ofn.lpstrDefExt = strchr(filter, '\0') + 1;
 
 		if (GetSaveFileNameA(&ofn) == TRUE)
 			return ofn.lpstrFile;

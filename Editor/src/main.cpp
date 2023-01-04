@@ -1,17 +1,20 @@
 ﻿#include "pch.hpp"
 #include "EditorApplication.hpp"
 #include "Serialization/YAMLSerializer.hpp"
+#include "Platform/PlatformUtils.hpp"
 
 using namespace Pit;
 using namespace Editor;
 
 int main(const int argc, const char* argv[]) {
-	String projDir = "Sandbox/Sandbox.pitproj";
+	String projDir;
 	for (int i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-proj") == 0 && argc < i + 1)
 			projDir = argv[i + 1];
 	}
-	PIT_ENGINE_ASSERT(Editor, std::filesystem::exists(projDir), "The project specified doesn't exists!");
+	while (projDir.empty() || !std::filesystem::exists(projDir)) {
+		projDir = FileDialogs::OpenFile("PitEngine Project (*.pitproj)\0*.pitproj\0");
+	}
 
 	Serialization::YamlDeserializer in(projDir);
 	String projName;
