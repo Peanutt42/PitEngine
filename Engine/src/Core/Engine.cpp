@@ -5,7 +5,7 @@
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
 #include "Debug/MemoryLeakDetector.hpp"
-#include "Memory\MemorySubmodule.hpp"
+#include "Memory/MemorySubmodule.hpp"
 
 
 namespace Pit {

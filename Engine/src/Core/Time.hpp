@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include "Debug\Logging.hpp"
+#include "Debug/Logging.hpp"
 
 namespace Pit {
 	/// <summary>

@@ -5,8 +5,8 @@
 #include "Panels/SceneViewportPanel.hpp"
 #include "Panels/ProfilerPanel.hpp"
 #include "Panels/ContentBrowserPanel.hpp"
-#include "Panels\LoggingOutputPanel.hpp"
-#include "Panels\BuildGamePanel.hpp"
+#include "Panels/LoggingOutputPanel.hpp"
+#include "Panels/BuildGamePanel.hpp"
 #include "EditorDockspace.hpp"
 
 using namespace Pit;

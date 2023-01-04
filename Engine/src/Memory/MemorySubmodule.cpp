@@ -2,7 +2,7 @@
 #include "MemorySubmodule.hpp"
 #include "BumpAllocator.hpp"
 #include "Core/Engine.hpp"
-#include "Platform\PlatformUtils.hpp"
+#include "Platform/PlatformUtils.hpp"
 
 static bool s_UseFrameallocator = false;
 

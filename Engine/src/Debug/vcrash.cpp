@@ -1,12 +1,11 @@
 #include "pch.hpp"
 #include "vcrash.h"
 
-#include <string.h>
 #include "Core/Engine.hpp"
-#include "Debug\Logging.hpp"
-#include "Memory\MemorySubmodule.hpp"
-#include "Utils\DateUtils.hpp"
-#include "Platform\PlatformUtils.hpp"
+#include "Debug/Logging.hpp"
+#include "Memory/MemorySubmodule.hpp"
+#include "Utils/DateUtils.hpp"
+#include "Platform/PlatformUtils.hpp"
 
 #ifdef PIT_WINDOWS
 #include <windows.h>

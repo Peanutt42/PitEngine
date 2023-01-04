@@ -1,6 +1,6 @@
 ﻿#include "pch.hpp"
 #include "EditorApplication.hpp"
-#include "Serialization\YAMLSerializer.hpp"
+#include "Serialization/YAMLSerializer.hpp"
 
 using namespace Pit;
 using namespace Editor;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core\CoreInclude.hpp"
-#include "Platform\PlatformUtils.hpp"
+#include "Core/CoreInclude.hpp"
+#include "Platform/PlatformUtils.hpp"
 
 namespace Pit {
 	enum class BuildConfiguration {

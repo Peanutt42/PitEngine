@@ -10,7 +10,7 @@
 #include "AssetManagment/AssetManagmentSubmodule.hpp"
 #include "Memory/MemorySubmodule.hpp"
 #include "AntiCheat/AntiCheatSubmodule.hpp"
-#include "Scripting\ScriptingSubmodule.hpp"
+#include "Scripting/ScriptingSubmodule.hpp"
 
 namespace Pit {
 	void SubmoduleManager::Init() {

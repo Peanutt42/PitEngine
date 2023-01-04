@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core\CoreInclude.hpp"
-#include "Core\Event.hpp"
-#include "fmt\fmt.h"
+#include "Core/CoreInclude.hpp"
+#include "Core/Event.hpp"
+#include <fmt/fmt.h>
 
 namespace Pit::Debug {
 	enum class ConsoleColor {

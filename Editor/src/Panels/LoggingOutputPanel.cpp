@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "LoggingOutputPanel.hpp"
 #include <imgui/imgui.h>
-#include "Memory\MemorySubmodule.hpp"
+#include "Memory/MemorySubmodule.hpp"
 
 using namespace Pit;
 using namespace Editor;
