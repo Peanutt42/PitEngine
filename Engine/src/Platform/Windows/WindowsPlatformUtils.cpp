@@ -86,23 +86,18 @@ namespace Pit {
 	const unsigned long Process::GetCurrentProcessID() { return GetCurrentProcessId(); }
 
 	const std::wstring Process::GetName(unsigned long processId) {
-		HANDLE hProcessSnap;
 		PROCESSENTRY32 pe32;
 		pe32.dwSize = sizeof(PROCESSENTRY32);
-		hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 		int i = 0;
 		while (Process32Next(hProcessSnap, &pe32)) {
 			if (i < 3) { i++; continue; }
 			i++;
 			if (pe32.th32ProcessID != processId) continue;
-			std::wstring name;
-			for (auto c : pe32.szExeFile) {
-				if (c == '\0') break;
-				name += c;
-			}
-			return name;
+			CloseHandle(hProcessSnap);
+			return std::wstring(pe32.szExeFile);
 		};
-		return L"notfound";
+		return L"";
 	}
 
 	std::thread::id Thread::MainThreadId = std::this_thread::get_id();

@@ -71,10 +71,6 @@ void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 	stackframe.AddrStack.Mode = AddrModeFlat;
 #endif
 
-	#if DEBUG
-	out << "To get the source files location, change your configuration to release!\n";
-	#endif
-
 	int i = 1;
 	while (StackWalk64(image, process, thread, &stackframe, &context, NULL,	SymFunctionTableAccess64, SymGetModuleBase64, NULL)) {
 		char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];

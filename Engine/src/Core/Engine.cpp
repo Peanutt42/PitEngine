@@ -157,13 +157,6 @@ namespace Pit {
 			Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * .000000001f);
 			lastUpdate = now;
 
-			static int i = 0;
-			i++;
-			if (i > 1000) {
-				PIT_ENGINE_INFO(General, "Test");
-				i = 0;
-			}
-
 			Input::Update();
 
 			s_SubmoduleManager->Update();

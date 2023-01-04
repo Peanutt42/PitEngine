@@ -13,7 +13,7 @@ namespace Pit::Debug {
 	void MemoryLeakDetector::Init() {
 		#if DEBUG
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-		//_CrtSetBreakAlloc(xyz); xyz -> {xyz} normal block at 0xWhatEverLocation, ... bytes long
+		//_CrtSetBreakAlloc(12848);// number -> {number} normal block at 0xWhatEverLocation, ... bytes long
 		#endif
 	}
 	

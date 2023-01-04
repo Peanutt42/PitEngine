@@ -45,11 +45,9 @@ void SceneViewportPanel::OnDestroy() {}
 static void UIToolbar();
 
 void SceneViewportPanel::OnGui() {
-	UIToolbar();
-
-	auto region = ImGui::GetContentRegionAvail();
-	auto panelSize = ImGui::GetWindowSize();
-	auto panelPos = ImGui::GetWindowPos();
+	ImVec2 region = ImGui::GetContentRegionAvail();
+	ImVec2 panelSize = ImGui::GetWindowSize();
+	ImVec2 panelPos = ImGui::GetWindowPos();
 	ImGui::Image((ImTextureID)Cast<uint64>(Engine::Rendering()->Renderer->GetScreenTexColorBuffer()),
 				 ImVec2(region.x, region.y), ImVec2(0, 1), ImVec2(1, 0));
 

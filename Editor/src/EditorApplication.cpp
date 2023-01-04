@@ -30,13 +30,13 @@ void EditorApplication::Init() {
 
 	s_AssetManager.Init();
 
-	s_WindowPanels.reserve(5);
+	s_WindowPanels.reserve(7);
 	s_WindowPanels.push_back(new HierachyPanel());
 	s_WindowPanels.push_back(new PropertiesPanel());
 	s_WindowPanels.push_back(new SceneViewportPanel());
 	s_WindowPanels.push_back(new ProfilerPanel());
-	s_WindowPanels.push_back(new ContentBrowserPanel());
-	s_WindowPanels.push_back(new LoggingOutputPanel());
+	//s_WindowPanels.push_back(new ContentBrowserPanel());
+	//s_WindowPanels.push_back(new LoggingOutputPanel());
 	s_WindowPanels.push_back(new BuildGamePanel());
 	
 	Engine::UIRenderEvent += []() {
@@ -52,7 +52,7 @@ void EditorApplication::Init() {
 		}
 	};
 
-	for (auto* layer : s_WindowPanels) {
+	for (EditorWindowPanel* layer : s_WindowPanels) {
 		layer->OnCreate();
 		Engine::UIRenderEvent += [layer]() { layer->OnGUI(); };
 	}
@@ -77,15 +77,15 @@ static void SaveScene() {
 }
 
 void EditorApplication::Update() {
-	s_PanelKeyShortcutsPressed.resize(s_WindowPanels.size());
-	for (int i = 0; i < s_WindowPanels.size(); i++) {
-		bool pressed = s_WindowPanels[i]->Shortcut.size() > 0;
-		for (auto keycode : s_WindowPanels[i]->Shortcut) {
-			if (!Input::IsKeyDown(keycode))
-				pressed = false;
-		}
-		s_PanelKeyShortcutsPressed[i] = pressed;
-	}
+	//s_PanelKeyShortcutsPressed.resize(s_WindowPanels.size());
+	//for (int i = 0; i < s_WindowPanels.size(); i++) {
+		//bool pressed = s_WindowPanels[i]->Shortcut.size() > 0;
+		//for (auto keycode : s_WindowPanels[i]->Shortcut) {
+			//if (!Input::IsKeyDown(keycode))
+				//pressed = false;
+		//}
+		//s_PanelKeyShortcutsPressed[i] = pressed;
+	//}
 
 	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyPressed(KeyCode::O))
 		OpenSceneFromFile();
@@ -97,7 +97,7 @@ void EditorApplication::Update() {
 }
 
 void EditorApplication::MenubarCallback() {
-	Array<bool> openWindows(s_WindowPanels.size());
+	//Array<bool> openWindows(s_WindowPanels.size());
 	if (ImGui::BeginMenu("File")) {
 		if (ImGui::MenuItem("Open File", "Ctrl + O"))
 			OpenSceneFromFile();
@@ -109,19 +109,19 @@ void EditorApplication::MenubarCallback() {
 		ImGui::EndMenu();
 	}
 	if (ImGui::BeginMenu("Windows")) {
-		for (int i = 0; i < s_WindowPanels.size(); i++) {
-			String shortcutStr;
-			for (int j = 0; j < s_WindowPanels[i]->Shortcut.size(); j++) {
-				shortcutStr += KeyCodeToString(s_WindowPanels[i]->Shortcut[j]);
-				if (j + 1 != s_WindowPanels[i]->Shortcut.size()) shortcutStr += " + ";
-			}
-			if (ImGui::MenuItem(s_WindowPanels[i]->Name.c_str(), shortcutStr.c_str(), nullptr, s_WindowPanels[i]->Enabled))
-				openWindows[i] = true;
-		}
+		//for (int i = 0; i < s_WindowPanels.size(); i++) {
+			//String shortcutStr;
+			//for (int j = 0; j < s_WindowPanels[i]->Shortcut.size(); j++) {
+				//shortcutStr += KeyCodeToString(s_WindowPanels[i]->Shortcut[j]);
+				//if (j + 1 != s_WindowPanels[i]->Shortcut.size()) shortcutStr += " + ";
+			//}
+			//if (ImGui::MenuItem(s_WindowPanels[i]->Name.c_str(), shortcutStr.c_str(), nullptr, s_WindowPanels[i]->Enabled))
+				//openWindows[i] = true;
+		//}
 		ImGui::EndMenu();
 	}
-	for (int i = 0; i < s_WindowPanels.size(); i++) {
-		if (openWindows[i] || s_PanelKeyShortcutsPressed[i])
-			s_WindowPanels[i]->Opened = true;
-	}
+	//for (int i = 0; i < s_WindowPanels.size(); i++) {
+		//if (openWindows[i] || s_PanelKeyShortcutsPressed[i])
+			//s_WindowPanels[i]->Opened = true;
+	//}
 }

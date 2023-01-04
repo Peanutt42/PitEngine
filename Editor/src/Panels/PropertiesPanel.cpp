@@ -8,6 +8,7 @@
 #include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
+#include "Memory/MemorySubmodule.hpp"
 #include <imgui/imgui.h>
 #pragma warning(push)
 #pragma warning(disable: 4201)
@@ -83,17 +84,17 @@ static void DisplayAddComponentEntry(const String& entryName) {
 		}
 	}
 }
-
+static char nameInputBuffer[256];
+static char componentClassNameInputBuffer[100];
 void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	if (entity.HasComponent<ECS::NameComponent>()) {
 		auto& entityComp = entity.GetComponent<ECS::NameComponent>();
 		auto& name = entityComp.Name;
 
-		static char buffer[256];
-		memset(buffer, 0, sizeof(buffer));
-		strcpy_s(buffer, name.c_str());
-		if (ImGui::InputText("Name", buffer, sizeof(buffer)))
-			name = String(buffer);
+		memset(nameInputBuffer, 0, sizeof(nameInputBuffer));
+		strcpy_s(nameInputBuffer, name.c_str());
+		if (ImGui::InputText("Name", nameInputBuffer, sizeof(nameInputBuffer)))
+			name = String(nameInputBuffer);
 	}
 
 	DrawComponent<ECS::TransformComponent>("Transform", entity, [](ECS::TransformComponent& transform) {
@@ -108,17 +109,20 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 		ImGui::Text("UUID: %d", uuid.Id);
 	});
 
-	DrawComponent<ECS::ScriptComponent>("Script", entity, [](ECS::ScriptComponent& script) {
-		bool scriptClassExists = Engine::Scripting()->EntityClassExists(script.Name);
-		
-		if (!scriptClassExists) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
+	DrawComponent<ECS::CSharpComponent>("CSharpComponent", entity, [](ECS::CSharpComponent& component) {
+		bool componentClassExists = Engine::Scripting()->ComponentClassExists(component.ClassName);
 
-		static char buffer[64];
-		strcpy_s(buffer, script.Name.c_str());
-		if (ImGui::InputText("Class", buffer, 64))
-			script.Name = buffer;
+		memset(componentClassNameInputBuffer, 0, sizeof(componentClassNameInputBuffer));
+		strcpy_s(componentClassNameInputBuffer, component.ClassName.c_str());
 
-		if (!scriptClassExists) ImGui::PopStyleColor();
+		if (!componentClassExists)
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
+
+		if (ImGui::InputText("ComponentName", componentClassNameInputBuffer, sizeof(componentClassNameInputBuffer)))
+			component.ClassName = componentClassNameInputBuffer;
+
+		if (!componentClassExists)
+			ImGui::PopStyleColor();
 	});
 
 	ImGui::Spacing();
@@ -131,10 +135,12 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 		ImGui::OpenPopup("AddComponent");
 
 	if (ImGui::BeginPopup("AddComponent")) {
-		//DisplayAddComponentEntry<ECS::CameraComponent>("Camera");// Example
+		bool frameAllocActive = Engine::Memory()->GetFrameAllocatorActive();
+		Engine::Memory()->SetFrameAllocatorActive(false);
 		DisplayAddComponentEntry<ECS::TransformComponent>("Transform");
 		DisplayAddComponentEntry<ECS::UUIDComponent>("UUID");
-		DisplayAddComponentEntry<ECS::ScriptComponent>("Script");
+		DisplayAddComponentEntry<ECS::CSharpComponent>("CSharpComponent");
+		Engine::Memory()->SetFrameAllocatorActive(frameAllocActive);
 		ImGui::EndPopup();
 	}
 }
