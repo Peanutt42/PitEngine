@@ -132,4 +132,7 @@ void EditorApplication::Update() {
 		SaveScene();
 	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyDown(KeyCode::LeftShift) && Input::IsKeyReleased(KeyCode::S))
 		SaveSceneToFile();
+
+	if (Input::IsKeyDown(KeyCode::LeftControl) && Input::IsKeyPressed(KeyCode::R))
+		Engine::Scripting()->ReloadAssembly();
 }

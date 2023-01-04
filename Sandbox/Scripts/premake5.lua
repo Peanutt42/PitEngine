@@ -21,7 +21,7 @@ project "Sandbox"
 	dotnetframework "4.7.2"
 
 	targetdir ("Binaries")
-	objdir ("Intermediate")
+	objdir ("Intermediates")
 
 	files
 	{

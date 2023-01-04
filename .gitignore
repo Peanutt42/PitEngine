@@ -2,8 +2,9 @@
 **/bin/
 bin-int/
 Intermediates/
-Editor/Resources/Scripts/
-Engine/Resources/Scripts/
+Engine-ScriptCore/Binary/
+Engine-ScriptCore/Intermediates/
+Sandbox/Scripts/Intermediates/
 
 # Log files
 *.log

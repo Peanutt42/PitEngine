@@ -140,7 +140,7 @@ namespace Pit {
 
 
 	struct ScriptEngineData {
-		MonoDomain* RootDomain = nullptr;
+		MonoDomain* MonoRootDomain = nullptr; // Contains domain for mono
 		MonoDomain* AppDomain = nullptr;
 
 		MonoAssembly* CoreAssembly = nullptr;
@@ -160,6 +160,8 @@ namespace Pit {
 
 
 	void ScriptingSubmodule::Init() {
+		PIT_PROFILE_FUNCTION();
+
 		s_Data = new ScriptEngineData();
 
 		InitMono();
@@ -190,6 +192,8 @@ namespace Pit {
 	}
 
 	void ScriptingSubmodule::Shutdown() {
+		PIT_PROFILE_FUNCTION();
+
 		ShutdownMono();
 
 		delete s_Data;
@@ -199,11 +203,13 @@ namespace Pit {
 	}
 
 	void ScriptingSubmodule::InitMono() {
+		PIT_PROFILE_FUNCTION();
+
 		PIT_ENGINE_INFO(Scripting, "Initializing Mono");
 
 		if (std::filesystem::exists("JSON")) std::filesystem::remove_all("JSON"); // Random folder
 
-		mono_set_assemblies_path("Engine/lib");
+		mono_set_assemblies_path("Engine-ScriptCore/lib");
 
 		if (s_Data->EnableDebugging) {
 			const char* argv[2] = {
@@ -214,16 +220,18 @@ namespace Pit {
 			mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 		}
 
-		s_Data->RootDomain = mono_jit_init("PitEngineJITRuntime"); 
-		PIT_ENGINE_ASSERT(Scripting, s_Data->RootDomain, "Failed to init mono-jit (mono_jit_init(\"PitEngineJITRuntime\"))");
+		s_Data->MonoRootDomain = mono_jit_init("PitEngineJITRuntime");
+		PIT_ENGINE_ASSERT(Scripting, s_Data->MonoRootDomain, "Failed to init mono-jit (mono_jit_init(\"PitEngineJITRuntime\"))");
 
 		if (s_Data->EnableDebugging)
-			mono_debug_domain_create(s_Data->RootDomain);
+			mono_debug_domain_create(s_Data->MonoRootDomain);
 
 		mono_thread_set_main(mono_thread_current());
 	}
 
 	void ScriptingSubmodule::ShutdownMono() {
+		PIT_PROFILE_FUNCTION();
+
 		PIT_ENGINE_INFO(Scripting, "Shutting down Mono");
 
 		mono_domain_set(mono_get_root_domain(), false);
@@ -231,11 +239,13 @@ namespace Pit {
 		mono_domain_unload(s_Data->AppDomain);
 		s_Data->AppDomain = nullptr;
 
-		mono_jit_cleanup(s_Data->RootDomain);
-		s_Data->RootDomain = nullptr;
+		mono_jit_cleanup(s_Data->MonoRootDomain);
+		s_Data->MonoRootDomain = nullptr;
 	}
 
 	const bool ScriptingSubmodule::LoadCoreAssembly(const std::filesystem::path& binaryFilepath) {
+		PIT_PROFILE_FUNCTION();
+
 		// Create App-domain
 		char appName[] = "PitEngineScriptRuntime";
 		s_Data->AppDomain = mono_domain_create_appdomain(appName, nullptr);
@@ -259,6 +269,8 @@ namespace Pit {
 	}
 
 	const bool ScriptingSubmodule::LoadAppAssembly(const std::filesystem::path& binaryFilepath) {
+		PIT_PROFILE_FUNCTION();
+
 		s_Data->AppAssemblyFilepath = binaryFilepath;
 		s_Data->AppAssembly = Utils::LoadMonoAssembly(binaryFilepath, s_Data->EnableDebugging);
 		if (!s_Data->AppAssembly) {
@@ -277,16 +289,25 @@ namespace Pit {
 	}
 
 	void ScriptingSubmodule::ReloadAssembly() {
+		PIT_PROFILE_FUNCTION();
+
+		PIT_ENGINE_INFO(Scripting, "Reloading changed Assemblies");
+
+		ScopedTimer t("Script assembly reloading");
+
 		mono_domain_set(mono_get_root_domain(), false);
 
 		mono_domain_unload(s_Data->AppDomain);
 
 		LoadCoreAssembly(s_Data->CoreAssemblyFilepath);
 		LoadAppAssembly(s_Data->AppAssemblyFilepath);
+
 		LoadAssemblyClasses();
 	}
 
 	void ScriptingSubmodule::LoadAssemblyClasses() {
+		PIT_PROFILE_FUNCTION();
+
 		s_Data->SystemClasses.clear();
 		s_Data->ComponentClasses.clear();
 
