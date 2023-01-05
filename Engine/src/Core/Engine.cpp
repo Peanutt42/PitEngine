@@ -110,6 +110,15 @@ namespace Pit {
 		return true;
 	}
 
+	#if DEBUG
+	static void waitForOptickToCollectShutdownTimings() {
+		for (int i = 0; i < 3; i++) {
+			PIT_PROFILE_FRAME("MainThread");
+			PIT_PROFILE_FUNCTION("END");
+			std::this_thread::sleep_for(1s);
+		}
+	}
+	#endif
 	void Engine::Shutdown() {
 		PIT_PROFILE_FRAME("MainThread");
 
@@ -142,6 +151,10 @@ namespace Pit {
 			}
 		}
 		CATCH_EXCEPTIONS();
+
+		#if DEBUG
+		waitForOptickToCollectShutdownTimings();
+		#endif
 	}
 
 	void Engine::Update() {
@@ -187,7 +200,7 @@ namespace Pit {
 	bool Engine::ShouldClose() {
 		if (s_Quit)
 			return true;
-		else if (!s_Settings->Headless)
+		else if (!s_Settings->Headless && s_SubmoduleManager->RenderingSubmodule->Window)
 			return s_SubmoduleManager->RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;
