@@ -37,26 +37,25 @@ namespace Pit {
 			if (fileExtention == ".wav" ||
 				fileExtention == ".ogg" ||
 				fileExtention == ".mp3") {
-				std::cout << "Loading " << path.string() << '\n';
 				m_Assets.emplace_back(new Audio::AudioAsset(path.string(), LOAD_AUDIO_ASYNC));
 			}
 
 			// Textures
 			else if (fileExtention == ".png" ||
 					 fileExtention == ".jpg") {
-				std::cout << "Loading " << path.string() << '\n';
 				m_Assets.emplace_back(new Rendering::TextureAsset(path.string(), LOAD_TEXTURE_ASYNC));
 			}
 
 		}
 
-		for (int i = 0; i < m_Assets.size(); i++) {
-
-			if (headless) continue;
-
-			m_Assets[i]->Load();
+		for (auto& asset : m_Assets) {
+			AssetManagment::Asset* assetPtr = asset.Get();
+			JobSystem::Execute([assetPtr]() { assetPtr->Load(); });
 		}
+		
+		#if LOAD_AUDIO_ASYNC || LOAD_TEXTURE_ASYNC
 		JobSystem::Wait();
+		#endif
 
 		// Finish async loading with synchronization on the main thread
 		for (int i = 0; i < m_Assets.size(); i++) {
