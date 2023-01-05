@@ -5,7 +5,7 @@
 
 namespace Pit {
 	/// <summary>
-	/// Submodule for handeling Networking
+	/// Submodule for handling Networking
 	/// </summary>
 	class AntiCheatSubmodule : public Submodule {
 	public:
@@ -16,9 +16,8 @@ namespace Pit {
 		virtual void Update();
 
 	private:
-		static void _AntiCheatThreadMain(AntiCheatSubmodule* antiCheat);
+		static void _AntiCheatThreadMain();
 
 		std::thread m_AntiCheatThread;
-		bool m_AntiCheatThreadQuit;
 	};
 }
