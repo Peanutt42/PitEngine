@@ -30,6 +30,8 @@ namespace Pit {
 
 		static const EngineSettings& GetSettings();
 
+		static void SubmitToMainThread(std::function<void()> callback);
+
 		static class AudioSubmodule* Audio();
 		static class AssetManagmentSubmodule* AssetManagment();
 		static class RenderingSubmodule* Rendering();
@@ -56,6 +58,10 @@ namespace Pit {
 
 		static class SubmoduleManager* s_SubmoduleManager;
 		
+		static Array<std::function<void()>> s_MainThreadQueue;
+		static std::mutex s_MainThreadQueueMutex;
+		static void ExecuteMainThreadQueue();
+	
 		static std::ofstream s_InstanceLockFile;
 
 		static bool s_Quit;

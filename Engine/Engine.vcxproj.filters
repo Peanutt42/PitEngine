@@ -225,6 +225,9 @@
     <ClInclude Include="src\Scripting\ScriptGlue.hpp">
       <Filter>Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptUtils.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp">
       <Filter>Scripting</Filter>
     </ClInclude>
@@ -364,6 +367,9 @@
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Scripting\ScriptGlue.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptUtils.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp">

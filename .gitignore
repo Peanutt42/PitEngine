@@ -9,6 +9,10 @@ Sandbox/Scripts/Intermediates/
 # Log files
 *.log
 
+
+InstanceLock.lock
+
+
 # VS files and folder
 .vs/
 **.sln

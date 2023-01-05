@@ -18,24 +18,26 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Engine-ScriptCore\Binaries\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Engine-ScriptCore\Intermediates\Debug\</BaseIntermediateOutputPath>
+    <OutputPath>Binaries\</OutputPath>
+    <BaseIntermediateOutputPath>Intermediates\Debug\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Engine-ScriptCore\Binaries\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Engine-ScriptCore\Intermediates\Release\</BaseIntermediateOutputPath>
+    <OutputPath>Binaries\</OutputPath>
+    <BaseIntermediateOutputPath>Intermediates\Release\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
   </ItemGroup>

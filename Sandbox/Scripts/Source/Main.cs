@@ -6,7 +6,7 @@ namespace Sandbox {
             Debug.Log($"C# says: {message}");
         }
     }
-
+    
     public struct Component {
 
     }

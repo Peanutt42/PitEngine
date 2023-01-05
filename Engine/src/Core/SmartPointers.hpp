@@ -2,7 +2,7 @@
 
 namespace Pit {
 	/// <summary>
-	/// SmartPointer that gets automaticly destroyed when the scope exists
+	/// SmartPointer that gets automatically destroyed when the scope exists
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	template<class T>
@@ -65,6 +65,12 @@ namespace Pit {
 		}
 	};
 
+	template<typename T, typename... Args>
+	static __forceinline ScopeRef<T> CreateScopeRef(Args&&... args) {
+		return ScopeRef<T>(new T(std::forward<Args>(args)...));
+	}
+
+
 	struct ReferenceCounter {
 		ReferenceCounter(unsigned short startingCount) : m_Count(startingCount) {}
 
@@ -76,6 +82,9 @@ namespace Pit {
 		unsigned short m_Count;
 	};
 
+	/// <summary>
+	/// Smartpointer with automatic deletion, including reference counting
+	/// </summary>
 	template<class T>
 	class Ref {
 	public:
@@ -151,4 +160,9 @@ namespace Pit {
 			}
 		}
 	};
+
+	template<typename T, typename... Args>
+	static __forceinline Ref<T> CreateRef(Args&&... args) {
+		return Ref<T>(new T(std::forward<Args>(args)...));
+	}
 }

@@ -1,9 +1,9 @@
 #include "pch.hpp"
 #include "ScriptingSubmodule.hpp"
-
 #include "Core/Engine.hpp"
 
 #include "ScriptGlue.hpp"
+#include "ScriptUtils.hpp"
 
 #include <mono/jit/jit.h>
 #include "mono/metadata/assembly.h"
@@ -15,7 +15,11 @@
 
 #include <glm/glm.hpp>
 
+#include <filewatch/FileWatch.hpp>
+
 namespace Pit {
+	using namespace Scripting;
+
 	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap = {
 		{ "System.Single", ScriptFieldType::Float },
 		{ "System.Double", ScriptFieldType::Double },
@@ -150,6 +154,8 @@ namespace Pit {
 		MonoAssembly* AppAssembly = nullptr;
 		MonoImage* AppAssemblyImage = nullptr;
 		std::filesystem::path AppAssemblyFilepath;
+		bool AppAssemblyReloadPending = false;
+		ScopeRef<filewatch::FileWatch<String>> AppAssemblyFileWatcher;
 
 		bool EnableDebugging = false;
 
@@ -158,6 +164,17 @@ namespace Pit {
 	};
 	static ScriptEngineData* s_Data;
 
+	static void OnAppAssemblyFileSystemEvent([[maybe_unused]] const String& path, const filewatch::Event event) {
+		if (!s_Data->AppAssemblyReloadPending && event == filewatch::Event::modified) {
+			s_Data->AppAssemblyReloadPending = true;
+			Engine::SubmitToMainThread([]() {
+				if (s_Data->AppAssemblyReloadPending) {
+					Engine::Scripting()->ReloadAssembly();
+					s_Data->AppAssemblyReloadPending = false;
+				}
+			});
+		}
+	}
 
 	void ScriptingSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
@@ -175,6 +192,11 @@ namespace Pit {
 			return;
 		}
 		LoadAssemblyClasses();
+
+		s_Data->AppAssemblyFileWatcher = CreateScopeRef<filewatch::FileWatch<String>>(
+			s_Data->AppAssemblyFilepath.string(),
+			OnAppAssemblyFileSystemEvent
+			);
 
 
 		// ### TESTING ###
@@ -378,6 +400,7 @@ namespace Pit {
 	}
 
 	MonoImage* ScriptingSubmodule::GetCoreAssemblyImage() { return s_Data->CoreAssemblyImage; }
+	MonoImage* ScriptingSubmodule::GetAppAssemblyImage() { return s_Data->AppAssemblyImage; }
 	
 	const bool ScriptingSubmodule::ComponentClassExists(const String& className) const { return s_Data->ComponentClasses.find(className) != s_Data->ComponentClasses.end(); }
 
@@ -388,41 +411,5 @@ namespace Pit {
 	}
 	
 
-	// ScriptClass
-	ScriptClass::ScriptClass(const String& classNamespace, const String& className, bool isCore)
-		: m_ClassNamespace(classNamespace), m_ClassName(className) {
-
-		PIT_PROFILE_FUNCTION();
-
-		m_MonoClass = mono_class_from_name(isCore ? s_Data->CoreAssemblyImage : s_Data->AppAssemblyImage, classNamespace.c_str(), className.c_str());
-		if (!m_MonoClass) PIT_ENGINE_WARN(Scripting, "Trying to get class '{}.{}' that doesn't exists!", classNamespace, className);
-	}
 	
-	MonoMethod* ScriptClass::GetMethod(const String& name, int paramCount) {
-		PIT_PROFILE_FUNCTION();
-
-		MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, name.c_str(), paramCount);
-		if (!method) PIT_ENGINE_WARN(Scripting, "Trying to get a method '{}' of class '{}.{}' that doesn't exists!", name, m_ClassNamespace, m_ClassName);
-		return method;
-	}
-	
-	MonoObject* ScriptClass::Instantiate() {
-		return Engine::Scripting()->InstantiateClass(m_MonoClass);
-	}
-	
-	MonoClass* ScriptClass::GetNative() { return m_MonoClass; }
-
-
-	// ScriptInstance
-	ScriptInstance::ScriptInstance(MonoClass* scriptClass) : m_Class(scriptClass) {
-		if (!scriptClass) PIT_ENGINE_ERR(Scripting, "Trying to make a ScriptInstance of a nullptr scriptClass!");
-		m_Instance = Engine::Scripting()->InstantiateClass(scriptClass);
-	}
-
-	void ScriptInstance::Invoke(MonoMethod* method, void** params) {
-		if (!m_Instance) PIT_ENGINE_ERR(Scripting, "Trying to call a function on a ScriptInstance with m_Instance = nullptr!");
-		mono_runtime_invoke(method, m_Instance, params, nullptr);
-	}
-
-	MonoClass* ScriptInstance::GetClass() { return m_Class; }
 }

@@ -58,7 +58,7 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\filewatch\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -81,7 +81,7 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>PIT_WINDOWS;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\vendor\sndfile\include;..\vendor\filewatch\include;..\vendor\glad\include;..\vendor\EnTT\include;..\vendor\glm\include;..\vendor\fmt\include;..\vendor\mono\include;..\vendor\imgui\include;..\vendor\glfw\include;..\vendor\tinyobjloader\include;..\vendor\stb_image\include;..\vendor\optick\include;..\vendor\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -157,6 +157,7 @@
     <ClInclude Include="src\Rendering\TextureAsset.hpp" />
     <ClInclude Include="src\Rendering\Window.hpp" />
     <ClInclude Include="src\Scripting\ScriptGlue.hpp" />
+    <ClInclude Include="src\Scripting\ScriptUtils.hpp" />
     <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp" />
     <ClInclude Include="src\Serialization\KeyValueSerialization.hpp" />
     <ClInclude Include="src\Serialization\YAMLSerializer.hpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="src\Rendering\TextureAsset.cpp" />
     <ClCompile Include="src\Rendering\Window.cpp" />
     <ClCompile Include="src\Scripting\ScriptGlue.cpp" />
+    <ClCompile Include="src\Scripting\ScriptUtils.cpp" />
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp" />
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
     <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
