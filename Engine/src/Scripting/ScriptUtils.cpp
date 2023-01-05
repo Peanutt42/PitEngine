@@ -7,6 +7,71 @@
 #include <mono/metadata/object.h>
 
 namespace Pit::Scripting {
+	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap = {
+		{ "System.Single", ScriptFieldType::Float },
+		{ "System.Double", ScriptFieldType::Double },
+		{ "System.Boolean", ScriptFieldType::Bool },
+		{ "System.Char", ScriptFieldType::Char },
+		{ "System.Int16", ScriptFieldType::Short },
+		{ "System.Int32", ScriptFieldType::Int },
+		{ "System.Int64", ScriptFieldType::Long },
+		{ "System.Byte", ScriptFieldType::Byte },
+		{ "System.UInt16", ScriptFieldType::UShort },
+		{ "System.UInt32", ScriptFieldType::UInt },
+		{ "System.UInt64", ScriptFieldType::ULong }
+	};
+
+	ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType) {
+		std::string typeName = mono_type_get_name(monoType);
+
+		auto it = s_ScriptFieldTypeMap.find(typeName);
+		if (it == s_ScriptFieldTypeMap.end()) {
+			PIT_ENGINE_ERR(Scripting, "Unknown type: {}", typeName);
+			return ScriptFieldType::None;
+		}
+
+		return it->second;
+	}
+
+	const char* ScriptFieldTypeToString(ScriptFieldType fieldType) {
+		switch (fieldType) {
+		case ScriptFieldType::None:    return "None";
+		case ScriptFieldType::Float:   return "Float";
+		case ScriptFieldType::Double:  return "Double";
+		case ScriptFieldType::Bool:    return "Bool";
+		case ScriptFieldType::Char:    return "Char";
+		case ScriptFieldType::Byte:    return "Byte";
+		case ScriptFieldType::Short:   return "Short";
+		case ScriptFieldType::Int:     return "Int";
+		case ScriptFieldType::Long:    return "Long";
+		case ScriptFieldType::UByte:   return "UByte";
+		case ScriptFieldType::UShort:  return "UShort";
+		case ScriptFieldType::UInt:    return "UInt";
+		case ScriptFieldType::ULong:   return "ULong";
+		}
+		PIT_ENGINE_FATAL(Scripting, "Unknown ScriptFieldType");
+		return "None";
+	}
+
+	ScriptFieldType ScriptFieldTypeFromString(std::string_view fieldType) {
+		if (fieldType == "None")    return ScriptFieldType::None;
+		if (fieldType == "Float")   return ScriptFieldType::Float;
+		if (fieldType == "Double")  return ScriptFieldType::Double;
+		if (fieldType == "Bool")    return ScriptFieldType::Bool;
+		if (fieldType == "Char")    return ScriptFieldType::Char;
+		if (fieldType == "Byte")    return ScriptFieldType::Byte;
+		if (fieldType == "Short")   return ScriptFieldType::Short;
+		if (fieldType == "Int")     return ScriptFieldType::Int;
+		if (fieldType == "Long")    return ScriptFieldType::Long;
+		if (fieldType == "UByte")   return ScriptFieldType::UByte;
+		if (fieldType == "UShort")  return ScriptFieldType::UShort;
+		if (fieldType == "UInt")    return ScriptFieldType::UInt;
+		if (fieldType == "ULong")   return ScriptFieldType::ULong;
+
+		PIT_ENGINE_FATAL(Scripting, "Unknown ScriptFieldType");
+		return ScriptFieldType::None;
+	}
+
 	// ScriptClass
 	ScriptClass::ScriptClass(const String& classNamespace, const String& className, bool isCore)
 		: m_ClassNamespace(classNamespace), m_ClassName(className) {

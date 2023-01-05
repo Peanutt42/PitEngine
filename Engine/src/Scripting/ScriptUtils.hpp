@@ -6,6 +6,7 @@ extern "C" {
 	typedef struct _MonoClass MonoClass;
 	typedef struct _MonoObject MonoObject;
 	typedef struct _MonoMethod MonoMethod;
+	typedef struct _MonoType MonoType;
 	typedef struct _MonoClassField MonoClassField;
 }
 
@@ -23,6 +24,10 @@ namespace Pit::Scripting {
 
 		MonoClassField* ClassField;
 	};
+
+	ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType);
+	const char* ScriptFieldTypeToString(ScriptFieldType fieldType);
+	ScriptFieldType ScriptFieldTypeFromString(std::string_view fieldType);
 
 	// ScriptField + data storage
 	struct ScriptFieldInstance {

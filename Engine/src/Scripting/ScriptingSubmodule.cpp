@@ -20,20 +20,6 @@
 namespace Pit {
 	using namespace Scripting;
 
-	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap = {
-		{ "System.Single", ScriptFieldType::Float },
-		{ "System.Double", ScriptFieldType::Double },
-		{ "System.Boolean", ScriptFieldType::Bool },
-		{ "System.Char", ScriptFieldType::Char },
-		{ "System.Int16", ScriptFieldType::Short },
-		{ "System.Int32", ScriptFieldType::Int },
-		{ "System.Int64", ScriptFieldType::Long },
-		{ "System.Byte", ScriptFieldType::Byte },
-		{ "System.UInt16", ScriptFieldType::UShort },
-		{ "System.UInt32", ScriptFieldType::UInt },
-		{ "System.UInt64", ScriptFieldType::ULong }
-	};
-
 	namespace Utils {
 		// TODO: Maybe create a custom File class with such helper functions
 		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize) {
@@ -88,57 +74,6 @@ namespace Pit {
 			delete[] fileData;
 
 			return assembly;
-		}
-	
-		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType) {
-			std::string typeName = mono_type_get_name(monoType);
-
-			auto it = s_ScriptFieldTypeMap.find(typeName);
-			if (it == s_ScriptFieldTypeMap.end()) {
-				PIT_ENGINE_ERR(Scripting, "Unknown type: {}", typeName);
-				return ScriptFieldType::None;
-			}
-
-			return it->second;
-		}
-	
-		static inline const char* ScriptFieldTypeToString(ScriptFieldType fieldType) {
-			switch (fieldType) {
-			case ScriptFieldType::None:    return "None";
-			case ScriptFieldType::Float:   return "Float";
-			case ScriptFieldType::Double:  return "Double";
-			case ScriptFieldType::Bool:    return "Bool";
-			case ScriptFieldType::Char:    return "Char";
-			case ScriptFieldType::Byte:    return "Byte";
-			case ScriptFieldType::Short:   return "Short";
-			case ScriptFieldType::Int:     return "Int";
-			case ScriptFieldType::Long:    return "Long";
-			case ScriptFieldType::UByte:   return "UByte";
-			case ScriptFieldType::UShort:  return "UShort";
-			case ScriptFieldType::UInt:    return "UInt";
-			case ScriptFieldType::ULong:   return "ULong";
-			}
-			PIT_ENGINE_FATAL(Scripting, "Unknown ScriptFieldType");
-			return "None";
-		}
-
-		static inline ScriptFieldType ScriptFieldTypeFromString(std::string_view fieldType) {
-			if (fieldType == "None")    return ScriptFieldType::None;
-			if (fieldType == "Float")   return ScriptFieldType::Float;
-			if (fieldType == "Double")  return ScriptFieldType::Double;
-			if (fieldType == "Bool")    return ScriptFieldType::Bool;
-			if (fieldType == "Char")    return ScriptFieldType::Char;
-			if (fieldType == "Byte")    return ScriptFieldType::Byte;
-			if (fieldType == "Short")   return ScriptFieldType::Short;
-			if (fieldType == "Int")     return ScriptFieldType::Int;
-			if (fieldType == "Long")    return ScriptFieldType::Long;
-			if (fieldType == "UByte")   return ScriptFieldType::UByte;
-			if (fieldType == "UShort")  return ScriptFieldType::UShort;
-			if (fieldType == "UInt")    return ScriptFieldType::UInt;
-			if (fieldType == "ULong")   return ScriptFieldType::ULong;
-
-			PIT_ENGINE_FATAL(Scripting, "Unknown ScriptFieldType");
-			return ScriptFieldType::None;
 		}
 	}
 
@@ -383,8 +318,8 @@ namespace Pit {
 					bool isPrivate = flags & FIELD_ATTRIBUTE_PRIVATE;
 					
 					MonoType* type = mono_field_get_type(field);
-					ScriptFieldType fieldType = Utils::MonoTypeToScriptFieldType(type);
-					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : (isPrivate ? "private" : ""), Utils::ScriptFieldTypeToString(fieldType), fieldName);
+					ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
+					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : (isPrivate ? "private" : ""), ScriptFieldTypeToString(fieldType), fieldName);
 
 					// TODO: scriptClass.m_Fields[fieldName] = { fieldType, fieldName, field };
 				}
