@@ -19,7 +19,8 @@ namespace Pit::Editor {
 		Stopbutton = 10,
 		SimulateButton = 11,
 		StepButton = 12,
-		ExitButton = 13
+		ExitButton = 13,
+		COUNT = 14
 	};
 
 	class EditorAssetManager {
@@ -27,10 +28,10 @@ namespace Pit::Editor {
 		void Init(), Shutdown();
 
 		static ImTextureID GetIcon(Icon icon);
-		static const Rendering::Texture* GetIconTexture(Icon icon);
+		static const Rendering::Texture& GetIconTexture(Icon icon);
 	
 	private:
-		Array<Rendering::Texture*> m_Icons;
+		Array<Rendering::Texture> m_Icons;
 	};
 
 }

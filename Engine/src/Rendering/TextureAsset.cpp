@@ -8,17 +8,17 @@ namespace Pit::Rendering {
 	}
 
 	TextureAsset::~TextureAsset() {
-		if (m_Texture) delete m_Texture;
+		m_Texture.Release();
 	}
 	
 	void TextureAsset::Load() {
-		if (m_Texture) delete m_Texture;
+		Unload();
 		m_Texture = new Texture(m_Filepath, m_AsyncLoading);
 	}
 	
 	void TextureAsset::Unload() {
-		if (m_Texture) delete m_Texture;
+		if (m_Texture) m_Texture.Release();
 	}
 
-	Texture* TextureAsset::Get() { return m_Texture; }
+	Texture* TextureAsset::Get() { return m_Texture.Get(); }
 }

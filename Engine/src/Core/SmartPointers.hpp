@@ -2,9 +2,8 @@
 
 namespace Pit {
 	/// <summary>
-	/// SmartPointer that gets automatically destroyed when the scope exists
+	/// SmartPointer that gets automatically destroyed when out of scope
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
 	template<class T>
 	class ScopeRef {
 	public:
@@ -13,17 +12,16 @@ namespace Pit {
 		ScopeRef(const ScopeRef<T>& obj) = delete;
 		ScopeRef& operator=(const ScopeRef<T>& obj) = delete;
 
-		ScopeRef(ScopeRef<T>&& dyingObj) {
+		ScopeRef(ScopeRef<T>&& dyingObj) noexcept {
 			m_Ptr = dyingObj.m_Ptr;
 			dyingObj.m_Ptr = nullptr;
 		}
 
 		~ScopeRef() {
 			_Cleanup();
-			std::cout << "Cleanup\n";
 		}
 
-		void operator=(ScopeRef<T>&& dyingObj) {
+		void operator=(ScopeRef<T>&& dyingObj) noexcept {
 			_Cleanup();
 
 			m_Ptr = dyingObj.m_Ptr;
@@ -33,20 +31,23 @@ namespace Pit {
 		explicit operator const bool() const { return m_Ptr; }
 
 		T* operator->() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr) std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return m_Ptr;
 		}
 
 		T& operator*() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr)	std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return *m_Ptr;
 		}
 
 		T* Get() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr)	std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return m_Ptr;
 		}
 
@@ -58,10 +59,14 @@ namespace Pit {
 		T* m_Ptr;
 
 		inline void _Cleanup() {
+			#if DEBUG
 			if (m_Ptr) {
+			#endif
 				delete m_Ptr;
 				m_Ptr = nullptr;
+			#if DEBUG
 			}
+			#endif
 		}
 	};
 
@@ -117,20 +122,23 @@ namespace Pit {
 		explicit operator const bool() const { return m_Ptr && m_References; }
 
 		T* operator->() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr) std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return m_Ptr;
 		}
 
 		T& operator*() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr) std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return *m_Ptr;
 		}
 
 		T* Get() {
-			if (!m_Ptr)
-				std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#if DEBUG
+			if (!m_Ptr) std::cerr << "[Engine::General]    Pointer was accessed but was nullptr!\n";
+			#endif
 			return m_Ptr;
 		}
 
@@ -150,14 +158,22 @@ namespace Pit {
 		ReferenceCounter* m_References;
 
 		inline void _Cleanup() {
+			#if DEBUG
 			if (m_Ptr) {
+			#endif
 				delete m_Ptr;
 				m_Ptr = nullptr;
+			#if DEBUG
 			}
+			#endif
+			#if DEBUG
 			if (m_References) {
+			#endif
 				delete m_References;
 				m_References = nullptr;
+			#if DEBUG	
 			}
+			#endif
 		}
 	};
 

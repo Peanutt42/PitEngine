@@ -161,27 +161,27 @@ void ContentBrowserPanel::_DrawColumnsBrowser() {
 
 		ImGui::PushID(filenameString.c_str());
 
-		auto* icon = directoryEntry.is_directory() ? EditorAssetManager::GetIconTexture(FolderIcon) :
-													EditorAssetManager::GetIconTexture(TextIcon);
+		auto* icon = directoryEntry.is_directory() ? &EditorAssetManager::GetIconTexture(FolderIcon) :
+													&EditorAssetManager::GetIconTexture(TextIcon);
 		auto extention = path.extension();
 		if (extention == ".wav" ||
 			extention == ".mp3")
-			icon = EditorAssetManager::GetIconTexture(AudioIcon);
+			icon = &EditorAssetManager::GetIconTexture(AudioIcon);
 
 		if (extention == ".obj" ||
 			extention == ".fbx")
-			icon = EditorAssetManager::GetIconTexture(MeshIcon);
+			icon = &EditorAssetManager::GetIconTexture(MeshIcon);
 
 		if (extention == ".png" ||
 			extention == ".jpg")
-			icon = EditorAssetManager::GetIconTexture(ImageIcon);
+			icon = &EditorAssetManager::GetIconTexture(ImageIcon);
 
 		if (extention == ".vert" ||
 			extention == ".frag")
-			icon = EditorAssetManager::GetIconTexture(ShaderIcon);
+			icon = &EditorAssetManager::GetIconTexture(ShaderIcon);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		UI::ImageButton(icon, { thumbnailSize, thumbnailSize });
+		UI::ImageButton(*icon, { thumbnailSize, thumbnailSize });
 
 		if (ImGui::BeginDragDropSource()) {
 			String itemPath_str = relativePath.string();

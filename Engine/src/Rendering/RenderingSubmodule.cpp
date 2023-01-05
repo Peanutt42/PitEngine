@@ -26,11 +26,11 @@ namespace Pit {
 	void RenderingSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
 
-		delete Camera;
+		Camera.Release();
 
-		delete UIRenderer;
-		delete Renderer;
-		delete Window;
+		UIRenderer.Release();
+		Renderer.Release();
+		Window.Release();
 
 		glfwTerminate();
 	}

@@ -99,7 +99,7 @@ namespace Pit::Rendering {
 		lightingShader.SetVec3("viewPos", Engine::Rendering()->Camera->Position);
 
 		// view/projection transformations
-		Camera* cam = Engine::Rendering()->Camera;
+		ScopeRef<Camera>& cam = Engine::Rendering()->Camera;
 		float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
 		if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
 		glm::mat4 projection = glm::perspective(glm::radians(cam->Fov), aspect, cam->NearPlane, cam->FarPlane);

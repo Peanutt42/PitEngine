@@ -65,7 +65,7 @@ void SceneViewportPanel::OnGui() {
 		if (Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_DOWN)) moveDir.y--;
 		glm::vec2 lookDir = Input::GetAxisBinding(EDITOR_KEYBINDING_CAM_LOOK);
 		lookDir.y = -lookDir.y;
-		SpectatorCamera::Update(Engine::Rendering()->Camera,
+		SpectatorCamera::Update(Engine::Rendering()->Camera.Get(),
 								moveDir,
 								lookDir,
 								Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_FASTER),
@@ -118,11 +118,11 @@ static void UIToolbar() {
 		Simulate
 	};
 
-	const Rendering::Texture* m_IconPlay = EditorAssetManager::GetIconTexture(Icon::PlayButton);
-	const Rendering::Texture* m_IconStop = EditorAssetManager::GetIconTexture(Icon::Stopbutton);
-	const Rendering::Texture* m_IconSimulate = EditorAssetManager::GetIconTexture(Icon::SimulateButton);
-	const Rendering::Texture* m_IconStep = EditorAssetManager::GetIconTexture(Icon::StepButton);
-	const Rendering::Texture* m_IconExit = EditorAssetManager::GetIconTexture(Icon::ExitButton);
+	const Rendering::Texture& m_IconPlay = EditorAssetManager::GetIconTexture(Icon::PlayButton);
+	const Rendering::Texture& m_IconStop = EditorAssetManager::GetIconTexture(Icon::Stopbutton);
+	const Rendering::Texture& m_IconSimulate = EditorAssetManager::GetIconTexture(Icon::SimulateButton);
+	const Rendering::Texture& m_IconStep = EditorAssetManager::GetIconTexture(Icon::StepButton);
+	const Rendering::Texture& m_IconExit = EditorAssetManager::GetIconTexture(Icon::ExitButton);
 
 	static State state = Edit;
 	static bool paused = false;

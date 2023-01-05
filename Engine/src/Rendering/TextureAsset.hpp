@@ -23,6 +23,6 @@ namespace Pit::Rendering {
 
 	private:
 		bool m_AsyncLoading;
-		Texture* m_Texture = nullptr;
+		ScopeRef<Texture> m_Texture;
 	};
 }
