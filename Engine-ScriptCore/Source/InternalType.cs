@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pit.Engine {
+namespace PitEngine {
     public struct Vector3 {
         public float X, Y, Z;
 
@@ -8,6 +8,12 @@ namespace Pit.Engine {
             X = x;
             Y = y;
             Z = z;
+        }
+    }
+
+    namespace ECS {
+        public class System {
+            // public void Update() { }
         }
     }
 }

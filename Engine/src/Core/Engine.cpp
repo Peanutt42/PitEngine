@@ -10,25 +10,28 @@
 
 namespace Pit {
 
-	InitEvent					Engine::InitEvent;
-	NetworkingUpdateEvent		Engine::NetworkingUpdateEvent;
-	PhysicUpdateEvent			Engine::PhysicUpdateEvent;
-	PreUpdateEvent				Engine::PreUpdateEvent;
-	UpdateEvent					Engine::UpdateEvent;
-	PostUpdateEvent				Engine::PostUpdateEvent;
-	RenderEvent					Engine::RenderEvent;
-	UIRenderEvent				Engine::UIRenderEvent;
-	OnWindowResizeEvent			Engine::OnWindowResizeEvent;
-	SaveConfigEvent				Engine::SaveConfigEvent;
-	ShutdownEvent				Engine::ShutdownEvent;
+	InitEvent						Engine::InitEvent;
+	NetworkingUpdateEvent			Engine::NetworkingUpdateEvent;
+	PhysicUpdateEvent				Engine::PhysicUpdateEvent;
+	PreUpdateEvent					Engine::PreUpdateEvent;
+	UpdateEvent						Engine::UpdateEvent;
+	PostUpdateEvent					Engine::PostUpdateEvent;
+	RenderEvent						Engine::RenderEvent;
+	UIRenderEvent					Engine::UIRenderEvent;
+	OnWindowResizeEvent				Engine::OnWindowResizeEvent;
+	SaveConfigEvent					Engine::SaveConfigEvent;
+	ShutdownEvent					Engine::ShutdownEvent;
 
-	EngineSettings*				Engine::s_Settings = nullptr;
+	EngineSettings*					Engine::s_Settings = nullptr;
 
-	SubmoduleManager*			Engine::s_SubmoduleManager = nullptr;
+	SubmoduleManager*				Engine::s_SubmoduleManager = nullptr;
 
-	std::ofstream				Engine::s_InstanceLockFile;
+	std::ofstream					Engine::s_InstanceLockFile;
 
-	bool						Engine::s_Quit = false;
+	Array<std::function<void()>>	Engine::s_MainThreadQueue;
+	std::mutex						Engine::s_MainThreadQueueMutex;
+
+	bool							Engine::s_Quit = false;
 
 #define CATCH_EXCEPTIONS() \
 		catch ([[maybe_unused]] const std::bad_alloc& e)	{						\
@@ -130,7 +133,7 @@ namespace Pit {
 			Debug::Logging::Shutdown();
 
 			#if DEBUG
-			//Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
+			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
 			#endif
 
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
@@ -156,6 +159,8 @@ namespace Pit {
 			time_point<high_resolution_clock> now = high_resolution_clock::now();
 			Time::SetDeltaTime(duration_cast<nanoseconds>(now - lastUpdate).count() * .000000001f);
 			lastUpdate = now;
+
+			ExecuteMainThreadQueue();
 
 			Input::Update();
 
@@ -188,11 +193,23 @@ namespace Pit {
 			return false;
 	}
 
-	AudioSubmodule* Engine::Audio() { return s_SubmoduleManager->AudioSubmodule; }
-	AssetManagmentSubmodule* Engine::AssetManagment() { return s_SubmoduleManager->AssetManagmentSubmodule; }
-	RenderingSubmodule* Engine::Rendering() { return s_SubmoduleManager->RenderingSubmodule; }
-	ECSSubmodule* Engine::ECS() { return s_SubmoduleManager->ECSSubmodule; }
+
+	void Engine::SubmitToMainThread(std::function<void()> callback) {
+		std::scoped_lock lock(s_MainThreadQueueMutex);
+		s_MainThreadQueue.emplace_back(callback);
+	}
+
+	void Engine::ExecuteMainThreadQueue() {
+		for (auto& callback : s_MainThreadQueue) callback();
+		s_MainThreadQueue.clear();
+	}
+
+
+	AudioSubmodule* Engine::Audio()						{ if (s_SubmoduleManager) return s_SubmoduleManager->AudioSubmodule; else return nullptr; }
+	AssetManagmentSubmodule* Engine::AssetManagment()	{ if (s_SubmoduleManager) return s_SubmoduleManager->AssetManagmentSubmodule;  else return nullptr; }
+	RenderingSubmodule* Engine::Rendering()				{ if (s_SubmoduleManager) return s_SubmoduleManager->RenderingSubmodule;  else return nullptr; }
+	ECSSubmodule* Engine::ECS()							{ if (s_SubmoduleManager) return s_SubmoduleManager->ECSSubmodule;  else return nullptr; }
 	
-	MemorySubmodule* Engine::Memory() { return s_SubmoduleManager->MemorySubmodule; }
-	ScriptingSubmodule* Engine::Scripting() { return s_SubmoduleManager->ScriptingSubmodule;}
+	MemorySubmodule* Engine::Memory()					{ if (s_SubmoduleManager) return s_SubmoduleManager->MemorySubmodule;  else return nullptr; }
+	ScriptingSubmodule* Engine::Scripting()				{ if (s_SubmoduleManager) return s_SubmoduleManager->ScriptingSubmodule;  else return nullptr; }
 }

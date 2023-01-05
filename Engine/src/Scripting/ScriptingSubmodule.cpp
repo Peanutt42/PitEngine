@@ -1,22 +1,25 @@
 #include "pch.hpp"
 #include "ScriptingSubmodule.hpp"
-
 #include "Core/Engine.hpp"
 
 #include "ScriptGlue.hpp"
+#include "ScriptUtils.hpp"
 
 #include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/object.h>
-#include <mono/metadata/metadata.h>
-#include <mono/metadata/reflection.h>
-#include <mono/metadata/tabledefs.h>
-#include <mono/metadata/mono-debug.h>
-#include <mono/metadata/threads.h>
+#include "mono/metadata/assembly.h"
+#include "mono/metadata/object.h"
+#include "mono/metadata/tabledefs.h"
+#include "mono/metadata/metadata.h"
+#include "mono/metadata/mono-debug.h"
+#include "mono/metadata/threads.h"
 
 #include <glm/glm.hpp>
 
+#include <filewatch/FileWatch.hpp>
+
 namespace Pit {
+	using namespace Scripting;
+
 	namespace Utils {
 		// TODO: Maybe create a custom File class with such helper functions
 		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize) {
@@ -76,12 +79,18 @@ namespace Pit {
 
 
 	struct ScriptEngineData {
-		MonoDomain* RootDomain = nullptr;
+		MonoDomain* MonoRootDomain = nullptr; // Contains domain for mono
 		MonoDomain* AppDomain = nullptr;
 
 		MonoAssembly* CoreAssembly = nullptr;
 		MonoImage* CoreAssemblyImage = nullptr;
 		std::filesystem::path CoreAssemblyFilepath;
+
+		MonoAssembly* AppAssembly = nullptr;
+		MonoImage* AppAssemblyImage = nullptr;
+		std::filesystem::path AppAssemblyFilepath;
+		bool AppAssemblyReloadPending = false;
+		ScopeRef<filewatch::FileWatch<String>> AppAssemblyFileWatcher;
 
 		bool EnableDebugging = false;
 
@@ -90,27 +99,48 @@ namespace Pit {
 	};
 	static ScriptEngineData* s_Data;
 
+	static void OnAppAssemblyFileSystemEvent([[maybe_unused]] const String& path, const filewatch::Event event) {
+		if (!s_Data->AppAssemblyReloadPending && event == filewatch::Event::modified) {
+			s_Data->AppAssemblyReloadPending = true;
+			Engine::SubmitToMainThread([]() {
+				if (s_Data->AppAssemblyReloadPending) {
+					Engine::Scripting()->ReloadAssembly();
+					s_Data->AppAssemblyReloadPending = false;
+				}
+			});
+		}
+	}
 
 	void ScriptingSubmodule::Init() {
+		PIT_PROFILE_FUNCTION();
+
 		s_Data = new ScriptEngineData();
 
 		InitMono();
-		if (!LoadAssembly("Engine/Resources/Scripts/Engine-ScriptCore.dll")) {
+		Scripting::ScriptGlue::RegisterCoreFunctions();
+		if (!LoadCoreAssembly("Engine-ScriptCore/Binaries/Engine-ScriptCore.dll")) {
 			PIT_ENGINE_ERR(Scripting, "Failed to load 'Engine-ScriptCore.dll' assembly");
 			return;
 		}
-		ScriptClass systemClass("Pit", "System");
-		MonoMethod* updateSystemMethod = systemClass.GetMethod("Update", 0);
+		if (!LoadAppAssembly("Sandbox/Scripts/Binaries/Sandbox.dll")) {
+			PIT_ENGINE_ERR(Scripting, "Failed to load 'Sandbox.dll' assembly");
+			return;
+		}
+		LoadAssemblyClasses();
 
-		LoadAssemblyMetadata(s_Data->CoreAssembly);
+		s_Data->AppAssemblyFileWatcher = CreateScopeRef<filewatch::FileWatch<String>>(
+			s_Data->AppAssemblyFilepath.string(),
+			OnAppAssemblyFileSystemEvent
+			);
 
-		Scripting::ScriptGlue::RegisterFunctions();
 
 		// ### TESTING ###
+		ScriptClass systemClass("Sandbox", "TestSystem");
+		MonoMethod* updateSystemMethod = systemClass.GetMethod("Update", 0);
 		ScriptInstance systemInstance(systemClass.GetNative());
 		systemInstance.Invoke(updateSystemMethod, nullptr);
 
-		ScriptClass mainClass = ScriptClass("Pit", "Main");
+		ScriptClass mainClass = ScriptClass("Sandbox", "Main");
 		ScriptInstance mainInstance(mainClass.GetNative());
 		MonoMethod* printCustomMsgFunc = mainClass.GetMethod("PrintCustomMessage", 1);
 		MonoString* string = mono_string_new(s_Data->AppDomain, "Hi, this was invoked by C++ and printed in C#!");
@@ -119,6 +149,8 @@ namespace Pit {
 	}
 
 	void ScriptingSubmodule::Shutdown() {
+		PIT_PROFILE_FUNCTION();
+
 		ShutdownMono();
 
 		delete s_Data;
@@ -128,11 +160,13 @@ namespace Pit {
 	}
 
 	void ScriptingSubmodule::InitMono() {
+		PIT_PROFILE_FUNCTION();
+
 		PIT_ENGINE_INFO(Scripting, "Initializing Mono");
 
-		if (std::filesystem::exists("JSON")) std::filesystem::remove("JSON"); // Random folder
+		if (std::filesystem::exists("JSON")) std::filesystem::remove_all("JSON"); // Random folder
 
-		mono_set_assemblies_path("Engine/lib");
+		mono_set_assemblies_path("Engine-ScriptCore/lib");
 
 		if (s_Data->EnableDebugging) {
 			const char* argv[2] = {
@@ -143,16 +177,18 @@ namespace Pit {
 			mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 		}
 
-		s_Data->RootDomain = mono_jit_init("PitEngineJITRuntime"); 
-		PIT_ENGINE_ASSERT(Scripting, s_Data->RootDomain, "Failed to init mono-jit (mono_jit_init(\"PitEngineJITRuntime\"))");
+		s_Data->MonoRootDomain = mono_jit_init("PitEngineJITRuntime");
+		PIT_ENGINE_ASSERT(Scripting, s_Data->MonoRootDomain, "Failed to init mono-jit (mono_jit_init(\"PitEngineJITRuntime\"))");
 
 		if (s_Data->EnableDebugging)
-			mono_debug_domain_create(s_Data->RootDomain);
+			mono_debug_domain_create(s_Data->MonoRootDomain);
 
 		mono_thread_set_main(mono_thread_current());
 	}
 
 	void ScriptingSubmodule::ShutdownMono() {
+		PIT_PROFILE_FUNCTION();
+
 		PIT_ENGINE_INFO(Scripting, "Shutting down Mono");
 
 		mono_domain_set(mono_get_root_domain(), false);
@@ -160,11 +196,13 @@ namespace Pit {
 		mono_domain_unload(s_Data->AppDomain);
 		s_Data->AppDomain = nullptr;
 
-		mono_jit_cleanup(s_Data->RootDomain);
-		s_Data->RootDomain = nullptr;
+		mono_jit_cleanup(s_Data->MonoRootDomain);
+		s_Data->MonoRootDomain = nullptr;
 	}
 
-	const bool ScriptingSubmodule::LoadAssembly(const std::filesystem::path& binaryFilepath) {
+	const bool ScriptingSubmodule::LoadCoreAssembly(const std::filesystem::path& binaryFilepath) {
+		PIT_PROFILE_FUNCTION();
+
 		// Create App-domain
 		char appName[] = "PitEngineScriptRuntime";
 		s_Data->AppDomain = mono_domain_create_appdomain(appName, nullptr);
@@ -183,49 +221,121 @@ namespace Pit {
 			return false;
 		}
 
-		PIT_ENGINE_INFO(Scripting, "Successfully loaded assembly '{}'", binaryFilepath.string());
+		PIT_ENGINE_INFO(Scripting, "Successfully loaded CoreAssembly '{}'", binaryFilepath.string());
 		return true;
 	}
 
-	void ScriptingSubmodule::LoadAssemblyMetadata(MonoAssembly* assembly) {
+	const bool ScriptingSubmodule::LoadAppAssembly(const std::filesystem::path& binaryFilepath) {
+		PIT_PROFILE_FUNCTION();
+
+		s_Data->AppAssemblyFilepath = binaryFilepath;
+		s_Data->AppAssembly = Utils::LoadMonoAssembly(binaryFilepath, s_Data->EnableDebugging);
+		if (!s_Data->AppAssembly) {
+			PIT_ENGINE_ERR(Scripting, "Failed to load AppAssembly with file '{}'", binaryFilepath.string());
+			return false;
+		}
+
+		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
+		if (!s_Data->AppAssemblyImage) {
+			PIT_ENGINE_ERR(Scripting, "Failed to get mono image of the AppAssembly! file: '{}'", binaryFilepath.string());
+			return false;
+		}
+
+		PIT_ENGINE_INFO(Scripting, "Successfully loaded AppAssembly '{}'", binaryFilepath.string());
+		return true;
+	}
+
+	void ScriptingSubmodule::ReloadAssembly() {
+		PIT_PROFILE_FUNCTION();
+
+		PIT_ENGINE_INFO(Scripting, "Reloading changed Assemblies");
+
+		ScopedTimer t("Script assembly reloading");
+
+		mono_domain_set(mono_get_root_domain(), false);
+
+		mono_domain_unload(s_Data->AppDomain);
+
+		LoadCoreAssembly(s_Data->CoreAssemblyFilepath);
+		LoadAppAssembly(s_Data->AppAssemblyFilepath);
+
+		LoadAssemblyClasses();
+	}
+
+	void ScriptingSubmodule::LoadAssemblyClasses() {
+		PIT_PROFILE_FUNCTION();
+
 		s_Data->SystemClasses.clear();
 		s_Data->ComponentClasses.clear();
 
-		MonoImage* image = mono_assembly_get_image(assembly);
-		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_Data->AppAssemblyImage, MONO_TABLE_TYPEDEF);
 		int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
+		// Get Internal types from Engine-ScriptCore
+		MonoClass* systemClass = mono_class_from_name(s_Data->CoreAssemblyImage, "PitEngine.ECS", "System");
+
+		PIT_ENGINE_INFO(Scripting, "Reflection metadata:");
 		for (int32_t i = 1; i < numTypes; i++) {
 			uint32_t cols[MONO_TYPEDEF_SIZE];
 			mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
 
-			const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-			const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+			const char* nameSpace = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAMESPACE]);
+			const char* name = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
 			String fullName;
 			if (strlen(nameSpace) > 0) fullName = std::format("{}.{}", nameSpace, name);
 			else fullName = name;
+			PIT_ENGINE_INFO(Scripting, "{}", fullName);
 
-			MonoClass* monoClass = mono_class_from_name(image, nameSpace, name);
+			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, name);
 
-			void* iter = nullptr;
-			int methodCount = 0;
-			while (true) {
-				MonoMethod* method = mono_class_get_methods(monoClass, &iter);
-				if (!method) break;
-				methodCount++;
+
+			// Methods
+			int methodCount = mono_class_num_methods(monoClass);
+			if (methodCount > 0) {
+				void* methodIter = nullptr;
+				while (MonoMethod* method = mono_class_get_methods(monoClass, &methodIter)) {
+					const char* methodName = mono_method_get_name(method);
+					PIT_ENGINE_INFO(Scripting, "  {}()", methodName);
+				}
 			}
-			bool isSystem = mono_class_get_method_from_name(monoClass, "Update", 0) != nullptr;
+			
+			bool isSystem = mono_class_is_subclass_of(monoClass, systemClass, false) &&
+							mono_class_get_method_from_name(monoClass, "Update", 0) != nullptr;
 			if (isSystem)
 				s_Data->SystemClasses[fullName] = ScriptClass(nameSpace, name);
-			bool isComponent = methodCount <= 1; // 1 constructor, finalizer doesn't count
+			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, systemClass, false); // 1 constructor, finalizer doesn't count
 			if (isComponent)
 				s_Data->ComponentClasses[fullName] = ScriptClass(nameSpace, name);
 			
-			PIT_ENGINE_INFO(Scripting, "{}.{}", nameSpace, name);
+			// Fields/Variables
+			int fieldCount = mono_class_num_fields(monoClass);
+			if (fieldCount > 0) {
+				void* fieldIter = nullptr;
+				while (MonoClassField* field = mono_class_get_fields(monoClass, &fieldIter)) {
+					const char* fieldName = mono_field_get_name(field);
+					uint32_t flags = mono_field_get_flags(field);
+					bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
+					bool isPrivate = flags & FIELD_ATTRIBUTE_PRIVATE;
+					
+					MonoType* type = mono_field_get_type(field);
+					ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
+					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : (isPrivate ? "private" : ""), ScriptFieldTypeToString(fieldType), fieldName);
+
+					// TODO: scriptClass.m_Fields[fieldName] = { fieldType, fieldName, field };
+				}
+			}
 		}
+
+		ScriptClass testMainClass("Sandbox", "Main");
+		MonoMethod* testMainPrintFunc = testMainClass.GetMethod("PrintCustomMessage", 1);
+		ScriptInstance testMainInstance(testMainClass.GetNative());
+		MonoString* string = mono_string_new(s_Data->AppDomain, "AfterReload Msg!");
+		void* params[] = { string };
+		testMainInstance.Invoke(testMainPrintFunc, params);
 	}
 
 	MonoImage* ScriptingSubmodule::GetCoreAssemblyImage() { return s_Data->CoreAssemblyImage; }
+	MonoImage* ScriptingSubmodule::GetAppAssemblyImage() { return s_Data->AppAssemblyImage; }
 	
 	const bool ScriptingSubmodule::ComponentClassExists(const String& className) const { return s_Data->ComponentClasses.find(className) != s_Data->ComponentClasses.end(); }
 
@@ -236,41 +346,5 @@ namespace Pit {
 	}
 	
 
-	// ScriptClass
-	ScriptClass::ScriptClass(const String& classNamespace, const String& className)
-		: m_ClassNamespace(classNamespace), m_ClassName(className) {
-
-		PIT_PROFILE_FUNCTION();
-
-		m_MonoClass = mono_class_from_name(Engine::Scripting()->GetCoreAssemblyImage(), classNamespace.c_str(), className.c_str());
-		if (!m_MonoClass) PIT_ENGINE_WARN(Scripting, "Trying to get class '{}.{}' that doesn't exists!", classNamespace, className);
-	}
 	
-	MonoMethod* ScriptClass::GetMethod(const String& name, int paramCount) {
-		PIT_PROFILE_FUNCTION();
-
-		MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, name.c_str(), paramCount);
-		if (!method) PIT_ENGINE_WARN(Scripting, "Trying to get a method '{}' of class '{}.{}' that doesn't exists!", name, m_ClassNamespace, m_ClassName);
-		return method;
-	}
-	
-	MonoObject* ScriptClass::Instantiate() {
-		return Engine::Scripting()->InstantiateClass(m_MonoClass);
-	}
-	
-	MonoClass* ScriptClass::GetNative() { return m_MonoClass; }
-
-
-	// ScriptInstance
-	ScriptInstance::ScriptInstance(MonoClass* scriptClass) : m_Class(scriptClass) {
-		if (!scriptClass) PIT_ENGINE_ERR(Scripting, "Trying to make a ScriptInstance of a nullptr scriptClass!");
-		m_Instance = Engine::Scripting()->InstantiateClass(scriptClass);
-	}
-
-	void ScriptInstance::Invoke(MonoMethod* method, void** params) {
-		if (!m_Instance) PIT_ENGINE_ERR(Scripting, "Trying to call a function on a ScriptInstance with m_Instance = nullptr!");
-		mono_runtime_invoke(method, m_Instance, params, nullptr);
-	}
-
-	MonoClass* ScriptInstance::GetClass() { return m_Class; }
 }

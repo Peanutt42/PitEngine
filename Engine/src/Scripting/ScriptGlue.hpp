@@ -5,6 +5,6 @@
 namespace Pit::Scripting {
 	class ScriptGlue {
 	public:
-		static void RegisterFunctions();
+		static void RegisterCoreFunctions();
 	};
 }

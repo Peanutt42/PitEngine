@@ -1,12 +1,18 @@
 # Binaries
 **/bin/
-bin-int/
-Intermediates/
-Editor/Resources/Scripts/
-Engine/Resources/Scripts/
+**/bin-int/
+**/Binaries/
+**/Intermediates/
+Engine-ScriptCore/Binaries/
+Engine-ScriptCore/Intermediates/
+Sandbox/Scripts/Intermediates/
 
 # Log files
 *.log
+
+
+InstanceLock.lock
+
 
 # VS files and folder
 .vs/

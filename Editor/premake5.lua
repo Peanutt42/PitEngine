@@ -22,6 +22,7 @@ project "Editor"
 	includedirs {
 		"src",
 		"%{wks.location}/vendor/sndfile/include",
+		"%{wks.location}/vendor/filewatch/include",
 		"%{wks.location}/vendor/glad/include",
 		"%{wks.location}/vendor/EnTT/include",
 		"%{wks.location}/vendor/glm/include",

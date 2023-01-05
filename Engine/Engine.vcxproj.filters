@@ -78,6 +78,9 @@
     <ClInclude Include="src\Audio\AudioSubmodule.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Audio\MusicBuffer.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Audio\SoundDevice.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
@@ -153,13 +156,13 @@
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\ECS\ECSScene.hpp">
+      <Filter>ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECSSystem.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\ECSScene.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\Input.hpp">
@@ -222,6 +225,9 @@
     <ClInclude Include="src\Scripting\ScriptGlue.hpp">
       <Filter>Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptUtils.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scripting\ScriptingSubmodule.hpp">
       <Filter>Scripting</Filter>
     </ClInclude>
@@ -250,7 +256,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Audio\MusicBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -263,6 +268,9 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioSubmodule.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\MusicBuffer.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\SoundDevice.cpp">
@@ -304,10 +312,10 @@
     <ClCompile Include="src\Debug\vcrash.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ECSSubmodule.cpp">
+    <ClCompile Include="src\ECS\ECSScene.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\ECSScene.cpp">
+    <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">
@@ -361,6 +369,9 @@
     <ClCompile Include="src\Scripting\ScriptGlue.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptUtils.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
@@ -377,6 +388,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Audio\MusicBuffer.cpp" />
   </ItemGroup>
 </Project>
