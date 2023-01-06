@@ -1,0 +1,26 @@
+Scene: MainECSScene
+Camera:
+  Position: [0, 0, 5]
+  Rotation: [-100.999825, -7.19999981, 0]
+  Fov: 90
+  NearPlane: 0.100000001
+  FarPlane: 500
+Entities:
+  - Entity: 17425424309382045408
+    Name: 3
+    Transform:
+      Position: [5.80000019, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 11970674655204837705
+    Name: 2
+    Transform:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 17937668882184825790
+    Name: 1
+    Transform:
+      Position: [-5.80000019, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]

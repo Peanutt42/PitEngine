@@ -247,6 +247,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\ECS\ECSSceneSerializer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -370,5 +371,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\ECS\ECSSceneSerializer.cpp" />
   </ItemGroup>
 </Project>

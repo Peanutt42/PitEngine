@@ -134,6 +134,7 @@
     <ClInclude Include="src\ECS\ECSComponents.hpp" />
     <ClInclude Include="src\ECS\ECSEntityHandle.hpp" />
     <ClInclude Include="src\ECS\ECSScene.hpp" />
+    <ClInclude Include="src\ECS\ECSSceneSerializer.hpp" />
     <ClInclude Include="src\ECS\ECSSubmodule.hpp" />
     <ClInclude Include="src\ECS\ECSSystem.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\Debug\Logging.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
     <ClCompile Include="src\ECS\ECSScene.cpp" />
+    <ClCompile Include="src\ECS\ECSSceneSerializer.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Input\InputBinding.cpp" />

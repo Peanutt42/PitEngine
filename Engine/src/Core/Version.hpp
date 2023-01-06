@@ -1,7 +1,10 @@
 #pragma once
 
+#pragma warning ( push )
+#pragma warning (disable: 4715)
 #include <fmt/fmt.h>
 #include <fmt/ostr.h>
+#pragma warning ( pop )
 
 namespace Pit {
 	/// <summary>
