@@ -129,7 +129,6 @@
     <ClInclude Include="src\Core\Version.hpp" />
     <ClInclude Include="src\Debug\ConsoleLogger.hpp" />
     <ClInclude Include="src\Debug\Logging.hpp" />
-    <ClInclude Include="src\Debug\MemoryLeakDetector.hpp" />
     <ClInclude Include="src\Debug\Profiling.hpp" />
     <ClInclude Include="src\Debug\vcrash.h" />
     <ClInclude Include="src\ECS\ECSComponents.hpp" />
@@ -185,7 +184,6 @@
     <ClCompile Include="src\Core\Version.cpp" />
     <ClCompile Include="src\Debug\ConsoleLogger.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
-    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
     <ClCompile Include="src\ECS\ECSScene.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
@@ -208,7 +206,6 @@
     <ClCompile Include="src\Scripting\ScriptUtils.cpp" />
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp" />
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
-    <ClCompile Include="src\Serialization\YAMLSerializer.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
     <ClCompile Include="src\UI\UIRenderer.cpp" />
     <ClCompile Include="src\pch.cpp">

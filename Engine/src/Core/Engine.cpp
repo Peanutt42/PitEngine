@@ -4,7 +4,6 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
-#include "Debug/MemoryLeakDetector.hpp"
 
 
 namespace Pit {
@@ -50,8 +49,6 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		CrashHandler::Init();
-
-		Debug::MemoryLeakDetector::Init();
 
 		try {
 			s_Settings = &settings;
@@ -123,6 +120,8 @@ namespace Pit {
 
 		PIT_PROFILE_FUNCTION();
 
+		s_Quit = true;
+
 		try {
 			{
 				ScopedTimer t("EngineShutdownTime");
@@ -139,10 +138,6 @@ namespace Pit {
 			PIT_ENGINE_INFO(General, "=== PIT::ENGINE Shutdown ===");
 
 			Debug::Logging::Shutdown();
-
-			#if DEBUG
-			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
-			#endif
 
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
 				s_InstanceLockFile.close();
@@ -195,7 +190,7 @@ namespace Pit {
 	bool Engine::ShouldClose() {
 		if (s_Quit)
 			return true;
-		else if (!s_Settings->Headless && s_SubmoduleManager->RenderingSubmodule->Window)
+		else if (!s_Settings->Headless)
 			return s_SubmoduleManager->RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;

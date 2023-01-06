@@ -28,9 +28,6 @@
     <Filter Include="Math">
       <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Memory">
-      <UniqueIdentifier>{BE94DDC2-AA36-0899-93F1-1BED7F328FE9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{6D615D47-5919-9F94-C220-78F0AEF73985}</UniqueIdentifier>
     </Filter>
@@ -141,9 +138,6 @@
     <ClInclude Include="src\Debug\Logging.hpp">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="src\Debug\MemoryLeakDetector.hpp">
-      <Filter>Debug</Filter>
-    </ClInclude>
     <ClInclude Include="src\Debug\Profiling.hpp">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -190,6 +184,9 @@
       <Filter>Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Camera.hpp">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\Framebuffer.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.hpp">
@@ -250,7 +247,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Rendering\Framebuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -301,9 +297,6 @@
     <ClCompile Include="src\Debug\Logging.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\Debug\MemoryLeakDetector.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
     <ClCompile Include="src\Debug\vcrash.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -332,6 +325,9 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Camera.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\Framebuffer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Renderer.cpp">
@@ -367,9 +363,6 @@
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="src\Serialization\YAMLSerializer.cpp">
-      <Filter>Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="src\Threading\JobSystem.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -377,6 +370,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Rendering\Framebuffer.cpp" />
   </ItemGroup>
 </Project>
