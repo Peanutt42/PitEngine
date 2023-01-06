@@ -123,6 +123,7 @@ void EditorApplication::Update() {
 				pressed = false;
 		}
 		s_PanelKeyShortcutsPressed[i] = pressed;
+		s_WindowPanels[i]->OnUpdate();
 	}
 
 	if (Input::IsKeyDown(KeyCode::LeftControl) && !Input::IsKeyDown(KeyCode::LeftShift) && Input::IsKeyPressed(KeyCode::O))
