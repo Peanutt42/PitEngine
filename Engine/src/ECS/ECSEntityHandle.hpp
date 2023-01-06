@@ -80,6 +80,8 @@ namespace Pit::ECS {
 			m_Scene->RemoveComponent<T>(m_ID);
 		}
 
+		operator bool() { return m_Scene && m_Scene->GetRegistry().valid(m_ID); }
+
 		entt::entity GetID() { return m_ID; }
 		Scene* GetScene() { return m_Scene; }
 

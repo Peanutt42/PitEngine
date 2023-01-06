@@ -5,6 +5,7 @@
 #include "ECSSystem.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
+#include "ECSSceneSerializer.hpp"
 
 namespace Pit::ECS {
 
@@ -35,18 +36,8 @@ namespace Pit::ECS {
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
 	}
 
-	Scene::Scene(const String& name) :
-		m_Name(name) {}
-
-	Scene::Scene(const std::filesystem::path& sceneFilepath, bool binaryVersion) {
-		PIT_ENGINE_ASSERT(ECS, std::filesystem::exists(sceneFilepath), "Trying to load scene file '{}' yet it doesn't exists!", sceneFilepath.string());
-		if (binaryVersion) {
-			PIT_ENGINE_ASSERT(ECS, false, "binaryVersion isn't implomented yet!");
-		}
-		else {
-
-		}
-	}
+	Scene::Scene(const String& name, Rendering::Camera* camera) :
+		m_Name(name), m_Camera(camera) {}
 
 	bool Scene::Init() {
 		PIT_PROFILE_FUNCTION();
@@ -82,8 +73,8 @@ namespace Pit::ECS {
 	#pragma region Entity
 	entt::entity Scene::CreateEntityID() {
 		auto e = m_Registry.create();
-		m_Registry.emplace<UUIDComponent>(e);
 		m_Registry.emplace<NameComponent>(e);
+		m_Registry.emplace<UUIDComponent>(e);
 		m_Registry.emplace<TransformComponent>(e);
 		return e;
 	}

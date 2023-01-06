@@ -162,8 +162,6 @@ namespace Pit {
 	void ScriptingSubmodule::InitMono() {
 		PIT_PROFILE_FUNCTION();
 
-		PIT_ENGINE_INFO(Scripting, "Initializing Mono");
-
 		if (std::filesystem::exists("JSON")) std::filesystem::remove_all("JSON"); // Random folder
 
 		mono_set_assemblies_path("Engine-ScriptCore/lib");
@@ -188,8 +186,6 @@ namespace Pit {
 
 	void ScriptingSubmodule::ShutdownMono() {
 		PIT_PROFILE_FUNCTION();
-
-		PIT_ENGINE_INFO(Scripting, "Shutting down Mono");
 
 		mono_domain_set(mono_get_root_domain(), false);
 

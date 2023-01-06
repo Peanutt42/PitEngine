@@ -1,7 +1,6 @@
 #include "pch.hpp"
 #include "LoggingOutputPanel.hpp"
 #include <imgui/imgui.h>
-#include "Memory/MemorySubmodule.hpp"
 
 using namespace Pit;
 using namespace Editor;
@@ -12,11 +11,8 @@ void LoggingOutputPanel::OnCreate() {
 
 	auto copyLogFunc = [this]([[maybe_unused]] Debug::LogVerbosity verbosity, const std::string& msg) {
 		if (this && !Engine::ShouldClose() && msg.c_str() != nullptr) {
-			bool prevFrameAllocActive = Engine::Memory()->GetFrameAllocatorActive();
-			Engine::Memory()->SetFrameAllocatorActive(false);
 			m_Logs += msg;
 			m_Logs += '\n';
-			Engine::Memory()->SetFrameAllocatorActive(prevFrameAllocActive);
 		}
 	};
 	Debug::Logging::GetEngineLogger()->OnLogEvent += copyLogFunc;

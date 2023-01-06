@@ -14,12 +14,7 @@ namespace Pit::Audio {
 	
 	void AudioAsset::Load() {
 		if (m_MusicBuffer) delete m_MusicBuffer;
-		if (m_AsyncLoading)
-			JobSystem::Execute([this]() {
-			m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
-		});
-		else
-			m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
+		m_MusicBuffer = new MusicBuffer(m_Filepath.string().c_str(), m_AsyncLoading);
 	}
 	
 	void AudioAsset::Unload() {

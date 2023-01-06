@@ -97,7 +97,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\MemoryAllocations.cpp" />
     <ClCompile Include="src\SmartpointerTest.cpp" />
     <ClCompile Include="src\test.cpp" />
   </ItemGroup>

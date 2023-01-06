@@ -14,6 +14,8 @@ namespace Pit {
 	/// </summary>
 	class ECSSubmodule : public Submodule {
 	public:
+		ECSSubmodule();
+
 		virtual void Init();
 
 		virtual void Shutdown();
@@ -25,6 +27,6 @@ namespace Pit {
 		ECS::Scene& GetEcsWorld();
 
 	private:
-		ECS::Scene m_ECSScene = ECS::Scene(String("MainECSScene"));
+		ECS::Scene m_ECSScene;
 	};
 }

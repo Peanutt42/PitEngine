@@ -16,11 +16,9 @@ int main(const int argc, const char* argv[]) {
 
 	if (!std::filesystem::exists(projDir)) return 0;
 
-	Serialization::YamlDeserializer in(projDir);
-	String projName;
-	in.Find("Name", projName);
-	String projEngineVersionStr;
-	in.Find("EngineVersion", projEngineVersionStr);
+	YAML::Node in = YAML::LoadFile(projDir);
+	String projName = in["Name"].as<String>();
+	String projEngineVersionStr = in["EngineVersion"].as<String>();
 	ProjectInfo projInfo{ .Name = projName, .EngineVersion = Version(projEngineVersionStr) };
 	PIT_ENGINE_ASSERT(Editor, projInfo.EngineVersion == Engine::Version, "Project {0:s}'s version ({1}) is not compatible with this version of the Editor({2})", projName, projInfo.EngineVersion, Engine::Version);
 

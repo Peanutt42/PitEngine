@@ -3,7 +3,6 @@
 
 #include "Core/Engine.hpp"
 #include "Debug/Logging.hpp"
-#include "Memory/MemorySubmodule.hpp"
 #include "Utils/DateUtils.hpp"
 #include "Platform/PlatformUtils.hpp"
 
@@ -115,7 +114,6 @@ void CrashHandler::StackTrace(bool cutSetup, std::ostream& out) {
 }
 
 void CrashHandler::OnProcessCrashed([[maybe_unused]] int sig) {
-	Pit::Engine::Memory()->SetFrameAllocatorActive(false);
 	std::cout << "A crash occured.\n";
 	
 	StackTrace(true);

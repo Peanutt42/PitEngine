@@ -1634,9 +1634,9 @@ FMT_CONSTEXPR FMT_INLINE auto visit_format_arg(
   case detail::type::ulong_long_type:
     return vis(arg.value_.ulong_long_value);
   case detail::type::int128_type:
-    return vis(detail::convert_for_visit(arg.value_.int128_value));
+    //return vis(detail::convert_for_visit(arg.value_.int128_value));
   case detail::type::uint128_type:
-    return vis(detail::convert_for_visit(arg.value_.uint128_value));
+    //return vis(detail::convert_for_visit(arg.value_.uint128_value));
   case detail::type::bool_type:
     return vis(arg.value_.bool_value);
   case detail::type::char_type:
@@ -1657,7 +1657,7 @@ FMT_CONSTEXPR FMT_INLINE auto visit_format_arg(
   case detail::type::custom_type:
     return vis(typename basic_format_arg<Context>::handle(arg.value_.custom));
   }
-  return vis(monostate());
+  //return vis(monostate());
 }
 
 FMT_BEGIN_DETAIL_NAMESPACE

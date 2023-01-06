@@ -13,5 +13,11 @@ namespace Pit::Editor {
 		virtual void OnDestroy() override;
 
 		virtual void OnGui() override;
+
+		virtual void OnUpdate() override;
+
+	private:
+		glm::vec2 m_ViewportBottumLeft;
+		ImVec2 m_ViewportSize;
 	};
 }

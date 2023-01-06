@@ -7,12 +7,14 @@
 #endif
 
 namespace Pit {
+	static bool s_AntiCheatThreadQuit;
+
 #ifdef PIT_WINDOWS
-	void AntiCheatSubmodule::_AntiCheatThreadMain(AntiCheatSubmodule* antiCheat) {
+	void AntiCheatSubmodule::_AntiCheatThreadMain() {
 		PROCESSENTRY32 pe32;
 		pe32.dwSize = sizeof(PROCESSENTRY32);
 		void* hProcessSnap = nullptr;
-		while (!antiCheat->m_AntiCheatThreadQuit) {
+		while (!s_AntiCheatThreadQuit) {
 			hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 			int i = 0;
 			while (Process32Next(hProcessSnap, &pe32)) {
@@ -29,14 +31,14 @@ namespace Pit {
 	void AntiCheatSubmodule::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		m_AntiCheatThread = std::thread(AntiCheatSubmodule::_AntiCheatThreadMain, this);
+		m_AntiCheatThread = std::thread(AntiCheatSubmodule::_AntiCheatThreadMain);
 	}
 
 	void AntiCheatSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
 
-		m_AntiCheatThreadQuit = true;
-		m_AntiCheatThread.join();
+		s_AntiCheatThreadQuit = true;
+		m_AntiCheatThread.detach();
 	}
 
 	void AntiCheatSubmodule::Update() {

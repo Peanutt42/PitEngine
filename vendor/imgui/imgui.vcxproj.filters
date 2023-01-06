@@ -42,6 +42,9 @@
     <ClInclude Include="include\imgui\imstb_textedit.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="include\imgui\imgui_stdlib.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -63,6 +66,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="include\imgui\imgui_widgets.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_stdlib.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

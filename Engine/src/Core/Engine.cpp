@@ -4,8 +4,6 @@
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
-#include "Debug/MemoryLeakDetector.hpp"
-#include "Memory/MemorySubmodule.hpp"
 
 
 namespace Pit {
@@ -51,8 +49,6 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		CrashHandler::Init();
-
-		Debug::MemoryLeakDetector::Init();
 
 		try {
 			s_Settings = &settings;
@@ -110,10 +106,21 @@ namespace Pit {
 		return true;
 	}
 
+	#if DEBUG
+	static void waitForOptickToCollectShutdownTimings() {
+		for (int i = 0; i < 3; i++) {
+			PIT_PROFILE_FRAME("MainThread");
+			PIT_PROFILE_FUNCTION("END");
+			std::this_thread::sleep_for(1s);
+		}
+	}
+	#endif
 	void Engine::Shutdown() {
 		PIT_PROFILE_FRAME("MainThread");
 
 		PIT_PROFILE_FUNCTION();
+
+		s_Quit = true;
 
 		try {
 			{
@@ -132,16 +139,16 @@ namespace Pit {
 
 			Debug::Logging::Shutdown();
 
-			#if DEBUG
-			Debug::MemoryLeakDetector::PrintOutPotentialMemLeaks();
-			#endif
-
 			if (s_Settings->OneInstanceOnly && s_InstanceLockFile) {
 				s_InstanceLockFile.close();
 				std::filesystem::remove({ INSTANCE_LOCK_FILENAME });
 			}
 		}
 		CATCH_EXCEPTIONS();
+
+		#if DEBUG
+		waitForOptickToCollectShutdownTimings();
+		#endif
 	}
 
 	void Engine::Update() {
@@ -150,8 +157,6 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
-			Memory()->SetFrameAllocatorActive(true);
-
 			Time::SetFrame((Time::Frame() + 1) % 1000);
 
 			using namespace std::chrono;
@@ -175,8 +180,6 @@ namespace Pit {
 					Time::MicroSleep(Cast<uint64>(floor(timeLeft * 1000 * 1000))); // Wait for microseconds
 				}
 			}
-
-			Memory()->SetFrameAllocatorActive(false);
 		}
 		CATCH_EXCEPTIONS();
 
@@ -209,7 +212,5 @@ namespace Pit {
 	AssetManagmentSubmodule* Engine::AssetManagment()	{ if (s_SubmoduleManager) return s_SubmoduleManager->AssetManagmentSubmodule;  else return nullptr; }
 	RenderingSubmodule* Engine::Rendering()				{ if (s_SubmoduleManager) return s_SubmoduleManager->RenderingSubmodule;  else return nullptr; }
 	ECSSubmodule* Engine::ECS()							{ if (s_SubmoduleManager) return s_SubmoduleManager->ECSSubmodule;  else return nullptr; }
-	
-	MemorySubmodule* Engine::Memory()					{ if (s_SubmoduleManager) return s_SubmoduleManager->MemorySubmodule;  else return nullptr; }
 	ScriptingSubmodule* Engine::Scripting()				{ if (s_SubmoduleManager) return s_SubmoduleManager->ScriptingSubmodule;  else return nullptr; }
 }

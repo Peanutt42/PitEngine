@@ -34,7 +34,7 @@ namespace Pit {
 
 		s_FinishedLabel.store(0);
 
-		auto numCores = std::thread::hardware_concurrency();
+		auto numCores = std::thread::hardware_concurrency() - 6;
 
 		if (numCores < 1) numCores = 1;
 		s_NumThreads = numCores;

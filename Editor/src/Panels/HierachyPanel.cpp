@@ -29,8 +29,10 @@ void HierachyPanel::OnGui() {
 
 	// Right-click on blank space
 	if (ImGui::BeginPopupContextWindow("EntityCreateMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_NoOpenOverExistingPopup)) {
-		if (ImGui::MenuItem("Create Entity"))
-			Engine::ECS()->GetEcsWorld().CreateEntity();
+		if (ImGui::MenuItem("Create Entity")) {
+			ECS::EntityHandle entity = Engine::ECS()->GetEcsWorld().CreateEntity();
+			s_SelectedEntity = entity;
+		}
 
 		ImGui::EndPopup();
 	}

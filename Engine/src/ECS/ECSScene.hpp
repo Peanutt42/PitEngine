@@ -4,6 +4,9 @@
 #include <entt.hpp>
 #include "ECSSystem.hpp"
 
+namespace Pit::Rendering {
+	class Camera;
+}
 
 namespace Pit::ECS {
 	class EntityHandle;
@@ -21,8 +24,7 @@ namespace Pit::ECS {
 	/// </summary>
 	class Scene {
 	public:
-		Scene(const String& name);
-		Scene(const std::filesystem::path& sceneFilepath, bool binaryVersion = false);
+		Scene(const String& name, Rendering::Camera* camera);
 
 		bool Init();
 		void Update(const SystemTopic topic);
@@ -169,6 +171,9 @@ namespace Pit::ECS {
 
 		const String& GetName() const;
 		void SetName(const String& name);
+
+		Rendering::Camera* GetCamera() { return m_Camera; }
+		void SetCamera(Rendering::Camera* newCamera) { m_Camera = newCamera; }
 		
 		entt::registry& GetRegistry() { return m_Registry; }
 		bool Paused = false;
@@ -177,6 +182,8 @@ namespace Pit::ECS {
 		String m_Name;
 		entt::registry m_Registry;
 		Array<SystemHandle> m_Systems;
+
+		Rendering::Camera* m_Camera;
 
 #if DEBUG
 		size m_ComponentMemSize = 0;

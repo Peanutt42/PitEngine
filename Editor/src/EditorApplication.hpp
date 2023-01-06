@@ -28,6 +28,10 @@ namespace Pit::Editor {
 
 		static ProjectInfo s_CurrentProject;
 		static std::filesystem::path s_CurrentSceneFilepath;
+
+		static void OpenSceneFromFile();
+		static void SaveSceneToFile();
+		static void SaveScene();
 	};
 
 

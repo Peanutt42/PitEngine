@@ -56,7 +56,7 @@ namespace Pit {
 		}
 
 		void Serialize(const std::filesystem::path& filepath) {
-			Serialization::YamlSerializer out;
+			YAML::Emitter out;
 			out << YAML::BeginMap;
 
 			out << YAML::Comment("EngineSettings");
@@ -66,20 +66,26 @@ namespace Pit {
 			out << YAML::Key << "AntiAliasing" << YAML::Value << AntiAliasing;
 
 			out << YAML::EndMap;
-			out.SaveToFile(filepath);
+			Serialization::SaveYamlToFile(filepath, out);
 		}
 
 		void Deserialize(const std::filesystem::path& filepath) {
 			if (!std::filesystem::exists(filepath)) Serialize(filepath);
 
-			Serialization::YamlDeserializer in(filepath);
+			try {
+				YAML::Node in = YAML::LoadFile(filepath.string());
 
-			in.Find("VSync", VSync);
-			in.Find("MaxFps", MaxFps);
-			String renderingApiStr;
-			in.Find("RenderingApi", renderingApiStr);
-			RenderingApi = StringToRenderingApi(renderingApiStr);
-			in.Find("AntiAliasing", AntiAliasing);
+				VSync = in["VSync"].as<bool>();
+				MaxFps = in["MaxFps"].as<int>();
+				RenderingApi = StringToRenderingApi(in["RenderingApi"].as<String>());
+				AntiAliasing = in["AntiAliasing"].as<int>();
+			}
+			catch ([[maybe_unused]] const YAML::BadFile& badFile) {
+				PIT_ENGINE_FATAL(General, "Failed to load EngineSettings '{}', error: file isn't in yaml-format", filepath.string());
+			}
+			catch (const YAML::ParserException& parserError) {
+				PIT_ENGINE_FATAL(General, "Failed to parse EngineSettings '{}', error: {}", filepath.string(), parserError.what());
+			}
 		}
 	};
 }

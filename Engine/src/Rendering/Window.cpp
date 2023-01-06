@@ -10,15 +10,11 @@ namespace Pit::Rendering {
 
 		PIT_PROFILE_FUNCTION();
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 #ifdef PIT_APPLE
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-		glfwWindowHint(GLFW_MAXIMIZED, fullscreen ? GLFW_TRUE : GLFW_FALSE);
+		glfwWindowHint(GLFW_MAXIMIZED, fullscreen);
 
 		glfwWindowHint(GLFW_SAMPLES, 0);// Weil wir die scene eh in einen seperaten framebuffer render (für post-processing) Engine::GetSettings().AntiAliasing);
 

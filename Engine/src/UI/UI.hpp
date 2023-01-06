@@ -211,7 +211,7 @@ namespace Pit::UI {
 		return IMGUI_LEFT_LABEL(ImGui::DragFloat, label, v, v_speed, v_min, v_max, format, flags);
 	}
 
-	inline static bool ImageButton(const Pit::Rendering::Texture* texture, const ImVec2& size, const bool flipX = false, const bool flipY = false, const int& framePadding = -1, const ImVec4& bgColor = { 0,0,0,0 }, const ImVec4& tintColor = { 1,1,1,1 }) {
+	inline static bool ImageButton(const Pit::Rendering::Texture& texture, const ImVec2& size, const bool flipX = false, const bool flipY = false, const int& framePadding = -1, const ImVec4& bgColor = { 0,0,0,0 }, const ImVec4& tintColor = { 1,1,1,1 }) {
 		ImVec2 uv1;
 		ImVec2 uv2;
 		if (flipX && flipY) {
@@ -230,6 +230,6 @@ namespace Pit::UI {
 			uv1 = { 0, 0 };
 			uv2 = { 1, 1 };
 		}
-		return ImGui::ImageButton((ImTextureID)Cast<uint64>(texture->GetRendererID()), size, uv1, uv2, framePadding, bgColor, tintColor);
+		return ImGui::ImageButton((ImTextureID)Cast<uint64>(texture.GetRendererID()), size, uv1, uv2, framePadding, bgColor, tintColor);
 	}
 }

@@ -2,7 +2,10 @@
 
 #include "Core/CoreInclude.hpp"
 #include "Core/Event.hpp"
+#pragma warning ( push )
+#pragma warning (disable: 4715)
 #include <fmt/fmt.h>
+#pragma warning ( pop )
 
 namespace Pit::Debug {
 	enum class ConsoleColor {

@@ -45,8 +45,7 @@ namespace Pit::Rendering {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
-
-		if (Engine::GetSettings().AntiAliasing != 0) {
+		/*if (Engine::GetSettings().AntiAliasing != 0) {
 			// configure MSAA framebuffer
 			// --------------------------
 			glGenFramebuffers(1, &m_ScreenFramebuffer);
@@ -108,7 +107,13 @@ namespace Pit::Rendering {
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 				PIT_ENGINE_FATAL(Rendering, "Framebuffer is not complete!");
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		}
+		}*/
+		FramebufferSpecification spec;
+		spec.Width = (uint32_t)Engine::Rendering()->Window->GetWidth();
+		spec.Height = (uint32_t)Engine::Rendering()->Window->GetHeight();
+		spec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
+		spec.Samples = (uint32_t)Engine::GetSettings().AntiAliasing;
+		m_Framebuffer = new Framebuffer(spec);
 
 		m_ScreenShader.Use();
 		m_ScreenShader.SetInt("screenTexture", 0);
@@ -123,13 +128,47 @@ namespace Pit::Rendering {
 	Renderer::~Renderer() {
 		PIT_PROFILE_FUNCTION();
 
+		delete m_Framebuffer;
 	}
 
 
 	void Renderer::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		if (Engine::GetSettings().AntiAliasing != 0) {
+		int width = Engine::Rendering()->Window->GetWidth();
+		int height = Engine::Rendering()->Window->GetHeight();
+		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+			width > 0.0f && height > 0.0f && 
+			(spec.Width != (uint32_t)width || spec.Height != (uint32_t)height)) {
+			m_Framebuffer->Resize((uint32_t)width, (uint32_t)height);
+		}
+
+		m_Framebuffer->Bind();
+		glEnable(GL_DEPTH_TEST);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Clear Entity id attachment to -1
+		m_Framebuffer->ClearAttachment(1, -1);
+
+		m_RenderingSystem.Render();
+
+		m_Framebuffer->Unbind();
+
+
+
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST);
+
+		m_ScreenShader.Use();
+		glBindVertexArray(m_ScreenQuadVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_Framebuffer->GetColorAttachmentRendererID());
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		
+		/*if (Engine::GetSettings().AntiAliasing != 0) {
 			glBindFramebuffer(GL_FRAMEBUFFER, m_ScreenFramebuffer);
 			glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -173,8 +212,8 @@ namespace Pit::Rendering {
 			glBindVertexArray(m_ScreenQuadVAO);
 			glBindTexture(GL_TEXTURE_2D, m_ScreenTexColorBuffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
-		}
+		}*/
 	}
 	
-	uint Renderer::GetScreenTexColorBuffer() { return m_ScreenTexColorBuffer; }
+	Framebuffer* Renderer::GetScreenFramebuffer() { return m_Framebuffer; }
 }

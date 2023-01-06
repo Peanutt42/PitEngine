@@ -14,7 +14,7 @@
 
 namespace Pit {
 	/// <summary>
-	/// Submodule that handles anything related to Graphics like Window Handeling, UI/2D/3D Rendering
+	/// Submodule that handles anything related to Graphics like Window Handling, UI/2D/3D Rendering
 	/// </summary>
 	class RenderingSubmodule : public Submodule {
 	public:
@@ -24,9 +24,9 @@ namespace Pit {
 		
 		virtual void Update();
 
-		Rendering::Window* Window = nullptr;
-		Rendering::Renderer* Renderer = nullptr;
-		UI::UIRenderer* UIRenderer = nullptr;
-		Rendering::Camera* Camera = nullptr;
+		ScopeRef<Rendering::Window> Window;
+		ScopeRef<Rendering::Renderer> Renderer;
+		ScopeRef<UI::UIRenderer> UIRenderer;
+		ScopeRef<Rendering::Camera> Camera;
 	};
 }

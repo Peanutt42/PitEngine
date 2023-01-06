@@ -9,6 +9,7 @@ namespace Pit::Editor {
 		virtual void OnCreate() {}
 		virtual void OnDestroy() {}
 		virtual void OnGui() {}
+		virtual void OnUpdate() {}
 
 		void OnGUI() {
 			if (!Opened) return;

@@ -35,7 +35,10 @@ namespace Pit {
 	using Array = std::vector<T>;
 
 
-	// Casts type with some compiler checks that the type is actually convertable
+	#define STRINGIFY(T) #T
+
+
+	// Casts type with some compiler checks that the type is actually convertible
 	template<typename To, typename From>
 	__forceinline To Cast(From src) {
 		static_assert((std::is_convertible_v<From, To> || std::is_convertible_v<To, From>) ||
