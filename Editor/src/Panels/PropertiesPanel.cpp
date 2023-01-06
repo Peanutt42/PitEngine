@@ -8,8 +8,8 @@
 #include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
-#include "Memory/MemorySubmodule.hpp"
 #include <imgui/imgui.h>
+#include <imgui/imgui_stdlib.h>
 #pragma warning(push)
 #pragma warning(disable: 4201)
 #include <glm/gtc/type_ptr.hpp>
@@ -84,17 +84,12 @@ static void DisplayAddComponentEntry(const String& entryName) {
 		}
 	}
 }
-static char nameInputBuffer[256];
-static char componentClassNameInputBuffer[100];
+
 void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	if (entity.HasComponent<ECS::NameComponent>()) {
-		auto& entityComp = entity.GetComponent<ECS::NameComponent>();
-		auto& name = entityComp.Name;
+		auto& nameComp = entity.GetComponent<ECS::NameComponent>();
 
-		memset(nameInputBuffer, 0, sizeof(nameInputBuffer));
-		strcpy_s(nameInputBuffer, name.c_str());
-		if (ImGui::InputText("Name", nameInputBuffer, sizeof(nameInputBuffer)))
-			name = String(nameInputBuffer);
+		ImGui::InputText("Name", &nameComp.Name);
 	}
 
 	DrawComponent<ECS::TransformComponent>("Transform", entity, [](ECS::TransformComponent& transform) {
@@ -112,14 +107,10 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	DrawComponent<ECS::CSharpComponent>("CSharpComponent", entity, [](ECS::CSharpComponent& component) {
 		bool componentClassExists = Engine::Scripting()->ComponentClassExists(component.ClassName);
 
-		memset(componentClassNameInputBuffer, 0, sizeof(componentClassNameInputBuffer));
-		strcpy_s(componentClassNameInputBuffer, component.ClassName.c_str());
-
 		if (!componentClassExists)
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
 
-		if (ImGui::InputText("ComponentName", componentClassNameInputBuffer, sizeof(componentClassNameInputBuffer)))
-			component.ClassName = componentClassNameInputBuffer;
+		ImGui::InputText("ComponentName", &component.ClassName);
 
 		if (!componentClassExists)
 			ImGui::PopStyleColor();
@@ -135,12 +126,9 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 		ImGui::OpenPopup("AddComponent");
 
 	if (ImGui::BeginPopup("AddComponent")) {
-		bool frameAllocActive = Engine::Memory()->GetFrameAllocatorActive();
-		Engine::Memory()->SetFrameAllocatorActive(false);
 		DisplayAddComponentEntry<ECS::TransformComponent>("Transform");
 		DisplayAddComponentEntry<ECS::UUIDComponent>("UUID");
 		DisplayAddComponentEntry<ECS::CSharpComponent>("CSharpComponent");
-		Engine::Memory()->SetFrameAllocatorActive(frameAllocActive);
 		ImGui::EndPopup();
 	}
 }
