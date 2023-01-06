@@ -5,7 +5,6 @@
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
 #include "Debug/MemoryLeakDetector.hpp"
-#include "Memory/MemorySubmodule.hpp"
 
 
 namespace Pit {
@@ -163,8 +162,6 @@ namespace Pit {
 		PIT_PROFILE_FUNCTION();
 
 		try {
-			Memory()->SetFrameAllocatorActive(true);
-
 			Time::SetFrame((Time::Frame() + 1) % 1000);
 
 			using namespace std::chrono;
@@ -188,8 +185,6 @@ namespace Pit {
 					Time::MicroSleep(Cast<uint64>(floor(timeLeft * 1000 * 1000))); // Wait for microseconds
 				}
 			}
-
-			Memory()->SetFrameAllocatorActive(false);
 		}
 		CATCH_EXCEPTIONS();
 
@@ -222,7 +217,5 @@ namespace Pit {
 	AssetManagmentSubmodule* Engine::AssetManagment()	{ if (s_SubmoduleManager) return s_SubmoduleManager->AssetManagmentSubmodule;  else return nullptr; }
 	RenderingSubmodule* Engine::Rendering()				{ if (s_SubmoduleManager) return s_SubmoduleManager->RenderingSubmodule;  else return nullptr; }
 	ECSSubmodule* Engine::ECS()							{ if (s_SubmoduleManager) return s_SubmoduleManager->ECSSubmodule;  else return nullptr; }
-	
-	MemorySubmodule* Engine::Memory()					{ if (s_SubmoduleManager) return s_SubmoduleManager->MemorySubmodule;  else return nullptr; }
 	ScriptingSubmodule* Engine::Scripting()				{ if (s_SubmoduleManager) return s_SubmoduleManager->ScriptingSubmodule;  else return nullptr; }
 }

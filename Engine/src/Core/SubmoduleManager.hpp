@@ -10,7 +10,6 @@ namespace Pit {
 	class NetworkingSubmodule;
 	class PhysicsSubmodule;
 	class RenderingSubmodule;
-	class MemorySubmodule;
 	class AntiCheatSubmodule;
 	class ScriptingSubmodule;
 
@@ -24,7 +23,6 @@ namespace Pit {
 
 
 		AudioSubmodule* AudioSubmodule;
-		MemorySubmodule* MemorySubmodule;
 		AntiCheatSubmodule* AntiCheatSubmodule;
 		AssetManagmentSubmodule* AssetManagmentSubmodule;
 		ECSSubmodule* ECSSubmodule;

@@ -8,15 +8,11 @@
 #include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
 #include "AssetManagment/AssetManagmentSubmodule.hpp"
-#include "Memory/MemorySubmodule.hpp"
 #include "AntiCheat/AntiCheatSubmodule.hpp"
 #include "Scripting/ScriptingSubmodule.hpp"
 
 namespace Pit {
 	void SubmoduleManager::Init() {
-		MemorySubmodule = new Pit::MemorySubmodule();
-		MemorySubmodule->Init();
-
 		AntiCheatSubmodule = new Pit::AntiCheatSubmodule();
 		AntiCheatSubmodule->Init();
 
@@ -69,14 +65,9 @@ namespace Pit {
 		}
 		AntiCheatSubmodule->Shutdown();
 		delete AntiCheatSubmodule;
-
-		MemorySubmodule->Shutdown();
-		delete MemorySubmodule;
 	}
 
 	void SubmoduleManager::Update() {
-		MemorySubmodule->Update();
-
 		AntiCheatSubmodule->Update();
 
 		NetworkingSubmodule->Update();
