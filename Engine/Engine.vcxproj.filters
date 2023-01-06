@@ -153,6 +153,9 @@
     <ClInclude Include="src\ECS\ECSScene.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\ECS\ECSSceneSerializer.hpp">
+      <Filter>ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
@@ -247,7 +250,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\ECS\ECSSceneSerializer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -302,6 +304,9 @@
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\ECSScene.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\ECSSceneSerializer.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\ECSSubmodule.cpp">
@@ -371,6 +376,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\ECS\ECSSceneSerializer.cpp" />
   </ItemGroup>
 </Project>

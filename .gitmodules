@@ -1,3 +1,6 @@
 [submodule "vendor/PitTest"]
 	path = vendor/PitTest
 	url = https://github.com/Peanutt42/PitTest.git
+[submodule "vendor/ImGuizmo/ImGuizmo"]
+	path = vendor/ImGuizmo/ImGuizmo
+	url = https://github.com/TheCherno/ImGuizmo

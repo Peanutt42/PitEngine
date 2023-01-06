@@ -29,6 +29,7 @@ project "Engine"
 		"%{wks.location}/vendor/fmt/include",
 		"%{wks.location}/vendor/mono/include",
 		"%{wks.location}/vendor/imgui/include",
+		"%{wks.location}/vendor/ImGuizmo/ImGuizmo",
 		"%{wks.location}/vendor/glfw/include",
 		"%{wks.location}/vendor/tinyobjloader/include",
 		"%{wks.location}/vendor/stb_image/include",

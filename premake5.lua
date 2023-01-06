@@ -19,27 +19,25 @@ workspace "PitEngine"
 
 outputdir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
+RootDir = "../"
+
 group "Dependencies"
 	include "vendor/glad"
 	include "vendor/glm"
 	include "vendor/imgui"
+	include "vendor/ImGuizmo"
 	include "vendor/stb_image"
 	include "vendor/tinyobjloader"
 	include "vendor/yaml"
 group ""
 
-RootDir = "../"
-
 group "Core"
 	include "Engine"
 	include "Engine-ScriptCore"
-group ""
-
-group "Tools"
 	include "Editor"
-	include "Tests"
 group ""
 
-group "Misc"
+group "Other"
+	include "Tests"
 	include "Sandbox"
 group ""
