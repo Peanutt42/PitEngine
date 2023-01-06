@@ -36,8 +36,8 @@ namespace Pit::ECS {
 		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
 	}
 
-	Scene::Scene(const String& name, Rendering::Camera* camera) :
-		m_Name(name), m_Camera(camera) {}
+	Scene::Scene(const String& name) :
+		m_Name(name), m_Camera({0, 0, 0.5f}) {}
 
 	bool Scene::Init() {
 		PIT_PROFILE_FUNCTION();

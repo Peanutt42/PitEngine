@@ -93,11 +93,11 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	}
 
 	DrawComponent<ECS::TransformComponent>("Transform", entity, [](ECS::TransformComponent& transform) {
-		UI::Vec3("Position", transform.position);
-		glm::vec3 rotation = glm::degrees(transform.rotation);
+		UI::Vec3("Position", transform.Position);
+		glm::vec3 rotation = glm::degrees(transform.Rotation);
 		UI::Vec3("Rotation", rotation);
-		transform.rotation = glm::radians(rotation);
-		UI::Vec3("Scale", transform.scale, 1.0f);
+		transform.Rotation = glm::radians(rotation);
+		UI::Vec3("Scale", transform.Scale, 1.0f);
 	});
 
 	DrawComponent<ECS::UUIDComponent>("UUID", entity, [](ECS::UUIDComponent& uuid) {

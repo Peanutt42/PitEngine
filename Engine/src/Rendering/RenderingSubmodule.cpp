@@ -23,14 +23,10 @@ namespace Pit {
 		Window->SetViewport(Window->GetWidth(), Window->GetHeight());
 		Renderer = new Rendering::Renderer();
 		UIRenderer = new UI::UIRenderer();
-
-		Camera = new Rendering::Camera({ 0.f, 0.f, 5.f });
 	}
 
 	void RenderingSubmodule::Shutdown() {
 		PIT_PROFILE_FUNCTION();
-
-		Camera.Release();
 
 		UIRenderer.Release();
 		Renderer.Release();

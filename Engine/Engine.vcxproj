@@ -141,6 +141,7 @@
     <ClInclude Include="src\Input\InputBinding.hpp" />
     <ClInclude Include="src\Input\KeyCode.hpp" />
     <ClInclude Include="src\Math\CoreMath.hpp" />
+    <ClInclude Include="src\Math\GraphicsMath.hpp" />
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp" />
     <ClInclude Include="src\Physics\PhysicScene.hpp" />
     <ClInclude Include="src\Physics\PhysicsSubmodule.hpp" />
@@ -186,11 +187,13 @@
     <ClCompile Include="src\Debug\ConsoleLogger.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />
     <ClCompile Include="src\Debug\vcrash.cpp" />
+    <ClCompile Include="src\ECS\ECSComponents.cpp" />
     <ClCompile Include="src\ECS\ECSScene.cpp" />
     <ClCompile Include="src\ECS\ECSSceneSerializer.cpp" />
     <ClCompile Include="src\ECS\ECSSubmodule.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Input\InputBinding.cpp" />
+    <ClCompile Include="src\Math\GraphicsMath.cpp" />
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp" />
     <ClCompile Include="src\Physics\PhysicScene.cpp" />
     <ClCompile Include="src\Physics\PhysicsSubmodule.cpp" />

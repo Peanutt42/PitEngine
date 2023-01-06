@@ -8,7 +8,9 @@
 #include "Rendering/SpectatorCamera.hpp"
 #include "UI/UI.hpp"
 #include <imgui/imgui.h>
-#include <glm/glm.hpp>
+#include <ImGuizmo.h>
+#include "Math/GraphicsMath.hpp"
+
 
 namespace Pit::Editor {
 
@@ -56,6 +58,43 @@ namespace Pit::Editor {
 		auto viewportBottumLeft = ImGui::GetCursorScreenPos();
 		m_ViewportBottumLeft = { viewportBottumLeft.x, viewportBottumLeft.y };
 		
+
+		// Guizmos
+		if (HierachyPanel::s_SelectedEntity && m_GizmoType != -1) {
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
+							  (float)ImGui::GetWindowWidth(), (float)ImGui::GetWindowHeight());
+
+			Rendering::Camera& cam = Engine::ECS()->GetEcsWorld().GetCamera();
+			float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
+			if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
+			glm::mat4 projection = glm::perspective(glm::radians(cam.Fov), aspect, cam.NearPlane, cam.FarPlane);
+			glm::mat4 view = cam.GetViewMatrix();
+
+			auto& selectedTransform = HierachyPanel::s_SelectedEntity.GetComponent<ECS::TransformComponent>();
+			glm::mat4 transform = selectedTransform.GetTransform();
+
+			// Snapping
+			bool snap = Input::IsKeyDown(KeyCode::LeftControl);
+			float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+			// Snap to 45 degrees for rotation
+			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
+
+			float snapValues[3] = { snapValue, snapValue, snapValue };
+
+			ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection), (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform), nullptr, snap ? snapValues : nullptr);
+			if (ImGuizmo::IsUsing()) {
+				glm::vec3 position, rotation, scale;
+				Math::DecomposeTransform(transform, position, rotation, scale);
+				selectedTransform.Position = position;
+				selectedTransform.Rotation += rotation - selectedTransform.Rotation;
+				selectedTransform.Scale = scale;
+			}
+		}
+
+
 		static bool lookAround = false;
 		if (ImGui::IsWindowHovered() && Input::IsMouseButtonPressed(MouseButton::Right)) lookAround = true;
 		else if (Input::IsMouseButtonReleased(MouseButton::Right)) lookAround = false;
@@ -70,7 +109,7 @@ namespace Pit::Editor {
 			if (Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_DOWN)) moveDir.y--;
 			glm::vec2 lookDir = Input::GetAxisBinding(EDITOR_KEYBINDING_CAM_LOOK);
 			lookDir.y = -lookDir.y;
-			SpectatorCamera::Update(Engine::Rendering()->Camera.Get(),
+			SpectatorCamera::Update(&Engine::ECS()->GetEcsWorld().GetCamera(),
 									moveDir,
 									lookDir,
 									Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_FASTER),
@@ -166,7 +205,7 @@ namespace Pit::Editor {
 	}
 
 	void SceneViewportPanel::OnUpdate() {
-		if (Input::IsMouseButtonPressed(MouseButton::Left)) {
+		if (Input::IsMouseButtonPressed(MouseButton::Left) && !ImGuizmo::IsOver((ImGuizmo::OPERATION)m_GizmoType)) {
 			auto absoluteMousePos = ImGui::GetMousePos();
 			int mouseX = (int)(absoluteMousePos.x - m_ViewportBottumLeft.x);
 			int mouseY = -(int)(absoluteMousePos.y - m_ViewportBottumLeft.y);
@@ -180,6 +219,14 @@ namespace Pit::Editor {
 				Engine::Rendering()->Renderer->GetScreenFramebuffer()->Unbind();
 				HierachyPanel::s_SelectedEntity = pixelData == -1 ? ECS::EntityHandle((ECS::Scene*)nullptr, (entt::entity)- 1) : ECS::EntityHandle(&Engine::ECS()->GetEcsWorld(), (entt::entity)pixelData);
 			}
+		}
+
+		if (!Input::IsMouseButtonDown(MouseButton::Right) && !ImGuizmo::IsUsing()) {
+			if (Input::IsKeyPressed(KeyCode::Q)) m_GizmoType = -1;
+			if (Input::IsKeyPressed(KeyCode::W)) m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			if (Input::IsKeyPressed(KeyCode::E)) m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			if (Input::IsKeyPressed(KeyCode::R) &&
+				!Input::IsKeyDown(KeyCode::LeftControl)) m_GizmoType = ImGuizmo::OPERATION::SCALE;
 		}
 	}
 }

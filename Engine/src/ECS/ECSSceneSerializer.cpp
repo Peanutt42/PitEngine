@@ -134,29 +134,35 @@ namespace Pit::ECS {
 			out << YAML::Key << "Name" << YAML::Value << entity.GetComponent<NameComponent>().Name;
 		}
 		SerializeComponent<TransformComponent>(out, entity, "Transform", [&](TransformComponent& transformComponent) {
-			out << YAML::Key << "Position" << YAML::Value << transformComponent.position;
-			out << YAML::Key << "Rotation" << YAML::Value << transformComponent.rotation;
-			out << YAML::Key << "Scale" << YAML::Value << transformComponent.scale;
+			out << YAML::Key << "Position" << YAML::Value << transformComponent.Position;
+			out << YAML::Key << "Rotation" << YAML::Value << transformComponent.Rotation;
+			out << YAML::Key << "Scale" << YAML::Value << transformComponent.Scale;
 		});
 
 		out << YAML::EndMap;
 	}
 
 	const bool SceneSerializer::Serialize(const std::filesystem::path& filepath, Scene& scene) {
-		PIT_ENGINE_INFO(ECS, "Saving ECS scene '{}' to '{}'", scene.GetName(), filepath.string());
+		PIT_PROFILE_FUNCTION();
+
+		String filepathStr = filepath.string();
+		String sceneName = scene.GetName();
+		PIT_ENGINE_INFO(ECS, "Saving ECS scene '{}' to '{}'", sceneName, filepathStr);
+
+		ScopedTimer t("Saving ECS scene " + sceneName + " to " + filepathStr);
 
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 
-		out << YAML::Key << "Scene" << YAML::Value << scene.GetName();
+		out << YAML::Key << "Scene" << YAML::Value << sceneName;
 		out << YAML::Key << "Camera";
-		const Rendering::Camera* cam = scene.GetCamera();
+		const Rendering::Camera& cam = scene.GetCamera();
 		out << YAML::BeginMap;
-		out << YAML::Key << "Position" << YAML::Value << cam->Position;
-		out << YAML::Key << "Rotation" << YAML::Value << cam->Rotation;
-		out << YAML::Key << "Fov" << YAML::Value << cam->Fov;
-		out << YAML::Key << "NearPlane" << YAML::Value << cam->NearPlane;
-		out << YAML::Key << "FarPlane" << YAML::Value << cam->FarPlane;
+		out << YAML::Key << "Position" << YAML::Value << cam.Position;
+		out << YAML::Key << "Rotation" << YAML::Value << cam.Rotation;
+		out << YAML::Key << "Fov" << YAML::Value << cam.Fov;
+		out << YAML::Key << "NearPlane" << YAML::Value << cam.NearPlane;
+		out << YAML::Key << "FarPlane" << YAML::Value << cam.FarPlane;
 		out << YAML::EndMap;
 
 		out << YAML::Key << "Entities" << YAML::Value;
@@ -187,9 +193,13 @@ namespace Pit::ECS {
 	}
 
 	const bool SceneSerializer::Deserialize(const std::filesystem::path& filepath, Scene& scene) {
+		PIT_PROFILE_FUNCTION();
+
+		String filepathStr = filepath.string();
+
 		YAML::Node data;
 		try {
-			data = YAML::LoadFile(filepath.string());
+			data = YAML::LoadFile(filepathStr);
 		}
 		catch (YAML::ParserException e) {
 			PIT_ENGINE_ERR(ECS, "Failed to load .pitscene file '{0}'\n     {1}", filepath, e.what());
@@ -200,8 +210,9 @@ namespace Pit::ECS {
 			return false;
 
 		std::string sceneName = data["Scene"].as<std::string>();
-		PIT_ENGINE_INFO(ECS, "Deserializing scene '{0}'", sceneName);
+		PIT_ENGINE_INFO(ECS, "Loading ECS scene '{}' from '{}'", sceneName, filepathStr);
 
+		ScopedTimer t("Loading ECS scene " + sceneName + " from " + filepathStr);
 
 
 		auto entities = data["Entities"];
@@ -214,9 +225,9 @@ namespace Pit::ECS {
 
 				DeserializeComponent<TransformComponent>(entityNode, "Transform", [&](YAML::Node& transformNode) {
 					TransformComponent& transform = entity.GetComponent<TransformComponent>();
-					transform.position = transformNode["Position"].as<glm::vec3>();
-					transform.rotation = transformNode["Rotation"].as<glm::vec3>();
-					transform.scale = transformNode["Scale"].as<glm::vec3>();
+					transform.Position = transformNode["Position"].as<glm::vec3>();
+					transform.Rotation = transformNode["Rotation"].as<glm::vec3>();
+					transform.Scale = transformNode["Scale"].as<glm::vec3>();
 				});
 		
 			}

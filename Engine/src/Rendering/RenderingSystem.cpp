@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "RenderingSystem.hpp"
-#include "Core/Engine.hpp"
 #include "RenderingSubmodule.hpp"
+#include "Core/Engine.hpp"
 #include "Camera.hpp"
 #include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
@@ -90,20 +90,20 @@ namespace Pit::Rendering {
 	}
 
 	void RenderingSystem::Render() {
+		Camera& cam = Engine::ECS()->GetEcsWorld().GetCamera();
 
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.Use();
 		lightingShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		lightingShader.SetVec3("lightColor", lightColor);
 		lightingShader.SetVec3("lightPos", lightPos);
-		lightingShader.SetVec3("viewPos", Engine::Rendering()->Camera->Position);
+		lightingShader.SetVec3("viewPos", cam.Position);
 
 		// view/projection transformations
-		ScopeRef<Camera>& cam = Engine::Rendering()->Camera;
 		float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
 		if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
-		glm::mat4 projection = glm::perspective(glm::radians(cam->Fov), aspect, cam->NearPlane, cam->FarPlane);
-		glm::mat4 view = cam->GetViewMatrix();
+		glm::mat4 projection = glm::perspective(glm::radians(cam.Fov), aspect, cam.NearPlane, cam.FarPlane);
+		glm::mat4 view = cam.GetViewMatrix();
 		lightingShader.SetMat4("projection", projection);
 		lightingShader.SetMat4("view", view);
 
@@ -115,7 +115,7 @@ namespace Pit::Rendering {
 		auto entityview = Engine::ECS()->GetEcsWorld().View<ECS::TransformComponent>();
 		for (auto e : entityview) {
 			ECS::TransformComponent& transform = entityview.get<ECS::TransformComponent>(e);
-			transform.mat4(model);
+			model = transform.GetTransform();
 			lightingShader.SetMat4("model", model);
 			lightingShader.SetInt("entityId", (int)e);
 			glDrawArrays(GL_TRIANGLES, 0, 36);

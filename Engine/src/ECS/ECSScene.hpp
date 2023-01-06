@@ -3,10 +3,7 @@
 #include "Core/CoreInclude.hpp"
 #include <entt.hpp>
 #include "ECSSystem.hpp"
-
-namespace Pit::Rendering {
-	class Camera;
-}
+#include "Rendering/Camera.hpp"
 
 namespace Pit::ECS {
 	class EntityHandle;
@@ -24,7 +21,7 @@ namespace Pit::ECS {
 	/// </summary>
 	class Scene {
 	public:
-		Scene(const String& name, Rendering::Camera* camera);
+		Scene(const String& name);
 
 		bool Init();
 		void Update(const SystemTopic topic);
@@ -172,8 +169,8 @@ namespace Pit::ECS {
 		const String& GetName() const;
 		void SetName(const String& name);
 
-		Rendering::Camera* GetCamera() { return m_Camera; }
-		void SetCamera(Rendering::Camera* newCamera) { m_Camera = newCamera; }
+		Rendering::Camera& GetCamera() { return m_Camera; }
+		void SetCamera(Rendering::Camera& newCamera) { m_Camera = newCamera; }
 		
 		entt::registry& GetRegistry() { return m_Registry; }
 		bool Paused = false;
@@ -183,7 +180,7 @@ namespace Pit::ECS {
 		entt::registry m_Registry;
 		Array<SystemHandle> m_Systems;
 
-		Rendering::Camera* m_Camera;
+		Rendering::Camera m_Camera;
 
 #if DEBUG
 		size m_ComponentMemSize = 0;

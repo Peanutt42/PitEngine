@@ -19,5 +19,7 @@ namespace Pit::Editor {
 	private:
 		glm::vec2 m_ViewportBottumLeft;
 		ImVec2 m_ViewportSize;
+
+		int m_GizmoType;
 	};
 }

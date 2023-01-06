@@ -27,6 +27,5 @@ namespace Pit {
 		ScopeRef<Rendering::Window> Window;
 		ScopeRef<Rendering::Renderer> Renderer;
 		ScopeRef<UI::UIRenderer> UIRenderer;
-		ScopeRef<Rendering::Camera> Camera;
 	};
 }

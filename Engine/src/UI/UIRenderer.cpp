@@ -9,6 +9,7 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 #pragma warning(pop)
+#include <ImGuizmo.h>
 
 namespace Pit::UI {
 
@@ -47,6 +48,7 @@ namespace Pit::UI {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
 			static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;

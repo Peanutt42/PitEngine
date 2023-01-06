@@ -250,6 +250,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Math\GraphicsMath.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -376,5 +377,7 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Math\GraphicsMath.cpp" />
+    <ClCompile Include="src\ECS\ECSComponents.cpp" />
   </ItemGroup>
 </Project>
