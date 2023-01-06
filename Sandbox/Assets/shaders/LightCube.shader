@@ -1,6 +1,6 @@
 #type vertex
 
-#version 330 core
+#version 450
 layout(location = 0) in vec3 aPos;
 
 uniform mat4 model;
@@ -14,9 +14,11 @@ void main() {
 
 #type fragment
 
-#version 330 core
+#version 450
 out vec4 FragColor;
+out uint entityId; 
 
 void main() {
-	FragColor = vec4(1.0); // set alle 4 vector values to 1.0
+	FragColor = vec4(1.0);
+	entityId = -1;
 }

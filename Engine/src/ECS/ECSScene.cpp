@@ -82,8 +82,8 @@ namespace Pit::ECS {
 	#pragma region Entity
 	entt::entity Scene::CreateEntityID() {
 		auto e = m_Registry.create();
-		m_Registry.emplace<UUIDComponent>(e);
 		m_Registry.emplace<NameComponent>(e);
+		m_Registry.emplace<UUIDComponent>(e);
 		m_Registry.emplace<TransformComponent>(e);
 		return e;
 	}

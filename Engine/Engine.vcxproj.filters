@@ -177,12 +177,6 @@
     <ClInclude Include="src\Math\CoreMath.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Memory\BumpAllocator.hpp">
-      <Filter>Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Memory\MemorySubmodule.hpp">
-      <Filter>Memory</Filter>
-    </ClInclude>
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
@@ -256,6 +250,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Rendering\Framebuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -324,12 +319,6 @@
     <ClCompile Include="src\Input\InputBinding.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Memory\BumpAllocator.cpp">
-      <Filter>Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Memory\MemorySubmodule.cpp">
-      <Filter>Memory</Filter>
-    </ClCompile>
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
@@ -388,5 +377,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Rendering\Framebuffer.cpp" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "Texture.hpp"
 #include "Camera.hpp"
 #include "RenderingSystem.hpp"
+#include "Framebuffer.hpp"
 
 namespace Pit::Rendering {
 	/// <summary>
@@ -19,13 +20,12 @@ namespace Pit::Rendering {
 
 		void Update();
 
-		uint GetScreenTexColorBuffer();
+		Framebuffer* GetScreenFramebuffer();
+
 	private:
 		RenderingSystem m_RenderingSystem;
 		uint m_ScreenQuadVAO, m_ScreenQuadVBO;
-		uint m_ScreenTexColorBuffer;
-		uint m_ScreenFramebuffer;
-		uint m_ScreenIntermediateFramebuffer;
+		Framebuffer* m_Framebuffer;
 		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "Resources/shaders/ScreenShader.shader");
 	};
 }

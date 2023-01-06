@@ -117,6 +117,7 @@ namespace Pit::Rendering {
 			ECS::TransformComponent& transform = entityview.get<ECS::TransformComponent>(e);
 			transform.mat4(model);
 			lightingShader.SetMat4("model", model);
+			lightingShader.SetInt("entityId", (int)e);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 

@@ -122,21 +122,21 @@ namespace Pit::Rendering {
         glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 
-
     void Shader::_CheckCompileErrors(unsigned int shader, std::string type) {
         int success;
-        char infoLog[1024];
+        static char infoLog[1024];
+        memset(infoLog, 0, sizeof(infoLog));
         if (type == "Program") {
             glGetProgramiv(shader, GL_LINK_STATUS, &success);
             if (!success) {
-                glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+                glGetProgramInfoLog(shader, sizeof(infoLog), NULL, infoLog);
                 PIT_ENGINE_ERR(Rendering, "Error while linking the shader program:\n{}\n -- --------------------------------------------------- -- ", infoLog);
             }
         }
         else {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
             if (!success) {
-                glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+                glGetShaderInfoLog(shader, sizeof(infoLog), NULL, infoLog);
                 PIT_ENGINE_ERR(Rendering, "Error while compiling {0}Shader:\n{1}\n -- --------------------------------------------------- -- ", type, infoLog);
             }
         }
