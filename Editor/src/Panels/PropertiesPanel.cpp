@@ -8,7 +8,6 @@
 #include "HierachyPanel.hpp"
 #include "UI/UIFonts.hpp"
 #include "UI/UI.hpp"
-#include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
@@ -33,8 +32,7 @@ void PropertiesPanel::OnDestroy() {
 }
 
 void PropertiesPanel::OnGui() {
-	auto& ecsworld = Engine::ECS()->GetEcsWorld();
-	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity.GetID())) {
+	if (Engine::GetScene()->GetRegistry().valid(HierachyPanel::s_SelectedEntity.GetID())) {
 		_DrawComponents(HierachyPanel::s_SelectedEntity);
 	}
 }

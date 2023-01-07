@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "ECS/ECSSubmodule.hpp"
+#include "ECS/ECSScene.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
 #include "Rendering/Camera.hpp"
 #include "Rendering/SpectatorCamera.hpp"
@@ -44,7 +44,7 @@ int main(const int argc, const char* argv[]) {
 			moveDir.z = moveInput.y;
 			if (Input::IsBindingDown("MoveUp")) moveDir.y++;
 			if (Input::IsBindingDown("MoveDown")) moveDir.y--;
-			SpectatorCamera::Update(&Engine::ECS()->GetEcsWorld().GetCamera(),
+			SpectatorCamera::Update(&Engine::GetScene()->GetCamera(),
 									moveDir,
 									Input::GetAxisBinding("Look") * glm::vec2(1, -1),
 									Input::IsBindingDown("MoveFaster"),

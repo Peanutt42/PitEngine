@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #include "pch.hpp"
 #include "ScriptingSubmodule.hpp"
 #include "Core/Engine.hpp"
@@ -114,9 +116,9 @@ namespace Pit {
 
 		// ### TESTING ###
 		Scripting::ScriptClass systemClass("Sandbox", "TestSystem");
+		
 		MonoMethod* updateSystemMethod = systemClass.GetMethod("Update", 0);
-		Scripting::ScriptInstance systemInstance(systemClass.GetNative());
-		systemInstance.Invoke(updateSystemMethod, nullptr);
+		systemClass.StaticInvoke(updateSystemMethod, nullptr);
 
 		Scripting::ScriptClass mainClass("Sandbox", "Main");
 		Scripting::ScriptInstance mainInstance(mainClass.GetNative());
@@ -176,7 +178,7 @@ namespace Pit {
 
 	const bool ScriptingSubmodule::LoadCoreAssembly(const std::filesystem::path& binaryFilepath) {
 		PIT_PROFILE_FUNCTION();
-
+		
 		// Create App-domain
 		char appName[] = "PitEngineScriptRuntime";
 		s_Data->AppDomain = mono_domain_create_appdomain(appName, nullptr);
@@ -246,7 +248,7 @@ namespace Pit {
 		int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
 		// Get Internal types from Engine-ScriptCore
-		MonoClass* systemClass = mono_class_from_name(s_Data->CoreAssemblyImage, "PitEngine.ECS", "System");
+		MonoClass* baseSystemClass = mono_class_from_name(s_Data->CoreAssemblyImage, "PitEngine.ECS", "System");
 
 		PIT_ENGINE_INFO(Scripting, "Reflection metadata:");
 		for (int32_t i = 1; i < numTypes; i++) {
@@ -272,31 +274,40 @@ namespace Pit {
 				}
 			}
 			
-			bool isSystem = mono_class_is_subclass_of(monoClass, systemClass, false) &&
+			bool isSystem = mono_class_is_subclass_of(monoClass, baseSystemClass, false) &&
 							mono_class_get_method_from_name(monoClass, "Update", 0) != nullptr;
 			if (isSystem)
 				s_Data->SystemClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
-			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, systemClass, false); // 1 constructor, finalizer doesn't count
+			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, baseSystemClass, false); // 1 constructor, finalizer doesn't count
 			if (isComponent)
 				s_Data->ComponentClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
 
-			if (!isComponent) continue;
-			
-			// Fields/Variables
-			int fieldCount = mono_class_num_fields(monoClass);
-			if (fieldCount > 0) {
-				void* fieldIter = nullptr;
-				while (MonoClassField* field = mono_class_get_fields(monoClass, &fieldIter)) {
-					const char* fieldName = mono_field_get_name(field);
-					uint32_t flags = mono_field_get_flags(field);
-					bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
-					
-					MonoType* type = mono_field_get_type(field);
-					Scripting::ScriptFieldType fieldType = Scripting::MonoTypeToScriptFieldType(type);
-					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : "private", ScriptFieldTypeToString(fieldType), fieldName);
+			if (isComponent) {
+				// Fields/Variables
+				int fieldCount = mono_class_num_fields(monoClass);
+				if (fieldCount > 0) {
+					void* fieldIter = nullptr;
+					while (MonoClassField* field = mono_class_get_fields(monoClass, &fieldIter)) {
+						const char* fieldName = mono_field_get_name(field);
+						uint32_t flags = mono_field_get_flags(field);
+						bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
 
-					s_Data->ComponentClasses[fullName].m_Fields[fieldName] = { fieldType, fieldName, field };
+						MonoType* type = mono_field_get_type(field);
+						Scripting::ScriptFieldType fieldType = Scripting::MonoTypeToScriptFieldType(type);
+						PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : "private", ScriptFieldTypeToString(fieldType), fieldName);
+
+						s_Data->ComponentClasses[fullName].m_Fields[fieldName] = { fieldType, fieldName, field };
+					}
 				}
+			}
+			if (isSystem) {
+				// TODO
+				//MonoMethod* updateSystemMethod = s_Data->SystemClasses[fullName].GetMethod("Update", 0);
+				//Engine::ECS()->GetEcsWorld().AddSystem(ECS::SystemTopic::General,
+					//[fullName, updateSystemMethod]([[maybe_unused]] ECS::Scene& scene) {
+						//s_Data->SystemClasses.at(fullName).StaticInvoke(updateSystemMethod, nullptr);
+					//}
+				//);
 			}
 		}
 

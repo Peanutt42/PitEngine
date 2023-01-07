@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #pragma once
 
 #include "Core/CoreInclude.hpp"
@@ -67,6 +69,7 @@ namespace Pit::Scripting {
 		ScriptClass(const String& classNamespace, const String& className, bool isCore = false);
 
 		MonoMethod* GetMethod(const String& name, int paramCount);
+		void StaticInvoke(MonoMethod* method, void** params);
 
 		MonoObject* Instantiate();
 

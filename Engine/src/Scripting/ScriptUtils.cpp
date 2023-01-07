@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #include "pch.hpp"
 #include "ScriptUtils.hpp"
 #include "Core/Engine.hpp"
@@ -87,6 +89,11 @@ namespace Pit::Scripting {
 		MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, name.c_str(), paramCount);
 		if (!method) PIT_ENGINE_WARN(Scripting, "Trying to get a method '{}' of class '{}.{}' that doesn't exists!", name, m_ClassNamespace, m_ClassName);
 		return method;
+	}
+
+	void ScriptClass::StaticInvoke(MonoMethod* method, void** params) {
+		PIT_ENGINE_ASSERT(Scripting, method, "Trying to call a nullptr static method!");
+		mono_runtime_invoke(method, nullptr, params, nullptr);
 	}
 
 	MonoObject* ScriptClass::Instantiate() {

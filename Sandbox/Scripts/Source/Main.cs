@@ -13,7 +13,7 @@ namespace Sandbox {
     }
 
     public class TestSystem : PitEngine.ECS.System {
-        public void Update() {
+        public static void Update() {
             Debug.Log("System.Update()");
         }
     }

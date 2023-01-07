@@ -4,17 +4,20 @@
 #include "EngineSettings.hpp"
 
 namespace Pit {
-	DEFINE_SIMPLE_EVENT(InitEvent);
-	DEFINE_SIMPLE_EVENT(NetworkingUpdateEvent);
-	DEFINE_SIMPLE_EVENT(PhysicUpdateEvent);
-	DEFINE_SIMPLE_EVENT(PreUpdateEvent);
-	DEFINE_SIMPLE_EVENT(UpdateEvent);
-	DEFINE_SIMPLE_EVENT(PostUpdateEvent);
-	DEFINE_SIMPLE_EVENT(RenderEvent);
 	DEFINE_SIMPLE_EVENT(UIRenderEvent);
-	DEFINE_SIMPLE_EVENT(OnWindowResizeEvent);
 	DEFINE_SIMPLE_EVENT(SaveConfigEvent);
-	DEFINE_SIMPLE_EVENT(ShutdownEvent);
+
+	namespace ECS {
+		class Scene;
+	}
+	class AudioSubmodule;
+	class AssetManagmentSubmodule;
+	class ECSSubmodule;
+	class NetworkingSubmodule;
+	class PhysicsSubmodule;
+	class RenderingSubmodule;
+	class AntiCheatSubmodule;
+	class ScriptingSubmodule;
 	
 	/// <summary>
 	/// Main class of the GameEngine.
@@ -38,24 +41,27 @@ namespace Pit {
 		static class ECSSubmodule* ECS();
 		static class ScriptingSubmodule* Scripting();
 
-		static InitEvent InitEvent;
-		static NetworkingUpdateEvent NetworkingUpdateEvent;
-		static PhysicUpdateEvent PhysicUpdateEvent;
-		static PreUpdateEvent PreUpdateEvent;
-		static UpdateEvent UpdateEvent;
-		static PostUpdateEvent PostUpdateEvent;
-		static RenderEvent RenderEvent;
 		static UIRenderEvent UIRenderEvent;
-		static OnWindowResizeEvent OnWindowResizeEvent;
 		static SaveConfigEvent SaveConfigEvent;
-		static ShutdownEvent ShutdownEvent;
 
 		inline static Version Version = Version(0, 0, 1);
+
+		static ECS::Scene* GetScene() { return s_Scene; }
 
 	private:
 		static EngineSettings* s_Settings;
 
-		static class SubmoduleManager* s_SubmoduleManager;
+		inline static AudioSubmodule* s_AudioSubmodule = nullptr;
+		inline static AntiCheatSubmodule* s_AntiCheatSubmodule = nullptr;
+		inline static AssetManagmentSubmodule* s_AssetManagmentSubmodule = nullptr;
+		inline static ECSSubmodule* s_ECSSubmodule = nullptr;
+		inline static NetworkingSubmodule* s_NetworkingSubmodule = nullptr;
+		inline static PhysicsSubmodule* s_PhysicsSubmodule = nullptr;
+		inline static RenderingSubmodule* s_RenderingSubmodule = nullptr;
+		inline static ScriptingSubmodule* s_ScriptingSubmodule = nullptr;
+
+		// TEMP!!!
+		inline static ECS::Scene* s_Scene;
 		
 		static Array<std::function<void()>> s_MainThreadQueue;
 		static std::mutex s_MainThreadQueueMutex;

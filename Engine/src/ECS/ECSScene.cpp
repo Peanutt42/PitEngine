@@ -1,6 +1,5 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "ECSSubmodule.hpp"
 #include "ECSScene.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
@@ -17,11 +16,12 @@ namespace Pit::ECS {
 		return true;
 	}
 
-	void Scene::Update() {
+	void Scene::UpdateRuntime() {
 		PIT_PROFILE_FUNCTION();
+	}
 
-		if (Paused) return;
-
+	void Scene::UpdateEditor() {
+		PIT_PROFILE_FUNCTION();
 	}
 
 	void Scene::Clear() {

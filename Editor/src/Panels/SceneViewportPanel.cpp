@@ -2,8 +2,8 @@
 #include "SceneViewportPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "Core/Engine.hpp"
+#include "ECS/ECSComponents.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
-#include "ECS/ECSSubmodule.hpp"
 #include "Rendering/Texture.hpp"
 #include "Rendering/SpectatorCamera.hpp"
 #include "UI/UI.hpp"
@@ -66,7 +66,7 @@ namespace Pit::Editor {
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
 							  (float)ImGui::GetWindowWidth(), (float)ImGui::GetWindowHeight());
 
-			Rendering::Camera& cam = Engine::ECS()->GetEcsWorld().GetCamera();
+			Rendering::Camera& cam = Engine::GetScene()->GetCamera();
 			float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
 			if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
 			glm::mat4 projection = glm::perspective(glm::radians(cam.Fov), aspect, cam.NearPlane, cam.FarPlane);
@@ -106,7 +106,7 @@ namespace Pit::Editor {
 			if (Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_DOWN)) moveDir.y--;
 			glm::vec2 lookDir = Input::GetAxisBinding(EDITOR_KEYBINDING_CAM_LOOK);
 			lookDir.y = -lookDir.y;
-			SpectatorCamera::Update(&Engine::ECS()->GetEcsWorld().GetCamera(),
+			SpectatorCamera::Update(&Engine::GetScene()->GetCamera(),
 									moveDir,
 									lookDir,
 									Input::IsBindingDown(EDITOR_KEYBINDING_CAM_MOVE_FASTER),
@@ -213,7 +213,7 @@ namespace Pit::Editor {
 				Engine::Rendering()->Renderer->GetScreenFramebuffer()->Bind();
 				int pixelData = Engine::Rendering()->Renderer->GetScreenFramebuffer()->ReadPixel(1, mouseX, mouseY);
 				Engine::Rendering()->Renderer->GetScreenFramebuffer()->Unbind();
-				HierachyPanel::s_SelectedEntity = pixelData == -1 ? ECS::EntityHandle((ECS::Scene*)nullptr, (entt::entity)- 1) : ECS::EntityHandle(&Engine::ECS()->GetEcsWorld(), (entt::entity)pixelData);
+				HierachyPanel::s_SelectedEntity = pixelData == -1 ? ECS::EntityHandle((ECS::Scene*)nullptr, (entt::entity)- 1) : ECS::EntityHandle(Engine::GetScene(), (entt::entity)pixelData);
 			}
 		}
 

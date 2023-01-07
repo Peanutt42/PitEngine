@@ -16,7 +16,8 @@ namespace Pit::ECS {
 		Scene(const String& name);
 
 		bool Init();
-		void Update();
+		void UpdateRuntime();
+		void UpdateEditor();
 		void Clear();
 
 #pragma region Entity
@@ -122,7 +123,6 @@ namespace Pit::ECS {
 		void SetCamera(Rendering::Camera& newCamera) { m_Camera = newCamera; }
 		
 		entt::registry& GetRegistry() { return m_Registry; }
-		bool Paused = false;
 
 	private:
 		String m_Name;

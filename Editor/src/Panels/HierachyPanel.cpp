@@ -3,7 +3,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "HierachyPanel.hpp"
-#include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSComponents.hpp"
 #include "ECS/ECSEntityHandle.hpp"
 #include <imgui/imgui.h>
@@ -21,18 +20,18 @@ void HierachyPanel::OnDestroy() {
 }
 
 void HierachyPanel::OnGui() {
-	Engine::ECS()->GetEcsWorld().Each([this](entt::entity e) {
-		if (Engine::ECS()->GetEcsWorld().GetRegistry().valid(e))
+	Engine::GetScene()->Each([this](entt::entity e) {
+		if (Engine::GetScene()->GetRegistry().valid(e))
 			_DrawEntityNode(e);
 	});
 
 	if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-		s_SelectedEntity = ECS::EntityHandle(&Engine::ECS()->GetEcsWorld(), entt::null);
+		s_SelectedEntity = ECS::EntityHandle(Engine::GetScene(), entt::null);
 
 	// Right-click on blank space
 	if (ImGui::BeginPopupContextWindow("EntityCreateMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_NoOpenOverExistingPopup)) {
 		if (ImGui::MenuItem("Create Entity")) {
-			ECS::EntityHandle entity = Engine::ECS()->GetEcsWorld().CreateEntity();
+			ECS::EntityHandle entity = Engine::GetScene()->CreateEntity();
 			s_SelectedEntity = entity;
 		}
 
@@ -41,7 +40,7 @@ void HierachyPanel::OnGui() {
 }
 
 void HierachyPanel::_DrawEntityNode(entt::entity entity) {
-	auto& ecsworld = Engine::ECS()->GetEcsWorld();
+	auto& ecsworld = *Engine::GetScene();
 	auto& name = ecsworld.GetComponent<ECS::NameComponent>(entity).Name;
 
 	ImGuiTreeNodeFlags flags = ((s_SelectedEntity.GetID() == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
