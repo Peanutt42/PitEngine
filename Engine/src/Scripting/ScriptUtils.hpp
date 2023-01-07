@@ -10,6 +10,10 @@ extern "C" {
 	typedef struct _MonoClassField MonoClassField;
 }
 
+namespace Pit {
+	class ScriptingSubmodule;
+}
+
 namespace Pit::Scripting {
 	enum class ScriptFieldType {
 		None = 0,
@@ -68,12 +72,14 @@ namespace Pit::Scripting {
 
 		MonoClass* GetNative();
 
+		const std::map<std::string, ScriptField>& GetFields() const { return m_Fields; }
+
 	private:
 		String m_ClassNamespace, m_ClassName;
 		std::map<std::string, ScriptField> m_Fields;
 		MonoClass* m_MonoClass = nullptr;
 
-		friend class ScriptingSubmodule;
+		friend Pit::ScriptingSubmodule;
 	};
 
 	class ScriptInstance {

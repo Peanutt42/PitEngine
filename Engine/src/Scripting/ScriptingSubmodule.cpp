@@ -18,8 +18,6 @@
 #include <filewatch/FileWatch.hpp>
 
 namespace Pit {
-	using namespace Scripting;
-
 	namespace Utils {
 		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false) {
 			uint32_t fileSize = 0;
@@ -74,8 +72,8 @@ namespace Pit {
 
 		bool EnableDebugging = false;
 
-		std::unordered_map<String, ScriptClass> ComponentClasses;
-		std::unordered_map<String, ScriptClass> SystemClasses;
+		std::unordered_map<String, Scripting::ScriptClass> ComponentClasses;
+		std::unordered_map<String, Scripting::ScriptClass> SystemClasses;
 	};
 	static ScriptEngineData* s_Data;
 
@@ -115,13 +113,13 @@ namespace Pit {
 
 
 		// ### TESTING ###
-		ScriptClass systemClass("Sandbox", "TestSystem");
+		Scripting::ScriptClass systemClass("Sandbox", "TestSystem");
 		MonoMethod* updateSystemMethod = systemClass.GetMethod("Update", 0);
-		ScriptInstance systemInstance(systemClass.GetNative());
+		Scripting::ScriptInstance systemInstance(systemClass.GetNative());
 		systemInstance.Invoke(updateSystemMethod, nullptr);
 
-		ScriptClass mainClass = ScriptClass("Sandbox", "Main");
-		ScriptInstance mainInstance(mainClass.GetNative());
+		Scripting::ScriptClass mainClass("Sandbox", "Main");
+		Scripting::ScriptInstance mainInstance(mainClass.GetNative());
 		MonoMethod* printCustomMsgFunc = mainClass.GetMethod("PrintCustomMessage", 1);
 		MonoString* string = mono_string_new(s_Data->AppDomain, "Hi, this was invoked by C++ and printed in C#!");
 		void* params[] = { string };
@@ -263,8 +261,7 @@ namespace Pit {
 			PIT_ENGINE_INFO(Scripting, "{}", fullName);
 
 			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, name);
-
-
+			
 			// Methods
 			int methodCount = mono_class_num_methods(monoClass);
 			if (methodCount > 0) {
@@ -278,10 +275,10 @@ namespace Pit {
 			bool isSystem = mono_class_is_subclass_of(monoClass, systemClass, false) &&
 							mono_class_get_method_from_name(monoClass, "Update", 0) != nullptr;
 			if (isSystem)
-				s_Data->SystemClasses[fullName] = ScriptClass(nameSpace, name);
+				s_Data->SystemClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
 			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, systemClass, false); // 1 constructor, finalizer doesn't count
 			if (isComponent)
-				s_Data->ComponentClasses[fullName] = ScriptClass(nameSpace, name);
+				s_Data->ComponentClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
 
 			if (!isComponent) continue;
 			
@@ -293,20 +290,19 @@ namespace Pit {
 					const char* fieldName = mono_field_get_name(field);
 					uint32_t flags = mono_field_get_flags(field);
 					bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
-					bool isPrivate = flags & FIELD_ATTRIBUTE_PRIVATE;
 					
 					MonoType* type = mono_field_get_type(field);
-					ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
-					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : (isPrivate ? "private" : ""), ScriptFieldTypeToString(fieldType), fieldName);
+					Scripting::ScriptFieldType fieldType = Scripting::MonoTypeToScriptFieldType(type);
+					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : "private", ScriptFieldTypeToString(fieldType), fieldName);
 
-					// TODO: scriptClass.m_Fields[fieldName] = { fieldType, fieldName, field };
+					s_Data->ComponentClasses[fullName].m_Fields[fieldName] = { fieldType, fieldName, field };
 				}
 			}
 		}
 
-		ScriptClass testMainClass("Sandbox", "Main");
+		Scripting::ScriptClass testMainClass("Sandbox", "Main");
 		MonoMethod* testMainPrintFunc = testMainClass.GetMethod("PrintCustomMessage", 1);
-		ScriptInstance testMainInstance(testMainClass.GetNative());
+		Scripting::ScriptInstance testMainInstance(testMainClass.GetNative());
 		MonoString* string = mono_string_new(s_Data->AppDomain, "AfterReload Msg!");
 		void* params[] = { string };
 		testMainInstance.Invoke(testMainPrintFunc, params);
@@ -316,6 +312,7 @@ namespace Pit {
 	MonoImage* ScriptingSubmodule::GetAppAssemblyImage() { return s_Data->AppAssemblyImage; }
 	
 	const bool ScriptingSubmodule::ComponentClassExists(const String& className) const { return s_Data->ComponentClasses.find(className) != s_Data->ComponentClasses.end(); }
+	const Scripting::ScriptClass& ScriptingSubmodule::GetComponentClass(const String& className) const { return s_Data->ComponentClasses.at(className); }
 
 	MonoObject* ScriptingSubmodule::InstantiateClass(MonoClass* monoClass) {
 		MonoObject* obj = mono_object_new(s_Data->AppDomain, monoClass);

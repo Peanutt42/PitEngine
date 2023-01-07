@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "Scripting/ScriptingSubmodule.hpp"
+#include "Scripting/ScriptUtils.hpp"
 #include "PropertiesPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "UI/UIFonts.hpp"
@@ -114,6 +115,30 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 
 		if (!componentClassExists)
 			ImGui::PopStyleColor();
+
+		// Fields
+		if (componentClassExists) {
+			const Scripting::ScriptClass& scriptClass = Engine::Scripting()->GetComponentClass(component.ClassName);
+			for (const auto [name, field] : scriptClass.GetFields()) {
+				switch (field.Type) {
+				default:
+				case Scripting::ScriptFieldType::None: break;
+				case Scripting::ScriptFieldType::Float: 
+				{
+					static float test;
+					ImGui::DragFloat(name.c_str(), &test);
+					break;
+				}
+				case Scripting::ScriptFieldType::Int:
+				{
+					static int test;
+					ImGui::DragInt(name.c_str(), &test);
+					break;
+				}
+				}
+			}
+
+		}
 	});
 
 	ImGui::Spacing();

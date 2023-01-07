@@ -8,7 +8,8 @@ namespace Sandbox {
     }
     
     public struct Component {
-
+        public int Integer;
+        public float AFloat;
     }
 
     public class TestSystem : PitEngine.ECS.System {
