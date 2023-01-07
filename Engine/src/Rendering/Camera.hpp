@@ -1,5 +1,4 @@
 #pragma once
-#include <glad/glad.h>
 
 #include "Core/CoreInclude.hpp"
 #include <glm/glm.hpp>
@@ -21,7 +20,6 @@ namespace Pit::Rendering {
 
         glm::mat4 GetViewMatrix();
 
-    private:
-        void _UpdateCameraVectors();
+        glm::vec3 GetForwardDirection();
     };
 }

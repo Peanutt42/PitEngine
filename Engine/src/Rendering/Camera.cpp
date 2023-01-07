@@ -7,8 +7,6 @@ namespace Pit::Rendering {
         : Rotation(-90, 0, 0), Fov(90) {
 
         Position = position;
-
-        _UpdateCameraVectors();
     }
 
     glm::mat4 Camera::GetViewMatrix() {
@@ -20,13 +18,14 @@ namespace Pit::Rendering {
         return glm::lookAt(Position, Position + front, glm::vec3(0, 1, 0));
     }
 
-    void Camera::_UpdateCameraVectors() {
-        /*glm::vec3 front;
-        front.x = cos(glm::radians(Rotation.x)) * cos(glm::radians(Rotation.y));
-        front.y = sin(glm::radians(Rotation.y));
-        front.z = sin(glm::radians(Rotation.x)) * cos(glm::radians(Rotation.y));
-        Front = glm::normalize(front);
-        Right = glm::normalize(glm::cross(Front, WorldUp));
-        Up = glm::normalize(glm::cross(Right, Front));*/
+	// Right = glm::normalize(glm::cross(Front, WorldUp));
+	// Up = glm::normalize(glm::cross(Right, Front));
+    glm::vec3 Camera::GetForwardDirection() {
+        glm::vec3 front{
+			cos(glm::radians(Rotation.x))* cos(glm::radians(Rotation.y)),
+			sin(glm::radians(Rotation.y)),
+			sin(glm::radians(Rotation.x))* cos(glm::radians(Rotation.y))
+        };
+        return glm::normalize(front);
     }
 }
