@@ -4,7 +4,7 @@
 #include "ECSScene.hpp"
 
 namespace Pit::ECS {
-#define ECS_NULL_CHECKS (DEBUG || RELEASE)
+#define ECS_NULL_CHECKS (DEBUG)
 
 	/// <summary>
 	/// Handle for the native entt::entity id that also

@@ -159,9 +159,6 @@
     <ClInclude Include="src\ECS\ECSSubmodule.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSSystem.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input\Input.hpp">
       <Filter>Input</Filter>
     </ClInclude>
