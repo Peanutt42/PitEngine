@@ -1,5 +1,7 @@
 #pragma once
 
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/ContentBrowserPanel.h
+
 #include "EditorWindowPanel.hpp"
 #include <filesystem>
 

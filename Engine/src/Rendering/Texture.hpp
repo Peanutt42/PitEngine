@@ -1,6 +1,6 @@
 #pragma once
 
-// Help from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLTexture.h
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLTexture.h
 
 #include "Core/CoreInclude.hpp"
 #include <glad/glad.h>

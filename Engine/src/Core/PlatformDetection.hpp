@@ -1,6 +1,6 @@
 #pragma once
 
-// Inspired by TheCherno/Hazel: PlatformDetection.h https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/PlatformDetection.h
+// Information from TheCherno/Hazel: PlatformDetection.h https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/PlatformDetection.h
 
 #if defined(__ANDROID__)
 	#error "Android is not supported!"

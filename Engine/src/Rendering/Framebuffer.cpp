@@ -1,3 +1,5 @@
+// Copied (and maybe modified) from TheCherno https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLFramebuffer.cpp
+
 #include "pch.hpp"
 #include "Framebuffer.hpp"
 

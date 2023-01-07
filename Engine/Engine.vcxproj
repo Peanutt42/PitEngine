@@ -179,10 +179,8 @@
     <ClCompile Include="src\Audio\SoundSource.cpp" />
     <ClCompile Include="src\BuildSystem\BuildSystem.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
-    <ClCompile Include="src\Core\Random.cpp" />
     <ClCompile Include="src\Core\SubmoduleManager.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
-    <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\Core\Version.cpp" />
     <ClCompile Include="src\Debug\ConsoleLogger.cpp" />
     <ClCompile Include="src\Debug\Logging.cpp" />

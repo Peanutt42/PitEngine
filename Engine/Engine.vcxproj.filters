@@ -280,16 +280,10 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Random.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\SubmoduleManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Time.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\UUID.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Version.cpp">

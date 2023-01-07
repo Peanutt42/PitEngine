@@ -24,6 +24,7 @@ namespace Pit {
 		MessageBoxW(NULL, msg, title, MB_ICONERROR | MB_OK);
 	}
 
+	// copied from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/Windows/WindowsPlatformUtils.cpp
 	const std::string FileDialogs::OpenFile(const char* filter) {
 		OPENFILENAMEA ofn;
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -47,6 +48,7 @@ namespace Pit {
 		return std::string();
 	}
 
+	// copied from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/Windows/WindowsPlatformUtils.cpp
 	const std::string FileDialogs::SaveFile(const char* filter) {
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };

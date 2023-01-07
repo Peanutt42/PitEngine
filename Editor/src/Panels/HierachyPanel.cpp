@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/SceneHierarchyPanel.cpp, see SceneHierachyPanel
+
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "HierachyPanel.hpp"

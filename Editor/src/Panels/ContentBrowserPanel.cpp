@@ -1,3 +1,5 @@
+// Copied (and modified) from https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/ContentBrowserPanel.cpp
+
 #include "pch.hpp"
 #include "UI/UI.hpp"
 #include "ContentBrowserPanel.hpp"

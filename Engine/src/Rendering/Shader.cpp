@@ -22,6 +22,7 @@ namespace Pit::Rendering {
             else PIT_ENGINE_FATAL(Rendering, "Could not open shaderFile {}", filepath.string());
         }
         
+        // Vertex and Fragment shader code in one file implementation copied from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLShader.cpp
         String vertexCode, fragmentCode;
         
         const char* typeToken = "#type";

@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
+
 #include "pch.hpp"
 #include "Texture.hpp"
 #include <stb_image.h>

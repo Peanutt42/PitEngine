@@ -1,3 +1,5 @@
+// Help from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/Timer.h
+
 #pragma once
 
 #include <iostream>
@@ -26,10 +28,6 @@ namespace Pit {
 		static float s_DeltaTime;
 		static int s_Frame;
 	};
-
-
-#define QUICK_SCOPE_PROFILE(name)	\
-	ScopedTimer __scopeTimer(name);
 
 	/// <summary>
 	/// Simple Timer class that capsures time between construction and Elapsed()

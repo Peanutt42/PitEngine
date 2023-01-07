@@ -1,3 +1,5 @@
+// Help from TheCherno (Hazel) https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/SceneHierarchyPanel.cpp, see SceneHierachyPanel->Property Window
+
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "Scripting/ScriptingSubmodule.hpp"
