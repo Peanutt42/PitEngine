@@ -21,29 +21,9 @@ namespace Pit {
 	using namespace Scripting;
 
 	namespace Utils {
-		// TODO: Maybe create a custom File class with such helper functions
-		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize) {
-			std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
-
-			if (!stream) return nullptr;
-
-			std::streampos end = stream.tellg();
-			stream.seekg(0, std::ios::beg);
-			uint32_t size = Cast<uint32_t>(end - stream.tellg());
-
-			if (size == 0) return nullptr;
-
-			char* buffer = new char[size];
-			stream.read((char*)buffer, size);
-			stream.close();
-
-			*outSize = size;
-			return buffer;
-		}
-
 		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false) {
 			uint32_t fileSize = 0;
-			char* fileData = ReadBytes(assemblyPath, &fileSize);
+			char* fileData = FileSystem::ReadFileBytes(assemblyPath, &fileSize);
 
 			// NOTE: We can't use this image for anything other than loading the assembly because this image doesn't have a reference to the assembly
 			MonoImageOpenStatus status;
@@ -61,7 +41,7 @@ namespace Pit {
 
 				if (std::filesystem::exists(pdbPath)) {
 					uint32_t pdbFileSize = 0;
-					char* pdbFileData = ReadBytes(pdbPathStr, &pdbFileSize);
+					char* pdbFileData = FileSystem::ReadFileBytes(pdbPathStr, &pdbFileSize);
 					mono_debug_open_image_from_memory(image, (const mono_byte*)pdbFileData, pdbFileSize);
 					PIT_ENGINE_INFO(Scripting, "Loaded PDB {}", pdbPathStr);
 				}
@@ -240,7 +220,7 @@ namespace Pit {
 		PIT_ENGINE_INFO(Scripting, "Successfully loaded AppAssembly '{}'", binaryFilepath.string());
 		return true;
 	}
-
+	
 	void ScriptingSubmodule::ReloadAssembly() {
 		PIT_PROFILE_FUNCTION();
 
@@ -302,6 +282,8 @@ namespace Pit {
 			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, systemClass, false); // 1 constructor, finalizer doesn't count
 			if (isComponent)
 				s_Data->ComponentClasses[fullName] = ScriptClass(nameSpace, name);
+
+			if (!isComponent) continue;
 			
 			// Fields/Variables
 			int fieldCount = mono_class_num_fields(monoClass);
