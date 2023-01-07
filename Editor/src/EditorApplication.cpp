@@ -26,38 +26,6 @@ namespace Pit::Editor {
 		s_CurrentProject = projectInfo;
 	}
 
-
-	// TODO: Temp
-	void EditorApplication::OpenSceneFromFile() {
-		String filepath = FileDialogs::OpenFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
-		if (std::filesystem::exists(filepath)) {
-			s_CurrentSceneFilepath = filepath;
-			Engine::ECS()->GetEcsWorld().Clear();
-			ECS::SceneSerializer::Deserialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
-		}
-	}
-	void EditorApplication::SaveSceneToFile() {
-		String filepath = FileDialogs::SaveFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
-		if (std::filesystem::exists(filepath)) {
-			s_CurrentSceneFilepath = filepath;
-			ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
-		}
-	}
-	void EditorApplication::SaveScene() {
-		if (std::filesystem::exists(s_CurrentSceneFilepath)) {
-			// Save scene
-			ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
-		}
-		else {
-			String filepath = FileDialogs::SaveFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
-			if (std::filesystem::exists(filepath)) {
-				s_CurrentSceneFilepath = filepath;
-				ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
-			}
-		}
-	}
-
-
 	void EditorApplication::Init() {
 		PIT_ENGINE_ASSERT(Editor, s_CurrentProject.Name != "NULL", "Editor has no project selected!\n - add -proj MyProject to your console args");
 		PIT_ENGINE_ASSERT(Editor, s_CurrentProject.EngineVersion == Engine::Version, "Selected Project has a diffrent version ({0}) than this editors version {1}", s_CurrentProject.EngineVersion, Engine::Version);
@@ -158,4 +126,32 @@ namespace Pit::Editor {
 			Engine::Scripting()->ReloadAssembly();
 	}
 
+	void EditorApplication::OpenSceneFromFile() {
+		String filepath = FileDialogs::OpenFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
+		if (std::filesystem::exists(filepath)) {
+			s_CurrentSceneFilepath = filepath;
+			Engine::ECS()->GetEcsWorld().Clear();
+			ECS::SceneSerializer::Deserialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
+		}
+	}
+	void EditorApplication::SaveSceneToFile() {
+		String filepath = FileDialogs::SaveFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
+		if (std::filesystem::exists(filepath)) {
+			s_CurrentSceneFilepath = filepath;
+			ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
+		}
+	}
+	void EditorApplication::SaveScene() {
+		if (std::filesystem::exists(s_CurrentSceneFilepath)) {
+			// Save scene
+			ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
+		}
+		else {
+			String filepath = FileDialogs::SaveFile("PitEngine Scene (*.pitscene)\0*.pitscene\0");
+			if (std::filesystem::exists(filepath)) {
+				s_CurrentSceneFilepath = filepath;
+				ECS::SceneSerializer::Serialize(s_CurrentSceneFilepath, Engine::ECS()->GetEcsWorld());
+			}
+		}
+	}
 }
