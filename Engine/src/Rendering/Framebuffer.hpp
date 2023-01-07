@@ -1,5 +1,7 @@
 #pragma once
 
+// Copied (and maybe modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Platform/OpenGL/OpenGLFramebuffer.h
+
 #include "Core/CoreInclude.hpp"
 
 namespace Pit::Rendering {

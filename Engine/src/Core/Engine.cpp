@@ -1,28 +1,24 @@
 #include "pch.hpp"
 #include "Engine.hpp"
-#include "SubmoduleManager.hpp"
+
+#include "Audio/AudioSubmodule.hpp"
 #include "Rendering/RenderingSubmodule.hpp"
+#include "Networking/NetworkingSubmodule.hpp"
+#include "Physics/PhysicsSubmodule.hpp"
+#include "AssetManagment/AssetManagmentSubmodule.hpp"
+#include "AntiCheat/AntiCheatSubmodule.hpp"
+#include "Scripting/ScriptingSubmodule.hpp"
+
+#include "ECS/ECSScene.hpp"
 #include "Threading/JobSystem.hpp"
 #include "Debug/vcrash.h"
 
 
 namespace Pit {
-
-	InitEvent						Engine::InitEvent;
-	NetworkingUpdateEvent			Engine::NetworkingUpdateEvent;
-	PhysicUpdateEvent				Engine::PhysicUpdateEvent;
-	PreUpdateEvent					Engine::PreUpdateEvent;
-	UpdateEvent						Engine::UpdateEvent;
-	PostUpdateEvent					Engine::PostUpdateEvent;
-	RenderEvent						Engine::RenderEvent;
 	UIRenderEvent					Engine::UIRenderEvent;
-	OnWindowResizeEvent				Engine::OnWindowResizeEvent;
 	SaveConfigEvent					Engine::SaveConfigEvent;
-	ShutdownEvent					Engine::ShutdownEvent;
 
 	EngineSettings*					Engine::s_Settings = nullptr;
-
-	SubmoduleManager*				Engine::s_SubmoduleManager = nullptr;
 
 	std::ofstream					Engine::s_InstanceLockFile;
 
@@ -96,10 +92,33 @@ namespace Pit {
 			if (!s_Settings->Headless)
 				Input::Init();
 
-			s_SubmoduleManager = new SubmoduleManager();
-			s_SubmoduleManager->Init();
+			s_Scene = new ECS::Scene("MainScene");
 
-			InitEvent.Invoke();
+			s_AntiCheatSubmodule = new Pit::AntiCheatSubmodule();
+			s_AntiCheatSubmodule->Init();
+
+
+			if (!Engine::GetSettings().Headless) {
+				s_AudioSubmodule = new Pit::AudioSubmodule();
+				s_AudioSubmodule->Init();
+			}
+
+			s_ScriptingSubmodule = new Pit::ScriptingSubmodule();
+			s_ScriptingSubmodule->Init();
+
+			if (!Engine::GetSettings().Headless) {
+				s_RenderingSubmodule = new Pit::RenderingSubmodule();
+				s_RenderingSubmodule->Init();
+			}
+
+			s_NetworkingSubmodule = new Pit::NetworkingSubmodule();
+			s_NetworkingSubmodule->Init();
+
+			s_PhysicsSubmodule = new Pit::PhysicsSubmodule();
+			s_PhysicsSubmodule->Init();
+
+			s_AssetManagmentSubmodule = new Pit::AssetManagmentSubmodule();
+			s_AssetManagmentSubmodule->Init();
 		}
 		CATCH_EXCEPTIONS();
 
@@ -125,9 +144,27 @@ namespace Pit {
 		try {
 			{
 				ScopedTimer t("EngineShutdownTime");
-				Engine::ShutdownEvent.Invoke();
+				s_Scene->Clear();
+				delete s_Scene;
+				s_AssetManagmentSubmodule->Shutdown();
+				delete s_AssetManagmentSubmodule;
 
-				s_SubmoduleManager->Shutdown();
+				if (!Engine::GetSettings().Headless) {
+					s_RenderingSubmodule->Shutdown();
+					delete s_RenderingSubmodule;
+				}
+				s_PhysicsSubmodule->Shutdown();
+				delete s_PhysicsSubmodule;
+				s_NetworkingSubmodule->Shutdown();
+				delete s_NetworkingSubmodule;
+				s_ScriptingSubmodule->Shutdown();
+				delete s_ScriptingSubmodule;
+				if (!Engine::GetSettings().Headless) {
+					s_AudioSubmodule->Shutdown();
+					delete s_AudioSubmodule;
+				}
+				s_AntiCheatSubmodule->Shutdown();
+				delete s_AntiCheatSubmodule;
 
 				JobSystem::Shutdown();
 
@@ -169,7 +206,19 @@ namespace Pit {
 
 			Input::Update();
 
-			s_SubmoduleManager->Update();
+			s_AntiCheatSubmodule->Update();
+
+			s_NetworkingSubmodule->Update();
+
+			s_PhysicsSubmodule->Update();
+
+			s_ScriptingSubmodule->Update();
+
+			if (!Engine::GetSettings().Headless) {
+				s_RenderingSubmodule->Update();
+
+				s_AudioSubmodule->Update();
+			}
 
 			// Limit the Fps
 			if (s_Settings->MaxFps > 0) {
@@ -191,7 +240,7 @@ namespace Pit {
 		if (s_Quit)
 			return true;
 		else if (!s_Settings->Headless)
-			return s_SubmoduleManager->RenderingSubmodule->Window->ShouldClose();
+			return s_RenderingSubmodule->Window->ShouldClose();
 		else
 			return false;
 	}
@@ -208,9 +257,9 @@ namespace Pit {
 	}
 
 
-	AudioSubmodule* Engine::Audio()						{ if (s_SubmoduleManager) return s_SubmoduleManager->AudioSubmodule; else return nullptr; }
-	AssetManagmentSubmodule* Engine::AssetManagment()	{ if (s_SubmoduleManager) return s_SubmoduleManager->AssetManagmentSubmodule;  else return nullptr; }
-	RenderingSubmodule* Engine::Rendering()				{ if (s_SubmoduleManager) return s_SubmoduleManager->RenderingSubmodule;  else return nullptr; }
-	ECSSubmodule* Engine::ECS()							{ if (s_SubmoduleManager) return s_SubmoduleManager->ECSSubmodule;  else return nullptr; }
-	ScriptingSubmodule* Engine::Scripting()				{ if (s_SubmoduleManager) return s_SubmoduleManager->ScriptingSubmodule;  else return nullptr; }
+	AudioSubmodule* Engine::Audio()						{ return s_AudioSubmodule; }
+	AssetManagmentSubmodule* Engine::AssetManagment()	{ return s_AssetManagmentSubmodule;  }
+	RenderingSubmodule* Engine::Rendering()				{ return s_RenderingSubmodule;  }
+	ECSSubmodule* Engine::ECS()							{ return s_ECSSubmodule;  }
+	ScriptingSubmodule* Engine::Scripting() { return s_ScriptingSubmodule; }
 }

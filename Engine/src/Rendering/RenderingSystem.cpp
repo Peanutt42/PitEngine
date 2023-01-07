@@ -3,7 +3,6 @@
 #include "RenderingSubmodule.hpp"
 #include "Core/Engine.hpp"
 #include "Camera.hpp"
-#include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
@@ -90,7 +89,7 @@ namespace Pit::Rendering {
 	}
 
 	void RenderingSystem::Render() {
-		Camera& cam = Engine::ECS()->GetEcsWorld().GetCamera();
+		Camera& cam = Engine::GetScene()->GetCamera();
 
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.Use();
@@ -112,7 +111,7 @@ namespace Pit::Rendering {
 
 		// render the cube
 		glBindVertexArray(cubeVAO);
-		auto entityview = Engine::ECS()->GetEcsWorld().View<ECS::TransformComponent>();
+		auto entityview = Engine::GetScene()->View<ECS::TransformComponent>();
 		for (auto e : entityview) {
 			ECS::TransformComponent& transform = entityview.get<ECS::TransformComponent>(e);
 			model = transform.GetTransform();

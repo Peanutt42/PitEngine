@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #pragma once
 
 #include "Core/CoreInclude.hpp"
@@ -8,6 +10,10 @@ extern "C" {
 	typedef struct _MonoMethod MonoMethod;
 	typedef struct _MonoType MonoType;
 	typedef struct _MonoClassField MonoClassField;
+}
+
+namespace Pit {
+	class ScriptingSubmodule;
 }
 
 namespace Pit::Scripting {
@@ -63,17 +69,20 @@ namespace Pit::Scripting {
 		ScriptClass(const String& classNamespace, const String& className, bool isCore = false);
 
 		MonoMethod* GetMethod(const String& name, int paramCount);
+		void StaticInvoke(MonoMethod* method, void** params);
 
 		MonoObject* Instantiate();
 
 		MonoClass* GetNative();
+
+		const std::map<std::string, ScriptField>& GetFields() const { return m_Fields; }
 
 	private:
 		String m_ClassNamespace, m_ClassName;
 		std::map<std::string, ScriptField> m_Fields;
 		MonoClass* m_MonoClass = nullptr;
 
-		friend class ScriptingSubmodule;
+		friend Pit::ScriptingSubmodule;
 	};
 
 	class ScriptInstance {

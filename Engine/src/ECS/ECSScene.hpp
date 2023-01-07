@@ -2,19 +2,11 @@
 
 #include "Core/CoreInclude.hpp"
 #include <entt.hpp>
-#include "ECSSystem.hpp"
 #include "Rendering/Camera.hpp"
 
 namespace Pit::ECS {
 	class EntityHandle;
 	class Scene;
-
-	struct SystemHandle {
-		SystemIndex SystemIndex;
-		SystemTopic Topic = SystemTopic::None;
-		int32 ExecuteOrder;
-		std::function<void(Scene&)> Update;
-	};
 
 	/// <summary>
 	/// ECSScene
@@ -24,7 +16,8 @@ namespace Pit::ECS {
 		Scene(const String& name);
 
 		bool Init();
-		void Update(const SystemTopic topic);
+		void UpdateRuntime();
+		void UpdateEditor();
 		void Clear();
 
 #pragma region Entity
@@ -108,7 +101,6 @@ namespace Pit::ECS {
 		}
 #pragma endregion
 
-#pragma region System
 		template<typename... T>
 		auto View() {
 			return m_Registry.view<T...>();
@@ -124,48 +116,6 @@ namespace Pit::ECS {
 			m_Registry.each(func);
 		}
 
-		template<typename T>
-		bool HasSystem() {
-			SystemIndex systemIndex = GetSystemIndex<T>();
-			for (int i = 0; i < m_Systems.size(); i++)
-				if (m_Systems[i].SystemIndex == systemIndex)
-					return true;
-			return false;
-		}
-
-		template<typename T>
-		void AddSystem() {
-#if DEBUG
-			m_SystemCount++;
-#endif
-			m_Systems.emplace_back(GetSystemIndex<T>(), T::GetTopic(), T::GetExecuteOrder(), &T::Update);
-			SortSystemsOnExecuteOrder();
-		}
-
-		template<typename T>
-		void RemoveSystem() {
-#if DEBUG
-			m_SystemCount--;
-#endif
-			SystemIndex systemIndex = GetSystemIndex<T>();
-			for (int i = 0; i < m_Systems.size(); i++)
-				if (m_Systems[i].SystemIndex == systemIndex) {
-					m_Systems.erase(m_Systems.begin() + i);
-					break;
-				}
-			SortSystemsOnExecuteOrder();
-		}
-
-		void SortSystemsOnExecuteOrder() {
-			std::sort(m_Systems.begin(), m_Systems.end(), [](const SystemHandle& s1, const SystemHandle& s2) {
-				if (s1.Topic != s2.Topic)
-					return s1.Topic > s2.Topic;
-				else
-					return s1.ExecuteOrder >= s2.ExecuteOrder;
-			});
-		}
-#pragma endregion
-
 		const String& GetName() const;
 		void SetName(const String& name);
 
@@ -173,20 +123,17 @@ namespace Pit::ECS {
 		void SetCamera(Rendering::Camera& newCamera) { m_Camera = newCamera; }
 		
 		entt::registry& GetRegistry() { return m_Registry; }
-		bool Paused = false;
 
 	private:
 		String m_Name;
 		entt::registry m_Registry;
-		Array<SystemHandle> m_Systems;
 
 		Rendering::Camera m_Camera;
 
-#if DEBUG
+		#if DEBUG
 		size m_ComponentMemSize = 0;
 		size m_ComponentCount = 0;
-		size m_SystemCount = 0;
-#endif
+		#endif
 
 		friend EntityHandle;
 	};

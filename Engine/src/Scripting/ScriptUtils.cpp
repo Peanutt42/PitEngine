@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #include "pch.hpp"
 #include "ScriptUtils.hpp"
 #include "Core/Engine.hpp"
@@ -8,17 +10,17 @@
 
 namespace Pit::Scripting {
 	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap = {
-		{ "System.Single", ScriptFieldType::Float },
-		{ "System.Double", ScriptFieldType::Double },
-		{ "System.Boolean", ScriptFieldType::Bool },
-		{ "System.Char", ScriptFieldType::Char },
-		{ "System.Int16", ScriptFieldType::Short },
-		{ "System.Int32", ScriptFieldType::Int },
-		{ "System.Int64", ScriptFieldType::Long },
-		{ "System.Byte", ScriptFieldType::Byte },
-		{ "System.UInt16", ScriptFieldType::UShort },
-		{ "System.UInt32", ScriptFieldType::UInt },
-		{ "System.UInt64", ScriptFieldType::ULong }
+		{ "System.Single",	ScriptFieldType::Float },
+		{ "System.Double",	ScriptFieldType::Double },
+		{ "System.Boolean",	ScriptFieldType::Bool },
+		{ "System.Char",	ScriptFieldType::Char },
+		{ "System.Int16",	ScriptFieldType::Short },
+		{ "System.Int32",	ScriptFieldType::Int },
+		{ "System.Int64",	ScriptFieldType::Long },
+		{ "System.Byte",	ScriptFieldType::Byte },
+		{ "System.UInt16",	ScriptFieldType::UShort },
+		{ "System.UInt32",	ScriptFieldType::UInt },
+		{ "System.UInt64",	ScriptFieldType::ULong }
 	};
 
 	ScriptFieldType MonoTypeToScriptFieldType(MonoType* monoType) {
@@ -35,22 +37,21 @@ namespace Pit::Scripting {
 
 	const char* ScriptFieldTypeToString(ScriptFieldType fieldType) {
 		switch (fieldType) {
-		case ScriptFieldType::None:    return "None";
-		case ScriptFieldType::Float:   return "Float";
-		case ScriptFieldType::Double:  return "Double";
-		case ScriptFieldType::Bool:    return "Bool";
-		case ScriptFieldType::Char:    return "Char";
-		case ScriptFieldType::Byte:    return "Byte";
-		case ScriptFieldType::Short:   return "Short";
-		case ScriptFieldType::Int:     return "Int";
-		case ScriptFieldType::Long:    return "Long";
-		case ScriptFieldType::UByte:   return "UByte";
-		case ScriptFieldType::UShort:  return "UShort";
-		case ScriptFieldType::UInt:    return "UInt";
-		case ScriptFieldType::ULong:   return "ULong";
+		default:
+		case ScriptFieldType::None:    return "unknown";
+		case ScriptFieldType::Float:   return "float";
+		case ScriptFieldType::Double:  return "double";
+		case ScriptFieldType::Bool:    return "bool";
+		case ScriptFieldType::Char:    return "char";
+		case ScriptFieldType::Byte:    return "byte";
+		case ScriptFieldType::Short:   return "short";
+		case ScriptFieldType::Int:     return "int";
+		case ScriptFieldType::Long:    return "long";
+		case ScriptFieldType::UByte:   return "ubyte";
+		case ScriptFieldType::UShort:  return "ushort";
+		case ScriptFieldType::UInt:    return "uint";
+		case ScriptFieldType::ULong:   return "ulong";
 		}
-		PIT_ENGINE_FATAL(Scripting, "Unknown ScriptFieldType");
-		return "None";
 	}
 
 	ScriptFieldType ScriptFieldTypeFromString(std::string_view fieldType) {
@@ -88,6 +89,11 @@ namespace Pit::Scripting {
 		MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, name.c_str(), paramCount);
 		if (!method) PIT_ENGINE_WARN(Scripting, "Trying to get a method '{}' of class '{}.{}' that doesn't exists!", name, m_ClassNamespace, m_ClassName);
 		return method;
+	}
+
+	void ScriptClass::StaticInvoke(MonoMethod* method, void** params) {
+		PIT_ENGINE_ASSERT(Scripting, method, "Trying to call a nullptr static method!");
+		mono_runtime_invoke(method, nullptr, params, nullptr);
 	}
 
 	MonoObject* ScriptClass::Instantiate() {

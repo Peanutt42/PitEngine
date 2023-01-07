@@ -8,11 +8,12 @@ namespace Sandbox {
     }
     
     public struct Component {
-
+        public int Integer;
+        public float AFloat;
     }
 
     public class TestSystem : PitEngine.ECS.System {
-        public void Update() {
+        public static void Update() {
             Debug.Log("System.Update()");
         }
     }

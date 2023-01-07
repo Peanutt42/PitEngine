@@ -26,16 +26,4 @@ namespace Pit::ECS {
     struct CSharpComponent {
         String ClassName;
     };
-
-
-
-	[[maybe_unused]] static void RegisterComponents(entt::registry* reg) {
-		entt::entity registerEntity = reg->create();
-	#define PIT_REGISTER_COMPONENT(component) reg->emplace<component>(registerEntity); reg->remove<component>(registerEntity)
-		PIT_REGISTER_COMPONENT(NameComponent);
-		PIT_REGISTER_COMPONENT(UUIDComponent);
-		PIT_REGISTER_COMPONENT(TransformComponent);
-		PIT_REGISTER_COMPONENT(CSharpComponent);
-		reg->destroy(registerEntity);
-	}
 }

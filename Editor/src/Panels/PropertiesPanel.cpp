@@ -1,11 +1,13 @@
+// Help from TheCherno (Hazel) https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/SceneHierarchyPanel.cpp, see SceneHierachyPanel->Property Window
+
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "Scripting/ScriptingSubmodule.hpp"
+#include "Scripting/ScriptUtils.hpp"
 #include "PropertiesPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "UI/UIFonts.hpp"
 #include "UI/UI.hpp"
-#include "ECS/ECSSubmodule.hpp"
 #include "ECS/ECSScene.hpp"
 #include "ECS/ECSComponents.hpp"
 #include <imgui/imgui.h>
@@ -30,8 +32,7 @@ void PropertiesPanel::OnDestroy() {
 }
 
 void PropertiesPanel::OnGui() {
-	auto& ecsworld = Engine::ECS()->GetEcsWorld();
-	if (ecsworld.GetRegistry().valid(HierachyPanel::s_SelectedEntity.GetID())) {
+	if (Engine::GetScene()->GetRegistry().valid(HierachyPanel::s_SelectedEntity.GetID())) {
 		_DrawComponents(HierachyPanel::s_SelectedEntity);
 	}
 }
@@ -114,6 +115,30 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 
 		if (!componentClassExists)
 			ImGui::PopStyleColor();
+
+		// Fields
+		if (componentClassExists) {
+			const Scripting::ScriptClass& scriptClass = Engine::Scripting()->GetComponentClass(component.ClassName);
+			for (const auto [name, field] : scriptClass.GetFields()) {
+				switch (field.Type) {
+				default:
+				case Scripting::ScriptFieldType::None: break;
+				case Scripting::ScriptFieldType::Float: 
+				{
+					static float test;
+					ImGui::DragFloat(name.c_str(), &test);
+					break;
+				}
+				case Scripting::ScriptFieldType::Int:
+				{
+					static int test;
+					ImGui::DragInt(name.c_str(), &test);
+					break;
+				}
+				}
+			}
+
+		}
 	});
 
 	ImGui::Spacing();

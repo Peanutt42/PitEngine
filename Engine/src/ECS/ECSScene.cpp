@@ -1,40 +1,11 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "ECSSubmodule.hpp"
 #include "ECSScene.hpp"
-#include "ECSSystem.hpp"
 #include "ECSComponents.hpp"
 #include "ECSEntityHandle.hpp"
 #include "ECSSceneSerializer.hpp"
 
 namespace Pit::ECS {
-
-	static void UpdateRendering() {
-		PIT_PROFILE_FUNCTION("Pit::ECS::World::RenderingSystems");
-
-		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Render);
-	}
-	static void UpdateNetworking() {
-		PIT_PROFILE_FUNCTION("Pit::ECS::World::NetworkingSystems");
-
-		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Networking);
-	}
-	static void UpdatePhysics() {
-		PIT_PROFILE_FUNCTION("Pit::ECS::World::PhysicsSystems");
-
-		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Physic);
-	}
-	static void UpdateMain() {
-		PIT_PROFILE_FUNCTION("Pit::ECS::World::MainSystems");
-
-		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::General);
-	}
-
-	static void UpdateGameplay() {
-		PIT_PROFILE_FUNCTION("Pit::ECS::World::GameplaySystems");
-
-		Pit::Engine::ECS()->GetEcsWorld().Update(SystemTopic::Gameplay);
-	}
 
 	Scene::Scene(const String& name) :
 		m_Name(name), m_Camera({0, 0, 0.5f}) {}
@@ -42,26 +13,15 @@ namespace Pit::ECS {
 	bool Scene::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		Engine::NetworkingUpdateEvent += &UpdateNetworking;
-		Engine::PhysicUpdateEvent += &UpdatePhysics;
-		Engine::UpdateEvent += &UpdateMain;
-		Engine::UpdateEvent += &UpdateGameplay;
-		Engine::RenderEvent += &UpdateRendering;
-
-		RegisterComponents(&m_Registry);
-
 		return true;
 	}
 
-	void Scene::Update(const SystemTopic topic) {
+	void Scene::UpdateRuntime() {
 		PIT_PROFILE_FUNCTION();
+	}
 
-		if (Paused) return;
-
-		for (auto& system : m_Systems) {
-			if (system.Topic == topic)
-				system.Update(*this);
-		}
+	void Scene::UpdateEditor() {
+		PIT_PROFILE_FUNCTION();
 	}
 
 	void Scene::Clear() {

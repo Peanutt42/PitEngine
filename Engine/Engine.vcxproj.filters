@@ -117,9 +117,6 @@
     <ClInclude Include="src\Core\Submodule.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\SubmoduleManager.hpp">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Time.hpp">
       <Filter>Core</Filter>
     </ClInclude>
@@ -156,12 +153,6 @@
     <ClInclude Include="src\ECS\ECSSceneSerializer.hpp">
       <Filter>ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\ECSSubmodule.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ECS\ECSSystem.hpp">
-      <Filter>ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input\Input.hpp">
       <Filter>Input</Filter>
     </ClInclude>
@@ -172,6 +163,9 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\CoreMath.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\GraphicsMath.hpp">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Networking\NetworkingSubmodule.hpp">
@@ -250,7 +244,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\Math\GraphicsMath.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -280,16 +273,7 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Random.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\SubmoduleManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Time.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\UUID.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Version.cpp">
@@ -304,13 +288,13 @@
     <ClCompile Include="src\Debug\vcrash.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\ECS\ECSComponents.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
     <ClCompile Include="src\ECS\ECSScene.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\ECSSceneSerializer.cpp">
-      <Filter>ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ECS\ECSSubmodule.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp">
@@ -318,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="src\Input\InputBinding.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\GraphicsMath.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Networking\NetworkingSubmodule.cpp">
       <Filter>Networking</Filter>
@@ -377,7 +364,5 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Math\GraphicsMath.cpp" />
-    <ClCompile Include="src\ECS\ECSComponents.cpp" />
   </ItemGroup>
 </Project>

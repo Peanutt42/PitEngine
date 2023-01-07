@@ -1,3 +1,5 @@
+// Copied (and modified) from TheCherno/Hazel https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.h and https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Scripting/ScriptEngine.cpp
+
 #include "pch.hpp"
 #include "ScriptingSubmodule.hpp"
 #include "Core/Engine.hpp"
@@ -18,32 +20,10 @@
 #include <filewatch/FileWatch.hpp>
 
 namespace Pit {
-	using namespace Scripting;
-
 	namespace Utils {
-		// TODO: Maybe create a custom File class with such helper functions
-		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize) {
-			std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
-
-			if (!stream) return nullptr;
-
-			std::streampos end = stream.tellg();
-			stream.seekg(0, std::ios::beg);
-			uint32_t size = Cast<uint32_t>(end - stream.tellg());
-
-			if (size == 0) return nullptr;
-
-			char* buffer = new char[size];
-			stream.read((char*)buffer, size);
-			stream.close();
-
-			*outSize = size;
-			return buffer;
-		}
-
 		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false) {
 			uint32_t fileSize = 0;
-			char* fileData = ReadBytes(assemblyPath, &fileSize);
+			char* fileData = FileSystem::ReadFileBytes(assemblyPath, &fileSize);
 
 			// NOTE: We can't use this image for anything other than loading the assembly because this image doesn't have a reference to the assembly
 			MonoImageOpenStatus status;
@@ -61,7 +41,7 @@ namespace Pit {
 
 				if (std::filesystem::exists(pdbPath)) {
 					uint32_t pdbFileSize = 0;
-					char* pdbFileData = ReadBytes(pdbPathStr, &pdbFileSize);
+					char* pdbFileData = FileSystem::ReadFileBytes(pdbPathStr, &pdbFileSize);
 					mono_debug_open_image_from_memory(image, (const mono_byte*)pdbFileData, pdbFileSize);
 					PIT_ENGINE_INFO(Scripting, "Loaded PDB {}", pdbPathStr);
 				}
@@ -94,8 +74,8 @@ namespace Pit {
 
 		bool EnableDebugging = false;
 
-		std::unordered_map<String, ScriptClass> ComponentClasses;
-		std::unordered_map<String, ScriptClass> SystemClasses;
+		std::unordered_map<String, Scripting::ScriptClass> ComponentClasses;
+		std::unordered_map<String, Scripting::ScriptClass> SystemClasses;
 	};
 	static ScriptEngineData* s_Data;
 
@@ -135,13 +115,13 @@ namespace Pit {
 
 
 		// ### TESTING ###
-		ScriptClass systemClass("Sandbox", "TestSystem");
+		Scripting::ScriptClass systemClass("Sandbox", "TestSystem");
+		
 		MonoMethod* updateSystemMethod = systemClass.GetMethod("Update", 0);
-		ScriptInstance systemInstance(systemClass.GetNative());
-		systemInstance.Invoke(updateSystemMethod, nullptr);
+		systemClass.StaticInvoke(updateSystemMethod, nullptr);
 
-		ScriptClass mainClass = ScriptClass("Sandbox", "Main");
-		ScriptInstance mainInstance(mainClass.GetNative());
+		Scripting::ScriptClass mainClass("Sandbox", "Main");
+		Scripting::ScriptInstance mainInstance(mainClass.GetNative());
 		MonoMethod* printCustomMsgFunc = mainClass.GetMethod("PrintCustomMessage", 1);
 		MonoString* string = mono_string_new(s_Data->AppDomain, "Hi, this was invoked by C++ and printed in C#!");
 		void* params[] = { string };
@@ -198,7 +178,7 @@ namespace Pit {
 
 	const bool ScriptingSubmodule::LoadCoreAssembly(const std::filesystem::path& binaryFilepath) {
 		PIT_PROFILE_FUNCTION();
-
+		
 		// Create App-domain
 		char appName[] = "PitEngineScriptRuntime";
 		s_Data->AppDomain = mono_domain_create_appdomain(appName, nullptr);
@@ -240,7 +220,7 @@ namespace Pit {
 		PIT_ENGINE_INFO(Scripting, "Successfully loaded AppAssembly '{}'", binaryFilepath.string());
 		return true;
 	}
-
+	
 	void ScriptingSubmodule::ReloadAssembly() {
 		PIT_PROFILE_FUNCTION();
 
@@ -268,7 +248,7 @@ namespace Pit {
 		int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
 		// Get Internal types from Engine-ScriptCore
-		MonoClass* systemClass = mono_class_from_name(s_Data->CoreAssemblyImage, "PitEngine.ECS", "System");
+		MonoClass* baseSystemClass = mono_class_from_name(s_Data->CoreAssemblyImage, "PitEngine.ECS", "System");
 
 		PIT_ENGINE_INFO(Scripting, "Reflection metadata:");
 		for (int32_t i = 1; i < numTypes; i++) {
@@ -283,8 +263,7 @@ namespace Pit {
 			PIT_ENGINE_INFO(Scripting, "{}", fullName);
 
 			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, name);
-
-
+			
 			// Methods
 			int methodCount = mono_class_num_methods(monoClass);
 			if (methodCount > 0) {
@@ -295,36 +274,46 @@ namespace Pit {
 				}
 			}
 			
-			bool isSystem = mono_class_is_subclass_of(monoClass, systemClass, false) &&
+			bool isSystem = mono_class_is_subclass_of(monoClass, baseSystemClass, false) &&
 							mono_class_get_method_from_name(monoClass, "Update", 0) != nullptr;
 			if (isSystem)
-				s_Data->SystemClasses[fullName] = ScriptClass(nameSpace, name);
-			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, systemClass, false); // 1 constructor, finalizer doesn't count
+				s_Data->SystemClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
+			bool isComponent = methodCount <= 1 && !mono_class_is_subclass_of(monoClass, baseSystemClass, false); // 1 constructor, finalizer doesn't count
 			if (isComponent)
-				s_Data->ComponentClasses[fullName] = ScriptClass(nameSpace, name);
-			
-			// Fields/Variables
-			int fieldCount = mono_class_num_fields(monoClass);
-			if (fieldCount > 0) {
-				void* fieldIter = nullptr;
-				while (MonoClassField* field = mono_class_get_fields(monoClass, &fieldIter)) {
-					const char* fieldName = mono_field_get_name(field);
-					uint32_t flags = mono_field_get_flags(field);
-					bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
-					bool isPrivate = flags & FIELD_ATTRIBUTE_PRIVATE;
-					
-					MonoType* type = mono_field_get_type(field);
-					ScriptFieldType fieldType = MonoTypeToScriptFieldType(type);
-					PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : (isPrivate ? "private" : ""), ScriptFieldTypeToString(fieldType), fieldName);
+				s_Data->ComponentClasses[fullName] = Scripting::ScriptClass(nameSpace, name);
 
-					// TODO: scriptClass.m_Fields[fieldName] = { fieldType, fieldName, field };
+			if (isComponent) {
+				// Fields/Variables
+				int fieldCount = mono_class_num_fields(monoClass);
+				if (fieldCount > 0) {
+					void* fieldIter = nullptr;
+					while (MonoClassField* field = mono_class_get_fields(monoClass, &fieldIter)) {
+						const char* fieldName = mono_field_get_name(field);
+						uint32_t flags = mono_field_get_flags(field);
+						bool isPublic = flags & FIELD_ATTRIBUTE_PUBLIC;
+
+						MonoType* type = mono_field_get_type(field);
+						Scripting::ScriptFieldType fieldType = Scripting::MonoTypeToScriptFieldType(type);
+						PIT_ENGINE_INFO(Scripting, "  {} {} {}", isPublic ? "public" : "private", ScriptFieldTypeToString(fieldType), fieldName);
+
+						s_Data->ComponentClasses[fullName].m_Fields[fieldName] = { fieldType, fieldName, field };
+					}
 				}
+			}
+			if (isSystem) {
+				// TODO
+				//MonoMethod* updateSystemMethod = s_Data->SystemClasses[fullName].GetMethod("Update", 0);
+				//Engine::ECS()->GetEcsWorld().AddSystem(ECS::SystemTopic::General,
+					//[fullName, updateSystemMethod]([[maybe_unused]] ECS::Scene& scene) {
+						//s_Data->SystemClasses.at(fullName).StaticInvoke(updateSystemMethod, nullptr);
+					//}
+				//);
 			}
 		}
 
-		ScriptClass testMainClass("Sandbox", "Main");
+		Scripting::ScriptClass testMainClass("Sandbox", "Main");
 		MonoMethod* testMainPrintFunc = testMainClass.GetMethod("PrintCustomMessage", 1);
-		ScriptInstance testMainInstance(testMainClass.GetNative());
+		Scripting::ScriptInstance testMainInstance(testMainClass.GetNative());
 		MonoString* string = mono_string_new(s_Data->AppDomain, "AfterReload Msg!");
 		void* params[] = { string };
 		testMainInstance.Invoke(testMainPrintFunc, params);
@@ -334,6 +323,7 @@ namespace Pit {
 	MonoImage* ScriptingSubmodule::GetAppAssemblyImage() { return s_Data->AppAssemblyImage; }
 	
 	const bool ScriptingSubmodule::ComponentClassExists(const String& className) const { return s_Data->ComponentClasses.find(className) != s_Data->ComponentClasses.end(); }
+	const Scripting::ScriptClass& ScriptingSubmodule::GetComponentClass(const String& className) const { return s_Data->ComponentClasses.at(className); }
 
 	MonoObject* ScriptingSubmodule::InstantiateClass(MonoClass* monoClass) {
 		MonoObject* obj = mono_object_new(s_Data->AppDomain, monoClass);

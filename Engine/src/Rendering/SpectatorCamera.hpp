@@ -27,9 +27,7 @@ namespace Pit {
 				if (moveSlower) speed /= 2;
 
 				glm::vec3 move{ 0,0,0 };
-				glm::vec3 front = glm::normalize(glm::vec3{ cos(glm::radians(cam->Rotation.x)) * cos(glm::radians(cam->Rotation.y)),
-															sin(glm::radians(cam->Rotation.y)),
-															sin(glm::radians(cam->Rotation.x)) * cos(glm::radians(cam->Rotation.y)) });
+				glm::vec3 front = cam->GetForwardDirection();
 				glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
 				glm::vec3 up = glm::normalize(glm::cross(right, front));
 				move += dir.z * front;

@@ -6,6 +6,12 @@
 #include "ConsoleLogger.hpp"
 #include "vcrash.h"
 
+#pragma warning (push)
+#pragma warning (disable: 4201)
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
+#pragma warning (pop)
+
 namespace Pit::Debug {
 	/// <summary>
 	/// Holder for Logging Stuff
@@ -47,6 +53,23 @@ namespace Pit::Debug {
 	};
 }
 
+#pragma region formating types
+// Copied from https://github.com/TheCherno/Hazel/blob/master/Hazel/src/Hazel/Core/Log.h line 30 to 46
+template<typename OStream, glm::length_t L, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, const glm::vec<L, T, Q>& vector) {
+	return os << glm::to_string(vector);
+}
+
+template<typename OStream, glm::length_t C, glm::length_t R, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, const glm::mat<C, R, T, Q>& matrix) {
+	return os << glm::to_string(matrix);
+}
+
+template<typename OStream, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, glm::qua<T, Q> quaternion) {
+	return os << glm::to_string(quaternion);
+}
+#pragma endregion
 
 using Log = Pit::Debug::Logging::Category;
 

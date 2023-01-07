@@ -3,7 +3,7 @@
 #include "PlatformDetection.hpp"
 
 namespace Pit {
-#if DEBUG || RELEASE
+#if DEBUG
 	#if defined(PIT_WINDOWS)
 		#define PIT_DEBUGBREAK() __debugbreak()
 	#elif defined(PIT_LINUX)
@@ -14,6 +14,6 @@ namespace Pit {
 	#endif
 	#define PIT_ENABLE_ASSERTS
 #else
-	#define PIT_DEBUGBREAK()
+	#define PIT_DEBUGBREAK() assert(false);
 #endif
 }

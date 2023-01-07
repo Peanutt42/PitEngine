@@ -2,6 +2,7 @@
 
 #include "Core/CoreInclude.hpp"
 #include "Core/Submodule.hpp"
+#include "ScriptUtils.hpp"
 
 extern "C" {
 	typedef struct _MonoObject MonoObject;
@@ -10,11 +11,6 @@ extern "C" {
 }
 
 namespace Pit {
-	namespace Scripting {
-		class ScriptClass;
-		class ScriptInstance;
-	}
-
 	class ScriptingSubmodule : public Submodule {
 	public:
 		virtual void Init() override;
@@ -26,6 +22,7 @@ namespace Pit {
 		void ReloadAssembly();
 
 		const bool ComponentClassExists(const String& className) const;
+		const Scripting::ScriptClass& GetComponentClass(const String& className) const;
 
 		MonoImage* GetCoreAssemblyImage();
 		MonoImage* GetAppAssemblyImage();

@@ -17,6 +17,5 @@ namespace Pit {
 	void NetworkingSubmodule::Update() {
 		PIT_PROFILE_FUNCTION();
 
-		Engine::NetworkingUpdateEvent.Invoke();
 	}
 }
