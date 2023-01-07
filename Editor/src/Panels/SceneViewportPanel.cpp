@@ -77,11 +77,8 @@ namespace Pit::Editor {
 
 			// Snapping
 			bool snap = Input::IsKeyDown(KeyCode::LeftControl);
-			float snapValue = 0.5f; // Snap to 0.5m for translation/scale
-			// Snap to 45 degrees for rotation
-			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
-				snapValue = 45.0f;
-
+			float snapValue = 0.5f;
+			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE) snapValue = 15.0f;
 			float snapValues[3] = { snapValue, snapValue, snapValue };
 
 			ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection), (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform), nullptr, snap ? snapValues : nullptr);
@@ -118,15 +115,14 @@ namespace Pit::Editor {
 			if (Input::IsKeyboardAndMouseInUse()) {
 				glm::vec2 windowPos;
 				Engine::Rendering()->Window->GetPosition(windowPos.x, windowPos.y);
+				glm::vec2 mousePos = Input::GetMousePos();
+				float windowWidth = (float)Engine::Rendering()->Window->GetWidth();
+				float windowHeight = (float)Engine::Rendering()->Window->GetHeight();
 
-				// Left Border
-				if (Input::GetMousePos().x + windowPos.x <= panelPos.x) Input::SetMousePos({ panelSize.x + panelPos.x - windowPos.x, Input::GetMousePos().y });
-				// Right Border
-				if (Input::GetMousePos().x + windowPos.x > panelPos.x + panelSize.x) Input::SetMousePos({ panelPos.x - windowPos.x + 1, Input::GetMousePos().y });
-				// Top Border
-				if (Input::GetMousePos().y + windowPos.y - panelPos.y <= panelPos.y) Input::SetMousePos({ Input::GetMousePos().x, panelPos.y + panelSize.y - windowPos.y - 1 });
-				// Bottom Border
-				if (Input::GetMousePos().y + windowPos.y - panelPos.y >= panelSize.y) Input::SetMousePos({ Input::GetMousePos().x, panelPos.y - windowPos.y + 50 });
+				if (mousePos.x < 0) Input::SetMousePos({ windowWidth, mousePos.y });
+				if (mousePos.x > windowWidth) Input::SetMousePos({ 0, mousePos.y });
+				if (mousePos.y < 0) Input::SetMousePos({ mousePos.x, windowHeight });
+				if (mousePos.y > windowHeight) Input::SetMousePos({ mousePos.x, 0 });
 			}
 		}
 
