@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "Platform/PlatformUtils.hpp"
 #include "Core/Engine.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Window.hpp"
 
 #ifdef PIT_WINDOWS
 #include <GLFW/glfw3.h>
@@ -29,8 +29,8 @@ namespace Pit {
 		OPENFILENAMEA ofn;
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		if (Engine::Rendering())
-			ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		if (Engine::GetWindow())
+			ofn.hwndOwner = glfwGetWin32Window(Engine::GetWindow()->GetWindowHandle());
 		else
 			ofn.hwndOwner = nullptr;
 		char szFile[260] = { 0 };
@@ -54,8 +54,8 @@ namespace Pit {
 		CHAR szFile[260] = { 0 };
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		if (Engine::Rendering())
-			ofn.hwndOwner = glfwGetWin32Window(Engine::Rendering()->Window->GetWindowHandle());
+		if (Engine::GetWindow())
+			ofn.hwndOwner = glfwGetWin32Window(Engine::GetWindow()->GetWindowHandle());
 		else
 			ofn.hwndOwner = nullptr;
 		ofn.lpstrFile = szFile;

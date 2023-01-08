@@ -106,7 +106,7 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 	});
 
 	DrawComponent<ECS::CSharpComponent>("CSharpComponent", entity, [](ECS::CSharpComponent& component) {
-		bool componentClassExists = Engine::Scripting()->ComponentClassExists(component.ClassName);
+		static bool componentClassExists = false;
 
 		if (!componentClassExists)
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.2f, 0.3f, 1.0f));
@@ -115,6 +115,8 @@ void PropertiesPanel::_DrawComponents(ECS::EntityHandle entity) {
 
 		if (!componentClassExists)
 			ImGui::PopStyleColor();
+
+		componentClassExists = Engine::Scripting()->ComponentClassExists(component.ClassName);
 
 		// Fields
 		if (componentClassExists) {

@@ -1,6 +1,5 @@
 #include "pch.hpp"
 #include "ProfilerPanel.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
 #include <imgui/imgui.h>
 
 using namespace Pit;

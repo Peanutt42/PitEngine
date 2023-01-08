@@ -1,10 +1,10 @@
 // Copied (and modified) from https://github.com/TheCherno/Hazel/blob/master/Hazelnut/src/Panels/ContentBrowserPanel.cpp
 
 #include "pch.hpp"
-#include "UI/UI.hpp"
+#include "EditorLayer.hpp"
 #include "ContentBrowserPanel.hpp"
+#include "UI/UI.hpp"
 #include <imgui/imgui.h>
-#include <EditorApplication.hpp>
 
 using namespace Pit::Editor;
 

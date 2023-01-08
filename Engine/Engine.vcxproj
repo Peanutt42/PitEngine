@@ -118,6 +118,7 @@
     <ClInclude Include="src\Core\EngineSettings.hpp" />
     <ClInclude Include="src\Core\Event.hpp" />
     <ClInclude Include="src\Core\FileSystem.hpp" />
+    <ClInclude Include="src\Core\Layer.hpp" />
     <ClInclude Include="src\Core\PlatformDetection.hpp" />
     <ClInclude Include="src\Core\Random.hpp" />
     <ClInclude Include="src\Core\SmartPointers.hpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="src\Core\Types.hpp" />
     <ClInclude Include="src\Core\UUID.hpp" />
     <ClInclude Include="src\Core\Version.hpp" />
+    <ClInclude Include="src\Core\EntryPoint.hpp" />
     <ClInclude Include="src\Debug\ConsoleLogger.hpp" />
     <ClInclude Include="src\Debug\Logging.hpp" />
     <ClInclude Include="src\Debug\Profiling.hpp" />
@@ -146,7 +148,6 @@
     <ClInclude Include="src\Rendering\Camera.hpp" />
     <ClInclude Include="src\Rendering\Framebuffer.hpp" />
     <ClInclude Include="src\Rendering\Renderer.hpp" />
-    <ClInclude Include="src\Rendering\RenderingSubmodule.hpp" />
     <ClInclude Include="src\Rendering\RenderingSystem.hpp" />
     <ClInclude Include="src\Rendering\Shader.hpp" />
     <ClInclude Include="src\Rendering\SpectatorCamera.hpp" />
@@ -161,7 +162,7 @@
     <ClInclude Include="src\Threading\JobSystem.hpp" />
     <ClInclude Include="src\UI\UI.hpp" />
     <ClInclude Include="src\UI\UIFonts.hpp" />
-    <ClInclude Include="src\UI\UIRenderer.hpp" />
+    <ClInclude Include="src\UI\ImGuiLayer.hpp" />
     <ClInclude Include="src\Utils\DateUtils.hpp" />
     <ClInclude Include="src\Utils\StringUtils.hpp" />
     <ClInclude Include="src\pch.hpp" />
@@ -194,7 +195,6 @@
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Rendering\Framebuffer.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
-    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp" />
     <ClCompile Include="src\Rendering\RenderingSystem.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
@@ -205,7 +205,7 @@
     <ClCompile Include="src\Scripting\ScriptingSubmodule.cpp" />
     <ClCompile Include="src\Serialization\KeyValueSerialization.cpp" />
     <ClCompile Include="src\Threading\JobSystem.cpp" />
-    <ClCompile Include="src\UI\UIRenderer.cpp" />
+    <ClCompile Include="src\UI\ImGuiLayer.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

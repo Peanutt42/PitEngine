@@ -1,14 +1,24 @@
 #include "pch.hpp"
+#include "Rendering/Window.hpp"
 #include "Core/Engine.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
 #include "Window.hpp"
 
 namespace Pit::Rendering {
+
+	static void GLFWErrorCallback(int error, const char* description) {
+		PIT_ENGINE_ERR(Rendering, "GLFW Error ({0}): {1}", error, description);
+	}
 
 	Window::Window(const String& title, int width, int height, bool fullscreen)
 		: m_Title(title), m_Width(width), m_Height(height) {
 
 		PIT_PROFILE_FUNCTION();
+
+		if (s_WindowCount == 0) {
+			glfwInit();
+			glfwSetErrorCallback(GLFWErrorCallback);
+		}
+		s_WindowCount++;
 
 #ifdef PIT_APPLE
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -50,7 +60,12 @@ namespace Pit::Rendering {
 	Window::~Window() {
 		PIT_PROFILE_FUNCTION();
 
+		s_WindowCount--;
+
 		glfwDestroyWindow(m_Window);
+
+		if (s_WindowCount == 0)
+			glfwTerminate();
 	}
 
 	void Window::Update() {

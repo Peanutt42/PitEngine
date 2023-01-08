@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
 #include "Input.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Window.hpp"
 #include <GLFW/glfw3.h>
 #include <conio.h>
 
@@ -24,7 +24,7 @@ namespace Pit {
 	ControllerId Input::s_LastUsedController = ControllerId::None;
 
 	static GLFWwindow* GetWindow() {
-		return Engine::Rendering()->Window->GetWindowHandle();
+		return Engine::GetWindow()->GetWindowHandle();
 	}
 
 	void Input::Init() {

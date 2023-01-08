@@ -34,7 +34,6 @@ namespace Pit {
 		bool WindowToolbar;
 		bool VSync;
 		int MaxFps;
-		bool UIDocking;
 		RenderingAPI RenderingApi;
 		int AntiAliasing;
 		bool Headless;
@@ -44,10 +43,9 @@ namespace Pit {
 
 		EngineSettings(const int argc, const char* argv[], const String& prefix,
 					   const String& windowName, bool windowToolbar,
-					   bool uiDocking, bool headless = false, bool oneInstanceOnly = false)
+					   bool headless = false, bool oneInstanceOnly = false)
 			: Prefix(prefix), WindowName(windowName), WindowToolbar(windowToolbar),
-			  VSync(false), MaxFps(-1), UIDocking(uiDocking),
-			  RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), OneInstanceOnly(oneInstanceOnly) {
+			  VSync(false), MaxFps(-1), RenderingApi(RenderingAPI::OpenGL), AntiAliasing(0), Headless(headless), OneInstanceOnly(oneInstanceOnly) {
 
 			ConsoleArgs.assign(argv, argv + argc);
 			for (const auto& arg : ConsoleArgs) {

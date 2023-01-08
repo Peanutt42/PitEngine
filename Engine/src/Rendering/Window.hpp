@@ -42,6 +42,8 @@ namespace Pit::Rendering {
 		bool m_Maximized = false, m_Minimized = false;
 		bool m_FramebufferResized = false;
 
+		inline static int s_WindowCount;
+
 		static void _GLFWErrorCallback(int errorCode, const char* description);
 		static void _FramebufferResizedCallback(GLFWwindow* window, int width, int height);
 		static void _WindowResizedCallback(GLFWwindow* window, int width, int height);

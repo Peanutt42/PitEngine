@@ -2,7 +2,9 @@
 #include "Engine.hpp"
 
 #include "Audio/AudioSubmodule.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Renderer.hpp"
+#include "Rendering/Window.hpp"
+#include "UI/ImGuiLayer.hpp"
 #include "Networking/NetworkingSubmodule.hpp"
 #include "Physics/PhysicsSubmodule.hpp"
 #include "AssetManagment/AssetManagmentSubmodule.hpp"
@@ -15,7 +17,6 @@
 
 
 namespace Pit {
-	UIRenderEvent					Engine::UIRenderEvent;
 	SaveConfigEvent					Engine::SaveConfigEvent;
 
 	EngineSettings*					Engine::s_Settings = nullptr;
@@ -107,8 +108,11 @@ namespace Pit {
 			s_ScriptingSubmodule->Init();
 
 			if (!Engine::GetSettings().Headless) {
-				s_RenderingSubmodule = new Pit::RenderingSubmodule();
-				s_RenderingSubmodule->Init();
+				s_Window = new Rendering::Window(s_Settings->WindowName, 1920, 1080, false);
+				Rendering::Renderer::Init();
+
+				s_ImGuiLayer = new UI::ImGuiLayer();
+				AddOverlay(s_ImGuiLayer);
 			}
 
 			s_NetworkingSubmodule = new Pit::NetworkingSubmodule();
@@ -143,6 +147,10 @@ namespace Pit {
 
 		try {
 			{
+				for (Layer* layer : s_Layers) {
+					layer->OnDestroy();
+					delete layer;
+				}
 				ScopedTimer t("EngineShutdownTime");
 				s_Scene->Clear();
 				delete s_Scene;
@@ -150,8 +158,8 @@ namespace Pit {
 				delete s_AssetManagmentSubmodule;
 
 				if (!Engine::GetSettings().Headless) {
-					s_RenderingSubmodule->Shutdown();
-					delete s_RenderingSubmodule;
+					Rendering::Renderer::Shutdown();
+					delete s_Window;
 				}
 				s_PhysicsSubmodule->Shutdown();
 				delete s_PhysicsSubmodule;
@@ -214,11 +222,29 @@ namespace Pit {
 
 			s_ScriptingSubmodule->Update();
 
+			{
+				PIT_PROFILE_FUNCTION("Pit::Engine::Update::Layers::OnUpdate");
+				for (Layer* layer : s_Layers) layer->OnUpdate();
+			}
+
 			if (!Engine::GetSettings().Headless) {
-				s_RenderingSubmodule->Update();
+				Rendering::Renderer::Begin();
+				{
+					PIT_PROFILE_FUNCTION("Pit::Engine::Update::Layers::OnRender");
+					for (Layer* layer : s_Layers) layer->OnRender();
+				}
+				Rendering::Renderer::End();
 
 				s_AudioSubmodule->Update();
 			}
+			s_ImGuiLayer->Begin();
+			{
+				PIT_PROFILE_FUNCTION("Pit::Engine::Update::Layers::OnUIRender");
+				for (Layer* layer : s_Layers) layer->OnUIRender();
+			}
+			s_ImGuiLayer->End();
+
+			s_Window->Update();
 
 			// Limit the Fps
 			if (s_Settings->MaxFps > 0) {
@@ -240,7 +266,7 @@ namespace Pit {
 		if (s_Quit)
 			return true;
 		else if (!s_Settings->Headless)
-			return s_RenderingSubmodule->Window->ShouldClose();
+			return s_Window->ShouldClose();
 		else
 			return false;
 	}
@@ -259,7 +285,33 @@ namespace Pit {
 
 	AudioSubmodule* Engine::Audio()						{ return s_AudioSubmodule; }
 	AssetManagmentSubmodule* Engine::AssetManagment()	{ return s_AssetManagmentSubmodule;  }
-	RenderingSubmodule* Engine::Rendering()				{ return s_RenderingSubmodule;  }
 	ECSSubmodule* Engine::ECS()							{ return s_ECSSubmodule;  }
 	ScriptingSubmodule* Engine::Scripting() { return s_ScriptingSubmodule; }
+	
+	void Engine::AddLayer(Layer* layer) {
+		s_Layers.emplace(s_Layers.begin() + s_LayerInsertIndex, layer);
+		s_LayerInsertIndex++;
+		layer->OnCreate();
+	}
+	void Engine::AddOverlay(Layer* overlay) {
+		s_Layers.emplace_back(overlay);
+		overlay->OnCreate();
+	}
+	void Engine::RemoveLayer(Layer* layer) {
+		auto it = std::find(s_Layers.begin(), s_Layers.begin() + s_LayerInsertIndex, layer);
+		if (it != s_Layers.begin() + s_LayerInsertIndex) {
+			layer->OnDestroy();
+			delete layer;
+			s_Layers.erase(it);
+			s_LayerInsertIndex--;
+		}
+	}
+	void Engine::RemoveOverlay(Layer* overlay) {
+		auto it = std::find(s_Layers.begin() + s_LayerInsertIndex, s_Layers.end(), overlay);
+		if (it != s_Layers.end()) {
+			overlay->OnDestroy();
+			delete overlay;
+			s_Layers.erase(it);
+		}
+	}
 }
