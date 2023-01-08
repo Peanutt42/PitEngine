@@ -2,7 +2,6 @@
 #include "Core/CoreInclude.hpp"
 #include "Core/Engine.hpp"
 #include "ECSSceneSerializer.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
 #include "Rendering/Camera.hpp"
 #include "ECSEntityHandle.hpp"
 #include "ECSComponents.hpp"

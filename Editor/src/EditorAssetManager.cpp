@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "EditorAssetManager.hpp"
-#include "EditorApplication.hpp"
+#include "EditorLayer.hpp"
 
 namespace Pit::Editor {
 
@@ -26,11 +26,11 @@ namespace Pit::Editor {
 	}
 
 	ImTextureID EditorAssetManager::GetIcon(Icon icon) {
-		return (ImTextureID)Cast<uint64>(EditorApplication::AssetManager().m_Icons[icon].GetRendererID());
+		return (ImTextureID)Cast<uint64>(EditorLayer::AssetManager().m_Icons[icon].GetRendererID());
 	}
 
 	const Rendering::Texture& EditorAssetManager::GetIconTexture(Icon icon) {
-		return EditorApplication::AssetManager().m_Icons[icon];
+		return EditorLayer::AssetManager().m_Icons[icon];
 	}
 
 	void EditorAssetManager::Shutdown() {

@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "Core/Engine.hpp"
-#include "RenderingSubmodule.hpp"
+#include "Window.hpp"
 #include "Renderer.hpp"
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
@@ -13,21 +13,26 @@
 
 namespace Pit::Rendering {
 
-	Renderer::Renderer() {
+	void Renderer::Init() {
 		PIT_PROFILE_FUNCTION();
 
-		Engine::Rendering()->Window->SetIcon(FileSystem::GetEngineDir() + "Resources/Icons/PitEngineLogo.png");
+		glfwMakeContextCurrent(Engine::GetWindow()->GetWindowHandle());
+
+		if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0)
+			PIT_ENGINE_FATAL(Rendering, "Failed to initialize GLAD");
+
+		Engine::GetWindow()->SetIcon(FileSystem::GetEngineDir() + "Resources/Icons/PitEngineLogo.png");
+
+		s_ScreenShader = new Shader(FileSystem::GetEngineDir() + "Resources/shaders/ScreenShader.shader");
 
 		glEnable(GL_DEPTH_TEST);
 		glPolygonMode(GL_FRONT, GL_FILL);
 		
-		m_RenderingSystem.Setup();
-		
 		// Create Screen Quad
-		glGenVertexArrays(1, &m_ScreenQuadVAO);
-		glGenBuffers(1, &m_ScreenQuadVBO);
-		glBindVertexArray(m_ScreenQuadVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_ScreenQuadVBO);
+		glGenVertexArrays(1, &s_ScreenQuadVAO);
+		glGenBuffers(1, &s_ScreenQuadVBO);
+		glBindVertexArray(s_ScreenQuadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, s_ScreenQuadVBO);
 
 		constexpr float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
 			// positions   // texCoords
@@ -109,14 +114,14 @@ namespace Pit::Rendering {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}*/
 		FramebufferSpecification spec;
-		spec.Width = (uint32_t)Engine::Rendering()->Window->GetWidth();
-		spec.Height = (uint32_t)Engine::Rendering()->Window->GetHeight();
+		spec.Width = (uint32_t)Engine::GetWindow()->GetWidth();
+		spec.Height = (uint32_t)Engine::GetWindow()->GetHeight();
 		spec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
 		spec.Samples = (uint32_t)Engine::GetSettings().AntiAliasing;
-		m_Framebuffer = new Framebuffer(spec);
+		s_Framebuffer = new Framebuffer(spec);
 
-		m_ScreenShader.Use();
-		m_ScreenShader.SetInt("screenTexture", 0);
+		s_ScreenShader->Use();
+		s_ScreenShader->SetInt("screenTexture", 0);
 		
 
 		PIT_ENGINE_INFO(Rendering, "OpenGL Info:");
@@ -125,46 +130,54 @@ namespace Pit::Rendering {
 		PIT_ENGINE_INFO(Rendering, " - Version: {}", (const char*)glGetString(GL_VERSION));
 	}
 
-	Renderer::~Renderer() {
+	void Renderer::Shutdown() {
 		PIT_PROFILE_FUNCTION();
 
-		delete m_Framebuffer;
+		delete s_Framebuffer;
+
+		delete s_ScreenShader;
 	}
 
 
-	void Renderer::Update() {
+	void Renderer::Begin() {
 		PIT_PROFILE_FUNCTION();
 
-		int width = Engine::Rendering()->Window->GetWidth();
-		int height = Engine::Rendering()->Window->GetHeight();
-		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
-			width > 0.0f && height > 0.0f && 
+		glfwSwapInterval(Engine::GetSettings().VSync);
+
+		int width = Engine::GetWindow()->GetWidth();
+		int height = Engine::GetWindow()->GetHeight();
+		if (FramebufferSpecification spec = s_Framebuffer->GetSpecification();
+			width > 0.0f && height > 0.0f &&
 			(spec.Width != (uint32_t)width || spec.Height != (uint32_t)height)) {
-			m_Framebuffer->Resize((uint32_t)width, (uint32_t)height);
+			s_Framebuffer->Resize((uint32_t)width, (uint32_t)height);
 		}
 
-		m_Framebuffer->Bind();
+	}
+
+	void Renderer::BeginScene() {
+		s_Framebuffer->Bind();
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Clear Entity id attachment to -1
-		m_Framebuffer->ClearAttachment(1, -1);
+		// For now
+		s_Framebuffer->ClearAttachment(1, -1);
+	}
 
-		m_RenderingSystem.Render();
+	void Renderer::EndScene() {
+		s_Framebuffer->Unbind();
+	}
 
-		m_Framebuffer->Unbind();
-
-
-
+	void Renderer::End() {
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDisable(GL_DEPTH_TEST);
 
-		m_ScreenShader.Use();
-		glBindVertexArray(m_ScreenQuadVAO);
+		s_ScreenShader->Use();
+		glBindVertexArray(s_ScreenQuadVAO);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_Framebuffer->GetColorAttachmentRendererID());
+		glBindTexture(GL_TEXTURE_2D, s_Framebuffer->GetColorAttachmentRendererID());
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		
@@ -215,5 +228,5 @@ namespace Pit::Rendering {
 		}*/
 	}
 	
-	Framebuffer* Renderer::GetScreenFramebuffer() { return m_Framebuffer; }
+	Framebuffer* Renderer::GetScreenFramebuffer() { return s_Framebuffer; }
 }

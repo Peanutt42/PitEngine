@@ -6,7 +6,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\EditorApplication.hpp" />
+    <ClInclude Include="src\EditorLayer.hpp" />
     <ClInclude Include="src\EditorAssetManager.hpp" />
     <ClInclude Include="src\EditorCameraController.hpp" />
     <ClInclude Include="src\EditorDockspace.hpp" />
@@ -33,9 +33,10 @@
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\ImGuiThemes.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EditorApplication.cpp" />
+    <ClCompile Include="src\EditorLayer.cpp" />
     <ClCompile Include="src\EditorAssetManager.cpp" />
     <ClCompile Include="src\Panels\BuildGamePanel.cpp">
       <Filter>Panels</Filter>

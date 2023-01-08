@@ -1,15 +1,20 @@
 #include "pch.hpp"
+#include "EditorLayer.hpp"
 #include "SceneViewportPanel.hpp"
 #include "HierachyPanel.hpp"
 #include "Core/Engine.hpp"
 #include "ECS/ECSComponents.hpp"
-#include "Rendering/RenderingSubmodule.hpp"
+#include "Rendering/Renderer.hpp"
 #include "Rendering/Texture.hpp"
 #include "Rendering/SpectatorCamera.hpp"
+#include "Rendering/Window.hpp"
+#include "Rendering/Framebuffer.hpp"
 #include "UI/UI.hpp"
 #include <imgui/imgui.h>
 #include <ImGuizmo.h>
 #include "Math/GraphicsMath.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
 namespace Pit::Editor {
@@ -52,7 +57,7 @@ namespace Pit::Editor {
 		m_ViewportSize = ImGui::GetContentRegionAvail();
 		ImVec2 panelSize = ImGui::GetWindowSize();
 		ImVec2 panelPos = ImGui::GetWindowPos();
-		ImGui::Image((ImTextureID)Cast<uint64>(Engine::Rendering()->Renderer->GetScreenFramebuffer()->GetColorAttachmentRendererID()),
+		ImGui::Image((ImTextureID)Cast<uint64>(Rendering::Renderer::GetScreenFramebuffer()->GetColorAttachmentRendererID()),
 					 m_ViewportSize, ImVec2(0, 1), ImVec2(1, 0));
 
 		auto viewportBottumLeft = ImGui::GetCursorScreenPos();
@@ -67,7 +72,7 @@ namespace Pit::Editor {
 							  (float)ImGui::GetWindowWidth(), (float)ImGui::GetWindowHeight());
 
 			Rendering::Camera& cam = Engine::GetScene()->GetCamera();
-			float aspect = (float)Engine::Rendering()->Window->GetWidth() / (float)Engine::Rendering()->Window->GetHeight();
+			float aspect = (float)Engine::GetWindow()->GetWidth() / (float)Engine::GetWindow()->GetHeight();
 			if (std::isnan(aspect)) aspect = 1920.f / 1080.f;
 			glm::mat4 projection = glm::perspective(glm::radians(cam.Fov), aspect, cam.NearPlane, cam.FarPlane);
 			glm::mat4 view = cam.GetViewMatrix();
@@ -114,10 +119,10 @@ namespace Pit::Editor {
 
 			if (Input::IsKeyboardAndMouseInUse()) {
 				glm::vec2 windowPos;
-				Engine::Rendering()->Window->GetPosition(windowPos.x, windowPos.y);
+				Engine::GetWindow()->GetPosition(windowPos.x, windowPos.y);
 				glm::vec2 mousePos = Input::GetMousePos();
-				float windowWidth = (float)Engine::Rendering()->Window->GetWidth();
-				float windowHeight = (float)Engine::Rendering()->Window->GetHeight();
+				float windowWidth = (float)Engine::GetWindow()->GetWidth();
+				float windowHeight = (float)Engine::GetWindow()->GetHeight();
 
 				if (mousePos.x < 0) Input::SetMousePos({ windowWidth, mousePos.y });
 				if (mousePos.x > windowWidth) Input::SetMousePos({ 0, mousePos.y });
@@ -207,12 +212,12 @@ namespace Pit::Editor {
 			int mouseY = -(int)(absoluteMousePos.y - m_ViewportBottumLeft.y);
 
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)m_ViewportSize.x && mouseY < (int)m_ViewportSize.y) {
-				auto& framebufferSpec = Engine::Rendering()->Renderer->GetScreenFramebuffer()->GetSpecification();
+				auto& framebufferSpec = Rendering::Renderer::GetScreenFramebuffer()->GetSpecification();
 				mouseX = (int)((framebufferSpec.Width / m_ViewportSize.x) * mouseX);
 				mouseY = (int)((framebufferSpec.Height / m_ViewportSize.y) * mouseY);
-				Engine::Rendering()->Renderer->GetScreenFramebuffer()->Bind();
-				int pixelData = Engine::Rendering()->Renderer->GetScreenFramebuffer()->ReadPixel(1, mouseX, mouseY);
-				Engine::Rendering()->Renderer->GetScreenFramebuffer()->Unbind();
+				Rendering::Renderer::GetScreenFramebuffer()->Bind();
+				int pixelData = Rendering::Renderer::GetScreenFramebuffer()->ReadPixel(1, mouseX, mouseY);
+				Rendering::Renderer::GetScreenFramebuffer()->Unbind();
 				HierachyPanel::s_SelectedEntity = pixelData == -1 ? ECS::EntityHandle((ECS::Scene*)nullptr, (entt::entity)- 1) : ECS::EntityHandle(Engine::GetScene(), (entt::entity)pixelData);
 			}
 		}

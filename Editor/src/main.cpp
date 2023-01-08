@@ -1,12 +1,26 @@
 ﻿#include "pch.hpp"
-#include "EditorApplication.hpp"
+#include "EditorLayer.hpp"
 #include "Serialization/YAMLSerializer.hpp"
 #include "Platform/PlatformUtils.hpp"
+
+#include "Core/EntryPoint.hpp"
+
+
+
+namespace Pit {
+	ApplicationInfo GetApplicationInfo() {
+		return ApplicationInfo{ .Prefix = "Editor", .WindowName = "PitEngine-Editor", .OneInstanceOnly = false };
+	}
+
+	void SetupApplication([[maybe_unused]] const int argc, [[maybe_unused]] const char* argv[]) {
+		Engine::AddLayer(new Editor::EditorLayer());
+	}
+}
 
 using namespace Pit;
 using namespace Editor;
 
-int main(const int argc, const char* argv[]) {
+/*int main(const int argc, const char* argv[]) {
 	String projDir;
 	for (int i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-proj") == 0 && argc < i + 1)
@@ -39,4 +53,4 @@ int main(const int argc, const char* argv[]) {
 	Engine::Shutdown();
 
 	return 0;
-}
+}*/

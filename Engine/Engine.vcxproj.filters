@@ -189,9 +189,6 @@
     <ClInclude Include="src\Rendering\Renderer.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\RenderingSubmodule.hpp">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rendering\RenderingSystem.hpp">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -234,7 +231,7 @@
     <ClInclude Include="src\UI\UIFonts.hpp">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\UIRenderer.hpp">
+    <ClInclude Include="src\UI\ImGuiLayer.hpp">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\DateUtils.hpp">
@@ -244,6 +241,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\Core\Layer.hpp" />
+    <ClInclude Include="src\Core\EntryPoint.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AntiCheat\AntiCheatSubmodule.cpp">
@@ -327,9 +326,6 @@
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\RenderingSubmodule.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\RenderingSystem.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
@@ -360,7 +356,7 @@
     <ClCompile Include="src\Threading\JobSystem.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\UIRenderer.cpp">
+    <ClCompile Include="src\UI\ImGuiLayer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />

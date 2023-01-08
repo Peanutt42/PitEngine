@@ -15,17 +15,21 @@ namespace Pit::Rendering {
 	/// </summary>
 	class Renderer {
 	public:
-		Renderer();
-		~Renderer();
+		static void Init();
+		static void Shutdown();
 
-		void Update();
+		static void Begin();
 
-		Framebuffer* GetScreenFramebuffer();
+		static void BeginScene();
+		static void EndScene();
+
+		static void End();
+
+		static Framebuffer* GetScreenFramebuffer();
 
 	private:
-		RenderingSystem m_RenderingSystem;
-		uint m_ScreenQuadVAO, m_ScreenQuadVBO;
-		Framebuffer* m_Framebuffer;
-		Shader m_ScreenShader = Shader(FileSystem::GetEngineDir() + "Resources/shaders/ScreenShader.shader");
+		inline static uint s_ScreenQuadVAO, s_ScreenQuadVBO;
+		inline static Framebuffer* s_Framebuffer;
+		inline static Shader* s_ScreenShader;
 	};
 }

@@ -2,7 +2,6 @@
 
 #include "Core/CoreInclude.hpp"
 #include "Rendering/Texture.hpp"
-#include "EditorApplication.hpp"
 #include "EditorWindowPanel.hpp"
 
 namespace Pit::Editor {
